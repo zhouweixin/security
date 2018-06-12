@@ -107,6 +107,20 @@ public class User {
 	private Date practiceEndDate;
 
 	/**
+	 * 离职
+	 */
+	@Temporal(value = TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date resignDate;
+
+    /**
+     * 离职类型
+     */
+    @ManyToOne(targetEntity = ResignType.class)
+    @JoinColumn(name = "resign_type_id", referencedColumnName = "id")
+	private ResignType resignType;
+
+	/**
 	 * 考勤组
 	 */
 	@ManyToOne(targetEntity = AttendanceGroup.class)
@@ -226,12 +240,41 @@ public class User {
 		this.attendanceGroup = attendanceGroup;
 	}
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", sex=" + sex + ", ic=" + ic + ", wechat=" + wechat + ", contact="
-				+ contact + ", password=" + password + ", department=" + department + ", role=" + role + ", jobNature="
-				+ jobNature + ", period=" + period + ", employDate=" + employDate + ", practiceEndDate="
-				+ practiceEndDate + ", attendanceGroup=" + attendanceGroup + "]";
-	}
+    public Date getResignDate() {
+        return resignDate;
+    }
 
+    public void setResignDate(Date resignDate) {
+        this.resignDate = resignDate;
+    }
+
+    public ResignType getResignType() {
+        return resignType;
+    }
+
+    public void setResignType(ResignType resignType) {
+        this.resignType = resignType;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", sex=" + sex +
+                ", ic='" + ic + '\'' +
+                ", wechat='" + wechat + '\'' +
+                ", contact='" + contact + '\'' +
+                ", password='" + password + '\'' +
+                ", department=" + department +
+                ", role=" + role +
+                ", jobNature=" + jobNature +
+                ", period=" + period +
+                ", employDate=" + employDate +
+                ", practiceEndDate=" + practiceEndDate +
+                ", resignDate=" + resignDate +
+                ", resignType=" + resignType +
+                ", attendanceGroup=" + attendanceGroup +
+                '}';
+    }
 }

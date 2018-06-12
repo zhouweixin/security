@@ -1,18 +1,15 @@
 package com.xplusplus.security.repository;
 
+import java.util.Date;
 import java.util.List;
 
+import com.xplusplus.security.domain.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import com.xplusplus.security.domain.AttendanceGroup;
-import com.xplusplus.security.domain.Department;
-import com.xplusplus.security.domain.JobNature;
-import com.xplusplus.security.domain.User;
 
 /**
  * @Author: zhouweixin
@@ -154,4 +151,15 @@ public interface UserRepository extends JpaRepository<User, String> {
      * @return
      */
 	public List<User> findByAttendanceGroup(AttendanceGroup attendanceGroup);
+
+    /**
+     * 离职
+     *
+     * @param date
+     * @param resignType
+     * @param id
+     */
+	@Modifying
+    @Query(value = "update User u set u.resignDate=?1, u.resignType=?2 where u.id=?3")
+	public void updateResignDateAndResignType(Date date, ResignType resignType, String id);
 }

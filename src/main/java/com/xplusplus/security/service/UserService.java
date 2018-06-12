@@ -1,14 +1,15 @@
 package com.xplusplus.security.service;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
 import javax.transaction.Transactional;
 
-import com.xplusplus.security.domain.AttendanceGroup;
-import com.xplusplus.security.repository.AttendanceGroupRepository;
+import com.xplusplus.security.domain.*;
+import com.xplusplus.security.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,14 +19,8 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
-import com.xplusplus.security.domain.Department;
-import com.xplusplus.security.domain.JobNature;
-import com.xplusplus.security.domain.User;
 import com.xplusplus.security.exception.EnumExceptions;
 import com.xplusplus.security.exception.SecurityExceptions;
-import com.xplusplus.security.repository.DepartmentRepository;
-import com.xplusplus.security.repository.JobNatureRepository;
-import com.xplusplus.security.repository.UserRepository;
 import com.xplusplus.security.utils.GlobalUtil;
 
 /**
@@ -47,6 +42,9 @@ public class UserService {
 
     @Autowired
     private AttendanceGroupRepository attendanceGroupRepository;
+
+    @Autowired
+    private ResignTypeRepository resignTypeRepository;
 
     /**
      * 新增
@@ -434,5 +432,28 @@ public class UserService {
      */
     public List<User> findByAttendanceGroup(AttendanceGroup attendanceGroup){
         return userRepository.findByAttendanceGroup(attendanceGroup);
+    }
+
+    /**
+     * 离职
+     *
+     * @param date
+     * @param resignTypeId
+     * @param id
+     */
+    @Transactional
+    public void updateResignDateAndResignType(Date date, Integer resignTypeId, String id){
+        // 验证离职类型
+        ResignType resignType = resignTypeRepository.findOne(resignTypeId);
+        if(resignType == null){
+            throw new SecurityExceptions(EnumExceptions.UPDATE_FAILED_RESIGN_TYPE_NOT_EXIST);
+        }
+
+        // 验证用户是否存在
+        if(userRepository.findOne(id) == null){
+            throw new SecurityExceptions(EnumExceptions.UPDATE_FAILED_USER_NOT_EXIST);
+        }
+
+        userRepository.updateResignDateAndResignType(date, resignType, id);
     }
 }

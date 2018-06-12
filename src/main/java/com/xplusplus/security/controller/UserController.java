@@ -1,24 +1,21 @@
 package com.xplusplus.security.controller;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
 
+import com.xplusplus.security.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.xplusplus.security.domain.Department;
-import com.xplusplus.security.domain.JobNature;
-import com.xplusplus.security.domain.Project;
-import com.xplusplus.security.domain.ProjectUser;
-import com.xplusplus.security.domain.Result;
-import com.xplusplus.security.domain.User;
 import com.xplusplus.security.service.ProjectUserService;
 import com.xplusplus.security.service.UserService;
 import com.xplusplus.security.utils.ResultUtil;
@@ -221,7 +218,7 @@ public class UserController {
 	/**
 	 * 通过工作性质查询-分页
 	 * 
-	 * @param name
+	 * @param jobNature
 	 * @param page
 	 * @param size
 	 * @param sortFieldName
@@ -241,7 +238,7 @@ public class UserController {
 	/**
 	 * 通过id更新工作性质
 	 * 
-	 * @param jobNature
+	 * @param jobNatureId
 	 * @param id
 	 * @return
 	 */
@@ -250,5 +247,18 @@ public class UserController {
 		userService.updateJobNatureById(jobNatureId, id);
 		return ResultUtil.success();
 	}
+
+    /**
+     * 离职
+     *
+     * @return
+     */
+    @RequestMapping(value = "/resign")
+	public Result<Object> resign(@DateTimeFormat(pattern = "yyyy-MM-dd") Date resignDate,
+                                 @RequestParam(value = "resignTypeId", defaultValue = "-1") Integer resignTypeId,
+                                 @RequestParam(value = "id", defaultValue = "-1") String id){
+        userService.updateResignDateAndResignType(resignDate, resignTypeId, id);
+        return ResultUtil.success();
+    }
 	
 }
