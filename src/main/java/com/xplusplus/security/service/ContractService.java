@@ -1,6 +1,9 @@
 package com.xplusplus.security.service;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -350,12 +353,16 @@ public class ContractService {
 	 */
 	public Page<Contract> findByEndDayByPage(Integer endDay, Integer page, Integer size, String sortFieldName,
 			Integer asc) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.DAY_OF_MONTH, endDay);
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
-		calendar.set(Calendar.MINUTE, 0);
-		calendar.set(Calendar.SECOND, 0);
+        ZoneId zoneId = ZoneId.systemDefault();
+        LocalDate localDate1 = LocalDate.now();
+        LocalDate localDate2 = localDate1.minusDays(-1 * endDay - 1);
+        localDate1 = localDate1.minusDays(1);
+
+        ZonedDateTime zdt1 = localDate1.atStartOfDay(zoneId);
+        ZonedDateTime zdt2 = localDate2.atStartOfDay(zoneId);
+
+        Date date1 = Date.from(zdt1.toInstant());
+        Date date2 = Date.from(zdt2.toInstant());
 
 		// 判断排序字段名是否存在
 		try {
@@ -373,7 +380,7 @@ public class ContractService {
 		}
 
 		Pageable pageable = new PageRequest(page, size, sort);
-		return contractRepository.findByEndDateAfter(calendar.getTime(), pageable);
+		return contractRepository.findByEndDateAfterAndEndDateBefore(date1, date2, pageable);
 	}
 
 	/**

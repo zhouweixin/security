@@ -78,14 +78,15 @@ public interface ContractRepository extends JpaRepository<Contract, Long>{
 	 */
 	public Page<Contract> findByContractTypeAndUserInAndStartDateBetween(ContractType contractType, List<User> users, Date date1, Date date2, Pageable pageable);
 
-	/**
-	 * 查询未结束的合同-分页
-	 * 
-	 * @param date
-	 * @param pageable
-	 * @return
-	 */
-	public Page<Contract> findByEndDateAfter(Date endDate, Pageable pageable);
+    /**     *
+     * 查询时间段内的合同-分页
+     *
+     * @param date1
+     * @param date2
+     * @param pageable
+     * @return
+     */
+	public Page<Contract> findByEndDateAfterAndEndDateBefore(Date date1, Date date2, Pageable pageable);
 	
 	/**
 	 * 通过开始日期的区间查询-分页

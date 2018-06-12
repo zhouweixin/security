@@ -237,7 +237,7 @@ public class ContractController {
 	/**
 	 * 通过工作性质查询-分页
 	 * 
-	 * @param userName
+	 * @param jobNature
 	 * @param page
 	 * @param size
 	 * @param sortFieldName
