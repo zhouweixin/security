@@ -117,7 +117,7 @@
                 <div class="operating-content">
                     <div class="button-group">
                         <a class="btn btn-default button-mgr">员工导入</a>
-                        <a class="btn btn-default button-mgr">员工导出</a>
+                        <a class="btn btn-default button-mgr" onclick="exportStaffInformationExcelTable('staffInformationTable')">员工导出</a>
                         <a id="add-staff-button" class="btn btn-default button-mgr" data-toggle="modal" data-target="#myModal-addStaff">添加员工</a>
                     </div>
                 </div>
@@ -181,7 +181,7 @@
                 <div class="search-content">
                     <div class="search-left">
                         <div class="dropdown col-xs-3 select-department" >
-                            <button class="btn btn-default dropdown-toggle" type="button" id="selectDepartment-dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <button class="btn btn-default dropdown-toggle" type="button" value='' id="selectDepartment-dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                 选择部门
                                 <span class="caret"></span>
                             </button>
@@ -216,27 +216,29 @@
                         </div>
                     </div>
                     <div class="search-right">
-
+                        <button class="btn btn-default" onclick="deleteStaffInBatch()">批量删除</button>
                     </div>
                 </div>
             </div>
             <div class="table-body">
-                <table class="table table-bordered">
+                <table id="staffInformationTable" class="table table-bordered">
                     <thead style="background-color: #F9FAFB">
                     <tr>
-                        <th><input id="select-all" class="select-box" type="checkbox">员工</th>
+                        <th style="width: 34px"><input id="select-all" class="select-box" type="checkbox"></th>
+                        <th>员工</th>
                         <th>工号</th>
                         <th>部门</th>
                         <th>手机</th>
                         <th>角色</th>
                         <th>工作性质</th>
                         <th>入职日期</th>
-                        <th>操作<a class="deleteDepartmentInBatch-button" onclick="deleteStaffInBatch()">批量删除</a></th>
+                        <th>操作</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr class="table-tr hidden">
-                        <td class="staff-name tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="staff-name"></td>
                         <td class="staff-id"></td>
                         <td class="staff-department"></td>
                         <td class="staff-phoneNumber"></td>
@@ -257,7 +259,8 @@
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
-                        <td class="staff-name tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="staff-name"></td>
                         <td class="staff-id"></td>
                         <td class="staff-department"></td>
                         <td class="staff-phoneNumber"></td>
@@ -278,7 +281,8 @@
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
-                        <td class="staff-name tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="staff-name"></td>
                         <td class="staff-id"></td>
                         <td class="staff-department"></td>
                         <td class="staff-phoneNumber"></td>
@@ -299,7 +303,8 @@
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
-                        <td class="staff-name tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="staff-name"></td>
                         <td class="staff-id"></td>
                         <td class="staff-department"></td>
                         <td class="staff-phoneNumber"></td>
@@ -320,7 +325,8 @@
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
-                        <td class="staff-name tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="staff-name"></td>
                         <td class="staff-id"></td>
                         <td class="staff-department"></td>
                         <td class="staff-phoneNumber"></td>
@@ -341,7 +347,8 @@
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
-                        <td class="staff-name tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="staff-name"></td>
                         <td class="staff-id"></td>
                         <td class="staff-department"></td>
                         <td class="staff-phoneNumber"></td>
@@ -362,7 +369,8 @@
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
-                        <td class="staff-name tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="staff-name"></td>
                         <td class="staff-id"></td>
                         <td class="staff-department"></td>
                         <td class="staff-phoneNumber"></td>
@@ -383,7 +391,8 @@
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
-                        <td class="staff-name tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="staff-name"></td>
                         <td class="staff-id"></td>
                         <td class="staff-department"></td>
                         <td class="staff-phoneNumber"></td>
@@ -404,7 +413,8 @@
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
-                        <td class="staff-name tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="staff-name"></td>
                         <td class="staff-id"></td>
                         <td class="staff-department"></td>
                         <td class="staff-phoneNumber"></td>
@@ -425,7 +435,8 @@
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
-                        <td class="staff-name tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="staff-name"></td>
                         <td class="staff-id"></td>
                         <td class="staff-department"></td>
                         <td class="staff-phoneNumber"></td>
@@ -544,6 +555,7 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu staffInformation-department-menu-ul" aria-labelledby="select-staffInformation-department">
+                                        <li><a value="">请选择部门</a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
@@ -579,7 +591,7 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu staffInformation-role-menu-ul" aria-labelledby="select-staffInformation-role">
-                                        <li class="hidden"><a></a></li>
+                                        <li><a value =''>请选择</a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
@@ -638,6 +650,7 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu staffInformation-jobNature-menu-ul" aria-labelledby="select-staffInformation-jobNature">
+                                        <li><a value =''>请选择</a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
@@ -692,8 +705,8 @@
                                     <button class="btn btn-default dropdown-toggle disable" type="button" disabled="disabled" id="select-archiveInformation-nation" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="caret"></span>
                                     </button>
-                                    <ul class="dropdown-menu archiveInformation-nation-menu-ul" aria-labelledby="select-archiveInformation-nation">
-                                        <li class="hidden"><a></a></li>
+                                    <ul class="dropdown-menu archiveInformation-nation-menu-ul" aria-labelledby="select-archiveInformation-nation" style="max-height: 200px;overflow-y: scroll">
+                                        <li><a value=''>请选择</a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
@@ -754,6 +767,7 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu archiveInformation-maritalStatus-menu-ul" aria-labelledby="select-archiveInformation-maritalStatus">
+                                        <li><a value=''>请选择</a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
@@ -776,6 +790,7 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu archiveInformation-militaryStatus-menu-ul" aria-labelledby="select-archiveInformation-militaryStatus">
+                                        <li><a value=''>请选择</a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
@@ -798,6 +813,10 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu archiveInformation-politicalStatus-menu-ul" aria-labelledby="select-archiveInformation-politicalStatus">
+                                        <li><a value=''>请选择</a></li>
+                                        <li class="hidden"><a></a></li>
+                                        <li class="hidden"><a></a></li>
+                                        <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
@@ -819,7 +838,16 @@
                                     <button class="btn btn-default dropdown-toggle disable"disabled="disabled" type="button" id="select-archiveInformation-education" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="caret"></span>
                                     </button>
-                                    <ul class="dropdown-menu archiveInformation-education-menu-ul" aria-labelledby="select-archiveInformation-education">
+                                    <ul class="dropdown-menu archiveInformation-education-menu-ul" aria-labelledby="select-archiveInformation-education"style="max-height: 200px;overflow-y: scroll">
+                                        <li><a value=''>请选择</a></li>
+                                        <li class="hidden"><a></a></li>
+                                        <li class="hidden"><a></a></li>
+                                        <li class="hidden"><a></a></li>
+                                        <li class="hidden"><a></a></li>
+                                        <li class="hidden"><a></a></li>
+                                        <li class="hidden"><a></a></li>
+                                        <li class="hidden"><a></a></li>
+                                        <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
@@ -873,6 +901,7 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu archiveInformation-healthStatus-menu-ul" aria-labelledby="select-archiveInformation-healthStatus">
+                                        <li><a value=''>请选择</a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
@@ -987,6 +1016,7 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu formalContractStatus-menu-ul" aria-labelledby="select-formalContractStatus">
+                                        <li><a value=''>请选择</a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
@@ -1062,6 +1092,7 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu temporaryContractStatus-menu-ul" aria-labelledby="select-temporaryContractStatus">
+                                         <li><a value=''>请选择</a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
@@ -1137,6 +1168,7 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu internshipAgreementStatus-menu-ul" aria-labelledby="select-internshipAgreementStatus">
+                                         <li><a value=''>请选择</a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
@@ -1225,6 +1257,7 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu addStaffDepartment-menu-ul" aria-labelledby="select-addStaffDepartment">
+                                        <li ><a value="">选择部门</a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
@@ -1272,6 +1305,7 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu addStaffPosition-menu-ul" aria-labelledby="select-addStaffPosition">
+                                        <li ><a value="">请选择</a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
@@ -1307,6 +1341,7 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu addStaffJobNature-menu-ul" aria-labelledby="select-addStaffJobNature">
+                                        <li ><a value="">请选择</a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>

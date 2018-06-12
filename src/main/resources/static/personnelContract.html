@@ -179,7 +179,7 @@
                                     <input id="alreadySigned-startDate" class="select-date" type="date">
                                 </div>
                                 <div style="display: inline-block;float: left;margin-right: 3px"class="input-group">
-                                    <label for="getSecondDate" style="font-weight: normal">至</label>
+                                    <label for="alreadySigned-endDate" style="font-weight: normal">至</label>
                                     <input id="alreadySigned-endDate" class="select-date" type="date">
                                 </div>
                                 <div class="input-group">
@@ -191,7 +191,8 @@
                                 </div>
                             </div>
                             <div class="search-right">
-                                <button id="alreadySigned-export-button" class="btn btn-info">导入合同</button>
+                                <button class="btn btn-default" onclick="deleteContractInBatch(this)" value="">批量删除</button>
+                                <button id="alreadySigned-export-button" class="btn btn-default">导入合同</button>
                             </div>
                         </div>
                     </div>
@@ -199,7 +200,8 @@
                         <table class="table table-bordered">
                             <thead style="background-color: #F9FAFB">
                             <tr>
-                                <th><input id="select-all" class="select-box" type="checkbox">姓名</th>
+                                <th style="width: 34px"><input id="select-all" class="select-box" type="checkbox"></th>
+                                <th>姓名</th>
                                 <th>工号</th>
                                 <th>部门</th>
                                 <th>合同编号</th>
@@ -207,12 +209,14 @@
                                 <th>合同起始日</th>
                                 <th>合同终止日</th>
                                 <th>合同状态</th>
-                                <th>操作<a class="deleteDepartmentInBatch-button" onclick="deleteContractInBatch()">批量删除</a></th>
+                                <th style="width: 50px">修改</th>
+                                <th style="width: 50px">删除</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr class="table-tr hidden">
-                                <td class="alreadySignedStaff-name tbody-td-id"></td>
+                                <td class="alreadySignedStaff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                                <td class="alreadySignedStaff-name"></td>
                                 <td class="alreadySignedStaff-id"></td>
                                 <td class="alreadySignedStaff-department"></td>
                                 <td class="alreadySignedStaff-contractNumber"></td>
@@ -221,12 +225,15 @@
                                 <td class="alreadySignedStaff-contractEndDate"></td>
                                 <td class="alreadySignedStaff-contractCondition"></td>
                                 <td class="alreadySignedStaff-operating">
-                                    <a class="edit-a" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)">修改</a>
-                                    <a onclick="deleteContract(this)">删除</a>
+                                    <a class="" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                </td>
+                                <td>
+                                    <a onclick="deleteContract(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                 </td>
                             </tr>
                             <tr class="table-tr hidden">
-                                <td class="alreadySignedStaff-name tbody-td-id"></td>
+                                <td class="alreadySignedStaff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                                <td class="alreadySignedStaff-name"></td>
                                 <td class="alreadySignedStaff-id"></td>
                                 <td class="alreadySignedStaff-department"></td>
                                 <td class="alreadySignedStaff-contractNumber"></td>
@@ -235,12 +242,15 @@
                                 <td class="alreadySignedStaff-contractEndDate"></td>
                                 <td class="alreadySignedStaff-contractCondition"></td>
                                 <td class="alreadySignedStaff-operating">
-                                    <a class="edit-a" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)">修改</a>
-                                    <a onclick="deleteContract(this)">删除</a>
+                                    <a class="" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                </td>
+                                <td>
+                                    <a onclick="deleteContract(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                 </td>
                             </tr>
                             <tr class="table-tr hidden">
-                                <td class="alreadySignedStaff-name tbody-td-id"></td>
+                                <td class="alreadySignedStaff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                                <td class="alreadySignedStaff-name"></td>
                                 <td class="alreadySignedStaff-id"></td>
                                 <td class="alreadySignedStaff-department"></td>
                                 <td class="alreadySignedStaff-contractNumber"></td>
@@ -249,12 +259,15 @@
                                 <td class="alreadySignedStaff-contractEndDate"></td>
                                 <td class="alreadySignedStaff-contractCondition"></td>
                                 <td class="alreadySignedStaff-operating">
-                                    <a class="edit-a" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)">修改</a>
-                                    <a onclick="deleteContract(this)">删除</a>
+                                    <a class="" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                </td>
+                                <td>
+                                    <a onclick="deleteContract(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                 </td>
                             </tr>
                             <tr class="table-tr hidden">
-                                <td class="alreadySignedStaff-name tbody-td-id"></td>
+                                <td class="alreadySignedStaff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                                <td class="alreadySignedStaff-name"></td>
                                 <td class="alreadySignedStaff-id"></td>
                                 <td class="alreadySignedStaff-department"></td>
                                 <td class="alreadySignedStaff-contractNumber"></td>
@@ -263,12 +276,15 @@
                                 <td class="alreadySignedStaff-contractEndDate"></td>
                                 <td class="alreadySignedStaff-contractCondition"></td>
                                 <td class="alreadySignedStaff-operating">
-                                    <a class="edit-a" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)">修改</a>
-                                    <a onclick="deleteContract(this)">删除</a>
+                                    <a class="" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                </td>
+                                <td>
+                                    <a onclick="deleteContract(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                 </td>
                             </tr>
                             <tr class="table-tr hidden">
-                                <td class="alreadySignedStaff-name tbody-td-id"></td>
+                                <td class="alreadySignedStaff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                                <td class="alreadySignedStaff-name"></td>
                                 <td class="alreadySignedStaff-id"></td>
                                 <td class="alreadySignedStaff-department"></td>
                                 <td class="alreadySignedStaff-contractNumber"></td>
@@ -277,12 +293,15 @@
                                 <td class="alreadySignedStaff-contractEndDate"></td>
                                 <td class="alreadySignedStaff-contractCondition"></td>
                                 <td class="alreadySignedStaff-operating">
-                                    <a class="edit-a" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)">修改</a>
-                                    <a onclick="deleteContract(this)">删除</a>
+                                    <a class="" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                </td>
+                                <td>
+                                    <a onclick="deleteContract(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                 </td>
                             </tr>
                             <tr class="table-tr hidden">
-                                <td class="alreadySignedStaff-name tbody-td-id"></td>
+                                <td class="alreadySignedStaff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                                <td class="alreadySignedStaff-name"></td>
                                 <td class="alreadySignedStaff-id"></td>
                                 <td class="alreadySignedStaff-department"></td>
                                 <td class="alreadySignedStaff-contractNumber"></td>
@@ -291,12 +310,15 @@
                                 <td class="alreadySignedStaff-contractEndDate"></td>
                                 <td class="alreadySignedStaff-contractCondition"></td>
                                 <td class="alreadySignedStaff-operating">
-                                    <a class="edit-a" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)">修改</a>
-                                    <a onclick="deleteContract(this)">删除</a>
+                                    <a class="" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                </td>
+                                <td>
+                                    <a onclick="deleteContract(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                 </td>
                             </tr>
                             <tr class="table-tr hidden">
-                                <td class="alreadySignedStaff-name tbody-td-id"></td>
+                                <td class="alreadySignedStaff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                                <td class="alreadySignedStaff-name"></td>
                                 <td class="alreadySignedStaff-id"></td>
                                 <td class="alreadySignedStaff-department"></td>
                                 <td class="alreadySignedStaff-contractNumber"></td>
@@ -305,12 +327,15 @@
                                 <td class="alreadySignedStaff-contractEndDate"></td>
                                 <td class="alreadySignedStaff-contractCondition"></td>
                                 <td class="alreadySignedStaff-operating">
-                                    <a class="edit-a" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)">修改</a>
-                                    <a onclick="deleteContract(this)">删除</a>
+                                    <a class="" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                </td>
+                                <td>
+                                    <a onclick="deleteContract(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                 </td>
                             </tr>
                             <tr class="table-tr hidden">
-                                <td class="alreadySignedStaff-name tbody-td-id"></td>
+                                <td class="alreadySignedStaff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                                <td class="alreadySignedStaff-name"></td>
                                 <td class="alreadySignedStaff-id"></td>
                                 <td class="alreadySignedStaff-department"></td>
                                 <td class="alreadySignedStaff-contractNumber"></td>
@@ -319,12 +344,15 @@
                                 <td class="alreadySignedStaff-contractEndDate"></td>
                                 <td class="alreadySignedStaff-contractCondition"></td>
                                 <td class="alreadySignedStaff-operating">
-                                    <a class="edit-a" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)">修改</a>
-                                    <a onclick="deleteContract(this)">删除</a>
+                                    <a class="" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                </td>
+                                <td>
+                                    <a onclick="deleteContract(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                 </td>
                             </tr>
                             <tr class="table-tr hidden">
-                                <td class="alreadySignedStaff-name tbody-td-id"></td>
+                                <td class="alreadySignedStaff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                                <td class="alreadySignedStaff-name"></td>
                                 <td class="alreadySignedStaff-id"></td>
                                 <td class="alreadySignedStaff-department"></td>
                                 <td class="alreadySignedStaff-contractNumber"></td>
@@ -333,12 +361,15 @@
                                 <td class="alreadySignedStaff-contractEndDate"></td>
                                 <td class="alreadySignedStaff-contractCondition"></td>
                                 <td class="alreadySignedStaff-operating">
-                                    <a class="edit-a" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)">修改</a>
-                                    <a onclick="deleteContract(this)">删除</a>
+                                    <a class="" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                </td>
+                                <td>
+                                    <a onclick="deleteContract(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                 </td>
                             </tr>
                             <tr class="table-tr hidden">
-                                <td class="alreadySignedStaff-name tbody-td-id"></td>
+                                <td class="alreadySignedStaff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                                <td class="alreadySignedStaff-name"></td>
                                 <td class="alreadySignedStaff-id"></td>
                                 <td class="alreadySignedStaff-department"></td>
                                 <td class="alreadySignedStaff-contractNumber"></td>
@@ -347,8 +378,10 @@
                                 <td class="alreadySignedStaff-contractEndDate"></td>
                                 <td class="alreadySignedStaff-contractCondition"></td>
                                 <td class="alreadySignedStaff-operating">
-                                    <a class="edit-a" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)">修改</a>
-                                    <a onclick="deleteContract(this)">删除</a>
+                                    <a class="" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                </td>
+                                <td>
+                                    <a onclick="deleteContract(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                 </td>
                             </tr>
                             </tbody>
@@ -376,7 +409,8 @@
                             <div class="search-left" style="width: 730px">
                             </div>
                             <div class="search-right">
-                                <button id="export-button" class="btn btn-info">导入合同</button>
+                                <button class="btn btn-default" onclick="deleteContractInBatch(this)"  value="dueDate">批量删除</button>
+                                <button id="export-button" class="btn btn-default">导入合同</button>
                             </div>
                         </div>
                     </div>
@@ -384,7 +418,8 @@
                         <table class="table table-bordered">
                             <thead style="background-color: #F9FAFB">
                             <tr>
-                                <th><input onclick="selectAllCheckButton()" class="select-box" type="checkbox">姓名</th>
+                                <th style="width: 34px"><input id="select-all" class="select-box" type="checkbox"></th>
+                                <th>姓名</th>
                                 <th>工号</th>
                                 <th>部门</th>
                                 <th>合同编号</th>
@@ -392,12 +427,14 @@
                                 <th>合同起始日</th>
                                 <th>合同终止日</th>
                                 <th>合同状态</th>
-                                <th>操作<a class="deleteDepartmentInBatch-button" onclick="deleteContractInBatch()"value="dueDate">批量删除</a></th>
+                                <th style="width: 50px">修改</th>
+                                <th style="width: 50px">删除</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr class="table-trr hidden">
-                                <td class="dueDate-name tbody-td-id"></td>
+                                <td class="dueDate-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                                <td class="dueDate-name "></td>
                                 <td class="dueDate-id"></td>
                                 <td class="dueDate-department"></td>
                                 <td class="dueDate-contractNumber"></td>
@@ -405,13 +442,16 @@
                                 <td class="dueDate-contractStartDate"></td>
                                 <td class="dueDate-contractEndDate"></td>
                                 <td class="dueDate-contractCondition"></td>
-                                <td class="dueDate-operating">
-                                    <a class="edit-a" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)">修改</a>
-                                    <a onclick="deleteContract(this)" value="dueDate">删除</a>
+                                <td class="">
+                                    <a class="" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                </td>
+                                <td>
+                                    <a onclick="deleteContract(this)" value="dueDate"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                 </td>
                             </tr>
                             <tr class="table-trr hidden">
-                                <td class="dueDate-name tbody-td-id"></td>
+                                <td class="dueDate-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                                <td class="dueDate-name "></td>
                                 <td class="dueDate-id"></td>
                                 <td class="dueDate-department"></td>
                                 <td class="dueDate-contractNumber"></td>
@@ -419,13 +459,16 @@
                                 <td class="dueDate-contractStartDate"></td>
                                 <td class="dueDate-contractEndDate"></td>
                                 <td class="dueDate-contractCondition"></td>
-                                <td class="dueDate-operating">
-                                    <a class="edit-a" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)">修改</a>
-                                    <a onclick="deleteContract(this)" value="dueDate">删除</a>
+                                <td class="">
+                                    <a class="" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                </td>
+                                <td>
+                                    <a onclick="deleteContract(this)" value="dueDate"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                 </td>
                             </tr>
                             <tr class="table-trr hidden">
-                                <td class="dueDate-name tbody-td-id"></td>
+                                <td class="dueDate-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                                <td class="dueDate-name "></td>
                                 <td class="dueDate-id"></td>
                                 <td class="dueDate-department"></td>
                                 <td class="dueDate-contractNumber"></td>
@@ -433,13 +476,16 @@
                                 <td class="dueDate-contractStartDate"></td>
                                 <td class="dueDate-contractEndDate"></td>
                                 <td class="dueDate-contractCondition"></td>
-                                <td class="dueDate-operating">
-                                    <a class="edit-a" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)">修改</a>
-                                    <a onclick="deleteContract(this)" value="dueDate">删除</a>
+                                <td class="">
+                                    <a class="" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                </td>
+                                <td>
+                                    <a onclick="deleteContract(this)" value="dueDate"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                 </td>
                             </tr>
                             <tr class="table-trr hidden">
-                                <td class="dueDate-name tbody-td-id"></td>
+                                <td class="dueDate-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                                <td class="dueDate-name "></td>
                                 <td class="dueDate-id"></td>
                                 <td class="dueDate-department"></td>
                                 <td class="dueDate-contractNumber"></td>
@@ -447,13 +493,16 @@
                                 <td class="dueDate-contractStartDate"></td>
                                 <td class="dueDate-contractEndDate"></td>
                                 <td class="dueDate-contractCondition"></td>
-                                <td class="dueDate-operating">
-                                    <a class="edit-a" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)">修改</a>
-                                    <a onclick="deleteContract(this)" value="dueDate">删除</a>
+                                <td class="">
+                                    <a class="" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                </td>
+                                <td>
+                                    <a onclick="deleteContract(this)" value="dueDate"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                 </td>
                             </tr>
                             <tr class="table-trr hidden">
-                                <td class="dueDate-name tbody-td-id"></td>
+                                <td class="dueDate-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                                <td class="dueDate-name "></td>
                                 <td class="dueDate-id"></td>
                                 <td class="dueDate-department"></td>
                                 <td class="dueDate-contractNumber"></td>
@@ -461,13 +510,16 @@
                                 <td class="dueDate-contractStartDate"></td>
                                 <td class="dueDate-contractEndDate"></td>
                                 <td class="dueDate-contractCondition"></td>
-                                <td class="dueDate-operating">
-                                    <a class="edit-a" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)">修改</a>
-                                    <a onclick="deleteContract(this)" value="dueDate">删除</a>
+                                <td class="">
+                                    <a class="" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                </td>
+                                <td>
+                                    <a onclick="deleteContract(this)" value="dueDate"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                 </td>
                             </tr>
                             <tr class="table-trr hidden">
-                                <td class="dueDate-name tbody-td-id"></td>
+                                <td class="dueDate-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                                <td class="dueDate-name "></td>
                                 <td class="dueDate-id"></td>
                                 <td class="dueDate-department"></td>
                                 <td class="dueDate-contractNumber"></td>
@@ -475,13 +527,16 @@
                                 <td class="dueDate-contractStartDate"></td>
                                 <td class="dueDate-contractEndDate"></td>
                                 <td class="dueDate-contractCondition"></td>
-                                <td class="dueDate-operating">
-                                    <a class="edit-a" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)">修改</a>
-                                    <a onclick="deleteContract(this)" value="dueDate">删除</a>
+                                <td class="">
+                                    <a class="" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                </td>
+                                <td>
+                                    <a onclick="deleteContract(this)" value="dueDate"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                 </td>
                             </tr>
                             <tr class="table-trr hidden">
-                                <td class="dueDate-name tbody-td-id"></td>
+                                <td class="dueDate-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                                <td class="dueDate-name "></td>
                                 <td class="dueDate-id"></td>
                                 <td class="dueDate-department"></td>
                                 <td class="dueDate-contractNumber"></td>
@@ -489,13 +544,16 @@
                                 <td class="dueDate-contractStartDate"></td>
                                 <td class="dueDate-contractEndDate"></td>
                                 <td class="dueDate-contractCondition"></td>
-                                <td class="dueDate-operating">
-                                    <a class="edit-a" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)">修改</a>
-                                    <a onclick="deleteContract(this)" value="dueDate">删除</a>
+                                <td class="">
+                                    <a class="" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                </td>
+                                <td>
+                                    <a onclick="deleteContract(this)" value="dueDate"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                 </td>
                             </tr>
                             <tr class="table-trr hidden">
-                                <td class="dueDate-name tbody-td-id"></td>
+                                <td class="dueDate-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                                <td class="dueDate-name "></td>
                                 <td class="dueDate-id"></td>
                                 <td class="dueDate-department"></td>
                                 <td class="dueDate-contractNumber"></td>
@@ -503,13 +561,16 @@
                                 <td class="dueDate-contractStartDate"></td>
                                 <td class="dueDate-contractEndDate"></td>
                                 <td class="dueDate-contractCondition"></td>
-                                <td class="dueDate-operating">
-                                    <a class="edit-a" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)">修改</a>
-                                    <a onclick="deleteContract(this)" value="dueDate">删除</a>
+                                <td class="">
+                                    <a class="" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                </td>
+                                <td>
+                                    <a onclick="deleteContract(this)" value="dueDate"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                 </td>
                             </tr>
                             <tr class="table-trr hidden">
-                                <td class="dueDate-name tbody-td-id"></td>
+                                <td class="dueDate-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                                <td class="dueDate-name "></td>
                                 <td class="dueDate-id"></td>
                                 <td class="dueDate-department"></td>
                                 <td class="dueDate-contractNumber"></td>
@@ -517,13 +578,16 @@
                                 <td class="dueDate-contractStartDate"></td>
                                 <td class="dueDate-contractEndDate"></td>
                                 <td class="dueDate-contractCondition"></td>
-                                <td class="dueDate-operating">
-                                    <a class="edit-a" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)">修改</a>
-                                    <a onclick="deleteContract(this)" value="dueDate">删除</a>
+                                <td class="">
+                                    <a class="" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                </td>
+                                <td>
+                                    <a onclick="deleteContract(this)" value="dueDate"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                 </td>
                             </tr>
                             <tr class="table-trr hidden">
-                                <td class="dueDate-name tbody-td-id"></td>
+                                <td class="dueDate-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                                <td class="dueDate-name "></td>
                                 <td class="dueDate-id"></td>
                                 <td class="dueDate-department"></td>
                                 <td class="dueDate-contractNumber"></td>
@@ -531,11 +595,14 @@
                                 <td class="dueDate-contractStartDate"></td>
                                 <td class="dueDate-contractEndDate"></td>
                                 <td class="dueDate-contractCondition"></td>
-                                <td class="dueDate-operating">
-                                    <a class="edit-a" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)">修改</a>
-                                    <a onclick="deleteContract(this)" value="dueDate">删除</a>
+                                <td class="">
+                                    <a class="" data-toggle="modal" data-target="#myModal-updateContract" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                </td>
+                                <td>
+                                    <a onclick="deleteContract(this)" value="dueDate"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                 </td>
                             </tr>
+
                             </tbody>
                         </table>
                     </div>
@@ -620,6 +687,16 @@
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu modal-contractStatus-menu-ul" aria-labelledby="select-modal-contractStatus">
+                                        <li><a value="">请选择</a></li>
+                                        <li class="hidden"><a></a></li>
+                                        <li class="hidden"><a></a></li>
+                                        <li class="hidden"><a></a></li>
+                                        <li class="hidden"><a></a></li>
+                                        <li class="hidden"><a></a></li>
+                                        <li class="hidden"><a></a></li>
+                                        <li class="hidden"><a></a></li>
+                                        <li class="hidden"><a></a></li>
+                                        <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
                                         <li class="hidden"><a></a></li>
