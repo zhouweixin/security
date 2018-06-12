@@ -2,11 +2,18 @@ $(document).ready(function () {
     document.getElementById("modal-contractStartDate").valueAsDate = new Date()
     document.getElementById("modal-contractEndDate").valueAsDate = new Date()
 
-    $('#modal-projectStatus').val('进行中')
-    $('#modal-projectStatus').attr('value', 0)
+    var projectStatusA = $('.projectStatus-menu-ul li a')
+    getAllProjectStatusName(projectStatusA)
     $('.projectStatus-menu-ul li a').on('click', function () {
         $('#modal-projectStatus').val($(this).text())
         $('#modal-projectStatus').attr('value', $(this).attr('value'))
+    })
+
+    var updateProjectStatusA = $('.updateProjectStatus-menu-ul li a')
+    getAllProjectStatusName(updateProjectStatusA)
+    $('.updateProjectStatus-menu-ul li a').on('click', function () {
+        $('#modal-updateProjectStatus').val($(this).text())
+        $('#modal-updateProjectStatus').attr('value', $(this).attr('value'))
     })
 
     getAllProjectContractInformation()
@@ -58,7 +65,12 @@ function getAllProjectContractInformation() {
         url:urlStr,
         dataType:'json',
         success:function (obj) {
-            setProjectContractTableInformation(obj)
+            if(obj.code == 0){
+                setProjectContractTableInformation(obj)
+            }
+            else{
+                alert(obj.message)
+            }
         },
         error:function (error) {
             console.log(error)
@@ -71,6 +83,7 @@ function getAllProjectContractInformation() {
 function setProjectContractTableInformation(obj) {
     if(obj.data.numberOfElements != 0){
         var table_tr = $('.table-tr')
+        var project_checkbox = $('.project-checkBox')
         var project_id = $('.project-id')
         var project_name = $('.project-name')
         var project_status = $('.project-status')
@@ -85,17 +98,23 @@ function setProjectContractTableInformation(obj) {
         var project_project_endDate = $('.project-endDate')
         for(var  i = 0; i < obj.data.numberOfElements; i++){
             table_tr.eq(i).removeClass('hidden')
-            project_id.eq(i).html("<input class=\"select-box select-sub-box\" type=\"checkbox\"" +  "value=\"" + obj.data.content[i].id + "\"" + ">" + obj.data.content[i].id)
+            project_checkbox.eq(i).find('input').attr('value', obj.data.content[i].id )
+            project_id.eq(i).text(obj.data.content[i].id)
             project_name.eq(i).text(obj.data.content[i].name)
-            project_status.eq(i).text(obj.data.content[i].projectStatus)
+            if(obj.data.content[i].projectStatus){
+                project_status.eq(i).text(obj.data.content[i].projectStatus.name)
+                project_status.eq(i).attr('value', obj.data.content[i].projectStatus.id)
+            }
             project_period.eq(i).text(obj.data.content[i].period.days)
             project_customerName.eq(i).text(obj.data.content[i].customerUnit)
             project_customerOfficePhone.eq(i).text(obj.data.content[i].customerOfficePhone)
             project_customerFinancePhone.eq(i).text(obj.data.content[i].customerFinancePhone)
             project_amount.eq(i).text(obj.data.content[i].price)
             project_receivedPrice.eq(i).text(obj.data.content[i].receiptPrice)
-            project_responsiblePersonName.eq(i).text(obj.data.content[i].leader.name)
-            project_responsiblePersonName.eq(i).attr('value', obj.data.content[i].leader.id)
+            if(obj.data.content[i].leader){
+                project_responsiblePersonName.eq(i).text(obj.data.content[i].leader.name)
+                project_responsiblePersonName.eq(i).attr('value', obj.data.content[i].leader.id)
+            }
             project_startDate.eq(i).text(obj.data.content[i].startDate)
             project_project_endDate.eq(i).text(obj.data.content[i].endDate)
         }
@@ -114,17 +133,18 @@ function setProjectContractTableInformation(obj) {
  */
 function setUpdateModalInformation(thisObj) {
     var td = $(thisObj).parent().parent().parent().find('td')
-    $('#modal-updateProjectID').val(td.eq(0).text())
-    $('#modal-updateProjectName').val(td.eq(1).text())
-    $('#modal-updateProjectStatus').val(td.eq(2).text())
-    $('#modal-updateProjectCustomerName').val(td.eq(4).text())
-    $('#modal-updateProjectCustomerOfficePhone').val(td.eq(5).text())
-    $('#modal-updateProjectCustomerFinancePhone').val(td.eq(6).text())
-    $('#modal-updateProjectAmount').val(td.eq(7).text())
-    $('#modal-updateProjectReceiptPrice').val(td.eq(8).text())
-    $('#modal-updateProjectResponsibleName').val(td.eq(9).attr('value'))
-    $('#modal-updateProjectStartDate').val(td.eq(10).text())
-    $('#modal-updateProjectEndDate').val(td.eq(11).text())
+    $('#modal-updateProjectID').val(td.eq(1).text())
+    $('#modal-updateProjectName').val(td.eq(2).text())
+    $('#modal-updateProjectStatus').val(td.eq(3).text())
+    $('#modal-updateProjectStatus').attr('value', td.eq(3).attr('value'))
+    $('#modal-updateProjectCustomerName').val(td.eq(5).text())
+    $('#modal-updateProjectCustomerOfficePhone').val(td.eq(6).text())
+    $('#modal-updateProjectCustomerFinancePhone').val(td.eq(7).text())
+    $('#modal-updateProjectAmount').val(td.eq(8).text())
+    $('#modal-updateProjectReceiptPrice').val(td.eq(9).text())
+    $('#modal-updateProjectResponsibleName').val(td.eq(10).attr('value'))
+    $('#modal-updateProjectStartDate').val(td.eq(11).text())
+    $('#modal-updateProjectEndDate').val(td.eq(12).text())
 }
 /*
 修改合同/
@@ -139,7 +159,7 @@ function updateProjectContract() {
     var contractReceiptPrice = $('#modal-updateProjectReceiptPrice').val()
     var contractCustomerOfficePhone = $('#modal-updateProjectCustomerOfficePhone').val()
     var contractCustomerFinancePhone = $('#modal-updateProjectCustomerFinancePhone').val()
-    var projectStatus = $('#modal-updateProjectStatus').val()
+    var projectStatus = $('#modal-updateProjectStatus').attr('value')
     var contractResponsibleName = $('#modal-updateProjectResponsibleName').val()
     if(projectName == ''){
         alert("请输入项目名称")
@@ -148,6 +168,7 @@ function updateProjectContract() {
     var urlStr = ipPort + '/project/update?name='+ projectName + '&id=' + projectID + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate + '&price=' + contractAmount
         + '&receiptPrice=' + contractReceiptPrice + '&customerOfficePhone=' + contractCustomerOfficePhone + '&customerFinancePhone=' + contractCustomerFinancePhone
         + '&customerUnit=' + contractCustomerName + '&leader=' + contractResponsibleName + '&projectStatus=' + projectStatus
+    console.log(urlStr)
     $.ajax({
         url:urlStr,
         dataType:'json',
@@ -164,13 +185,19 @@ function updateProjectContract() {
  */
 function deleteProjectContract(thisObj) {
     var td = $(thisObj).parent().parent().parent().find('td')
-    var contractId = td.eq(0).text()
+    var contractId = td.eq(1).text()
     var urlStr = ipPort + '/project/deleteById?id='+ contractId
     $.ajax({
         url:urlStr,
         dataType:'json',
         success:function (obj) {
-            getAllProjectContractInformation()
+            if(obj.code == 0){
+                alert('删除成功!')
+                getAllProjectContractInformation()
+            }
+            else{
+                alert(obj.message)
+            }
         },
         error:function (error) {
             console.log(error)
@@ -221,7 +248,18 @@ function getInformationByProjectName() {
         url:urlStr,
         dataType:'json',
         success:function (obj) {
-            setProjectContractTableInformation(obj)
+            if(obj.code == 0){
+                if(obj.data.numberOfElements == 0){
+                    alert('无相关信息!')
+                    setProjectContractTableInformation(obj)
+                    return
+                }
+                setProjectContractTableInformation(obj)
+                alert('搜索成功!')
+            }
+            else{
+                alert(obj.message)
+            }
         },
         error:function (error) {
             console.log(error)

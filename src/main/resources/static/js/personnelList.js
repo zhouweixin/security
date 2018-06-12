@@ -1,3 +1,7 @@
+var jobNaturesName = []
+var jobNatureID = []
+var departmentsName = []
+var departmentsID = []
 $(document).ready(function () {
     var activeDetailsBranch
     $('.details-branch').on('click', function (e) {
@@ -60,39 +64,27 @@ $(document).ready(function () {
     $('#modal-addStaffSex').attr('value', 0)
 
     var addStaffDepartmentA = $('.addStaffDepartment-menu-ul li a')
-    for(var i = 0; i < departmentsName.length; i ++ ){
-        addStaffDepartmentA.eq(i).parent().removeClass('hidden')
-        addStaffDepartmentA.eq(i).text(departmentsName[i])
-        addStaffDepartmentA.eq(i).attr('value', departmentsID[i])
-    }
+    getAllDepartmentsName(addStaffDepartmentA)
     $('#modal-addStaffDepartment').val($('.addStaffDepartment-menu-ul li a').eq(0).text())
-    $('#modal-addStaffDepartment').attr('value', departmentsID[0])
+    $('#modal-addStaffDepartment').attr('value', '')
     $('.addStaffDepartment-menu-ul li a').on('click', function () {
         $('#modal-addStaffDepartment').val($(this).text())
         $('#modal-addStaffDepartment').attr('value', $(this).attr('value'))
     })
 
     var addStaffJobNatureA = $('.addStaffJobNature-menu-ul li a')
-    for(var i = 0; i < jobNaturesName.length; i ++ ){
-        addStaffJobNatureA.eq(i).parent().removeClass('hidden')
-        addStaffJobNatureA.eq(i).text(jobNaturesName[i])
-        addStaffJobNatureA.eq(i).attr('value', jobNatureID[i])
-    }
+    getAllJobNaturesName(addStaffJobNatureA)
     $('#modal-addStaffJobNature').val($('.addStaffJobNature-menu-ul li a').eq(0).text())
-    $('#modal-addStaffJobNature').attr('value', jobNatureID[0])
+    $('#modal-addStaffJobNature').attr('value', '')
     $('.addStaffJobNature-menu-ul li a').on('click', function () {
         $('#modal-addStaffJobNature').val($(this).text())
         $('#modal-addStaffJobNature').attr('value', $(this).attr('value'))
     })
 
     var addStaffPositionA = $('.addStaffPosition-menu-ul li a')
-    for(var i = 0; i < positionName.length; i ++ ){
-        addStaffPositionA.eq(i).parent().removeClass('hidden')
-        addStaffPositionA.eq(i).text(positionName[i])
-        addStaffPositionA.eq(i).attr('value', positionID[i])
-    }
+    getAllPositionName(addStaffPositionA)
     $('#modal-addStaffPosition').val($('.addStaffPosition-menu-ul li a').eq(0).text())
-    $('#modal-addStaffPosition').attr('value', positionID[0])
+    $('#modal-addStaffPosition').attr('value', '')
     $('.addStaffPosition-menu-ul li a').on('click', function () {
         $('#modal-addStaffPosition').val($(this).text())
         $('#modal-addStaffPosition').attr('value', $(this).attr('value'))
@@ -115,11 +107,25 @@ $(document).ready(function () {
      */
     var details_branch = $('.details-branch')
     var details_span = $('.details-span')
-    for(var i = 1, j = 0; i < jobNaturesName.length + 1; i++, j++ ){
-        details_branch.eq(i).removeClass('hidden')
-        details_span.eq(j).text(jobNaturesName[j])
-        details_span.eq(j).parent().parent().attr('value', jobNatureID[j])
-    }
+    $.ajax({
+        url:ipPort + '/jobNature/getAll',
+        dataType:'json',
+        success:function (obj) {
+            for(var i = 0; i < obj.data.length; i++){
+                jobNaturesName.push(obj.data[i].name)
+                jobNatureID.push(obj.data[i].id)
+            }
+            for(var i = 1, j = 0; i < jobNaturesName.length + 1; i++, j++ ){
+                details_branch.eq(i).removeClass('hidden')
+                details_span.eq(j).text(jobNaturesName[j])
+                details_span.eq(j).parent().parent().attr('value', jobNatureID[j])
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+
     /*
     设置table信息/
      */
@@ -136,11 +142,7 @@ $(document).ready(function () {
     员工列表页面的选择部门下拉菜单/
      */
     var selectDepartmentA = $('.selectDepartment-dropdownMenu-ul li a')
-    for(var i = 1; i < departmentsName.length + 1; i ++ ){
-        selectDepartmentA.eq(i).parent().removeClass('hidden')
-        selectDepartmentA.eq(i).text(departmentsName[i - 1])
-        selectDepartmentA.eq(i).attr('value', departmentsID[i - 1])
-    }
+    getAllDepartmentsName(selectDepartmentA)
     $('.selectDepartment-dropdownMenu-ul li a').on('click', function () {
         $('#selectDepartment-dropdownMenu').html($(this).text() + '<span style="margin-left:4px" class="caret"></span>')
         $('#selectDepartment-dropdownMenu').attr('value', $(this).attr('value'))
@@ -157,99 +159,63 @@ $(document).ready(function () {
         $('#staffInformation-cycle').attr('value', $(this).attr('value'))
     })
     var staffInformationDepartmentA = $('.staffInformation-department-menu-ul li a')
-    for(var i = 0; i < departmentsName.length; i++){
-        staffInformationDepartmentA.eq(i).parent().removeClass('hidden')
-        staffInformationDepartmentA.eq(i).text(departmentsName[i])
-        staffInformationDepartmentA.eq(i).attr('value', departmentsID[i])
-    }
+    getAllDepartmentsName(staffInformationDepartmentA)
     $('.staffInformation-department-menu-ul li a').on('click', function () {
         $('#staffInformation-department').val($(this).text())
         $('#staffInformation-department').attr('value', $(this).attr('value'))
     })
     var staffInformationRoleA = $('.staffInformation-role-menu-ul li a')
-    for(var i = 0; i < positionName.length; i++){
-        staffInformationRoleA.eq(i).parent().removeClass('hidden')
-        staffInformationRoleA.eq(i).text(positionName[i])
-        staffInformationRoleA.eq(i).attr('value', positionID[i])
-    }
+    getAllPositionName(staffInformationRoleA)
     $('.staffInformation-role-menu-ul li a').on('click', function () {
-        $('#select-staffInformation-role').val($(this).text())
-        $('#select-staffInformation-role').attr('value', $(this).attr('value'))
+        $('#staffInformation-role').val($(this).text())
+        $('#staffInformation-role').attr('value', $(this).attr('value'))
     })
     var staffInformationJobNatureA = $('.staffInformation-jobNature-menu-ul li a')
-    for(var i = 0; i < jobNaturesName.length; i++){
-        staffInformationJobNatureA.eq(i).parent().removeClass('hidden')
-        staffInformationJobNatureA.eq(i).text(jobNaturesName[i])
-        staffInformationJobNatureA.eq(i).attr('value', jobNatureID[i])
-    }
+    getAllJobNaturesName(staffInformationJobNatureA)
     $('.staffInformation-jobNature-menu-ul li a').on('click', function () {
-        $('#select-staffInformation-jobNature').val($(this).text())
-        $('#select-staffInformation-jobNature').attr('value', $(this).attr('value'))
+        $('#staffInformation-jobNature').val($(this).text())
+        $('#staffInformation-jobNature').attr('value', $(this).attr('value'))
     })
     /*
     详细信息档案信息/
      */
     var archiveInformationNationA = $('.archiveInformation-nation-menu-ul li a')
-    for(var i = 0; i < nationName.length; i ++ ){
-        archiveInformationNationA.eq(i).parent().removeClass('hidden')
-        archiveInformationNationA.eq(i).text(nationName[i])
-        archiveInformationNationA.eq(i).attr('value', nationID[i])
-    }
+    getAllNationName(archiveInformationNationA)
     $('.archiveInformation-nation-menu-ul li a').on('click', function () {
         $('#archiveInformation-nation').val($(this).text())
         $('#archiveInformation-nation').attr('value', $(this).attr('value'))
     })
 
     var archiveInformationMaritalStatusA = $('.archiveInformation-maritalStatus-menu-ul li a')
-    for(var i = 0; i < maritalStatusName.length; i ++ ){
-        archiveInformationMaritalStatusA.eq(i).parent().removeClass('hidden')
-        archiveInformationMaritalStatusA.eq(i).text(maritalStatusName[i])
-        archiveInformationMaritalStatusA.eq(i).attr('value', maritalStatusID[i])
-    }
+    getAllMaritalStatusName(archiveInformationMaritalStatusA)
     $('.archiveInformation-maritalStatus-menu-ul li a').on('click', function () {
         $('#archiveInformation-maritalStatus').val($(this).text())
         $('#archiveInformation-maritalStatus').attr('value', $(this).attr('value'))
     })
 
     var archiveInformationMilitaryStatusA = $('.archiveInformation-militaryStatus-menu-ul li a')
-    for(var i = 0; i < militaryStatusName.length; i ++ ){
-        archiveInformationMilitaryStatusA.eq(i).parent().removeClass('hidden')
-        archiveInformationMilitaryStatusA.eq(i).text(militaryStatusName[i])
-        archiveInformationMilitaryStatusA.eq(i).attr('value', militaryStatusID[i])
-    }
+    getAllMilitaryStatusName(archiveInformationMilitaryStatusA)
     $('.archiveInformation-militaryStatus-menu-ul li a').on('click', function () {
         $('#archiveInformation-militaryStatus').val($(this).text())
         $('#archiveInformation-militaryStatus').attr('value', $(this).attr('value'))
     })
 
     var archiveInformationPoliticalStatusA = $('.archiveInformation-politicalStatus-menu-ul li a')
-    for(var i = 0; i < politicalStatusName.length; i ++ ){
-        archiveInformationPoliticalStatusA.eq(i).parent().removeClass('hidden')
-        archiveInformationPoliticalStatusA.eq(i).text(politicalStatusName[i])
-        archiveInformationPoliticalStatusA.eq(i).attr('value', politicalStatusID[i])
-    }
+    getAllPoliticalStatusName(archiveInformationPoliticalStatusA)
     $('.archiveInformation-politicalStatus-menu-ul li a').on('click', function () {
         $('#archiveInformation-politicalStatus').val($(this).text())
         $('#archiveInformation-politicalStatus').attr('value', $(this).attr('value'))
     })
 
     var archiveInformationEducationA = $('.archiveInformation-education-menu-ul li a')
-    for(var i = 0; i < educationName.length; i ++ ){
-        archiveInformationEducationA.eq(i).parent().removeClass('hidden')
-        archiveInformationEducationA.eq(i).text(educationName[i])
-        archiveInformationEducationA.eq(i).attr('value', educationID[i])
-    }
+    getAllEducationName(archiveInformationEducationA)
     $('.archiveInformation-education-menu-ul li a').on('click', function () {
         $('#archiveInformation-education').val($(this).text())
         $('#archiveInformation-education').attr('value', $(this).attr('value'))
     })
 
     var archiveInformationHealthStatusA = $('.archiveInformation-healthStatus-menu-ul li a')
-    for(var i = 0; i < healthStatusName.length; i ++ ){
-        archiveInformationHealthStatusA.eq(i).parent().removeClass('hidden')
-        archiveInformationHealthStatusA.eq(i).text(healthStatusName[i])
-        archiveInformationHealthStatusA.eq(i).attr('value', healthStatusID[i])
-    }
+    getAllHealthStatusName(archiveInformationHealthStatusA)
     $('.archiveInformation-healthStatus-menu-ul li a').on('click', function () {
         $('#archiveInformation-healthStatus').val($(this).text())
         $('#archiveInformation-healthStatus').attr('value', $(this).attr('value'))
@@ -263,44 +229,32 @@ $(document).ready(function () {
     详细信息页面合同信息栏/
      */
     //正式合同
-    $('#formalContractType').val(personnelContractTypeName[0])
-    $('#formalContractType').attr('value', personnelContractTypeID[0])
+    var formalContractType = $('#formalContractType')
+    setContractType(formalContractType, 2)
 
     var formalContractStatusA = $('.formalContractStatus-menu-ul li a')
-    for(var i = 0; i < contractStatusName.length; i ++ ){
-        formalContractStatusA.eq(i).parent().removeClass('hidden')
-        formalContractStatusA.eq(i).text(contractStatusName[i])
-        formalContractStatusA.eq(i).attr('value', contractStatusID[i])
-    }
+    getAllContractStatusName(formalContractStatusA)
     $('.formalContractStatus-menu-ul li a').on('click', function () {
         $('#formalContractStatus').val($(this).text())
         $('#formalContractStatus').attr('value', $(this).attr('value'))
     })
 
     //临时合同
-    $('#temporaryContractType').val(personnelContractTypeName[1])
-    $('#temporaryContractType').attr('value', personnelContractTypeID[1])
+    var temporaryContractType = $('#temporaryContractType')
+    setContractType(temporaryContractType, 0)
 
     var temporaryContractStatusA = $('.temporaryContractStatus-menu-ul li a')
-    for(var i = 0; i < contractStatusName.length; i ++ ){
-        temporaryContractStatusA.eq(i).parent().removeClass('hidden')
-        temporaryContractStatusA.eq(i).text(contractStatusName[i])
-        temporaryContractStatusA.eq(i).attr('value', contractStatusID[i])
-    }
+    getAllContractStatusName(temporaryContractStatusA)
     $('.temporaryContractStatus-menu-ul li a').on('click', function () {
         $('#temporaryContractStatus').val($(this).text())
         $('#temporaryContractStatus').attr('value', $(this).attr('value'))
     })
     //实习协议
-    $('#internshipAgreementType').val(personnelContractTypeName[2])
-    $('#internshipAgreementType').attr('value', personnelContractTypeID[2])
+    var internshipAgreementType = $('#temporaryContractType')
+    setContractType(internshipAgreementType, 1)
 
     var internshipAgreementStatusA = $('.internshipAgreementStatus-menu-ul li a')
-    for(var i = 0; i < contractStatusName.length; i ++ ){
-        internshipAgreementStatusA.eq(i).parent().removeClass('hidden')
-        internshipAgreementStatusA.eq(i).text(contractStatusName[i])
-        internshipAgreementStatusA.eq(i).attr('value', contractStatusID[i])
-    }
+    getAllContractStatusName(internshipAgreementStatusA)
     $('.internshipAgreementStatus-menu-ul li a').on('click', function () {
         $('#internshipAgreementStatus').val($(this).text())
         $('#internshipAgreementStatus').attr('value', $(this).attr('value'))
@@ -362,8 +316,7 @@ function addStaff() {
 获取员工的详细信息/
  */
 function getDetailsInformation(thisObj) {
-    var td = $(thisObj).parent().parent().parent().find('td')
-    var staffId = td.eq(1).text()
+    var staffId = $(thisObj).parent().parent().parent().find('.staff-id').text()
     //人员信息
     var urlStr = ipPort + '/user/getById?id='+ staffId
     $.ajax({
@@ -374,7 +327,7 @@ function getDetailsInformation(thisObj) {
                 setDetailsStaffInformationColumn(obj)
             }
             else{
-                alert(obj.message)
+                console.log(obj)
             }
         },
         error:function (error) {
@@ -399,7 +352,7 @@ function getDetailsInformation(thisObj) {
                 }
             }
             else{
-                alert(obj.message)
+                console.log(obj)
             }
         },
         error:function (error) {
@@ -414,25 +367,24 @@ function getDetailsInformation(thisObj) {
         input.eq(i).attr('value', '')
     }
     textarea.eq(0).val('')
-    $('#formalContractType').val(personnelContractTypeName[0])
-    $('#formalContractType').attr('value', personnelContractTypeID[0])
-    $('#temporaryContractType').val(personnelContractTypeName[1])
-    $('#temporaryContractType').attr('value', personnelContractTypeID[1])
-    $('#internshipAgreementType').val(personnelContractTypeName[2])
-    $('#internshipAgreementType').attr('value', personnelContractTypeID[2])
+    var formalContractType = $('#formalContractType')
+    setContractType(formalContractType, 2)
+    var temporaryContractType = $('#temporaryContractType')
+    setContractType(temporaryContractType, 0)
+    var internshipAgreementType = $('#internshipAgreementType')
+    setContractType(internshipAgreementType, 1)
     var urlStr = ipPort + '/contract/getByUserByPage?user='+ staffId
     $.ajax({
         url:urlStr,
         dataType:'json',
         success:function (obj) {
-            console.log(obj)
             if(obj.code == 0){
                 if(obj.data.numberOfElements != 0){
                     setDetailsContractInformationColumn(obj)
                 }
             }
             else{
-                alert(obj.message)
+                console.log(obj)
             }
         },
         error:function (error) {
@@ -456,7 +408,7 @@ function getAllStaffInformationByPage() {
             if(obj.code == 0){
                 setStaffTableInformation(obj)
             }else{
-                alert(obj.message)
+                console.log(obj)
             }
         },
         error:function (error) {
@@ -470,6 +422,7 @@ function getAllStaffInformationByPage() {
 function setStaffTableInformation(obj) {
     var table_tr = $('.table-tr')
     if(obj.data.numberOfElements != 0){
+        var staff_box = $('.staff-checkBox')
         var staff_id = $('.staff-id')
         var staff_name = $('.staff-name')
         var staff_phoneNumber = $('.staff-phoneNumber')
@@ -479,13 +432,24 @@ function setStaffTableInformation(obj) {
         var staff_department = $('.staff-department')
         for(var i = 0; i < obj.data.numberOfElements; i++){
             table_tr.eq(i).removeClass('hidden')
-            staff_name.eq(i).html("<input class=\"select-box select-sub-box\" type=\"checkbox\"" +  "value=\"" + obj.data.content[i].id + "\"" + ">" + obj.data.content[i].name)
+            staff_box.eq(i).find('input').attr('value', obj.data.content[i].id)
+            staff_name.eq(i).text(obj.data.content[i].name)
             staff_id.eq(i).text(obj.data.content[i].id)
-            staff_department.eq(i).text(obj.data.content[i].department.name)
-            staff_phoneNumber.eq(i).text(obj.data.content[i].contact)
-            staff_role.eq(i).text(obj.data.content[i].role.name)
-            staff_jobNature.eq(i).text(obj.data.content[i].jobNature.name)
-            staff_joinDate.eq(i).text(obj.data.content[i].employDate)
+            if(obj.data.content[i].department){
+                staff_department.eq(i).text(obj.data.content[i].department.name)
+            }
+            if(obj.data.content[i].contact){
+                staff_phoneNumber.eq(i).text(obj.data.content[i].contact)
+            }
+            if(obj.data.content[i].role){
+                staff_role.eq(i).text(obj.data.content[i].role.name)
+            }
+            if(obj.data.content[i].jobNature){
+                staff_jobNature.eq(i).text(obj.data.content[i].jobNature.name)
+            }
+            if(obj.data.content[i].employDate){
+                staff_joinDate.eq(i).text(obj.data.content[i].employDate)
+            }
         }
     }
     for (var i = obj.data.numberOfElements; i < 10; i++){
@@ -496,8 +460,12 @@ function setStaffTableInformation(obj) {
 设置详细页面人员信息栏/
  */
 function setDetailsStaffInformationColumn(obj) {
-    $('#staffInformation-name').val(obj.data.name)
-    $('#staffInformation-id').val(obj.data.id)
+    if(obj.data){
+        if(obj.data){
+            $('#staffInformation-name').val(obj.data.name)
+            $('#staffInformation-id').val(obj.data.id)
+        }
+    }
     if(obj.data.sex == 0){
         $('#staffInformation-sex').val("男")
         $('#staffInformation-sex').attr('value', 0)
@@ -513,32 +481,37 @@ function setDetailsStaffInformationColumn(obj) {
         $('#staffInformation-cycle').val(staffInformationCycleA.eq(parseInt(obj.data.period.months)).text())
         $('#staffInformation-cycle').attr('value', obj.data.period.months)
     }
-    $('#staffInformation-department').val(obj.data.department.name)
-    $('#staffInformation-department').attr('value', obj.data.department.id)
-    $('#staffInformation-role').val(obj.data.role.name)
-    $('#staffInformation-role').attr('value', obj.data.role.id)
+    if(obj.data.department){
+        $('#staffInformation-department').val(obj.data.department.name)
+        $('#staffInformation-department').attr('value', obj.data.department.id)
+    }
+    if(obj.data.role){
+        $('#staffInformation-role').val(obj.data.role.name)
+        $('#staffInformation-role').attr('value', obj.data.role.id)
+    }
     $('#staffInformation-joinDate').val(obj.data.employDate)
     $('#staffInformation-icID').val(obj.data.ic)
     $('#staffInformation-weChat').val(obj.data.wechat)
     $('#staffInformation-phone').val(obj.data.contact)
-    $('#staffInformation-jobNature').val(obj.data.jobNature.name)
-    $('#staffInformation-jobNature').attr('value', obj.data.role.id)
+    if(obj.data.jobNature){
+        $('#staffInformation-jobNature').val(obj.data.jobNature.name)
+        $('#staffInformation-jobNature').attr('value', obj.data.jobNature.id)
+    }
 }
 /*
 设置离职面板信息/
  */
 function setQuitModalInformation(obj) {
     var td = $(obj).parent().parent().parent().parent().parent().find('td')
-    $('#modal-staffID').val(td.eq(1).text())
-    $('#modal-staffName').val(td.eq(0).text())
-    $('#modal-department').val(td.eq(2).text())
+    $('#modal-staffID').val(td.eq(2).text())
+    $('#modal-staffName').val(td.eq(1).text())
+    $('#modal-department').val(td.eq(3).text())
 }
 /*
 删除员工信息/
  */
 function deleteStaff(thisObj) {
-    var td = $(thisObj).parent().parent().parent().parent().parent().find('td')
-    var staffID = td.eq(1).text()
+    var staffID = $(thisObj).parent().parent().parent().parent().parent().find('.staff-id').text()
     var urlStr = ipPort + '/user/deleteById?id='+ staffID
     $.ajax({
         url:urlStr,
@@ -548,7 +521,7 @@ function deleteStaff(thisObj) {
                 alert("删除员工信息成功！")
                 getAllStaffInformationByPage()
             }else {
-                alert(obj.message)
+                console.log(obj)
             }
         },
         error:function (error) {
@@ -582,7 +555,7 @@ function deleteStaffInBatch() {
                 alert("批量删除员工信息成功！")
                 getAllStaffInformationByPage()
             }else {
-                alert(obj.message)
+                console.log(obj)
             }
         },
         error:function (error) {
@@ -597,6 +570,7 @@ function searchByDepartmentAndStaffName() {
     var departmentId = $('#selectDepartment-dropdownMenu').attr('value')
     var staffName = $('#staffName-searchInput').val()
     var urlStr = ipPort + "/user/getByDepartmentAndNameLikeByPage?id=" + departmentId + "&name=" + staffName
+    console.log(urlStr)
     $.ajax({
         url:urlStr,
         dataType:'json',
@@ -638,7 +612,7 @@ function searchByJobNature(thisObj) {
                 }
                 setStaffTableInformation(obj)
             }else {
-                alert(obj.message)
+                console.log(obj)
             }
         },
         error:function (error) {
@@ -651,22 +625,31 @@ function searchByJobNature(thisObj) {
  */
 function leaveJob() {
     var leaveJobStaffID = $('#modal-staffID').val()
-    var leaveJobID
-    for(var i = 0; i < jobNaturesName.length; i++ ){
-        if(jobNaturesName[i] == '离职'){
-            leaveJobID = jobNatureID[i]
-            break
-        }
-    }
-    var urlStr = ipPort + "/user/updateJobNatureById?id=" + leaveJobStaffID + "&jobNatureId=" + leaveJobID
+    var leaveJobID = ''
     $.ajax({
-        url:urlStr,
+        url:ipPort + '/jobNature/getAll',
         dataType:'json',
         success:function (obj) {
-            if(obj.code == 0){
-                alert(obj.message)
-            }else {
-                alert(obj.message)
+            for(var i = 0; i < obj.data.length; i++ ){
+                if(obj.data[i].name == '已离职'){
+                    leaveJobID = obj.data[i].id
+                    var urlStr = ipPort + "/user/updateJobNatureById?id=" + leaveJobStaffID + "&jobNatureId=" + leaveJobID
+                    $.ajax({
+                        url:urlStr,
+                        dataType:'json',
+                        success:function (obj) {
+                            if(obj.code == 0){
+                                alert(obj.message)
+                            }else {
+                                alert(obj.message)
+                            }
+                        },
+                        error:function (error) {
+                            console.log(error)
+                        }
+                    })
+                    break
+                }
             }
         },
         error:function (error) {
@@ -763,7 +746,7 @@ function cancelEditButtonOnClick(thisObj) {
                         }
                     }
                     else{
-                        alert(obj.message)
+                        console.log(obj)
                     }
                 },
                 error:function (error) {
@@ -788,7 +771,7 @@ function cancelEditButtonOnClick(thisObj) {
                         }
                     }
                     else{
-                        alert(obj.message)
+                        console.log(obj)
                     }
                 },
                 error:function (error) {
@@ -818,8 +801,10 @@ function cancelEditButtonOnClick(thisObj) {
         var contractID = $('#' + contractName + 'ID').val()
         if(contractID == ''){
             for(var i = 0; i < input.length; i++){
-                input.eq(i).val('')
-                input.eq(i).attr('value', '')
+                if(i != 1){
+                    input.eq(i).val('')
+                    input.eq(i).attr('value', '')
+                }
             }
             for(var i = 0; i < textarea.length; i++){
                 textarea.eq(i).val('')
@@ -834,7 +819,7 @@ function cancelEditButtonOnClick(thisObj) {
                         setDetailsContractInformationColumnCancelButton(obj)
                     }
                     else{
-                        alert(obj.message)
+                        console.log(obj)
                     }
                 },
                 error:function (error) {
@@ -849,31 +834,37 @@ function cancelEditButtonOnClick(thisObj) {
  */
 function setDetailsContractInformationColumn(obj) {
     for (var i = 0; i < obj.data.numberOfElements; i ++){
-        if(obj.data.content[i].contractType.id == 1){
+        if(obj.data.content[i].contractType.id == 3){
             $('#formalContractID').val(obj.data.content[i].id)
             $('#formalContractStartDate').val(obj.data.content[i].startDate)
             $('#formalContractEndDate').val(obj.data.content[i].endDate)
             $('#formalContractPeriod').val(obj.data.content[i].period)
-            $('#formalContractStatus').attr('value', obj.data.content[i].contractStatus.id)
-            $('#formalContractStatus').val(obj.data.content[i].contractStatus.name)
+            if(obj.data.content[i].contractStatus){
+                $('#formalContractStatus').attr('value', obj.data.content[i].contractStatus.id)
+                $('#formalContractStatus').val(obj.data.content[i].contractStatus.name)
+            }
             $('#formalContractContent').val(obj.data.content[i].content)
             $('#formalContractScanningCopy').val(obj.data.content[i].scanningCopy)
-        }else if (obj.data.content[i].contractType.id == 2) {
+        }else if (obj.data.content[i].contractType.id == 1) {
             $('#temporaryContractID').val(obj.data.content[i].id)
             $('#temporaryContractStartDate').val(obj.data.content[i].startDate)
             $('#temporaryContractEndDate').val(obj.data.content[i].endDate)
             $('#temporaryContractPeriod').val(obj.data.content[i].period)
-            $('#temporaryContractStatus').attr('value', obj.data.content[i].contractStatus.id)
-            $('#temporaryContractStatus').val(obj.data.content[i].contractStatus.name)
+            if(obj.data.content[i].contractStatus){
+                $('#temporaryContractStatus').attr('value', obj.data.content[i].contractStatus.id)
+                $('#temporaryContractStatus').val(obj.data.content[i].contractStatus.name)
+            }
             $('#temporaryContractContent').val(obj.data.content[i].content)
             $('#temporaryContractScanningCopy').val(obj.data.content[i].scanningCopy)
-        }else if (obj.data.content[i].contractType.id == 3) {
+        }else if (obj.data.content[i].contractType.id == 2) {
             $('#internshipAgreementID').val(obj.data.content[i].id)
             $('#internshipAgreementStartDate').val(obj.data.content[i].startDate)
             $('#internshipAgreementEndDate').val(obj.data.content[i].endDate)
             $('#internshipAgreementPeriod').val(obj.data.content[i].period)
-            $('#internshipAgreementStatus').attr('value', obj.data.content[i].contractStatus.id)
-            $('#internshipAgreementStatus').val(obj.data.content[i].contractStatus.name)
+            if(obj.data.content[i].contractStatus){
+                $('#internshipAgreementStatus').attr('value', obj.data.content[i].contractStatus.id)
+                $('#internshipAgreementStatus').val(obj.data.content[i].contractStatus.name)
+            }
             $('#internshipAgreementContent').val(obj.data.content[i].content)
             $('#internshipAgreementScanningCopy').val(obj.data.content[i].scanningCopy)
         }
@@ -883,31 +874,37 @@ function setDetailsContractInformationColumn(obj) {
 设置详细页面合同信息栏保存按钮/
  */
 function setDetailsContractInformationColumnCancelButton(obj) {
-    if(obj.data.contractType.id == 1){
+    if(obj.data.contractType.id == 3){
         $('#formalContractID').val(obj.data.id)
         $('#formalContractStartDate').val(obj.data.startDate)
         $('#formalContractEndDate').val(obj.data.endDate)
         $('#formalContractPeriod').val(obj.data.period)
-        $('#formalContractStatus').attr('value', obj.data.contractStatus.id)
-        $('#formalContractStatus').val(obj.data.contractStatus.name)
+        if(obj.data.contractStatus != null){
+            $('#formalContractStatus').attr('value', obj.data.contractStatus.id)
+            $('#formalContractStatus').val(obj.data.contractStatus.name)
+        }
         $('#formalContractContent').val(obj.data.content)
         $('#formalContractScanningCopy').val(obj.data.scanningCopy)
-    }else if (obj.data.contractType.id == 2) {
+    }else if (obj.data.contractType.id == 1) {
         $('#temporaryContractID').val(obj.data.id)
         $('#temporaryContractStartDate').val(obj.data.startDate)
         $('#temporaryContractEndDate').val(obj.data.endDate)
         $('#temporaryContractPeriod').val(obj.data.period)
-        $('#temporaryContractStatus').attr('value', obj.data.contractStatus.id)
-        $('#temporaryContractStatus').val(obj.data.contractStatus.name)
+        if(obj.data.contractStatus != null){
+            $('#temporaryContractStatus').attr('value', obj.data.contractStatus.id)
+            $('#temporaryContractStatus').val(obj.data.contractStatus.name)
+        }
         $('#temporaryContractContent').val(obj.data.content)
         $('#temporaryContractScanningCopy').val(obj.data.scanningCopy)
-    }else if (obj.data.contractType.id == 3) {
+    }else if (obj.data.contractType.id == 2) {
         $('#internshipAgreementID').val(obj.data.id)
         $('#internshipAgreementStartDate').val(obj.data.startDate)
         $('#internshipAgreementEndDate').val(obj.data.endDate)
         $('#internshipAgreementPeriod').val(obj.data.period)
-        $('#internshipAgreementStatus').attr('value', obj.data.contractStatus.id)
-        $('#internshipAgreementStatus').val(obj.data.contractStatus.name)
+        if(obj.data.contractStatus != null){
+            $('#internshipAgreementStatus').attr('value', obj.data.contractStatus.id)
+            $('#internshipAgreementStatus').val(obj.data.contractStatus.name)
+        }
         $('#internshipAgreementContent').val(obj.data.content)
         $('#internshipAgreementScanningCopy').val(obj.data.scanningCopy)
     }
@@ -949,7 +946,7 @@ function updateStaffInformation() {
                 if(obj.code == 0){
                     alert(obj.message)
                 }else{
-                    alert(obj.message)
+                    console.log(obj)
                 }
             },
             error:function (error) {
@@ -993,7 +990,7 @@ function saveArchiveInformation() {
                 if(obj.code == 0){
                     alert(obj.message)
                 }else{
-                    alert(obj.message)
+                    console.log(obj)
                 }
             },
             error:function (error) {
@@ -1010,9 +1007,9 @@ function saveArchiveInformation() {
             dataType:'json',
             success:function (obj) {
                 if(obj.code == 0){
-                    alert(obj.message)
+                    console.log(obj)
                 }else{
-                    alert(obj.message)
+                    console.log(obj)
                 }
             },
             error:function (error) {
@@ -1026,23 +1023,35 @@ function saveArchiveInformation() {
  */
 function setDetailsArchiveInformationColumn(obj) {
     $('#archiveInformation-archiveID').val(obj.data.id)
-    $('#archiveInformation-nation').val(obj.data.nation.name)
-    $('#archiveInformation-nation').attr('value', obj.data.nation.id)
+    if(obj.data.nation != null){
+        $('#archiveInformation-nation').val(obj.data.nation.name)
+        $('#archiveInformation-nation').attr('value', obj.data.nation.id)
+    }
     $('#archiveInformation-identityNumber').val(obj.data.identityNumber)
-    $('#archiveInformation-maritalStatus').val(obj.data.maritalStatus.name)
-    $('#archiveInformation-maritalStatus').attr('value', obj.data.maritalStatus.id)
-    $('#archiveInformation-militaryStatus').val(obj.data.militaryStatus.name)
-    $('#archiveInformation-militaryStatus').attr('value', obj.data.militaryStatus.id)
-    $('#archiveInformation-politicalStatus').val(obj.data.politicalStatus.name)
-    $('#archiveInformation-politicalStatus').attr('value', obj.data.politicalStatus.id)
-    $('#archiveInformation-education').val(obj.data.education.name)
-    $('#archiveInformation-education').attr('value', obj.data.education.id)
+    if(obj.data.maritalStatus != null){
+        $('#archiveInformation-maritalStatus').val(obj.data.maritalStatus.name)
+        $('#archiveInformation-maritalStatus').attr('value', obj.data.maritalStatus.id)
+    }
+    if(obj.data.militaryStatus){
+        $('#archiveInformation-militaryStatus').val(obj.data.militaryStatus.name)
+        $('#archiveInformation-militaryStatus').attr('value', obj.data.militaryStatus.id)
+    }
+    if(obj.data.politicalStatus){
+        $('#archiveInformation-politicalStatus').val(obj.data.politicalStatus.name)
+        $('#archiveInformation-politicalStatus').attr('value', obj.data.politicalStatus.id)
+    }
+    if(obj.data.education){
+        $('#archiveInformation-education').val(obj.data.education.name)
+        $('#archiveInformation-education').attr('value', obj.data.education.id)
+    }
     $('#archiveInformation-major').val(obj.data.major)
     $('#archiveInformation-firstWorkDate').val(obj.data.firstWorkDate)
     $('#archiveInformation-height').val(obj.data.height)
     $('#archiveInformation-weight').val(obj.data.weight)
-    $('#archiveInformation-healthStatus').val(obj.data.healthStatus.name)
-    $('#archiveInformation-healthStatus').attr('value', obj.data.healthStatus.id)
+    if(obj.data.healthStatus){
+        $('#archiveInformation-healthStatus').val(obj.data.healthStatus.name)
+        $('#archiveInformation-healthStatus').attr('value', obj.data.healthStatus.id)
+    }
     $('#archiveInformation-domicilePlace').val(obj.data.domicilePlace)
     $('#archiveInformation-livePlace').val(obj.data.livePlace)
     if(obj.data.insurance == 0){
@@ -1079,7 +1088,7 @@ function saveFormalContract() {
                     alert(obj.message)
                     setContractID('formalContract')
                 }else{
-                    alert(obj.message)
+                    console.log(obj)
                 }
             },
             error:function (error) {
@@ -1088,7 +1097,7 @@ function saveFormalContract() {
         })
     }else{
         var urlStr = ipPort + '/contract/update?id=' + contractID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
-            + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&scanningCopy=' + contractScanningCopy
+            + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&scanningCopy=' + contractScanningCopy + '&user=' + userID
         $.ajax({
             url:urlStr,
             dataType:'json',
@@ -1097,7 +1106,7 @@ function saveFormalContract() {
                     alert(obj.message)
                     setContractID('formalContract')
                 }else{
-                    alert(obj.message)
+                    console.log(obj)
                 }
             },
             error:function (error) {
@@ -1130,7 +1139,7 @@ function saveTemporaryContract() {
                     alert(obj.message)
                     setContractID('temporaryContract')
                 }else{
-                    alert(obj.message)
+                    console.log(obj)
                 }
             },
             error:function (error) {
@@ -1139,7 +1148,7 @@ function saveTemporaryContract() {
         })
     }else{
         var urlStr = ipPort + '/contract/update?id=' + contractID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
-            + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&scanningCopy=' + contractScanningCopy
+            + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&scanningCopy=' + contractScanningCopy + '&user=' + userID
         $.ajax({
             url:urlStr,
             dataType:'json',
@@ -1148,7 +1157,7 @@ function saveTemporaryContract() {
                     alert(obj.message)
                     setContractID('temporaryContract')
                 }else{
-                    alert(obj.message)
+                    console.log(obj)
                 }
             },
             error:function (error) {
@@ -1181,7 +1190,7 @@ function saveInternshipAgreement() {
                     alert(obj.message)
                     setContractID('internshipAgreement')
                 }else{
-                    alert(obj.message)
+                    console.log(obj)
                 }
             },
             error:function (error) {
@@ -1190,7 +1199,7 @@ function saveInternshipAgreement() {
         })
     }else{
         var urlStr = ipPort + '/contract/update?id=' + contractID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
-            + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&scanningCopy=' + contractScanningCopy
+            + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&scanningCopy=' + contractScanningCopy + '&user=' + userID
         $.ajax({
             url:urlStr,
             dataType:'json',
@@ -1199,7 +1208,7 @@ function saveInternshipAgreement() {
                     alert(obj.message)
                     setContractID('internshipAgreement')
                 }else{
-                    alert(obj.message)
+                    console.log(obj)
                 }
             },
             error:function (error) {
@@ -1221,25 +1230,49 @@ function setContractID(panelName) {
             if(obj.code == 0){
                 if(panelName == 'formalContract'){
                     for (var i = 0; i < obj.data.numberOfElements; i ++){
-                        if(obj.data.content[i].contractType.id == 1){
+                        if(obj.data.content[i].contractType.id == 3){
                             $('#formalContractID').val(obj.data.content[i].id)
                         }
                     }
                 }else if(panelName == 'temporaryContract'){
                     for (var i = 0; i < obj.data.numberOfElements; i ++){
-                        if(obj.data.content[i].contractType.id == 2){
+                        if(obj.data.content[i].contractType.id == 1){
                             $('#temporaryContractID').val(obj.data.content[i].id)
                         }
                     }
                 }else if(panelName == 'internshipAgreement'){
                     for (var i = 0; i < obj.data.numberOfElements; i ++){
-                        if(obj.data.content[i].contractType.id == 3){
+                        if(obj.data.content[i].contractType.id == 2){
                             $('#internshipAgreementID').val(obj.data.content[i].id)
                         }
                     }
                 }
             }else{
-                alert(obj.message)
+                console.log(obj)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+设置统计栏的数字cllback函数/
+ */
+function setSummaryNumberCllback(details_numb, i, obj) {
+    $.ajax({
+        url: ipPort + '/user/getByJobNature?jobNature=' + obj.data[i].id,
+        dataType:'json',
+        success:function (obj_) {
+            if(obj_.code == 0){
+                details_numb.eq(i+1).text(obj_.data.length)
+                i++
+                if(obj.data.length != i){
+                    setSummaryNumberCllback(details_numb, i, obj)
+                }
+            }else{
+                console.log(obj_)
+                i++
             }
         },
         error:function (error) {
@@ -1251,6 +1284,34 @@ function setContractID(panelName) {
 设置统计栏的数字/
  */
 function setSummaryNumber() {
+    $.ajax({
+        url:ipPort + '/jobNature/getAll',
+        dataType:'json',
+        success:function (obj) {
+            var i = 0
+            $.ajax({
+                url: ipPort + '/user/getByJobNature?jobNature=' + obj.data[i].id,
+                dataType:'json',
+                success:function (obj_) {
+                    if(obj_.code == 0){
+                        details_numb.eq(i+1).text(obj_.data.length)
+                        i++
+                        setSummaryNumberCllback(details_numb, i, obj)
+                    }else{
+                        console.log(obj_)
+                        i++
+                    }
+                },
+                error:function (error) {
+                    console.log(error)
+                }
+            })
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+
     var details_numb = $('.details-numb')
     var urlStr = ipPort + '/user/getAll'
     $.ajax({
@@ -1260,133 +1321,49 @@ function setSummaryNumber() {
             if(obj.code == 0){
                 details_numb.eq(0).text(obj.data.length)
             }else{
-                alert(obj.message)
+                console.log(obj)
             }
         },
         error:function (error) {
             console.log(error)
         }
     })
-    urlStr = ipPort + '/user/getByJobNature?jobNature=' + jobNatureID[0]
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                details_numb.eq(1).text(obj.data.length)
-            }else{
-                alert(obj.message)
-            }
-        },
-        error:function (error) {
-            console.log(error)
+
+}
+/*
+导出员工信息excel表格/
+ */
+function exportStaffInformationExcelTable(tableid) {
+    if(getExplorer()=='ie')
+    {
+        var curTbl = document.getElementById(tableid);
+        var oXL = new ActiveXObject("Excel.Application");
+        var oWB = oXL.Workbooks.Add();
+        var xlsheet = oWB.Worksheets(1);
+        var sel = document.body.createTextRange();
+        sel.moveToElementText(curTbl);
+        sel.select();
+        sel.execCommand("Copy");
+        xlsheet.Paste();
+        oXL.Visible = true;
+
+        try {
+            var fname = oXL.Application.GetSaveAsFilename("Excel", "Excel Spreadsheets (*.xls), *.xls");
+        } catch (e) {
+            print("Nested catch caught " + e);
+        } finally {
+            oWB.SaveAs(fname);
+            oWB.Close(savechanges = false);
+            oXL.Quit();
+            oXL = null;
+            idTmr = window.setInterval("Cleanup();", 1);
         }
-    })
-    urlStr = ipPort + '/user/getByJobNature?jobNature=' + jobNatureID[1]
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                details_numb.eq(2).text(obj.data.length)
-            }else{
-                alert(obj.message)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
-    urlStr = ipPort + '/user/getByJobNature?jobNature=' + jobNatureID[2]
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                details_numb.eq(3).text(obj.data.length)
-            }else{
-                alert(obj.message)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
-    urlStr = ipPort + '/user/getByJobNature?jobNature=' + jobNatureID[3]
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                details_numb.eq(4).text(obj.data.length)
-            }else{
-                alert(obj.message)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
-    urlStr = ipPort + '/user/getByJobNature?jobNature=' + jobNatureID[4]
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                details_numb.eq(5).text(obj.data.length)
-            }else{
-                alert(obj.message)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
-    urlStr = ipPort + '/user/getByJobNature?jobNature=' + jobNatureID[5]
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                details_numb.eq(6).text(obj.data.length)
-            }else{
-                alert(obj.message)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
-    urlStr = ipPort + '/user/getByJobNature?jobNature=' + jobNatureID[6]
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                details_numb.eq(7).text(obj.data.length)
-            }else{
-                alert(obj.message)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
-    urlStr = ipPort + '/user/getByJobNature?jobNature=' + jobNatureID[7]
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                details_numb.eq(8).text(obj.data.length)
-            }else{
-                alert(obj.message)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+
+    }
+    else
+    {
+        tableToExcel(tableid)
+    }
 }
 /*
 月份加指定数/

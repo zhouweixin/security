@@ -36,33 +36,21 @@ $(document).ready(function () {
     搜索栏/
      */
     var alreadySignedDepartmentA = $('.alreadySigned-department-ul li a')
-    for(var i = 1; i < departmentsName.length + 1; i ++ ){
-        alreadySignedDepartmentA.eq(i).parent().removeClass('hidden')
-        alreadySignedDepartmentA.eq(i).text(departmentsName[i - 1])
-        alreadySignedDepartmentA.eq(i).attr('value', departmentsID[i - 1])
-    }
+    getAllDepartmentsName(alreadySignedDepartmentA)
     $('.alreadySigned-department-ul li a').on('click', function () {
         $('#alreadySigned-department').html($(this).text() + '<span style="margin-left:4px" class="caret"></span>')
         $('#alreadySigned-department').attr('value', $(this).attr('value'))
     })
 
     var alreadySignedJobNatureA = $('.alreadySigned-jobNature-ul li a')
-    for(var i = 1; i < jobNaturesName.length + 1; i ++ ){
-        alreadySignedJobNatureA.eq(i).parent().removeClass('hidden')
-        alreadySignedJobNatureA.eq(i).text(jobNaturesName[i - 1])
-        alreadySignedJobNatureA.eq(i).attr('value', jobNatureID[i - 1])
-    }
+    getAllJobNaturesName(alreadySignedJobNatureA)
     $('.alreadySigned-jobNature-ul li a').on('click', function () {
         $('#alreadySigned-jobNature').html($(this).text() + '<span style="margin-left:4px" class="caret"></span>')
         $('#alreadySigned-jobNature').attr('value', $(this).attr('value'))
     })
 
     var alreadySignedContractTypeA = $('.alreadySigned-contractType-ul li a')
-    for(var i = 1; i < personnelContractTypeName.length + 1; i ++ ){
-        alreadySignedContractTypeA.eq(i).parent().removeClass('hidden')
-        alreadySignedContractTypeA.eq(i).text(personnelContractTypeName[i - 1])
-        alreadySignedContractTypeA.eq(i).attr('value', personnelContractTypeID[i - 1])
-    }
+    getAllPersonnelContractTypeName(alreadySignedContractTypeA)
     $('.alreadySigned-contractType-ul li a').on('click', function () {
         $('#alreadySigned-contractType').html($(this).text() + '<span style="margin-left:4px" class="caret"></span>')
         $('#alreadySigned-contractType').attr('value', $(this).attr('value'))
@@ -71,11 +59,7 @@ $(document).ready(function () {
     修改modal/
      */
     var modalContractStatusA = $('.modal-contractStatus-menu-ul li a')
-    for(var i = 0; i < contractStatusName.length + 1; i ++ ){
-        modalContractStatusA.eq(i).parent().removeClass('hidden')
-        modalContractStatusA.eq(i).text(contractStatusName[i - 1])
-        modalContractStatusA.eq(i).attr('value', contractStatusID[i - 1])
-    }
+    getAllContractStatusName(modalContractStatusA)
     $('.modal-contractStatus-menu-ul li a').on('click', function () {
         $('#modal-contractStatus').val($(this).text())
         $('#modal-contractStatus').attr('value', $(this).attr('value'))
@@ -107,6 +91,7 @@ function getAllContractInformation() {
 function setContractTableInformation(obj) {
     if(obj.data.numberOfElements != 0){
         var table_tr = $('.table-tr')
+        var alreadySignedStaff_chexBox = $('.alreadySignedStaff-checkBox')
         var alreadySignedStaff_name = $('.alreadySignedStaff-name')
         var alreadySignedStaff_id = $('.alreadySignedStaff-id')
         var alreadySignedStaff_department = $('.alreadySignedStaff-department')
@@ -119,14 +104,21 @@ function setContractTableInformation(obj) {
         for(var j = 0, i = 0; j < obj.data.numberOfElements; j++){
             if(obj.data.content[j].user != null){
                 table_tr.eq(i).removeClass('hidden')
-                alreadySignedStaff_name.eq(i).html("<input class=\"select-box select-sub-box\" type=\"checkbox\"" +  "value=\"" + obj.data.content[j].id + "\"" + ">" + obj.data.content[j].user.name)
+                alreadySignedStaff_chexBox.eq(i).find('input').attr('value', obj.data.content[j].id)
+                alreadySignedStaff_name.eq(i).text(obj.data.content[j].user.name)
                 alreadySignedStaff_id.eq(i).text(obj.data.content[j].user.id)
-                alreadySignedStaff_department.eq(i).text(obj.data.content[j].user.department.name)
+                if(obj.data.content[j].user.department){
+                    alreadySignedStaff_department.eq(i).text(obj.data.content[j].user.department.name)
+                }
                 alreadySignedStaff_contractNumber.eq(i).text(obj.data.content[j].id)
-                alreadySignedStaff_contractType.eq(i).text(obj.data.content[j].contractType.name)
+                if(obj.data.content[j].contractType){
+                    alreadySignedStaff_contractType.eq(i).text(obj.data.content[j].contractType.name)
+                }
                 alreadySignedStaff_contractStartDate.eq(i).text(obj.data.content[j].startDate)
                 alreadySignedStaff_contractEndDate.eq(i).text(obj.data.content[j].endDate)
-                alreadySignedStaff_contractCondition.eq(i).text(obj.data.content[j].contractStatus.name)
+                if(obj.data.content[j].contractStatus){
+                    alreadySignedStaff_contractCondition.eq(i).text(obj.data.content[j].contractStatus.name)
+                }
                 i++
             }
             number = i
@@ -162,7 +154,10 @@ function getInformationByParameters() {
         url:urlStr,
         dataType:'json',
         success:function (obj) {
-            setContractTableInformation(obj)
+            console.log(obj)
+            if(obj.code == 0){
+                setContractTableInformation(obj)
+            }
         },
         error:function (error) {
             console.log(error)
@@ -173,6 +168,7 @@ function getInformationByParameters() {
 修改合同信息/
  */
 function updateContractInformation() {
+    var userID = $('#modal-contractStaffID').val()
     var contractID = $('#modal-contractID').val()
     var contractType = $('#modal-contractType').attr('value')
     var contractStartDate = $('#modal-contractStartDate').val()
@@ -181,7 +177,7 @@ function updateContractInformation() {
     var contractContent = $('#modal-contractContent').val()
     var contractScanningCopy = $('#modal-contractScanningCopy').val()
     var urlStr = ipPort + '/contract/update?id=' + contractID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
-        + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&scanningCopy=' + contractScanningCopy
+        + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&scanningCopy=' + contractScanningCopy + '&user=' + userID
     $.ajax({
         url:urlStr,
         dataType:'json',
@@ -202,25 +198,30 @@ function updateContractInformation() {
  */
 function setUpdateModalInformation(thisObj) {
     var td = $(thisObj).parent().parent().find('td')
-    var contractId = td.eq(3).text()
+    var contractId = td.eq(4).text()
     var urlStr = ipPort + '/contract/getById?id='+ contractId
     $.ajax({
         url:urlStr,
         dataType:'json',
         success:function (obj) {
-            $('#modal-contractStaffName').val(obj.data.user.name)
-            $('#modal-contractStaffID').val(obj.data.user.id)
+            if(obj.data.user){
+                $('#modal-contractStaffName').val(obj.data.user.name)
+                $('#modal-contractStaffID').val(obj.data.user.id)
+            }
             $('#modal-contractID').val(obj.data.id)
-            $('#modal-contractType').val(obj.data.contractType.name)
-            $('#modal-contractType').attr('value', obj.data.contractType.id)
+            if(obj.data.contractType){
+                $('#modal-contractType').val(obj.data.contractType.name)
+                $('#modal-contractType').attr('value', obj.data.contractType.id)
+            }
             $('#modal-contractStartDate').val(obj.data.startDate)
             $('#modal-contractEndDate').val(obj.data.endDate)
             $('#modal-contractPeriod').val(obj.data.period)
-            $('#modal-contractStatus').val(obj.data.contractStatus.name)
-            $('#modal-contractStatus').attr('value', obj.data.contractStatus.id)
+            if(obj.data.contractStatus){
+                $('#modal-contractStatus').val(obj.data.contractStatus.name)
+                $('#modal-contractStatus').attr('value', obj.data.contractStatus.id)
+            }
             $('#modal-contractContent').val(obj.data.content)
             $('#modal-contractScanningCopy').val(obj.data.scanningCopy)
-            console.log(obj)
         },
         error:function (error) {
             console.log(error)
@@ -232,7 +233,7 @@ function setUpdateModalInformation(thisObj) {
  */
 function deleteContract(thisObj) {
     var td = $(thisObj).parent().parent().find('td')
-    var contractId = td.eq(3).text()
+    var contractId = td.eq(4).text()
     var urlStr = ipPort + '/contract/deleteById?id='+ contractId
     $.ajax({
         url:urlStr,
@@ -252,7 +253,7 @@ function deleteContract(thisObj) {
 /*
 批量删除合同信息/
  */
-function deleteContractInBatch() {
+function deleteContractInBatch(thisObj) {
     var select_sub_box = $('.select-sub-box')
     var jsonArr = []
     for(var i = 0; i < select_sub_box.length; i++){
@@ -273,7 +274,7 @@ function deleteContractInBatch() {
         success:function (obj) {
             if(obj.code == 0){
                 alert("批量删除合同信息成功！")
-                if($('.deleteDepartmentInBatch-button').attr('value') == 'dueDate'){
+                if($(thisObj).attr('value') == 'dueDate'){
                     getAllDueDateContractInformation()
                 }else {
                     getAllContractInformation()
@@ -295,12 +296,13 @@ function getAllDueDateContractInformation() {
     var size = 10
     var sortFieldName = 'id'
     var asc = 1
-    var dueDate = 30
+    var dueDate = 60
     var urlStr = ipPort + '/contract/getByEndDayByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&endDay=' + dueDate
     $.ajax({
         url:urlStr,
         dataType:'json',
         success:function (obj) {
+            console.log(obj)
             setDueDateContractTableInformation(obj)
         },
         error:function (error) {
@@ -314,6 +316,7 @@ function getAllDueDateContractInformation() {
 function setDueDateContractTableInformation(obj) {
     if(obj.data.numberOfElements != 0){
         var table_trr = $('.table-trr')
+        var dueDate_chexbox = $('.dueDate-checkBox')
         var dueDate_name = $('.dueDate-name')
         var dueDate_id = $('.dueDate-id')
         var dueDate_department = $('.dueDate-department')
@@ -326,14 +329,23 @@ function setDueDateContractTableInformation(obj) {
         for(var j = 0, i = 0; j < obj.data.numberOfElements; j++){
             if(obj.data.content[j].user != null){
                 table_trr.eq(i).removeClass('hidden')
-                dueDate_name.eq(i).html("<input class=\"select-box select-sub-box\" type=\"checkbox\"" +  "value=\"" + obj.data.content[j].id + "\"" + ">" + obj.data.content[j].user.name)
-                dueDate_id.eq(i).text(obj.data.content[j].user.id)
-                dueDate_department.eq(i).text(obj.data.content[j].user.department.name)
+                dueDate_chexbox.eq(i).find('input').attr('value', obj.data.content[j].id)
+                dueDate_name.eq(i).text(obj.data.content[j].user.name)
+                if(obj.data.content[j].user){
+                    dueDate_id.eq(i).text(obj.data.content[j].user.id)
+                }
+                if(obj.data.content[j].user.department){
+                    dueDate_department.eq(i).text(obj.data.content[j].user.department.name)
+                }
                 dueDate_contractNumber.eq(i).text(obj.data.content[j].id)
-                dueDate_contractType.eq(i).text(obj.data.content[j].contractType.name)
+                if(obj.data.content[j].contractType){
+                    dueDate_contractType.eq(i).text(obj.data.content[j].contractType.name)
+                }
                 dueDate_contractStartDate.eq(i).text(obj.data.content[j].startDate)
                 dueDate_contractEndDate.eq(i).text(obj.data.content[j].endDate)
-                dueDate_contractCondition.eq(i).text(obj.data.content[j].contractStatus.name)
+                if(obj.data.content[j].contractStatus){
+                    dueDate_contractCondition.eq(i).text(obj.data.content[j].contractStatus.name)
+                }
                 i++
             }
             number = i
