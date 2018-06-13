@@ -145,6 +145,40 @@ public interface UserRepository extends JpaRepository<User, String> {
 	public void updateAttendanceGroupById(AttendanceGroup attendenceGroup, String id);
 
     /**
+     * 把用户从指定薪资方案里清除
+     *
+     * @param wage
+     */
+    @Modifying
+    @Query(value = "update User u set u.wage=null where u.wage=?1")
+    public void nullWageByWage(Wage wage);
+
+    /** 给用户分配薪资方案
+     *
+     * @param wage
+     * @param id
+     */
+    @Modifying
+    @Query(value = "update User u set u.wage=?1 where u.id=?2")
+    public void updateWageById(Wage wage, String id);
+
+    /**
+     * 通过薪资方案查询
+     *
+     * @param wage
+     * @return
+     */
+    public List<User> findByWage(Wage wage);
+
+    /**
+     * 通过薪资方案查询-分页
+     *
+     * @param wage
+     * @return
+     */
+    public Page<User> findByWage(Wage wage, Pageable pageable);
+
+    /**
      * 通过考勤组查询
      *
      * @param attendanceGroup

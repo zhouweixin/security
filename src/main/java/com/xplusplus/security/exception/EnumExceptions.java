@@ -37,6 +37,7 @@ public enum EnumExceptions {
     ADD_FAILED_LATETYPE_NOT_EXIST(26, "新增失败, 迟到类型不存在"),
     ADD_FAILED_TIME_NOT_CORRECT(27,"新增失败，时间先后不正确"),
 	UPDATE_FAILED_RESIGN_TYPE_NOT_EXIST(28,"更新失败, 离职类型不存在"),
+	ASSIGN_FAILED_WAGE_NOT_EXIST(29, "分配失败, 薪资方案不存在"),
 
 	;
 

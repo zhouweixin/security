@@ -44,6 +44,9 @@ public class UserService {
     private AttendanceGroupRepository attendanceGroupRepository;
 
     @Autowired
+    private WageRepository wageRepository;
+
+    @Autowired
     private ResignTypeRepository resignTypeRepository;
 
     /**
@@ -425,6 +428,43 @@ public class UserService {
     }
 
     /**
+     * 分配用户到薪资方案
+     *
+     * @param wageId
+     * @param userIds
+     */
+    @Transactional
+    public void assignUsersToWage(Integer wageId, Set<String> userIds) {
+        // 判断薪资方案是否存在
+        Wage wage = wageRepository.findOne(wageId);
+        if (wage == null) {
+            throw new SecurityExceptions(EnumExceptions.ASSIGN_FAILED_WAGE_NOT_EXIST);
+        }
+
+        // 清空考勤组的员工
+        userRepository.nullWageByWage(wage);
+
+        // 分别分配每个用户
+        for (String userId : userIds) {
+            if (userRepository.findOne(userId) == null) {
+                EnumExceptions.ASSIGN_FAILED_USER_NOT_EXIST.setMessage("分配失败, 员工" + userId + "不存在");
+                throw new SecurityExceptions(EnumExceptions.ASSIGN_FAILED_USER_NOT_EXIST);
+            }
+
+            userRepository.updateWageById(wage, userId);
+        }
+    }
+
+    public void updateUserWage(Integer wageId, String userId){
+        Wage wage = wageRepository.findOne(wageId);
+        if (wage == null) {
+            throw new SecurityExceptions(EnumExceptions.ASSIGN_FAILED_WAGE_NOT_EXIST);
+        }
+
+        userRepository.updateWageById(wage, userId);
+    }
+
+    /**
      * 通过考勤组查询
      *
      * @param attendanceGroup
@@ -432,6 +472,47 @@ public class UserService {
      */
     public List<User> findByAttendanceGroup(AttendanceGroup attendanceGroup){
         return userRepository.findByAttendanceGroup(attendanceGroup);
+    }
+
+    /**
+     * 通过薪资组查询
+     *
+     * @param wage
+     * @return
+     */
+    public List<User> findByWage(Wage wage){
+        return userRepository.findByWage(wage);
+    }
+
+    /**
+     * 通过薪资组查询-分页
+     *
+     * @param wage
+     * @param page
+     * @param size
+     * @param sortFieldName
+     * @param asc
+     * @return
+     */
+    public Page<User> findByWageByPage(Wage wage, Integer page, Integer size, String sortFieldName, Integer asc) {
+
+        // 判断排序字段名是否存在
+        try {
+            User.class.getDeclaredField(sortFieldName);
+        } catch (Exception e) {
+            // 如果不存在就设置为id
+            sortFieldName = "id";
+        }
+
+        Sort sort = null;
+        if (asc == 0) {
+            sort = new Sort(Direction.DESC, sortFieldName);
+        } else {
+            sort = new Sort(Direction.ASC, sortFieldName);
+        }
+
+        Pageable pageable = new PageRequest(page, size, sort);
+        return userRepository.findByWage(wage, pageable);
     }
 
     /**
