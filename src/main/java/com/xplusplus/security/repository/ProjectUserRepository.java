@@ -60,12 +60,11 @@ public interface ProjectUserRepository extends JpaRepository<ProjectUser, Long> 
 	 * @return
 	 */
 	public Page<ProjectUser> findByUser(User user, Pageable pageable);
-	
+
 	/**
-	 * 通过项目查询员工
-	 * 
+	 * 通过项目删除
+	 *
 	 * @param project
-	 * @return
 	 */
-	public List<User> findUserByProject(Project project);
+	public void deleteByProject(Project project);
 }

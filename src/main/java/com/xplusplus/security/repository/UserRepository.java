@@ -1,18 +1,15 @@
 package com.xplusplus.security.repository;
 
+import java.util.Date;
 import java.util.List;
 
+import com.xplusplus.security.domain.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import com.xplusplus.security.domain.AttendanceGroup;
-import com.xplusplus.security.domain.Department;
-import com.xplusplus.security.domain.JobNature;
-import com.xplusplus.security.domain.User;
 
 /**
  * @Author: zhouweixin
@@ -148,10 +145,73 @@ public interface UserRepository extends JpaRepository<User, String> {
 	public void updateAttendanceGroupById(AttendanceGroup attendenceGroup, String id);
 
     /**
+     * 把用户从指定薪资方案里清除
+     *
+     * @param wage
+     */
+    @Modifying
+    @Query(value = "update User u set u.wage=null where u.wage=?1")
+    public void nullWageByWage(Wage wage);
+
+    /** 给用户分配薪资方案
+     *
+     * @param wage
+     * @param id
+     */
+    @Modifying
+    @Query(value = "update User u set u.wage=?1 where u.id=?2")
+    public void updateWageById(Wage wage, String id);
+
+    /**
+     * 通过薪资方案查询
+     *
+     * @param wage
+     * @return
+     */
+    public List<User> findByWage(Wage wage);
+
+    /**
+     * 通过薪资方案查询-分页
+     *
+     * @param wage
+     * @return
+     */
+    public Page<User> findByWage(Wage wage, Pageable pageable);
+
+    /**
      * 通过考勤组查询
      *
      * @param attendanceGroup
      * @return
      */
 	public List<User> findByAttendanceGroup(AttendanceGroup attendanceGroup);
+
+    /**
+     * 离职
+     *
+     * @param date
+     * @param resignType
+     * @param id
+     */
+	@Modifying
+    @Query(value = "update User u set u.resignDate=?1, u.resignType=?2 where u.id=?3")
+	public void updateResignDateAndResignType(Date date, ResignType resignType, String id);
+
+	/**
+	 * 通过主键更新卡号
+	 *
+	 * @param ic
+	 * @param id
+	 */
+	@Modifying
+	@Query(value = "update User u set u.ic=?1 where u.id=?2")
+   	public void updateIcById(String ic, String id);
+
+    /**
+     * 通过ic查询
+     *
+     * @param ic
+     * @return
+     */
+	public User findFirstByIc(String ic);
 }

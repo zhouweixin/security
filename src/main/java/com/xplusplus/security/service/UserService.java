@@ -1,14 +1,15 @@
 package com.xplusplus.security.service;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
 import javax.transaction.Transactional;
 
-import com.xplusplus.security.domain.AttendanceGroup;
-import com.xplusplus.security.repository.AttendanceGroupRepository;
+import com.xplusplus.security.domain.*;
+import com.xplusplus.security.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,14 +19,8 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
-import com.xplusplus.security.domain.Department;
-import com.xplusplus.security.domain.JobNature;
-import com.xplusplus.security.domain.User;
 import com.xplusplus.security.exception.EnumExceptions;
 import com.xplusplus.security.exception.SecurityExceptions;
-import com.xplusplus.security.repository.DepartmentRepository;
-import com.xplusplus.security.repository.JobNatureRepository;
-import com.xplusplus.security.repository.UserRepository;
 import com.xplusplus.security.utils.GlobalUtil;
 
 /**
@@ -47,6 +42,12 @@ public class UserService {
 
     @Autowired
     private AttendanceGroupRepository attendanceGroupRepository;
+
+    @Autowired
+    private WageRepository wageRepository;
+
+    @Autowired
+    private ResignTypeRepository resignTypeRepository;
 
     /**
      * 新增
@@ -427,6 +428,43 @@ public class UserService {
     }
 
     /**
+     * 分配用户到薪资方案
+     *
+     * @param wageId
+     * @param userIds
+     */
+    @Transactional
+    public void assignUsersToWage(Integer wageId, Set<String> userIds) {
+        // 判断薪资方案是否存在
+        Wage wage = wageRepository.findOne(wageId);
+        if (wage == null) {
+            throw new SecurityExceptions(EnumExceptions.ASSIGN_FAILED_WAGE_NOT_EXIST);
+        }
+
+        // 清空考勤组的员工
+        userRepository.nullWageByWage(wage);
+
+        // 分别分配每个用户
+        for (String userId : userIds) {
+            if (userRepository.findOne(userId) == null) {
+                EnumExceptions.ASSIGN_FAILED_USER_NOT_EXIST.setMessage("分配失败, 员工" + userId + "不存在");
+                throw new SecurityExceptions(EnumExceptions.ASSIGN_FAILED_USER_NOT_EXIST);
+            }
+
+            userRepository.updateWageById(wage, userId);
+        }
+    }
+
+    public void updateUserWage(Integer wageId, String userId){
+        Wage wage = wageRepository.findOne(wageId);
+        if (wage == null) {
+            throw new SecurityExceptions(EnumExceptions.ASSIGN_FAILED_WAGE_NOT_EXIST);
+        }
+
+        userRepository.updateWageById(wage, userId);
+    }
+
+    /**
      * 通过考勤组查询
      *
      * @param attendanceGroup
@@ -434,5 +472,85 @@ public class UserService {
      */
     public List<User> findByAttendanceGroup(AttendanceGroup attendanceGroup){
         return userRepository.findByAttendanceGroup(attendanceGroup);
+    }
+
+    /**
+     * 通过薪资组查询
+     *
+     * @param wage
+     * @return
+     */
+    public List<User> findByWage(Wage wage){
+        return userRepository.findByWage(wage);
+    }
+
+    /**
+     * 通过薪资组查询-分页
+     *
+     * @param wage
+     * @param page
+     * @param size
+     * @param sortFieldName
+     * @param asc
+     * @return
+     */
+    public Page<User> findByWageByPage(Wage wage, Integer page, Integer size, String sortFieldName, Integer asc) {
+
+        // 判断排序字段名是否存在
+        try {
+            User.class.getDeclaredField(sortFieldName);
+        } catch (Exception e) {
+            // 如果不存在就设置为id
+            sortFieldName = "id";
+        }
+
+        Sort sort = null;
+        if (asc == 0) {
+            sort = new Sort(Direction.DESC, sortFieldName);
+        } else {
+            sort = new Sort(Direction.ASC, sortFieldName);
+        }
+
+        Pageable pageable = new PageRequest(page, size, sort);
+        return userRepository.findByWage(wage, pageable);
+    }
+
+    /**
+     * 离职
+     *
+     * @param date
+     * @param resignTypeId
+     * @param id
+     */
+    @Transactional
+    public void updateResignDateAndResignType(Date date, Integer resignTypeId, String id){
+        // 验证离职类型
+        ResignType resignType = resignTypeRepository.findOne(resignTypeId);
+        if(resignType == null){
+            throw new SecurityExceptions(EnumExceptions.UPDATE_FAILED_RESIGN_TYPE_NOT_EXIST);
+        }
+
+        // 验证用户是否存在
+        if(userRepository.findOne(id) == null){
+            throw new SecurityExceptions(EnumExceptions.UPDATE_FAILED_USER_NOT_EXIST);
+        }
+
+        userRepository.updateResignDateAndResignType(date, resignType, id);
+    }
+
+    /**
+     * 通过主键更新ic卡号
+     *
+     * @param id
+     * @param ic
+     */
+    @Transactional
+    public void updateIcById(String id, String ic) {
+
+        if(userRepository.findFirstByIc(ic) != null){
+            throw new SecurityExceptions(EnumExceptions.SET_IC_CARD_FAILED_EXIST);
+        }
+
+        userRepository.updateIcById(ic, id);
     }
 }

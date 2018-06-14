@@ -107,131 +107,192 @@ public class User {
 	private Date practiceEndDate;
 
 	/**
+	 * 离职日期
+	 */
+	@Temporal(value = TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date resignDate;
+
+    /**
+     * 离职类型
+     */
+    @ManyToOne(targetEntity = ResignType.class)
+    @JoinColumn(name = "resign_type_id", referencedColumnName = "id")
+	private ResignType resignType;
+
+	/**
 	 * 考勤组
 	 */
 	@ManyToOne(targetEntity = AttendanceGroup.class)
 	@JoinColumn(name = "attendance_group_id", referencedColumnName = "id")
 	private AttendanceGroup attendanceGroup;
 
-	public String getId() {
-		return id;
-	}
+    /**
+     * 薪资方案
+     */
+    @ManyToOne(targetEntity = Wage.class)
+    @JoinColumn(name = "wage_id", referencedColumnName = "id")
+	private Wage wage;
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    /**
+     * 银行卡号
+     */
+    private String bankCardNum;
 
-	public String getName() {
-		return name;
-	}
+    /**
+     * 开户行
+     */
+    private String accountBank;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public Integer getSex() {
-		return sex;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public void setSex(Integer sex) {
-		this.sex = sex;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getIc() {
-		return ic;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setIc(String ic) {
-		this.ic = ic;
-	}
+    public Integer getSex() {
+        return sex;
+    }
 
-	public String getWechat() {
-		return wechat;
-	}
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
 
-	public void setWechat(String wechat) {
-		this.wechat = wechat;
-	}
+    public String getIc() {
+        return ic;
+    }
 
-	public String getContact() {
-		return contact;
-	}
+    public void setIc(String ic) {
+        this.ic = ic;
+    }
 
-	public void setContact(String contact) {
-		this.contact = contact;
-	}
+    public String getWechat() {
+        return wechat;
+    }
 
-	@JsonIgnore
-	public String getPassword() {
-		return password;
-	}
+    public void setWechat(String wechat) {
+        this.wechat = wechat;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getContact() {
+        return contact;
+    }
 
-	public Department getDepartment() {
-		return department;
-	}
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
 
-	public void setDepartment(Department department) {
-		this.department = department;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public Role getRole() {
-		return role;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setRole(Role role) {
-		this.role = role;
-	}
+    public Department getDepartment() {
+        return department;
+    }
 
-	public JobNature getJobNature() {
-		return jobNature;
-	}
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
 
-	public void setJobNature(JobNature jobNature) {
-		this.jobNature = jobNature;
-	}
+    public Role getRole() {
+        return role;
+    }
 
-	public Period getPeriod() {
-		return period;
-	}
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
-	public void setPeriod(Period period) {
-		this.period = period;
-	}
+    public JobNature getJobNature() {
+        return jobNature;
+    }
 
-	public Date getEmployDate() {
-		return employDate;
-	}
+    public void setJobNature(JobNature jobNature) {
+        this.jobNature = jobNature;
+    }
 
-	public void setEmployDate(Date employDate) {
-		this.employDate = employDate;
-	}
+    public Period getPeriod() {
+        return period;
+    }
 
-	public Date getPracticeEndDate() {
-		return practiceEndDate;
-	}
+    public void setPeriod(Period period) {
+        this.period = period;
+    }
 
-	public void setPracticeEndDate(Date practiceEndDate) {
-		this.practiceEndDate = practiceEndDate;
-	}
+    public Date getEmployDate() {
+        return employDate;
+    }
 
-	public AttendanceGroup getAttendanceGroup() {
-		return attendanceGroup;
-	}
+    public void setEmployDate(Date employDate) {
+        this.employDate = employDate;
+    }
 
-	public void setAttendanceGroup(AttendanceGroup attendanceGroup) {
-		this.attendanceGroup = attendanceGroup;
-	}
+    public Date getPracticeEndDate() {
+        return practiceEndDate;
+    }
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", sex=" + sex + ", ic=" + ic + ", wechat=" + wechat + ", contact="
-				+ contact + ", password=" + password + ", department=" + department + ", role=" + role + ", jobNature="
-				+ jobNature + ", period=" + period + ", employDate=" + employDate + ", practiceEndDate="
-				+ practiceEndDate + ", attendanceGroup=" + attendanceGroup + "]";
-	}
+    public void setPracticeEndDate(Date practiceEndDate) {
+        this.practiceEndDate = practiceEndDate;
+    }
 
+    public Date getResignDate() {
+        return resignDate;
+    }
+
+    public void setResignDate(Date resignDate) {
+        this.resignDate = resignDate;
+    }
+
+    public ResignType getResignType() {
+        return resignType;
+    }
+
+    public void setResignType(ResignType resignType) {
+        this.resignType = resignType;
+    }
+
+    public AttendanceGroup getAttendanceGroup() {
+        return attendanceGroup;
+    }
+
+    public void setAttendanceGroup(AttendanceGroup attendanceGroup) {
+        this.attendanceGroup = attendanceGroup;
+    }
+
+    public Wage getWage() {
+        return wage;
+    }
+
+    public void setWage(Wage wage) {
+        this.wage = wage;
+    }
+
+    public String getBankCardNum() {
+        return bankCardNum;
+    }
+
+    public void setBankCardNum(String bankCardNum) {
+        this.bankCardNum = bankCardNum;
+    }
+
+    public String getAccountBank() {
+        return accountBank;
+    }
+
+    public void setAccountBank(String accountBank) {
+        this.accountBank = accountBank;
+    }
 }

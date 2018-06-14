@@ -1,5 +1,8 @@
 package com.xplusplus.security.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,8 @@ import com.xplusplus.security.exception.SecurityExceptions;
 import com.xplusplus.security.repository.ProjectRepository;
 import com.xplusplus.security.repository.ProjectUserRepository;
 import com.xplusplus.security.repository.UserRepository;
+
+import javax.transaction.Transactional;
 
 /**
  * @Author: zhouweixin
@@ -82,8 +87,14 @@ public class ProjectUserService {
 	 * @param project
 	 * @return
 	 */
-	public List<User> findUserByProject(Project project){
-		return projectUserRepository.findUserByProject(project);
+	public List<User> findUsersByProject(Project project){
+        List<ProjectUser> projectUsers = projectUserRepository.findByProject(project);
+
+        List<User> users = new ArrayList<>();
+        for(ProjectUser projectUser : projectUsers){
+            users.add(projectUser.getUser());
+        }
+        return users;
 	}
 	
 	/**
@@ -194,4 +205,37 @@ public class ProjectUserService {
 		Pageable pageable = new PageRequest(page, size, sort);
 		return projectUserRepository.findByProject(project, pageable);
 	}
+
+    /**
+     * 分配员工到项目
+     * 
+     * @param projectId
+     * @param userIds
+     */
+	@Transactional
+	public int assignUsersToProject(Long projectId, String[] userIds) {
+	    // 验证项目是否存在
+        Project project = projectRepository.findOne(projectId);
+        if(project == null){
+            throw new SecurityExceptions(EnumExceptions.ASSIGN_FAILED_PROJECT_NOT_EXIST);
+        }
+
+        // 删除已分配的记录
+        projectUserRepository.deleteByProject(project);
+
+        // 用set去重
+        HashSet<String> userIdSet = new HashSet<>(Arrays.asList(userIds));
+
+        // 查询用户
+        List<User> users = userRepository.findAll(userIdSet);
+        
+        // 封装成项目用户
+        List<ProjectUser> projectUsers = new ArrayList<>();
+        for(User user : users){
+            projectUsers.add(new ProjectUser(user, project));
+        }
+
+        List<ProjectUser> save = projectUserRepository.save(projectUsers);
+        return save.size();
+    }
 }
