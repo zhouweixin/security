@@ -89,7 +89,7 @@ public class WageController {
      * @param userId
      * @return
      */
-    @RequestMapping(value = "/updateUserWage")
+    @RequestMapping(value = "/updateWageByUserId")
     public Result<Object> updateUserWage(Integer wageId, String userId) {
         userService.updateUserWage(wageId, userId);
         return ResultUtil.success();
