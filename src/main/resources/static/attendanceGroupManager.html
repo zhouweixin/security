@@ -9,10 +9,36 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/attendanceClassManager.css" rel="stylesheet">
+    <style type="text/css" rel="stylesheet">
+        .tbody-td-id{
+            position: relative;
+        }
+        input.select-box{
+            height: 18px;
+            width: 18px;
+            position: absolute;
+            left: 8px;
+            top: 5px;
+        }
+        input.select-box1{
+            height: 18px;
+            width: 18px;
+            position: absolute;
+            left: 8px;
+            top: 5px;
+        }
+        input.select-box2{
+            height: 18px;
+            width: 18px;
+            position: absolute;
+            left: 8px;
+            top: 5px;
+        }
+    </style>
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/style.js"></script>
-    <script src="js/attendanceClassManager.js"></script>
+    <script sec="js/style.js"></script>
+    <script src="js/attendanceGroupManager.js"></script>
     <script type="text/javascript">
 var o;
 function MoveTo(index)
@@ -64,6 +90,11 @@ function MoveBack(index)
   }
 }
 </script>
+    <script type="text/javascript">
+        window.onload=function(){
+            getAllGroupInformation()
+        }
+    </script>
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
@@ -113,7 +144,7 @@ function MoveBack(index)
                 </a>
                 <ul class="sub-menu">
                     <li class="sub-menu-li sub-li-active">
-                        <a class="sub-menu-link">
+                        <a href="attendanceGroupManager.html" class="sub-menu-link">
                             考勤组管理
                         </a>
                     </li>
@@ -176,14 +207,15 @@ function MoveBack(index)
                 <div class="search-content" style="height: 34px;">
                     <div class="search-left">
                         <div class="input-group col-xs-4">
-                            <input type="text" class="form-control" placeholder="请输入考勤组名称">
+                            <input type="text" id ="search-groupName" class="form-control" placeholder="请输入考勤组名称">
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">搜索</button>
+                                <button class="btn btn-default" type="button" onclick="searchByName()">搜索</button>
+                                <button class="btn btn-default" type="button" onclick="getAllGroupInformation()">搜索全部</button>
                             </span>
                         </div>
                     </div>
                     <div class="search-right">
-                        <button class="btn btn-default" type="button" data-toggle="modal" data-target="#myModal-addClass">
+                        <button class="btn btn-default" type="button" data-toggle="modal" data-target="#myModal-addGroup" onclick="getAllUserInformation()">
                             添加考勤组
                         </button>
                     </div>
@@ -194,21 +226,112 @@ function MoveBack(index)
                 <table class="table table-bordered">
                     <thead style="background-color: #F9FAFB">
                     <tr>
+                        <th>考勤组编号</th>
                         <th>考勤组名称</th>
-                        <th>人数</th>
-                        <th>考勤时间</th>
+                        <th>是否允许外勤打卡</th>
+                        <th>对应班次</th>
                         <th>操作</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="table-tr">
-                        <td class="staff-name">1</td>
-                        <td class="#">2</td>
-                        <td class="staff-number">3</td>
+                    <tr class="table-tr hidden">
+                        <td class="group-id"></td>
+                        <td class="group-name"></td>
+                        <td class="enable"></td>
+                        <td class="schedule-name"></td>
                         <td class="staff-operating">
-                            <text>编辑排班 |</text>
-                            <a class="edit-a">修改规则</a>
-                            <a >删除</a>
+                            <a class="edit-a" data-toggle="modal" onclick="setmodifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
+                            <a onclick="deleteGroup(this)">删除</a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="group-id"></td>
+                        <td class="group-name"></td>
+                        <td class="enable"></td>
+                        <td class="schedule-name"></td>
+                        <td class="staff-operating">
+                            <a class="edit-a" data-toggle="modal" onclick="setmodifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
+                            <a onclick="deleteGroup(this)">删除</a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="group-id"></td>
+                        <td class="group-name"></td>
+                        <td class="enable"></td>
+                        <td class="schedule-name"></td>
+                        <td class="staff-operating">
+                            <a class="edit-a" data-toggle="modal" onclick="setmodifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
+                            <a onclick="deleteGroup(this)">删除</a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="group-id"></td>
+                        <td class="group-name"></td>
+                        <td class="enable"></td>
+                        <td class="schedule-name"></td>
+                        <td class="staff-operating">
+                            <a class="edit-a" data-toggle="modal" onclick="setmodifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
+                            <a onclick="deleteGroup(this)">删除</a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="group-id"></td>
+                        <td class="group-name"></td>
+                        <td class="enable"></td>
+                        <td class="schedule-name"></td>
+                        <td class="staff-operating">
+                            <a class="edit-a" data-toggle="modal" onclick="setmodifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
+                            <a onclick="deleteGroup(this)">删除</a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="group-id"></td>
+                        <td class="group-name"></td>
+                        <td class="enable"></td>
+                        <td class="schedule-name"></td>
+                        <td class="staff-operating">
+                            <a class="edit-a" data-toggle="modal" onclick="setmodifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
+                            <a onclick="deleteGroup(this)">删除</a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="group-id"></td>
+                        <td class="group-name"></td>
+                        <td class="enable"></td>
+                        <td class="schedule-name"></td>
+                        <td class="staff-operating">
+                            <a class="edit-a" data-toggle="modal" onclick="setmodifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
+                            <a onclick="deleteGroup(this)">删除</a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="group-id"></td>
+                        <td class="group-name"></td>
+                        <td class="enable"></td>
+                        <td class="schedule-name"></td>
+                        <td class="staff-operating">
+                            <a class="edit-a" data-toggle="modal" onclick="setmodifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
+                            <a onclick="deleteGroup(this)">删除</a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="group-id"></td>
+                        <td class="group-name"></td>
+                        <td class="enable"></td>
+                        <td class="schedule-name"></td>
+                        <td class="staff-operating">
+                            <a class="edit-a" data-toggle="modal" onclick="setmodifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
+                            <a onclick="deleteGroup(this)">删除</a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="group-id"></td>
+                        <td class="group-name"></td>
+                        <td class="enable"></td>
+                        <td class="schedule-name"></td>
+                        <td class="staff-operating">
+                            <a class="edit-a" data-toggle="modal" onclick="setmodifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
+                            <a onclick="deleteGroup(this)">删除</a>
                         </td>
                     </tr>
                     </tbody>
@@ -219,9 +342,9 @@ function MoveBack(index)
                 <ul class="page-ul">
                     <li class="page-ul-li">
                         <div class="input-group" style="width: 110px">
-                            <input type="text" class="form-control" placeholder="">
+                            <input type="text" id="page_num"class="form-control" placeholder="0">
                             <span class="input-group-btn">
-                                <button id="jump-button" class="btn btn-default" type="button">跳转</button>
+                                <button id="jump-button"  onclick="getAllGroupInformation()" class="btn btn-default" type="button">跳转</button>
                              </span>
                         </div>
                     </li>
@@ -238,110 +361,202 @@ function MoveBack(index)
 
 </div>
 
-<div class="modal fade" id="myModal-addClass" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+<div class="modal fade" id="myModal-addGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">添加考勤组</h4>
+                <h4 class="modal-title" >添加考勤组</h4>
             </div>
             <div class="modal-body" style="padding: 15px 20px;font-size: 12px">
                 <form class="form-horizontal">
                     
                     <div class="form-group">
-                        <label for="modal-className" class="col-xs-3 control-label">考勤组名称</label>
+                        <label for="modal-groupName" class="col-xs-3 control-label">考勤组名称</label>
                         <div class="col-xs-4">
-                            <input type="text" class="form-control" id="modal-className" >
+                            <input type="text" class="form-control" id="modal-groupName" >
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-xs-3 control-label">参与考勤人员</label>
-                        <div class="col-xs-4">
-                        <button class="btn btn-default" data-toggle="modal" data-target="#modal1" type="button" >请选择</button>
+                        <div>
+                            <label class="col-xs-3 control-label">考勤组负责人</label>
+                            <div class="col-xs-8" >
+                                <span><a onclick="getAllUserInformation1()">选择考勤负责人</a></span>
+                            </div>
+                        </div>
                     </div>
-                    </div>
+
                     <div class="form-group">
-                        <label class="col-xs-3 control-label">无需考勤人员</label>
-                        <div class="col-xs-4">
-                        <button class="btn btn-default" data-toggle="modal" data-target="#modal2" type="button">请选择</button>
-                    </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xs-3 control-label">考勤组负责人</label>
-                        <div class="col-xs-4">
-                        <button class="btn btn-default" data-toggle="modal" data-target="#modal2" type="button">请选择</button>
-                    </div>
+                        <label class="col-xs-3 control-label"></label>
+                        <div class="col-xs-9">
+                            <div class="table-responsive">
+                                <table  id="lt" class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th><input id="select-all" class="select-box" type="checkbox">考勤负责人ID</th>
+                                        <th>考勤负责人姓名</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr class="table-tr1 hidden">
+                                        <td class="leader-id1 tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                                        <td class="leader-name1"></td>
+                                    </tr>
+                                    <tr class="table-tr1 hidden">
+                                        <td class="leader-id1 tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                                        <td class="leader-name1"></td>
+                                    </tr>
+                                    <tr class="table-tr1 hidden">
+                                        <td class="leader-id1 tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                                        <td class="leader-name1"></td>
+                                    </tr>
+                                    <tr class="table-tr1 hidden">
+                                        <td class="leader-id1 tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                                        <td class="leader-name1"></td>
+                                    </tr>
+                                    <tr class="table-tr1 hidden">
+                                        <td class="leader-id1 tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                                        <td class="leader-name1"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="page-body">
+                                <ul class="page-ul">
+                                    <li class="page-ul-li">
+                                        <div class="input-group" style="width: 110px">
+                                            <input type="text" id="page_num1"class="form-control" placeholder="0">
+                                            <span class="input-group-btn">
+                                <button id="jump-button1"  onclick="getAllUserInformation1()" class="btn btn-default" type="button">跳转</button>
+                             </span>
+                                        </div>
+                                    </li>
+                                    <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-left"></span></a></li>
+                                    <li class="page-ul-li" style="margin-top: 8px"><span>1/255</span></li>
+                                    <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-right"></span></a></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-group">
                         <div>
-                        <label class="col-xs-3 control-label">工作日设置</label>
-                        <div class="col-xs-9" >
-                            <span>快捷设置班次：休息 <a>更改班次</a></span>
+                            <label class="col-xs-3 control-label">参与考勤人员</label>
+                            <div class="col-xs-8" >
+                                <span><a onclick="getAllUserInformation2()">选择员工</a></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label"></label>
+                        <div class="col-xs-9">
+                            <div class="table-responsive">
+                           <table id="ut" class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th><input id="select-allu" class="select-box" type="checkbox">员工ID</th>
+                                    <th>员工姓名</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="table-tr2 hidden">
+                                    <td class="user-id1 tbody-td-id"><input class="select-box select-sub-box" type="checkbox">&nbsp;&nbsp;</td>
+                                    <td class="user-name1"></td>
+                                </tr>
+                                <tr class="table-tr2 hidden">
+                                    <td class="user-id1 tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                                    <td class="user-name1"></td>
+                                </tr>
+                                <tr class="table-tr2 hidden">
+                                    <td class="user-id1 tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                                    <td class="user-name1"></td>
+                                </tr>
+                                <tr class="table-tr2 hidden">
+                                    <td class="user-id1 tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                                    <td class="user-name1"></td>
+                                </tr>
+                                <tr class="table-tr2 hidden">
+                                    <td class="user-id1 tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                                    <td class="user-name1"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            </div>
+                            <div class="page-body">
+                                <ul class="page-ul">
+                                    <li class="page-ul-li">
+                                        <div class="input-group" style="width: 110px">
+                                            <input type="text" id="page_num2"class="form-control" placeholder="0">
+                                            <span class="input-group-btn">
+                                <button id="jump-button2"  onclick="getAllUserInformation2()" class="btn btn-default" type="button">跳转</button>
+                             </span>
+                                        </div>
+                                    </li>
+                                    <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-left"></span></a></li>
+                                    <li class="page-ul-li" style="margin-top: 8px"><span>1/255</span></li>
+                                    <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-right"></span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div>
+                        <label class="col-xs-3 control-label">班次设置</label>
+                        <div class="col-xs-8" >
+                            <span><a onclick="getAllschedules()">选择班次</a></span>
                         </div>
                         </div>   
                     </div>
 
                     <div class="form-group">
                         <label class="col-xs-3 control-label"></label>
-                        <div class="col-xs-8" style="border:1px solid #F2F2F2">
+                        <div class="col-xs-9" style="border:1px solid #F2F2F2">
                         <div class="table-responsive">
-                        <table class="table">
+                        <table id="st" class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th><input type="checkbox"></th>
-                                    <th>工作日</th>
-                                    <th>班次时间段</th>
-                                    <th>操作</th>
+                                    <th> <input id="select-alls" class="select-box" type="checkbox">班次ID</th>
+                                    <th>班次名称</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td>周一</td>
-                                    <td>休息</td>
-                                    <td><a>更改班次</a></td>
+                                <tr class="table-tr4 hidden">
+                                    <td class="s-id tbody-td-id" ><input class="select-box select-sub-box" type="checkbox"></td>
+                                    <td class="s-name"></td>
                                 </tr>
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td>周二</td>
-                                    <td>休息</td>
-                                    <td><a>更改班次</a></td>
+                                <tr class="table-tr4 hidden">
+                                    <td class="s-id tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                                    <td class="s-name"></td>
                                 </tr>
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td>周三</td>
-                                    <td>休息</td>
-                                    <td><a>更改班次</a></td>
+                                <tr class="table-tr4 hidden">
+                                    <td class="s-id tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                                    <td class="s-name"></td>
                                 </tr>
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td>周四</td>
-                                    <td>休息</td>
-                                    <td><a>更改班次</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td>周五</td>
-                                    <td>休息</td>
-                                    <td><a>更改班次</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td>周六</td>
-                                    <td>休息</td>
-                                    <td><a>更改班次</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="checkbox"></td>
-                                    <td>周日</td>
-                                    <td>休息</td>
-                                    <td><a>更改班次</a></td>
+                                <tr class="table-tr4 hidden">
+                                    <td class="s-id tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                                    <td class="s-name"></td>
                                 </tr>
                             </tbody>
                         </table>
                         </div>
+                            <div class="page-body">
+                                <ul class="page-ul">
+                                    <li class="page-ul-li">
+                                        <div class="input-group" style="width: 110px">
+                                            <input type="text" id="page_num3"class="form-control" placeholder="0">
+                                            <span class="input-group-btn">
+                                <button id="jump-button3"  onclick="getAllschedules()" class="btn btn-default" type="button">跳转</button>
+                             </span>
+                                        </div>
+                                    </li>
+                                    <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-left"></span></a></li>
+                                    <li class="page-ul-li" style="margin-top: 8px"><span>1/255</span></li>
+                                    <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-right"></span></a></li>
+                                </ul>
+                            </div>
                     </div>
                     </div>
 
@@ -365,7 +580,7 @@ function MoveBack(index)
                                         <option>2000米</option>
                                         <option>3000米</option>
                                     </select>
-                                <form>
+                                </form>
                             </span>
                         </div>
                         </div>   
@@ -401,14 +616,185 @@ function MoveBack(index)
                             </span>
                         </div>
                     </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="addGroup()">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
 
+
+<div class="modal fade" id="myModal-modifyGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" >更新考勤组</h4>
+            </div>
+            <div class="modal-body" style="padding: 15px 20px;font-size: 12px">
+                <form class="form-horizontal">
                     <div class="form-group">
-                        <label class="col-xs-3 control-label">加班规则</label>
+                        <label for="modal-modifygroupId" class="col-xs-3 control-label">考勤组ID</label>
                         <div class="col-xs-4">
-                            <span>默认加班规则 <a>更改</a></span>
+                            <input type="text" class="form-control" id="modal-modifygroupId" disabled="disabled">
                         </div>
                     </div>
-   
+
+                    <div class="form-group">
+                        <label for="modal-modifygroupName" class="col-xs-3 control-label">考勤组名称</label>
+                        <div class="col-xs-4">
+                            <input type="text" class="form-control" id="modal-modifygroupName" >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">考勤组负责人</label>
+                        <div class="col-xs-4">
+                            <button class="btn btn-default" data-toggle="modal" data-target="#modal3" type="button" onclick="getGroupUsers()">
+                                请选择
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">参与考勤人员</label>
+                        <div class="col-xs-4">
+                            <button class="btn btn-default" data-toggle="modal" data-target="#modal4" type="button" onclick="getGroupUsers()">
+                                请选择
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div>
+                            <label class="col-xs-3 control-label">工作日设置</label>
+                            <div class="col-xs-9" >
+                                <span>快捷设置班次：休息 <a onclick="getAllschedules()">更改班次</a></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label"></label>
+                        <div class="col-xs-8" style="border:1px solid #F2F2F2">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th><input type="checkbox"></th>
+                                        <th>工作日</th>
+                                        <th>班次时间段</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>周一</td>
+                                        <td>休息</td>
+                                        <td><a>更改班次</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>周二</td>
+                                        <td>休息</td>
+                                        <td><a>更改班次</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>周三</td>
+                                        <td>休息</td>
+                                        <td><a>更改班次</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>周四</td>
+                                        <td>休息</td>
+                                        <td><a>更改班次</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>周五</td>
+                                        <td>休息</td>
+                                        <td><a>更改班次</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>周六</td>
+                                        <td>休息</td>
+                                        <td><a>更改班次</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>周日</td>
+                                        <td>休息</td>
+                                        <td><a>更改班次</a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div>
+                            <label class="col-xs-3 control-label">考勤方式</label>
+                            <div class="col-xs-9" >
+                            <span>根据办公地点考勤（可添加多个考勤地点）有效范围
+                                <form>
+                                    <select>
+                                        <option>100米</option>
+                                        <option>200米</option>
+                                        <option selected="selected">300米</option>
+                                        <option>400米</option>
+                                        <option>500米</option>
+                                        <option>600米</option>
+                                        <option>700米</option>
+                                        <option>800米</option>
+                                        <option>900米</option>
+                                        <option>1000米</option>
+                                        <option>2000米</option>
+                                        <option>3000米</option>
+                                    </select>
+                                </form>
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label"></label>
+                        <div class="col-xs-8" style="border:1px solid #F2F2F2">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>考勤地址</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label"></label>
+                        <div class="col-xs-9">
+                            <span>
+                                <a href="#">添加考勤地点</a>（查询地点的经纬度请使用高德地图<a href="http://lbs.amap.com/console/show/picker">查看</a>）
+                            </span>
+                        </div>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -419,110 +805,9 @@ function MoveBack(index)
     </div>
 </div>
 
-<div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-     <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">选择部门与人员</h4>
-            </div>
 
-            <div class="modal-body" style="padding: 15px 20px;font-size: 12px">
-                <form class="form-horizontal">  
-                    <div class="form-group">
-                       <table width='500' border='1' cellpadding='0' cellspacing='0'>
-                        <tr>
-                        <td width='45%' align="center"><select id='source' multiple="multiple" style="width:40%; height:100%" ondblclick="MoveTo(this.selectedIndex)">
-                        <option value='1'>Item1</option>
-                        <option value='2'>Item2</option>
-                        <option value='3'>Item3</option>
-                        <option value='4'>Item4</option>
-                        <option value='5'>Item5</option>
-                        <option value='6'>Item6</option>
-                        </select></td>
-                        <td width='10%' align="center"><input type="button" value=">>" onclick="MoveTo()" /><br /><input type="button" value="<<" onclick="MoveBack()" /></td>
-                        <td width='45%'><select id='distinct' ondblclick="MoveBack(this.selectedIndex)" style="width:40%; height:100%" multiple="multiple" align="center"></select></td>
-                        </tr>
-                        </table>
-                    </div>
-                </form>
-            </div>
 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary">确认</button>
-            </div>
-        </div>
-    </div>
-</div >
-<div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-     <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">选择人员</h4>
-            </div>
-           <div class="modal-body" style="padding: 15px 20px;font-size: 12px">
-                <form class="form-horizontal">  
-                    <div class="form-group">
-                       <table width='500' border='1' cellpadding='0' cellspacing='0'>
-                        <tr>
-                        <td width='45%' align="center"><select id='source' multiple="multiple" style="width:40%; height:100%" ondblclick="MoveTo(this.selectedIndex)">
-                        <option value='1'>Item1</option>
-                        <option value='2'>Item2</option>
-                        <option value='3'>Item3</option>
-                        <option value='4'>Item4</option>
-                        <option value='5'>Item5</option>
-                        <option value='6'>Item6</option>
-                        </select></td>
-                        <td width='10%' align="center"><input type="button" value=">>" onclick="MoveTo()" /><br /><input type="button" value="<<" onclick="MoveBack()" /></td>
-                        <td width='45%'><select id='distinct' ondblclick="MoveBack(this.selectedIndex)" style="width:40%; height:100%" multiple="multiple" align="center"></select></td>
-                        </tr>
-                        </table>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary">确认</button>
-            </div>
-        </div>
-    </div>
-</div >
-<div class="modal fade" id="modal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-     <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">选择人员</h4>
-            </div>
-           <div class="modal-body" style="padding: 15px 20px;font-size: 12px">
-                <form class="form-horizontal">  
-                    <div class="form-group">
-                       <table width='500' border='1' cellpadding='0' cellspacing='0'>
-                        <tr>
-                        <td width='45%' align="center"><select id='source' multiple="multiple" style="width:40%; height:100%" ondblclick="MoveTo(this.selectedIndex)">
-                        <option value='1'>Item1</option>
-                        <option value='2'>Item2</option>
-                        <option value='3'>Item3</option>
-                        <option value='4'>Item4</option>
-                        <option value='5'>Item5</option>
-                        <option value='6'>Item6</option>
-                        </select></td>
-                        <td width='10%' align="center"><input type="button" value=">>" onclick="MoveTo()" /><br /><input type="button" value="<<" onclick="MoveBack()" /></td>
-                        <td width='45%'><select id='distinct' ondblclick="MoveBack(this.selectedIndex)" style="width:40%; height:100%" multiple="multiple" align="center"></select></td>
-                        </tr>
-                        </table>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary">确认</button>
-            </div>
-        </div>
-    </div>
-</div >
+
 
 
 </body>

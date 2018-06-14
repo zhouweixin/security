@@ -111,7 +111,7 @@ function deleteDepartmentInBatch() {
             jsonArr.push(json)
         }
     }
-    let myjson = JSON.stringify(jsonArr)
+    var myjson = JSON.stringify(jsonArr)
     var urlStr = ipPort + '/department/deleteByIdBatch'
     $.ajax({
         url:urlStr,
