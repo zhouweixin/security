@@ -206,4 +206,12 @@ public interface UserRepository extends JpaRepository<User, String> {
 	@Modifying
 	@Query(value = "update User u set u.ic=?1 where u.id=?2")
    	public void updateIcById(String ic, String id);
+
+    /**
+     * 通过ic查询
+     *
+     * @param ic
+     * @return
+     */
+	public User findFirstByIc(String ic);
 }

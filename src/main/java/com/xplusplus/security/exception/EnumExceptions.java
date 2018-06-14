@@ -39,6 +39,8 @@ public enum EnumExceptions {
 	UPDATE_FAILED_RESIGN_TYPE_NOT_EXIST(28,"更新失败, 离职类型不存在"),
 	ASSIGN_FAILED_WAGE_NOT_EXIST(29, "分配失败, 薪资方案不存在"),
 	ASSIGN_FAILED_PROJECT_NOT_EXIST(30, "分配失败, 项目不存在"),
+	SET_IC_CARD_FAILED_EXIST(31, "设置IC卡失败, 已被用")
+
 	;
 
 	/** 编码 */

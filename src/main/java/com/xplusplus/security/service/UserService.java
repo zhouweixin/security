@@ -544,7 +544,13 @@ public class UserService {
      * @param id
      * @param ic
      */
+    @Transactional
     public void updateIcById(String id, String ic) {
+
+        if(userRepository.findFirstByIc(ic) != null){
+            throw new SecurityExceptions(EnumExceptions.SET_IC_CARD_FAILED_EXIST);
+        }
+
         userRepository.updateIcById(ic, id);
     }
 }
