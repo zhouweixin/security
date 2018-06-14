@@ -260,5 +260,17 @@ public class UserController {
         userService.updateResignDateAndResignType(resignDate, resignTypeId, id);
         return ResultUtil.success();
     }
+
+    /**
+     * 通过主键更新ic卡号
+     *
+     * @param id
+     * @param ic
+     */
+    @RequestMapping(value = "/updateIcById")
+    public Result<Object> updateIcById(String id, String ic){
+        userService.updateIcById(id, ic);
+        return ResultUtil.success();
+    }
 	
 }

@@ -196,4 +196,14 @@ public interface UserRepository extends JpaRepository<User, String> {
 	@Modifying
     @Query(value = "update User u set u.resignDate=?1, u.resignType=?2 where u.id=?3")
 	public void updateResignDateAndResignType(Date date, ResignType resignType, String id);
+
+	/**
+	 * 通过主键更新卡号
+	 *
+	 * @param ic
+	 * @param id
+	 */
+	@Modifying
+	@Query(value = "update User u set u.ic=?1 where u.id=?2")
+   	public void updateIcById(String ic, String id);
 }

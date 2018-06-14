@@ -66,7 +66,7 @@ public class ProjectService {
         Project save = projectRepository.save(project);
 
         // 分配用户到项目
-        projectUserService.assignUserToProject(save.getId(), userIds);
+        projectUserService.assignUsersToProject(save.getId(), userIds);
 
 		return save;
 	}
@@ -96,7 +96,7 @@ public class ProjectService {
         Project save = projectRepository.save(project);
 
         // 分配用户到项目
-        projectUserService.assignUserToProject(save.getId(), userIds);
+        projectUserService.assignUsersToProject(save.getId(), userIds);
 
 		return save;
 	}
@@ -240,7 +240,7 @@ public class ProjectService {
 	/**
 	 * 通过项目状态查询-分页
 	 * 
-	 * @param name
+	 * @param projectStatus
 	 * @param page
 	 * @param size
 	 * @param sortFieldName

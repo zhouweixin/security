@@ -537,4 +537,14 @@ public class UserService {
 
         userRepository.updateResignDateAndResignType(date, resignType, id);
     }
+
+    /**
+     * 通过主键更新ic卡号
+     *
+     * @param id
+     * @param ic
+     */
+    public void updateIcById(String id, String ic) {
+        userRepository.updateIcById(ic, id);
+    }
 }

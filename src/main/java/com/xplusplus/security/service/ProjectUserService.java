@@ -87,8 +87,14 @@ public class ProjectUserService {
 	 * @param project
 	 * @return
 	 */
-	public List<User> findUserByProject(Project project){
-		return projectUserRepository.findUserByProject(project);
+	public List<User> findUsersByProject(Project project){
+        List<ProjectUser> projectUsers = projectUserRepository.findByProject(project);
+
+        List<User> users = new ArrayList<>();
+        for(ProjectUser projectUser : projectUsers){
+            users.add(projectUser.getUser());
+        }
+        return users;
 	}
 	
 	/**
@@ -207,7 +213,7 @@ public class ProjectUserService {
      * @param userIds
      */
 	@Transactional
-	public int assignUserToProject(Long projectId, String[] userIds) {
+	public int assignUsersToProject(Long projectId, String[] userIds) {
 	    // 验证项目是否存在
         Project project = projectRepository.findOne(projectId);
         if(project == null){

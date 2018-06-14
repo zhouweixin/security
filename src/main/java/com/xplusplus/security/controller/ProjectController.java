@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.xplusplus.security.domain.User;
 import com.xplusplus.security.service.ProjectUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -200,8 +201,19 @@ public class ProjectController {
      * @param userIds
      * @return
      */
-	@RequestMapping(value = "assignUserToProject")
-	public Result<Integer> assignUserToProject(Long projectId, String[] userIds){
-        return ResultUtil.success(projectUserService.assignUserToProject(projectId, userIds));
+	@RequestMapping(value = "/assignUsersToProject")
+	public Result<Integer> assignUsersToProject(Long projectId, String[] userIds){
+        return ResultUtil.success(projectUserService.assignUsersToProject(projectId, userIds));
+    }
+
+    /**
+     * 通过项目查询员工
+     *
+     * @param project
+     * @return
+     */
+    @RequestMapping(value = "/getUsersByProject")
+    public Result<List<User>> getUsersByProject(Project project){
+	    return ResultUtil.success(projectUserService.findUsersByProject(project));
     }
 }
