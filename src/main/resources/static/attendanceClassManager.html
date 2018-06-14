@@ -1,24 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>**公司</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>**公司</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    <link href="css/ManageDepartment.css" rel="stylesheet">
     <link href="css/attendanceClassManager.css" rel="stylesheet">
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/style.js"></script>
     <script src="js/attendanceClassManager.js"></script>
-    <script type="text/javascript">
-        window.onload=function(){
-            getAllScheduleInformation()
+
+    <style type="text/css" rel="stylesheet">
+        .tbody-td-id{
+            position: relative;
         }
-    </script>
+        input.select-box{
+            height: 18px;
+            width: 18px;
+            position: absolute;
+            left: 8px;
+            top: 5px;
+        }
+
+    </style>
+
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
@@ -142,93 +151,53 @@
                 </div>
             </div>
             <div class="table-body">
-                <table class="table table-bordered">
-                    <thead style="background-color: #F9FAFB">
+                <table class="table table-striped">
+                    <thead >
                     <tr>
                         <th><input id="select-all" class="select-box" type="checkbox"> 班次ID</th>
                         <th>班次名称</th>
-                        <th>操作<a class="deleteDepartmentInBatch-button" onclick="deleteDepartmentInBatch()">批量删除</a></th>
+                        <th>操作<a class="deleteClassInBatch-button" onclick="deleteClassInBatch()">批量删除</a></th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr class="table-tr hidden">
-                        <td class="schedule-id"></td>
-                        <td class="schedule-name"></td>
+                        <td class="class-id tbody-td-id"></td>
+                        <td class="class-name"></td>
                         <td class="operating">
                             <a class="edit-a">编辑</a>
                             <a onclick="deleteSchedule()" >删除</a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
-                        <td class="schedule-id"></td>
-                        <td class="schedule-name"></td>
+                        <td class="class-id tbody-td-id"></td>
+                        <td class="class-name"></td>
                         <td class="operating">
                             <a class="edit-a">编辑</a>
-                            <a onclick="deleteSchedule()">删除</a>
+                            <a onclick="deleteSchedule()" >删除</a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
-                        <td class="schedule-id"></td>
-                        <td class="schedule-name"></td>
+                        <td class="class-id tbody-td-id"></td>
+                        <td class="class-name"></td>
                         <td class="operating">
                             <a class="edit-a">编辑</a>
-                            <a onclick="deleteSchedule()">删除</a>
+                            <a onclick="deleteSchedule()" >删除</a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
-                        <td class="schedule-id"></td>
-                        <td class="schedule-name"></td>
+                        <td class="class-id tbody-td-id"></td>
+                        <td class="class-name"></td>
                         <td class="operating">
                             <a class="edit-a">编辑</a>
-                            <a onclick="deleteSchedule()">删除</a>
+                            <a onclick="deleteSchedule()" >删除</a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
-                        <td class="schedule-id"></td>
-                        <td class="schedule-name"></td>
+                        <td class="class-id tbody-td-id"></td>
+                        <td class="class-name"></td>
                         <td class="operating">
                             <a class="edit-a">编辑</a>
-                            <a onclick="deleteSchedule()">删除</a>
-                        </td>
-                    </tr>
-                    <tr class="table-tr hidden">
-                        <td class="schedule-id"></td>
-                        <td class="schedule-name"></td>
-                        <td class="operating">
-                            <a class="edit-a">编辑</a>
-                            <a onclick="deleteSchedule()">删除</a>
-                        </td>
-                    </tr>
-                    <tr class="table-tr hidden">
-                        <td class="schedule-id"></td>
-                        <td class="schedule-name"></td>
-                        <td class="operating">
-                            <a class="edit-a">编辑</a>
-                            <a onclick="deleteSchedule()">删除</a>
-                        </td>
-                    </tr>
-                    <tr class="table-tr hidden">
-                        <td class="schedule-id"></td>
-                        <td class="schedule-name"></td>
-                        <td class="operating">
-                            <a class="edit-a">编辑</a>
-                            <a onclick="deleteSchedule()">删除</a>
-                        </td>
-                    </tr>
-                    <tr class="table-tr hidden">
-                        <td class="schedule-id"></td>
-                        <td class="schedule-name"></td>
-                        <td class="operating">
-                            <a class="edit-a">编辑</a>
-                            <a onclick="deleteSchedule()">删除</a>
-                        </td>
-                    </tr>
-                    <tr class="table-tr hidden">
-                        <td class="schedule-id"></td>
-                        <td class="schedule-name"></td>
-                        <td class="operating">
-                            <a class="edit-a">编辑</a>
-                            <a >删onclick="deleteSchedule()"除</a>
+                            <a onclick="deleteSchedule()" >删除</a>
                         </td>
                     </tr>
                     </tbody>
@@ -238,9 +207,9 @@
                 <ul class="page-ul">
                     <li class="page-ul-li">
                         <div class="input-group" style="width: 110px">
-                            <input type="text" class="form-control" placeholder="">
+                            <input type="text" id="page_num" class="form-control" placeholder="0">
                             <span class="input-group-btn">
-                                <button id="jump-button" class="btn btn-default" type="button">跳转</button>
+                                <button id="jump-button" onclick="" class="btn btn-default" type="button">跳转</button>
                              </span>
                         </div>
                     </li>
