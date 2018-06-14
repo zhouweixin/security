@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.xplusplus.security.service.ProjectUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.validation.BindingResult;
@@ -30,6 +31,9 @@ public class ProjectController {
 	@Autowired
 	private ProjectService projectService;
 
+	@Autowired
+    private ProjectUserService projectUserService;
+
 	/**
 	 * 新增
 	 * 
@@ -37,13 +41,13 @@ public class ProjectController {
 	 * @return
 	 */
 	@RequestMapping(value = "/add")
-	public Result<Project> add(@Valid @RequestBody Project project, BindingResult bindingResult) {
+	public Result<Project> add(@Valid Project project, BindingResult bindingResult, String[] userIds) {
 
 		if (bindingResult.hasErrors()) {
 			return ResultUtil.error(bindingResult.getFieldError().getDefaultMessage().toString());
 		}
 
-		return ResultUtil.success(projectService.save(project));
+		return ResultUtil.success(projectService.save(project, userIds));
 	}
 
 	/**
@@ -53,13 +57,13 @@ public class ProjectController {
 	 * @return
 	 */
 	@RequestMapping(value = "/update")
-	public Result<Project> update(@Valid @RequestBody Project project, BindingResult bindingResult) {
+	public Result<Project> update(@Valid Project project, BindingResult bindingResult, String[] userIds) {
 
 		if (bindingResult.hasErrors()) {
 			return ResultUtil.error(bindingResult.getFieldError().getDefaultMessage().toString());
 		}
 
-		return ResultUtil.success(projectService.update(project));
+		return ResultUtil.success(projectService.update(project, userIds));
 	}
 
 	/**
@@ -149,7 +153,7 @@ public class ProjectController {
 	/**
 	 * 通过客户单位模糊查询-分页
 	 * 
-	 * @param name
+	 * @param customerUnit
 	 * @param page
 	 * @param size
 	 * @param sortFieldName
@@ -171,7 +175,7 @@ public class ProjectController {
 	/**
 	 * 通过项目状态查询-分页
 	 * 
-	 * @param name
+	 * @param projectStatus
 	 * @param page
 	 * @param size
 	 * @param sortFieldName
@@ -188,4 +192,16 @@ public class ProjectController {
 		return ResultUtil
 				.success(projectService.findByProjectStatusByPage(projectStatus, page, size, sortFieldName, asc));
 	}
+
+    /**
+     * 分配员工到项目, 返回分配人数
+     *
+     * @param projectId
+     * @param userIds
+     * @return
+     */
+	@RequestMapping(value = "assignUserToProject")
+	public Result<Integer> assignUserToProject(Long projectId, String[] userIds){
+        return ResultUtil.success(projectUserService.assignUserToProject(projectId, userIds));
+    }
 }

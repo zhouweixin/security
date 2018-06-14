@@ -32,6 +32,14 @@ public class ProjectUser {
 	@JoinColumn(name = "project_id", referencedColumnName = "id")
 	private Project project;
 
+	public ProjectUser() {
+	}
+
+	public ProjectUser(User user, Project project) {
+		this.user = user;
+		this.project = project;
+	}
+
 	public Long getId() {
 		return id;
 	}

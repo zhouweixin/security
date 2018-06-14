@@ -1,8 +1,11 @@
 package com.xplusplus.security.service;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
+import com.xplusplus.security.repository.ProjectUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +22,8 @@ import com.xplusplus.security.repository.ProjectRepository;
 import com.xplusplus.security.repository.UserRepository;
 import com.xplusplus.security.utils.GlobalUtil;
 
+import javax.transaction.Transactional;
+
 /**
  * @Author: zhouweixin
  * @Description:
@@ -32,21 +37,22 @@ public class ProjectService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+    private ProjectUserService projectUserService;
+
 	/**
 	 * 新增
 	 * 
 	 * @param project
 	 * @return
 	 */
-	public Project save(Project project) {
+	@Transactional
+	public Project save(Project project, String[] userIds) {
 
 		// 验证是否存在
 		if (project == null || (project.getId() != null && projectRepository.findOne(project.getId()) != null)) {
 			throw new SecurityExceptions(EnumExceptions.ADD_FAILED_DUPLICATE);
 		}
-		
-		System.out.println(project);
-		System.out.println(project.getLeader());
 
 		// 检验项目负责人
 		if (project.getLeader() == null || userRepository.getOne(project.getLeader().getId()) == null) {
@@ -56,7 +62,13 @@ public class ProjectService {
 		// 计算周期
 		project.setPeriod(GlobalUtil.computePeriod(project.getStartDate(), project.getEndDate()));
 
-		return projectRepository.save(project);
+		// 新增
+        Project save = projectRepository.save(project);
+
+        // 分配用户到项目
+        projectUserService.assignUserToProject(save.getId(), userIds);
+
+		return save;
 	}
 
 	/**
@@ -65,7 +77,8 @@ public class ProjectService {
 	 * @param project
 	 * @return
 	 */
-	public Project update(Project project) {
+	@Transactional
+	public Project update(Project project, String[] userIds) {
 
 		// 验证是否存在
 		if (project == null || project.getId() == null || projectRepository.findOne(project.getId()) == null) {
@@ -80,7 +93,12 @@ public class ProjectService {
 		// 计算周期
 		project.setPeriod(GlobalUtil.computePeriod(project.getStartDate(), project.getEndDate()));
 
-		return projectRepository.save(project);
+        Project save = projectRepository.save(project);
+
+        // 分配用户到项目
+        projectUserService.assignUserToProject(save.getId(), userIds);
+
+		return save;
 	}
 
 	/**
@@ -190,7 +208,7 @@ public class ProjectService {
 	/**
 	 * 通过客户单位模糊查询-分页
 	 * 
-	 * @param name
+	 * @param customerUnit
 	 * @param page
 	 * @param size
 	 * @param sortFieldName

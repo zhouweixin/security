@@ -68,4 +68,11 @@ public interface ProjectUserRepository extends JpaRepository<ProjectUser, Long> 
 	 * @return
 	 */
 	public List<User> findUserByProject(Project project);
+
+	/**
+	 * 通过项目删除
+	 *
+	 * @param project
+	 */
+	public void deleteByProject(Project project);
 }
