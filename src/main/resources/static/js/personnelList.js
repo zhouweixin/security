@@ -133,11 +133,12 @@ $(document).ready(function () {
     /*
     离职面板/
      */
+    var selectResignTypeA = $('.leaveType-menu-ul li a')
+    getAllResignTypeName(selectResignTypeA)
     $('.leaveType-menu-ul li a').on('click', function () {
         $('#modal-leaveType').val($(this).text())
         $('#modal-leaveType').attr('value', $(this).attr('value'))
     })
-    $('#modal-leaveType').val($('.leaveType-menu-ul li a').eq(0).text())
     /*
     员工列表页面的选择部门下拉菜单/
      */
@@ -175,6 +176,12 @@ $(document).ready(function () {
     $('.staffInformation-jobNature-menu-ul li a').on('click', function () {
         $('#staffInformation-jobNature').val($(this).text())
         $('#staffInformation-jobNature').attr('value', $(this).attr('value'))
+    })
+    var staffInformationResignTypeA = $('.staffInformation-resignType-menu-ul li a')
+    getAllResignTypeName(staffInformationResignTypeA)
+    $('.staffInformation-resignType-menu-ul li a').on('click', function () {
+        $('#staffInformation-resignType').val($(this).text())
+        $('#staffInformation-resignType').attr('value', $(this).attr('value'))
     })
     /*
     详细信息档案信息/
@@ -327,7 +334,7 @@ function getDetailsInformation(thisObj) {
                 setDetailsStaffInformationColumn(obj)
             }
             else{
-                console.log(obj)
+                alert(obj.message)
             }
         },
         error:function (error) {
@@ -484,18 +491,52 @@ function setDetailsStaffInformationColumn(obj) {
     if(obj.data.department){
         $('#staffInformation-department').val(obj.data.department.name)
         $('#staffInformation-department').attr('value', obj.data.department.id)
+    }else{
+        $('#staffInformation-department').val('')
+        $('#staffInformation-department').attr('value', '')
     }
     if(obj.data.role){
         $('#staffInformation-role').val(obj.data.role.name)
         $('#staffInformation-role').attr('value', obj.data.role.id)
+    }else{
+        $('#staffInformation-role').val('')
+        $('#staffInformation-role').attr('value', '')
     }
-    $('#staffInformation-joinDate').val(obj.data.employDate)
+
+    var joinDateSplit = obj.data.employDate
+    if(joinDateSplit){
+        var joinDate = new Date()
+        joinDate.setFullYear(joinDateSplit.split('-')[0], joinDateSplit.split('-')[1] - 1, joinDateSplit.split('-')[2])
+        document.getElementById("staffInformation-joinDate").valueAsDate = joinDate
+    }else{
+        $('#staffInformation-resignDate').val('')
+    }
+
     $('#staffInformation-icID').val(obj.data.ic)
     $('#staffInformation-weChat').val(obj.data.wechat)
     $('#staffInformation-phone').val(obj.data.contact)
     if(obj.data.jobNature){
         $('#staffInformation-jobNature').val(obj.data.jobNature.name)
         $('#staffInformation-jobNature').attr('value', obj.data.jobNature.id)
+    } else{
+        $('#staffInformation-jobNature').val('')
+        $('#staffInformation-jobNature').attr('value', '')
+    }
+    if(obj.data.resignType){
+        $('#staffInformation-resignType').val(obj.data.resignType.name)
+        $('#staffInformation-resignType').attr('value', obj.data.resignType.id)
+    }else{
+        $('#staffInformation-resignType').val('')
+        $('#staffInformation-resignType').attr('value', '')
+    }
+
+    var resignDateSplit = obj.data.resignDate
+    if(resignDateSplit){
+        var resignDate = new Date()
+        resignDate.setFullYear(resignDateSplit.split('-')[0], resignDateSplit.split('-')[1] - 1, resignDateSplit.split('-')[2])
+        document.getElementById("staffInformation-resignDate").valueAsDate = resignDate
+    }else{
+        $('#staffInformation-resignDate').val('')
     }
 }
 /*
@@ -508,10 +549,17 @@ function setQuitModalInformation(obj) {
     $('#modal-department').val(td.eq(3).text())
 }
 /*
+设置makeSureModal的value/
+ */
+function setMakeSureDeleteButtonValue(thisObj) {
+    var staffID = $(thisObj).parent().parent().parent().parent().parent().find('.staff-id').text()
+    $('#myModal-makeSureDelete').attr('value', staffID)
+}
+/*
 删除员工信息/
  */
-function deleteStaff(thisObj) {
-    var staffID = $(thisObj).parent().parent().parent().parent().parent().find('.staff-id').text()
+function deleteStaff() {
+    var staffID = $('#myModal-makeSureDelete').attr('value')
     var urlStr = ipPort + '/user/deleteById?id='+ staffID
     $.ajax({
         url:urlStr,
@@ -639,7 +687,23 @@ function leaveJob() {
                         dataType:'json',
                         success:function (obj) {
                             if(obj.code == 0){
-                                alert(obj.message)
+                                var resignDate = new Date(($('#modal-leaveDate').val()))
+                                resignDate = (resignDate.toLocaleDateString()).replace(/\//g, '-')
+                                var resignTypeId = $('#modal-leaveType').attr('value')
+                                $.ajax({
+                                    url:ipPort + '/user/resign?resignDate=' +  resignDate + '&resignTypeId=' + resignTypeId + '&id=' + leaveJobStaffID,
+                                    dataType:'json',
+                                    success:function (obj) {
+                                        if(obj.code == 0){
+                                            alert(obj.message)
+                                        }else {
+                                            console.log(obj)
+                                        }
+                                    },
+                                    error:function (error) {
+                                        console.log(error)
+                                    }
+                                })
                             }else {
                                 alert(obj.message)
                             }
@@ -669,7 +733,8 @@ function editButtonOnClick(thisObj){
         var button = $(panelName).find('button')
         var textarea = $(panelName).find('textarea')
         for(var i = 0; i < input.length; i++){
-            if(($(thisObj).attr('value') == 'staff' && i == 1) || ($(thisObj).attr('value') == 'archive' && i == 0))continue
+            if(($(thisObj).attr('value') == 'staff' && (i == 1 || i == 2 || i == 3 || i ==4 || i == 5 || i==10 || i==11))
+                || ($(thisObj).attr('value') == 'archive' && (i == 0 || i == 1 || i == 3 || i ==4 || i == 5 || i==6 || i == 11 || i == 14)))continue
             input.eq(i).attr('disabled', false)
         }
         for(var i = 0; i < button.length; i++){
@@ -691,7 +756,7 @@ function editButtonOnClick(thisObj){
         var button = $(panelName).find('button')
         var textarea = $(panelName).find('textarea')
         for(var i = 0; i < input.length; i++){
-            if(i == 1 || i == 0)continue
+            if(i == 1 || i == 0 || i == 5 || i == 4)continue
             input.eq(i).attr('disabled', false)
         }
         for(var i = 0; i < button.length; i++){
@@ -836,34 +901,94 @@ function setDetailsContractInformationColumn(obj) {
     for (var i = 0; i < obj.data.numberOfElements; i ++){
         if(obj.data.content[i].contractType.id == 3){
             $('#formalContractID').val(obj.data.content[i].id)
-            $('#formalContractStartDate').val(obj.data.content[i].startDate)
-            $('#formalContractEndDate').val(obj.data.content[i].endDate)
+
+            var startDateSplit = obj.data.content[i].startDate
+            if(startDateSplit){
+                var startDate = new Date()
+                startDate.setFullYear(startDateSplit.split('-')[0], startDateSplit.split('-')[1] - 1, startDateSplit.split('-')[2])
+                document.getElementById("formalContractStartDate").valueAsDate = startDate
+            }else {
+                $('#formalContractStartDate').val('')
+            }
+
+            var endDateSplit = obj.data.content[i].endDate
+            if(endDateSplit){
+                var endDate = new Date()
+                startDate.setFullYear(endDateSplit.split('-')[0], endDateSplit.split('-')[1] - 1, endDateSplit.split('-')[2])
+                document.getElementById("formalContractEndDate").valueAsDate = endDate
+            }else {
+                $('#formalContractEndDate').val('')
+            }
+
             $('#formalContractPeriod').val(obj.data.content[i].period)
             if(obj.data.content[i].contractStatus){
                 $('#formalContractStatus').attr('value', obj.data.content[i].contractStatus.id)
                 $('#formalContractStatus').val(obj.data.content[i].contractStatus.name)
+            }else {
+                $('#formalContractStatus').attr('value', '')
+                $('#formalContractStatus').val('')
             }
             $('#formalContractContent').val(obj.data.content[i].content)
             $('#formalContractScanningCopy').val(obj.data.content[i].scanningCopy)
         }else if (obj.data.content[i].contractType.id == 1) {
             $('#temporaryContractID').val(obj.data.content[i].id)
-            $('#temporaryContractStartDate').val(obj.data.content[i].startDate)
-            $('#temporaryContractEndDate').val(obj.data.content[i].endDate)
+
+            var startDateSplit = obj.data.content[i].startDate
+            if(startDateSplit){
+                var startDate = new Date()
+                startDate.setFullYear(startDateSplit.split('-')[0], startDateSplit.split('-')[1] - 1, startDateSplit.split('-')[2])
+                document.getElementById("temporaryContractStartDate").valueAsDate = startDate
+            }else {
+                $('#temporaryContractStartDate').val('')
+            }
+
+            var endDateSplit = obj.data.content[i].endDate
+            if(endDateSplit){
+                var endDate = new Date()
+                startDate.setFullYear(endDateSplit.split('-')[0], endDateSplit.split('-')[1] - 1, endDateSplit.split('-')[2])
+                document.getElementById("temporaryContractEndDate").valueAsDate = endDate
+            }else {
+                $('#temporaryContractEndDate').val('')
+            }
+
             $('#temporaryContractPeriod').val(obj.data.content[i].period)
             if(obj.data.content[i].contractStatus){
                 $('#temporaryContractStatus').attr('value', obj.data.content[i].contractStatus.id)
                 $('#temporaryContractStatus').val(obj.data.content[i].contractStatus.name)
+            }else {
+                $('#temporaryContractStatus').attr('value', '')
+                $('#temporaryContractStatus').val('')
             }
             $('#temporaryContractContent').val(obj.data.content[i].content)
             $('#temporaryContractScanningCopy').val(obj.data.content[i].scanningCopy)
         }else if (obj.data.content[i].contractType.id == 2) {
             $('#internshipAgreementID').val(obj.data.content[i].id)
-            $('#internshipAgreementStartDate').val(obj.data.content[i].startDate)
-            $('#internshipAgreementEndDate').val(obj.data.content[i].endDate)
+
+            var startDateSplit = obj.data.content[i].startDate
+            if(startDateSplit){
+                var startDate = new Date()
+                startDate.setFullYear(startDateSplit.split('-')[0], startDateSplit.split('-')[1] - 1, startDateSplit.split('-')[2])
+                document.getElementById("internshipAgreementStartDate").valueAsDate = startDate
+            }else {
+                $('#internshipAgreementStartDate').val('')
+            }
+
+            var endDateSplit = obj.data.content[i].endDate
+            if(endDateSplit){
+                var endDate = new Date()
+                startDate.setFullYear(endDateSplit.split('-')[0], endDateSplit.split('-')[1] - 1, endDateSplit.split('-')[2])
+                document.getElementById("internshipAgreementEndDate").valueAsDate = endDate
+            }else {
+                $('#internshipAgreementEndDate').val('')
+            }
+
             $('#internshipAgreementPeriod').val(obj.data.content[i].period)
             if(obj.data.content[i].contractStatus){
                 $('#internshipAgreementStatus').attr('value', obj.data.content[i].contractStatus.id)
                 $('#internshipAgreementStatus').val(obj.data.content[i].contractStatus.name)
+            }else {
+                $('#internshipAgreementStatus').attr('value', '')
+                $('#internshipAgreementStatus').val('')
             }
             $('#internshipAgreementContent').val(obj.data.content[i].content)
             $('#internshipAgreementScanningCopy').val(obj.data.content[i].scanningCopy)
@@ -933,12 +1058,20 @@ function updateStaffInformation() {
         period = ""
     }
     var archive = $('#staffInformation-archive').val()
+    var resignType = $('#staffInformation-resignType').attr('value')
+    var resignDate = new Date(($('#staffInformation-resignDate').val()))
+    if(resignDate != 'Invalid Date'){
+        resignDate = (resignDate.toLocaleDateString()).replace(/\//g, '-')
+    }else{
+        resignDate = ''
+    }
+
     if(!staffName || !phoneNumber){
         alert('姓名或者联系方式不能为空！')
         return
     }else {
         var urlStr = ipPort + '/user/update?name=' + staffName + '&id=' + staffID + '&sex=' + staffSex + '&ic=' + IcID + '&wechat=' + weChat + '&contact=' + phoneNumber
-            + '&department=' + department + '&role=' + position + '&jobNature=' + jobNature + '&employDate=' + joinDate + '&practiceEndDate=' + period
+            + '&department=' + department + '&role=' + position + '&jobNature=' + jobNature + '&employDate=' + joinDate + '&practiceEndDate=' + period + '&resignDate= ' + resignDate + '&resignType=' + resignType
         $.ajax({
             url:urlStr,
             dataType:'json',
@@ -968,7 +1101,12 @@ function saveArchiveInformation() {
     var politicalStatus = $('#archiveInformation-politicalStatus').attr('value')
     var education = $('#archiveInformation-education').attr('value')
     var major = $('#archiveInformation-major').val()
-    var firstWorkDate = $('#archiveInformation-firstWorkDate').val()
+    var firstWorkDate = new Date(($('#archiveInformation-firstWorkDate').val()))
+    if(firstWorkDate != 'Invalid Date'){
+        firstWorkDate = (firstWorkDate.toLocaleDateString()).replace(/\//g, '-')
+    }else{
+        firstWorkDate = ''
+    }
     var height = $('#archiveInformation-height').val()
     var weight = $('#archiveInformation-weight').val()
     var healthStatus = $('#archiveInformation-healthStatus').attr('value')
@@ -990,7 +1128,7 @@ function saveArchiveInformation() {
                 if(obj.code == 0){
                     alert(obj.message)
                 }else{
-                    console.log(obj)
+                    alert(obj.message)
                 }
             },
             error:function (error) {
@@ -1007,9 +1145,9 @@ function saveArchiveInformation() {
             dataType:'json',
             success:function (obj) {
                 if(obj.code == 0){
-                    console.log(obj)
+                    alert(obj.message)
                 }else{
-                    console.log(obj)
+                    alert(obj.message)
                 }
             },
             error:function (error) {
@@ -1023,34 +1161,61 @@ function saveArchiveInformation() {
  */
 function setDetailsArchiveInformationColumn(obj) {
     $('#archiveInformation-archiveID').val(obj.data.id)
-    if(obj.data.nation != null){
+    if(obj.data.nation){
         $('#archiveInformation-nation').val(obj.data.nation.name)
         $('#archiveInformation-nation').attr('value', obj.data.nation.id)
+    }else{
+        $('#staffInformation-nation').val('')
+        $('#staffInformation-nation').attr('value', '')
     }
     $('#archiveInformation-identityNumber').val(obj.data.identityNumber)
-    if(obj.data.maritalStatus != null){
+    if(obj.data.maritalStatus){
         $('#archiveInformation-maritalStatus').val(obj.data.maritalStatus.name)
         $('#archiveInformation-maritalStatus').attr('value', obj.data.maritalStatus.id)
+    }else{
+        $('#staffInformation-maritalStatus').val('')
+        $('#staffInformation-maritalStatus').attr('value', '')
     }
     if(obj.data.militaryStatus){
         $('#archiveInformation-militaryStatus').val(obj.data.militaryStatus.name)
         $('#archiveInformation-militaryStatus').attr('value', obj.data.militaryStatus.id)
+    }else{
+        $('#staffInformation-militaryStatus').val('')
+        $('#staffInformation-militaryStatus').attr('value', '')
     }
     if(obj.data.politicalStatus){
         $('#archiveInformation-politicalStatus').val(obj.data.politicalStatus.name)
         $('#archiveInformation-politicalStatus').attr('value', obj.data.politicalStatus.id)
+    }else{
+        $('#staffInformation-politicalStatus').val('')
+        $('#staffInformation-politicalStatus').attr('value', '')
     }
     if(obj.data.education){
         $('#archiveInformation-education').val(obj.data.education.name)
         $('#archiveInformation-education').attr('value', obj.data.education.id)
+    }else{
+        $('#staffInformation-education').val('')
+        $('#staffInformation-education').attr('value', '')
     }
     $('#archiveInformation-major').val(obj.data.major)
-    $('#archiveInformation-firstWorkDate').val(obj.data.firstWorkDate)
+
+    var firstWorkDateSplit = obj.data.firstWorkDate
+    if(firstWorkDateSplit){
+        var firstWorkDate = new Date()
+        firstWorkDate.setFullYear(firstWorkDateSplit.split('-')[0], firstWorkDateSplit.split('-')[1] - 1, firstWorkDateSplit.split('-')[2])
+        document.getElementById("archiveInformation-firstWorkDate").valueAsDate = firstWorkDate
+    }else {
+        $('#archiveInformation-firstWorkDate').val('')
+    }
+
     $('#archiveInformation-height').val(obj.data.height)
     $('#archiveInformation-weight').val(obj.data.weight)
     if(obj.data.healthStatus){
         $('#archiveInformation-healthStatus').val(obj.data.healthStatus.name)
         $('#archiveInformation-healthStatus').attr('value', obj.data.healthStatus.id)
+    }else{
+        $('#staffInformation-healthStatus').val('')
+        $('#staffInformation-healthStatus').attr('value', '')
     }
     $('#archiveInformation-domicilePlace').val(obj.data.domicilePlace)
     $('#archiveInformation-livePlace').val(obj.data.livePlace)
@@ -1071,8 +1236,18 @@ function saveFormalContract() {
     var contractID = $('#formalContractID').val()
     var userID = $('#staffInformation-id').val()
     var contractType = $('#formalContractType').attr('value')
-    var contractStartDate = $('#formalContractStartDate').val()
-    var contractEndDate = $('#formalContractEndDate').val()
+    var contractStartDate = new Date(($('#formalContractStartDate').val()))
+    if(contractStartDate != 'Invalid Date'){
+        contractStartDate = (contractStartDate.toLocaleDateString()).replace(/\//g, '-')
+    }else{
+        contractStartDate = ''
+    }
+    var contractEndDate = new Date(($('#formalContractEndDate').val()))
+    if(contractEndDate != 'Invalid Date'){
+        contractEndDate = (contractEndDate.toLocaleDateString()).replace(/\//g, '-')
+    }else{
+        contractEndDate = ''
+    }
     var contractStatus = $('#formalContractStatus').attr('value')
     var contractContent = $('#formalContractContent').val()
     var contractScanningCopy = $('#formalContractScanningCopy').val()
@@ -1122,8 +1297,18 @@ function saveTemporaryContract() {
     var contractID = $('#temporaryContractID').val()
     var userID = $('#staffInformation-id').val()
     var contractType = $('#temporaryContractType').attr('value')
-    var contractStartDate = $('#temporaryContractStartDate').val()
-    var contractEndDate = $('#temporaryContractEndDate').val()
+    var contractStartDate = new Date(($('#temporaryContractStartDate').val()))
+    if(contractStartDate != 'Invalid Date'){
+        contractStartDate = (contractStartDate.toLocaleDateString()).replace(/\//g, '-')
+    }else{
+        contractStartDate = ''
+    }
+    var contractEndDate = new Date(($('#temporaryContractEndDate').val()))
+    if(contractEndDate != 'Invalid Date'){
+        contractEndDate = (contractEndDate.toLocaleDateString()).replace(/\//g, '-')
+    }else{
+        contractEndDate = ''
+    }
     var contractStatus = $('#temporaryContractStatus').attr('value')
     var contractContent = $('#temporaryContractContent').val()
     var contractScanningCopy = $('#temporaryContractScanningCopy').val()
@@ -1173,12 +1358,21 @@ function saveInternshipAgreement() {
     var contractID = $('#internshipAgreementID').val()
     var userID = $('#staffInformation-id').val()
     var contractType = $('#internshipAgreementType').attr('value')
-    var contractStartDate = $('#internshipAgreementStartDate').val()
-    var contractEndDate = $('#internshipAgreementEndDate').val()
+    var contractStartDate = new Date(($('#internshipAgreementStartDate').val()))
+    if(contractStartDate != 'Invalid Date'){
+        contractStartDate = (contractStartDate.toLocaleDateString()).replace(/\//g, '-')
+    }else{
+        contractStartDate = ''
+    }
+    var contractEndDate = new Date(($('#internshipAgreementEndDate').val()))
+    if(contractEndDate != 'Invalid Date'){
+        contractEndDate = (contractEndDate.toLocaleDateString()).replace(/\//g, '-')
+    }else{
+        contractEndDate = ''
+    }
     var contractStatus = $('#internshipAgreementStatus').attr('value')
     var contractContent = $('#internshipAgreementContent').val()
     var contractScanningCopy = $('#internshipAgreementScanningCopy').val()
-
     if(contractID == ''){
         var urlStr = ipPort + '/contract/add?user=' + userID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
             + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&scanningCopy=' + contractScanningCopy
@@ -1259,7 +1453,7 @@ function setContractID(panelName) {
 /*
 设置统计栏的数字cllback函数/
  */
-function setSummaryNumberCllback(details_numb, i, obj) {
+function setSummaryNumberCallback(details_numb, i, obj) {
     $.ajax({
         url: ipPort + '/user/getByJobNature?jobNature=' + obj.data[i].id,
         dataType:'json',
@@ -1268,7 +1462,7 @@ function setSummaryNumberCllback(details_numb, i, obj) {
                 details_numb.eq(i+1).text(obj_.data.length)
                 i++
                 if(obj.data.length != i){
-                    setSummaryNumberCllback(details_numb, i, obj)
+                    setSummaryNumberCallback(details_numb, i, obj)
                 }
             }else{
                 console.log(obj_)
@@ -1296,7 +1490,7 @@ function setSummaryNumber() {
                     if(obj_.code == 0){
                         details_numb.eq(i+1).text(obj_.data.length)
                         i++
-                        setSummaryNumberCllback(details_numb, i, obj)
+                        setSummaryNumberCallback(details_numb, i, obj)
                     }else{
                         console.log(obj_)
                         i++

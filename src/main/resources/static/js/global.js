@@ -1,4 +1,4 @@
- var ipPort = "http://39.108.89.212:8080/security"
+var ipPort = "http://39.108.89.212:8080/security"
 //var ipPort = "http://127.0.0.1:9000/security"
 var departmentsName = []
 var departmentsID = []
@@ -47,6 +47,7 @@ function getAllDepartmentsName(department){
                 department.eq(i).text(obj.data[i - 1].name)
                 department.eq(i).attr('value', obj.data[i - 1].id)
             }
+
         },
         error:function (error) {
             console.log(error)
@@ -278,7 +279,26 @@ function getAllContractStatusName(contractStatus){
              console.log(error)
          }
      })
+ } /*
+ 获取所有离职类型名称/
+  */
+ function getAllResignTypeName(resignType){
+     $.ajax({
+         url:ipPort + '/resignType/getAll',
+         dataType:'json',
+         success:function (obj) {
+             for(var i = 1; i < obj.data.length + 1; i ++ ){
+                 resignType.eq(i).parent().removeClass('hidden')
+                 resignType.eq(i).text(obj.data[i - 1].name)
+                 resignType.eq(i).attr('value', obj.data[i - 1].id)
+             }
+         },
+         error:function (error) {
+             console.log(error)
+         }
+     })
  }
+
 /*
 获取浏览器信息/
  */

@@ -29,8 +29,8 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="personnelManager.html">人事</a></li>
-                <li><a href="attendanceManagement.html">考勤</a></li>
+                <li class="active"><a href="personnelList.html">人事</a></li>
+                <li><a href="attendanceHomePage.html">考勤</a></li>
                 <li><a href="salaryManagement.html">薪酬</a></li>
                 <li><a href="processManagement.html">流程</a></li>
                 <li><a href="assetsManagement.html">资产</a></li>
@@ -125,7 +125,7 @@
                         </div>
                     </div>
                     <div class="search-right">
-                        <button class="btn btn-default" onclick="deleteContractInBatch()">批量删除</button>
+                        <button class="btn btn-default" data-toggle="modal" data-target="#myModal-makeSureDeleteInBatch">批量删除</button>
                         <button class="btn btn-default" data-toggle="modal" data-target="#myModal-signContract">添加合同</button>
                     </div>
                 </div>
@@ -147,6 +147,7 @@
                         <th>项目负责人</th>
                         <th>合同开始时间</th>
                         <th>合同结束时间</th>
+                        <th style="width: 50px">收款</th>
                         <th style="width: 50px">修改</th>
                         <th style="width: 50px">删除</th>
                     </tr>
@@ -168,6 +169,13 @@
                         <td class="project-endDate"></td>
                         <td class="">
                             <div>
+                                <a class="" data-toggle="modal" data-target="#myModal-projectReceipt" onclick="setProjectReceiptModalInformation(this)">
+                                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                </a>
+                            </div>
+                        </td>
+                        <td class="">
+                            <div>
                                 <a class="" data-toggle="modal" data-target="#myModal-updateProjectContract" onclick="setUpdateModalInformation(this)">
                                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                 </a>
@@ -175,7 +183,7 @@
                         </td>
                         <td>
                             <div>
-                                <a onclick="deleteProjectContract(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                <a data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                             </div>
                         </td>
                     </tr>
@@ -195,6 +203,13 @@
                         <td class="project-endDate"></td>
                         <td class="">
                             <div>
+                                <a class="" data-toggle="modal" data-target="#myModal-projectReceipt" onclick="setProjectReceiptModalInformation(this)">
+                                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                </a>
+                            </div>
+                        </td>
+                        <td class="">
+                            <div>
                                 <a class="" data-toggle="modal" data-target="#myModal-updateProjectContract" onclick="setUpdateModalInformation(this)">
                                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                 </a>
@@ -202,7 +217,7 @@
                         </td>
                         <td>
                             <div>
-                                <a onclick="deleteProjectContract(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                <a data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                             </div>
                         </td>
                     </tr>
@@ -222,6 +237,13 @@
                         <td class="project-endDate"></td>
                         <td class="">
                             <div>
+                                <a class="" data-toggle="modal" data-target="#myModal-projectReceipt" onclick="setProjectReceiptModalInformation(this)">
+                                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                </a>
+                            </div>
+                        </td>
+                        <td class="">
+                            <div>
                                 <a class="" data-toggle="modal" data-target="#myModal-updateProjectContract" onclick="setUpdateModalInformation(this)">
                                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                 </a>
@@ -229,7 +251,7 @@
                         </td>
                         <td>
                             <div>
-                                <a onclick="deleteProjectContract(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                <a data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                             </div>
                         </td>
                     </tr>
@@ -249,6 +271,13 @@
                         <td class="project-endDate"></td>
                         <td class="">
                             <div>
+                                <a class="" data-toggle="modal" data-target="#myModal-projectReceipt" onclick="setProjectReceiptModalInformation(this)">
+                                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                </a>
+                            </div>
+                        </td>
+                        <td class="">
+                            <div>
                                 <a class="" data-toggle="modal" data-target="#myModal-updateProjectContract" onclick="setUpdateModalInformation(this)">
                                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                 </a>
@@ -256,7 +285,7 @@
                         </td>
                         <td>
                             <div>
-                                <a onclick="deleteProjectContract(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                <a data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                             </div>
                         </td>
                     </tr>
@@ -276,6 +305,13 @@
                         <td class="project-endDate"></td>
                         <td class="">
                             <div>
+                                <a class="" data-toggle="modal" data-target="#myModal-projectReceipt" onclick="setProjectReceiptModalInformation(this)">
+                                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                </a>
+                            </div>
+                        </td>
+                        <td class="">
+                            <div>
                                 <a class="" data-toggle="modal" data-target="#myModal-updateProjectContract" onclick="setUpdateModalInformation(this)">
                                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                 </a>
@@ -283,7 +319,7 @@
                         </td>
                         <td>
                             <div>
-                                <a onclick="deleteProjectContract(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                <a data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                             </div>
                         </td>
                     </tr>
@@ -303,6 +339,13 @@
                         <td class="project-endDate"></td>
                         <td class="">
                             <div>
+                                <a class="" data-toggle="modal" data-target="#myModal-projectReceipt" onclick="setProjectReceiptModalInformation(this)">
+                                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                </a>
+                            </div>
+                        </td>
+                        <td class="">
+                            <div>
                                 <a class="" data-toggle="modal" data-target="#myModal-updateProjectContract" onclick="setUpdateModalInformation(this)">
                                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                 </a>
@@ -310,7 +353,7 @@
                         </td>
                         <td>
                             <div>
-                                <a onclick="deleteProjectContract(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                <a data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                             </div>
                         </td>
                     </tr>
@@ -330,6 +373,13 @@
                         <td class="project-endDate"></td>
                         <td class="">
                             <div>
+                                <a class="" data-toggle="modal" data-target="#myModal-projectReceipt" onclick="setProjectReceiptModalInformation(this)">
+                                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                </a>
+                            </div>
+                        </td>
+                        <td class="">
+                            <div>
                                 <a class="" data-toggle="modal" data-target="#myModal-updateProjectContract" onclick="setUpdateModalInformation(this)">
                                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                 </a>
@@ -337,7 +387,7 @@
                         </td>
                         <td>
                             <div>
-                                <a onclick="deleteProjectContract(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                <a data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                             </div>
                         </td>
                     </tr>
@@ -357,6 +407,13 @@
                         <td class="project-endDate"></td>
                         <td class="">
                             <div>
+                                <a class="" data-toggle="modal" data-target="#myModal-projectReceipt" onclick="setProjectReceiptModalInformation(this)">
+                                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                </a>
+                            </div>
+                        </td>
+                        <td class="">
+                            <div>
                                 <a class="" data-toggle="modal" data-target="#myModal-updateProjectContract" onclick="setUpdateModalInformation(this)">
                                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                 </a>
@@ -364,7 +421,7 @@
                         </td>
                         <td>
                             <div>
-                                <a onclick="deleteProjectContract(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                <a data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                             </div>
                         </td>
                     </tr>
@@ -384,6 +441,13 @@
                         <td class="project-endDate"></td>
                         <td class="">
                             <div>
+                                <a class="" data-toggle="modal" data-target="#myModal-projectReceipt" onclick="setProjectReceiptModalInformation(this)">
+                                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                </a>
+                            </div>
+                        </td>
+                        <td class="">
+                            <div>
                                 <a class="" data-toggle="modal" data-target="#myModal-updateProjectContract" onclick="setUpdateModalInformation(this)">
                                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                 </a>
@@ -391,7 +455,7 @@
                         </td>
                         <td>
                             <div>
-                                <a onclick="deleteProjectContract(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                <a data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                             </div>
                         </td>
                     </tr>
@@ -411,6 +475,13 @@
                         <td class="project-endDate"></td>
                         <td class="">
                             <div>
+                                <a class="" data-toggle="modal" data-target="#myModal-projectReceipt" onclick="setProjectReceiptModalInformation(this)">
+                                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                                </a>
+                            </div>
+                        </td>
+                        <td class="">
+                            <div>
                                 <a class="" data-toggle="modal" data-target="#myModal-updateProjectContract" onclick="setUpdateModalInformation(this)">
                                     <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                 </a>
@@ -418,7 +489,7 @@
                         </td>
                         <td>
                             <div>
-                                <a onclick="deleteProjectContract(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                <a data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                             </div>
                         </td>
                     </tr>
@@ -480,7 +551,7 @@
                         <label for="modal-projectStatus" class="col-xs-3 control-label">项目状态</label>
                         <div class="col-xs-7">
                             <div class="dropdown input-group">
-                                <input id="modal-projectStatus" type="text" value="" class="form-control" placeholder="请选择项目状态">
+                                <input id="modal-projectStatus" type="text" value="" class="form-control" placeholder="请选择项目状态" disabled="disabled">
                                 <span class="input-group-btn">
                                     <button class="btn btn-default dropdown-toggle" type="button" id="select-projectStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="caret"></span>
@@ -503,15 +574,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="modal-contractAmount" class="col-xs-3 control-label">金额</label>
+                        <label for="modal-contractAmount" class="col-xs-3 control-label">项目总金额</label>
                         <div class="col-xs-7">
                             <input type="text" class="form-control" id="modal-contractAmount" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="modal-contractReceiptPrice" class="col-xs-3 control-label">已收金额</label>
-                        <div class="col-xs-7">
-                            <input type="text" class="form-control" id="modal-contractReceiptPrice" >
                         </div>
                     </div>
                     <div class="form-group">
@@ -529,7 +594,13 @@
                     <div class="form-group">
                         <label for="modal-contractResponsibleName" class="col-xs-3 control-label">项目负责人</label>
                         <div class="col-xs-7">
-                            <input type="text" class="form-control" id="modal-contractResponsibleName" value="ba00001">
+                            <input type="text" data-toggle="modal" onclick="getAllStaff(this)"  value="" data-value="contractResponsibleName" data-target="#myModal-selectStaff" class="form-control" id="modal-contractResponsibleName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-contractStaffs" class="col-xs-3 control-label">项目人员</label>
+                        <div class="col-xs-7">
+                            <textarea data-toggle="modal" onclick="getAllStaff(this)"  value="" data-value="contractStaffs" data-target="#myModal-selectStaff"class="form-control" id="modal-contractStaffs" style="height: 90px; overflow-y: auto"></textarea>
                         </div>
                     </div>
                 </form>
@@ -569,22 +640,22 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-xs-3 control-label">合同开始日期：</label>
+                        <label for="modal-updateProjectStartDate" class="col-xs-3 control-label">合同开始日期</label>
                         <div class="col-xs-7">
-                            <input id="modal-updateProjectStartDate" type="text" class="form-control" placeholder="请输入，如：2018-05-20">
+                            <input type="date" class="form-control" id="modal-updateProjectStartDate" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-xs-3 control-label">合同结束日期：</label>
+                        <label for="modal-updateProjectEndDate" class="col-xs-3 control-label">合同结束日期</label>
                         <div class="col-xs-7">
-                            <input id="modal-updateProjectEndDate" type="text" class="form-control" placeholder="请输入，如：2018-05-20">
+                            <input type="date" class="form-control" id="modal-updateProjectEndDate" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="modal-projectStatus" class="col-xs-3 control-label">项目状态</label>
                         <div class="col-xs-7">
                             <div class="dropdown input-group">
-                                <input id="modal-updateProjectStatus" type="text" value="" class="form-control" placeholder="请选择项目状态">
+                                <input id="modal-updateProjectStatus" type="text" value="" class="form-control" placeholder="请选择项目状态" disabled="disabled">
                                 <span class="input-group-btn">
                                     <button class="btn btn-default dropdown-toggle" type="button" id="select-updateProjectStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="caret"></span>
@@ -607,7 +678,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="modal-updateProjectAmount" class="col-xs-3 control-label">金额</label>
+                        <label for="modal-updateProjectAmount" class="col-xs-3 control-label">项目总金额</label>
                         <div class="col-xs-7">
                             <input type="text" class="form-control" id="modal-updateProjectAmount" >
                         </div>
@@ -633,7 +704,13 @@
                     <div class="form-group">
                         <label for="modal-updateProjectResponsibleName" class="col-xs-3 control-label">项目负责人</label>
                         <div class="col-xs-7">
-                            <input type="text" class="form-control" id="modal-updateProjectResponsibleName">
+                            <input type="text"onclick="getAllStaff(this)"  value="" data-value="updateProjectResponsibleName" data-target="#myModal-selectStaff" class="form-control" id="modal-updateProjectResponsibleName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-updateProjectStaffs" class="col-xs-3 control-label">项目人员</label>
+                        <div class="col-xs-7">
+                            <textarea data-toggle="modal" onclick="getAllStaff(this)"  value="" data-value="updateProjectStaffs" data-target="#myModal-selectStaff"class="form-control" id="modal-updateProjectStaffs" style="height: 90px; overflow-y: auto"></textarea>
                         </div>
                     </div>
                 </form>
@@ -641,6 +718,300 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                 <button type="button" class="btn btn-primary" onclick="updateProjectContract()">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal-projectReceipt" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-projectReceipt">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel-projectReceipt">项目收款记录表</h4>
+            </div>
+            <div class="modal-body" style="padding: 0px 20px">
+                <form class="form-horizontal">
+                    <div class="form-group" >
+                        <div class="table-body" style="height: 300px; overflow-y: scroll">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th id="projectReceipt-projectName-th" value-id="" value-name="">项目名称</th>
+                                    <th>收款金额</th>
+                                    <th>收款时间</th>
+                                    <th>描述</th>
+                                    <th>经办人姓名</th>
+                                    <th style="width: 50px">修改</th>
+                                </tr>
+                                </thead>
+                                <tbody >
+                                    <tr class="table-trr hidden">
+                                    <td class="projectReceipt-projectName" value=""></td>
+                                    <td class="projectReceipt-price"></td>
+                                    <td class="projectReceipt-time"></td>
+                                    <td class="projectReceipt-description"></td>
+                                    <td class="projectReceipt-operator"></td>
+                                    <td class="">
+                                        <div>
+                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
+                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal-addProjectReceipt" onclick="setAddProjectReceiptModalInformation()">添加记录</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal-addProjectReceipt" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">添加项目收款记录</h4>
+            </div>
+            <div class="modal-body" style="padding: 15px 20px">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="modal-addProjectReceipt-projectName" class="col-xs-3 control-label">项目名称</label>
+                        <div class="col-xs-7">
+                            <input type="text" class="form-control" id="modal-addProjectReceipt-projectName" disabled="disabled">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-addProjectReceipt-price" class="col-xs-3 control-label">收款金额</label>
+                        <div class="col-xs-7">
+                            <input type="text" class="form-control" id="modal-addProjectReceipt-price" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-addProjectReceipt-description" class="col-xs-3 control-label">描述</label>
+                        <div class="col-xs-7">
+                            <textarea value="" class="form-control" id="modal-addProjectReceipt-description" style="height: 90px; overflow-y: auto"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-addProjectReceipt-operator" class="col-xs-3 control-label">经办人姓名</label>
+                        <div class="col-xs-7">
+                            <input type="text" data-toggle="modal" onclick="getAllOneStaff()" data-target="#myModal-selectOneStaff" class="form-control" id="modal-addProjectReceipt-operator" >
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="addProjectReceipt()">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bs-example-modal-sm" id="myModal-makeSureDelete" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" value="">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 5px 15px">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                是否确认要删除？
+                <button type="button" class="btn btn-default" data-dismiss="modal" style="float: right; margin-left: 5px">取消</button>
+                <button type="button" class="btn btn-primary" style="float: right;" onclick="deleteProjectContract()">确认</button>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bs-example-modal-sm" id="myModal-makeSureDeleteInBatch" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" value="">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 5px 15px">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                是否确认要批量删除？
+                <button type="button" class="btn btn-default" data-dismiss="modal" style="float: right; margin-left: 5px">取消</button>
+                <button type="button" class="btn btn-primary" style="float: right;" onclick="deleteContractInBatch()" >确认</button>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal-selectStaff" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">选择员工</h4>
+            </div>
+            <div class="modal-body" style="padding: 0px 20px;font-size: 14px">
+                <form class="form-horizontal">
+                    <div class="form-group " style="margin-bottom: 0px;">
+                        <ul class="selectStaff-department-ul col-xs-6" style="height: 200px;overflow-y: scroll">
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                        </ul>
+                        <div class="col-xs-6" style="border-left: 1px solid #E5E5E5; height: 200px;overflow-y: scroll">
+                            <ul class="selectedStaff-staff-ul">
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary selectedStaffs-button" value="" onclick="selectedPeople(this)" data-dismiss="modal">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal-selectOneStaff" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">选择经办人</h4>
+            </div>
+            <div class="modal-body" style="padding: 0px 20px;font-size: 14px">
+                <form class="form-horizontal">
+                    <div class="form-group " style="margin-bottom: 0px;">
+                        <ul class="selectOneStaff-department-ul" style="height: 200px;overflow-y: scroll">
+                            <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <ul class="selectOneStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <ul class="selectOneStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <ul class="selectOneStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <ul class="selectOneStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <ul class="selectOneStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <ul class="selectOneStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <ul class="selectOneStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <ul class="selectOneStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <ul class="selectOneStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <ul class="selectOneStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary">确认</button>
             </div>
         </div>
     </div>
