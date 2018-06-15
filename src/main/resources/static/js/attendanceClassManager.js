@@ -31,15 +31,15 @@ function getAllScheduleInformation() {
     var size = 10
     var sortFieldName = 'id'
     var asc = 1
-    var urlStr =  'http:127.0.0.1:9000/security/schedule/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
+    var urlStr =  'http://127.0.0.1:9000/security/schedule/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
     alert(urlStr)
     $.ajax({
         url:urlStr,
         dataType:'json',
         cache:false,
         success: function (obj) {
-           // setScheduleTableInformation(obj)
-          alert(obj.message)
+            setScheduleTableInformation(obj)
+         // alert(obj.message)
         },
         error:function (error) {
             console.log(error)
@@ -67,7 +67,7 @@ function setScheduleTableInformation(obj) {
 function deleteSchedule(thisObj) {
     var td = $(thisObj).parent().parent().find('td')
     var scheduleID = td.eq(0).text()
-    var urlStr = ipPort + '/schedule/deleteById?id='+ scheduleID
+    var urlStr =  'http://127.0.0.1:9000/security/schedule/deleteById?id='+ scheduleID
     $.ajax({
         url:urlStr,
         dataType:'json',
