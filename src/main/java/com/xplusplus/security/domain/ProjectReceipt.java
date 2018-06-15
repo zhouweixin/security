@@ -36,7 +36,7 @@ public class ProjectReceipt {
 	private Double price;
 
 	// 收款时间
-	@Temporal(value = TemporalType.DATE)
+	@Temporal(value = TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date time;
 

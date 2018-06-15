@@ -49,7 +49,7 @@ public class Project {
 
 	// 已收金额
 	@Column(precision = 2)
-	private Double receiptPrice;
+	private Double receiptPrice = 0.0;
 
 	// 客户办公室电话
 	private String customerOfficePhone;
