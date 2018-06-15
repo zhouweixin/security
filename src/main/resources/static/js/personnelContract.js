@@ -229,20 +229,33 @@ function setUpdateModalInformation(thisObj) {
     })
 }
 /*
-删除单个合同信息/
+设置makeSureModal的value/
  */
-function deleteContract(thisObj) {
+function setMakeSureDeleteButtonValue(thisObj) {
     var td = $(thisObj).parent().parent().find('td')
     var contractId = td.eq(4).text()
+    $('#myModal-makeSureDelete').attr('value', contractId)
+    $('#myModal-makeSureDelete').attr('value-t', $(thisObj).attr('value'))
+}
+/*
+删除单个合同信息/
+ */
+function deleteContract() {
+    var contractId = $('#myModal-makeSureDelete').attr('value')
     var urlStr = ipPort + '/contract/deleteById?id='+ contractId
     $.ajax({
         url:urlStr,
         dataType:'json',
         success:function (obj) {
-            if(thisObj.attr('value') == 'dueDate'){
-                getAllDueDateContractInformation()
-            }else {
-                getAllContractInformation()
+            if(obj.code == 0){
+                if( $('#myModal-makeSureDelete').attr('value-t') == 'dueDate'){
+                    getAllDueDateContractInformation()
+                }else {
+                    getAllContractInformation()
+                }
+            }
+            else{
+                alert(obj.message)
             }
         },
         error:function (error) {
@@ -251,9 +264,15 @@ function deleteContract(thisObj) {
     })
 }
 /*
+设置批量删除Modal的value/
+ */
+function setMakeSureDeleteInBatchButtonValue(valueStr) {
+    $('#myModal-makeSureDeleteInBatch').attr('value', valueStr)
+}
+/*
 批量删除合同信息/
  */
-function deleteContractInBatch(thisObj) {
+function deleteContractInBatch() {
     var select_sub_box = $('.select-sub-box')
     var jsonArr = []
     for(var i = 0; i < select_sub_box.length; i++){
@@ -274,7 +293,7 @@ function deleteContractInBatch(thisObj) {
         success:function (obj) {
             if(obj.code == 0){
                 alert("批量删除合同信息成功！")
-                if($(thisObj).attr('value') == 'dueDate'){
+                if($('#myModal-makeSureDeleteInBatch').attr('value') == 'dueDate'){
                     getAllDueDateContractInformation()
                 }else {
                     getAllContractInformation()
@@ -302,7 +321,6 @@ function getAllDueDateContractInformation() {
         url:urlStr,
         dataType:'json',
         success:function (obj) {
-            console.log(obj)
             setDueDateContractTableInformation(obj)
         },
         error:function (error) {

@@ -24,8 +24,10 @@ $(document).ready(function () {
             }
             var imgItem = activeRow.find('img')
             var imgSrc = imgItem[0].src
-            imgSrc = imgSrc.replace(".png","_fill.png")
-            imgItem.attr('src', imgSrc)
+            if(imgSrc.search("_fill") == -1){
+                imgSrc = imgSrc.replace(".png","_fill.png")
+                imgItem.attr('src', imgSrc)
+            }
             var spanItem = activeRow.find('span')
             if(spanItem){
                 spanItem.removeClass('glyphicon-triangle-right')
@@ -80,23 +82,23 @@ $(document).ready(function () {
         }
     })
 
-    //二级菜单事件处理
-    $('.sub-menu').on('click', '.sub-menu-li', function (e) {
-        subMenuFlag = 1
-        //第一次处理subli
-        if(!subMenuActiveRow){
-            subMenuActiveRow = $(this)
-            subMenuActiveRow.addClass('sub-li-active')
-        }
-        else{
-            //处理上一个subli
-            var preSubMenuActiveRow = subMenuActiveRow
-            preSubMenuActiveRow.removeClass('sub-li-active')
-            //处理当前subli
-            subMenuActiveRow = $(this)
-            subMenuActiveRow.addClass('sub-li-active')
-        }
-    })
+    // //二级菜单事件处理
+    // $('.sub-menu').on('click', '.sub-menu-li', function (e) {
+    //     subMenuFlag = 1
+    //     //第一次处理subli
+    //     if(!subMenuActiveRow){
+    //         subMenuActiveRow = $(this)
+    //         subMenuActiveRow.addClass('sub-li-active')
+    //     }
+    //     else{
+    //         //处理上一个subli
+    //         var preSubMenuActiveRow = subMenuActiveRow
+    //         preSubMenuActiveRow.removeClass('sub-li-active')
+    //         //处理当前subli
+    //         subMenuActiveRow = $(this)
+    //         subMenuActiveRow.addClass('sub-li-active')
+    //     }
+    // })
 })
 function selectAllCheckButton(thisObj) {
     if(thisObj.checked == true){

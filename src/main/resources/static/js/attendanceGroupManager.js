@@ -61,7 +61,7 @@ function addGroup(){
     }
    alert(jsonArr3)
 
-    var urlStr = 'http://127.0.0.1:9000/security/attendanceGroup/add?name= '+ groupName + '&ids=' + users + '&leaderIds=' + leaders + '&schedule.id=' + jsonArr3;
+    var urlStr = 'http://39.108.89.212:8080/security/attendanceGroup/add?name= '+ groupName + '&ids=' + users + '&leaderIds=' + leaders + '&schedule.id=' + jsonArr3;
     alert(urlStr)
     $.ajax({
         url:urlStr,
@@ -89,7 +89,7 @@ function getAllGroupInformation() {
     var size = 10;
     var sortFieldName = 'id';
     var asc = 1;
-    var urlStr = 'http://127.0.0.1:9000/security/attendanceGroup/getAllByPage?page= '+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc;
+    var urlStr = 'http://39.108.89.212:8080/security/attendanceGroup/getAllByPage?page= '+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc;
    //  alert(urlStr);
     $.ajax({
         url:urlStr,
@@ -133,7 +133,7 @@ function searchByName() {
     var sortFieldName = 'id';
     var asc = 1;
     var name =$('#search-groupName').val();
-    var urlStr = 'http://127.0.0.1:9000/security/attendanceGroup/getByNameLikeByPage?page='+ page +'&name='+ name + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc;
+    var urlStr = 'http://39.108.89.212:8080/security/attendanceGroup/getByNameLikeByPage?page='+ page +'&name='+ name + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc;
     //  alert(urlStr);
     $.ajax({
         url:urlStr,
@@ -156,7 +156,7 @@ function getAllUserInformation1() {
     var size = 5;
     var sortFieldName = 'id';
     var asc = 1;
-    var urlStr = 'http://127.0.0.1:9000/security/user/getAllByPage?page= '+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc;
+    var urlStr = 'http://39.108.89.212:8080/security/user/getAllByPage?page= '+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc;
    // alert(urlStr);
     $.ajax({
         url:urlStr,
@@ -194,7 +194,7 @@ function getAllUserInformation2() {
     var size = 5;
     var sortFieldName = 'id';
     var asc = 1;
-    var urlStr = 'http://127.0.0.1:9000/security/user/getAllByPage?page= '+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc;
+    var urlStr = 'http://39.108.89.212:8080/security/user/getAllByPage?page= '+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc;
    // alert(urlStr);
     $.ajax({
         url:urlStr,
@@ -231,7 +231,7 @@ function getAllschedules(){
     var size = 4;
     var sortFieldName = 'id';
     var asc = 1;
-    var urlStr = 'http://127.0.0.1:9000/security/schedule/getAllByPage?page= '+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc;
+    var urlStr = 'http://39.108.89.212:8080/security/schedule/getAllByPage?page= '+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc;
     // alert(urlStr);
     $.ajax({
         url:urlStr,
@@ -265,7 +265,7 @@ function setAllschedules(obj){
 function deleteGroup(thisObj) {
     var td = $(thisObj).parent().parent().find('td')
     var groupId = td.eq(0).text()
-    var urlStr = 'http://127.0.0.1:9000/security/attendanceGroup/deleteById?id='+ groupId;
+    var urlStr = 'http://39.108.89.212:8080/security/attendanceGroup/deleteById?id='+ groupId;
     alert(urlStr);
     $.ajax({
         url:urlStr,
@@ -293,7 +293,7 @@ function getAllgUserInformation1() {
     var size = 5;
     var sortFieldName = 'id';
     var asc = 1;
-    var urlStr = 'http://127.0.0.1:9000/security/user/getAllByPage?page= '+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc;
+    var urlStr = 'http://39.108.89.212:8080/security/user/getAllByPage?page= '+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc;
     // alert(urlStr);
     $.ajax({
         url:urlStr,
@@ -331,7 +331,7 @@ function getAllgUserInformation2() {
     var size = 5;
     var sortFieldName = 'id';
     var asc = 1;
-    var urlStr = 'http://127.0.0.1:9000/security/user/getAllByPage?page= '+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc;
+    var urlStr = 'http://39.108.89.212:8080/security/user/getAllByPage?page= '+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc;
     // alert(urlStr);
     $.ajax({
         url:urlStr,
@@ -366,7 +366,7 @@ function getGroupLeaders(){
     var td = $(obj).parent().parent().find('td')
     $('#modal-modifygroupID').val(td.eq(0).text())
     var groupid= $('#modal-modifygroupId');
-    var urlStr = 'http://127.0.0.1:9000/security/attendanceGroup/getLeaders?id='+ groupid ;
+    var urlStr = 'http://39.108.89.212:8080/security/attendanceGroup/getLeaders?id='+ groupid ;
     alert(urlStr);
     $.ajax({
         url:urlStr,
@@ -398,7 +398,7 @@ function setGroupLeaders(obj){
 /* ******************************修改考勤组----通过考勤组ID获取所有员工的信息（分页 ）****************************** */
 function getGroupUsers(){
     var groupid= $('#modal-modifygroupId');
-    var urlStr = 'http://127.0.0.1:9000/security/attendanceGroup/getUsers?id='+ groupid ;
+    var urlStr = 'http://39.108.89.212:8080/security/attendanceGroup/getUsers?id='+ groupid ;
     alert(urlStr);
     $.ajax({
         url:urlStr,
@@ -470,7 +470,7 @@ function modifyGroup() {
     alert(users)
 
 
-    var urlStr = ipPort + '/department/update?id='+ groupID + "&ids=" + users + "&leadersId=" + leaders
+    var urlStr = 'http://39.108.89.212:8080/attendanceGroup/update?id='+ groupID + "&ids=" + users + "&leadersId=" + leaders
     alert(urlStr)
     $.ajax({
         url:urlStr,

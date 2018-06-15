@@ -17,6 +17,48 @@ $(document).ready(function () {
     })
 
     getAllProjectContractInformation()
+    /*
+ 选择员工Modal/
+  */
+    $('.selectStaff-department-li img').on('click', function () {
+        if($(this).parent().find('.hidden').length == 0){
+            $(this).parent().find('.selectStaff-staff-ul').addClass('hidden')
+            $(this).parent().find('.departmentName-img').attr('src', 'imgs/addition.png')
+        }else{
+            $(this).parent().find('.selectStaff-staff-ul').removeClass('hidden')
+            $(this).parent().find('.departmentName-img').attr('src', 'imgs/offline.png')
+        }
+    })
+    $('.departmentName-span').on('click', function () {
+        if($(this).parent().find('.hidden').length == 0){
+            $(this).parent().find('.selectStaff-staff-ul').addClass('hidden')
+            $(this).parent().find('.departmentName-img').attr('src', 'imgs/addition.png')
+        }else{
+            $(this).parent().find('.selectStaff-staff-ul').removeClass('hidden')
+            $(this).parent().find('.departmentName-img').attr('src', 'imgs/offline.png')
+        }
+    })
+    /*
+    选择One员工Modal/
+     */
+    $('.selectOneStaff-department-li img').on('click', function () {
+        if($(this).parent().find('.hidden').length == 0){
+            $(this).parent().find('.selectOneStaff-staff-ul').addClass('hidden')
+            $(this).parent().find('.departmentName-img').attr('src', 'imgs/addition.png')
+        }else{
+            $(this).parent().find('.selectOneStaff-staff-ul').removeClass('hidden')
+            $(this).parent().find('.departmentName-img').attr('src', 'imgs/offline.png')
+        }
+    })
+    $('.departmentName-span').on('click', function () {
+        if($(this).parent().find('.hidden').length == 0){
+            $(this).parent().find('.selectOneStaff-staff-ul').addClass('hidden')
+            $(this).parent().find('.departmentName-img').attr('src', 'imgs/addition.png')
+        }else{
+            $(this).parent().find('.selectOneStaff-staff-ul').removeClass('hidden')
+            $(this).parent().find('.departmentName-img').attr('src', 'imgs/offline.png')
+        }
+    })
 })
 /*
 添加项目合同/
@@ -29,23 +71,24 @@ function addProjectContract() {
     var contractEndDate = new Date(($('#modal-contractEndDate').val()))
     contractEndDate = (contractEndDate.toLocaleDateString()).replace(/\//g, '-')
     var contractAmount = $('#modal-contractAmount').val()
-    var contractReceiptPrice = $('#modal-contractReceiptPrice').val()
     var contractCustomerOfficePhone = $('#modal-contractCustomerOfficePhone').val()
     var contractCustomerFinancePhone = $('#modal-contractCustomerFinancePhone').val()
     var projectStatus = $('#modal-projectStatus').attr('value')
-    var contractResponsibleName = $('#modal-contractResponsibleName').val()
+    var contractResponsibleName = $('#modal-contractResponsibleName').attr('value').split('_')
+    var projectStaffs = $('#modal-contractStaffs').attr('value').split('_')
     if(projectName == ''){
         alert("请输入项目名称")
         return
     }
     var urlStr = ipPort + '/project/add?name='+ projectName + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate + '&price=' + contractAmount
-        + '&receiptPrice=' + contractReceiptPrice + '&customerOfficePhone=' + contractCustomerOfficePhone + '&customerFinancePhone=' + contractCustomerFinancePhone
-        + '&customerUnit=' + contractCustomerName + '&leader=' + contractResponsibleName + '&projectStatus=' + projectStatus
+        + '&customerOfficePhone=' + contractCustomerOfficePhone + '&customerFinancePhone=' + contractCustomerFinancePhone
+        + '&customerUnit=' + contractCustomerName + '&leader=' + contractResponsibleName + '&projectStatus=' + projectStatus + '&userIds=' + projectStaffs
     $.ajax({
         url:urlStr,
         dataType:'json',
         success:function (obj) {
             alert(obj.message)
+            getAllProjectContractInformation()
         },
         error:function (error) {
             console.log(error)
@@ -104,6 +147,9 @@ function setProjectContractTableInformation(obj) {
             if(obj.data.content[i].projectStatus){
                 project_status.eq(i).text(obj.data.content[i].projectStatus.name)
                 project_status.eq(i).attr('value', obj.data.content[i].projectStatus.id)
+            }else{
+                project_status.eq(i).text('')
+                project_status.eq(i).attr('value','')
             }
             project_period.eq(i).text(obj.data.content[i].period.days)
             project_customerName.eq(i).text(obj.data.content[i].customerUnit)
@@ -114,6 +160,9 @@ function setProjectContractTableInformation(obj) {
             if(obj.data.content[i].leader){
                 project_responsiblePersonName.eq(i).text(obj.data.content[i].leader.name)
                 project_responsiblePersonName.eq(i).attr('value', obj.data.content[i].leader.id)
+            }else{
+                project_responsiblePersonName.eq(i).text('')
+                project_responsiblePersonName.eq(i).attr('value', '')
             }
             project_startDate.eq(i).text(obj.data.content[i].startDate)
             project_project_endDate.eq(i).text(obj.data.content[i].endDate)
@@ -142,9 +191,52 @@ function setUpdateModalInformation(thisObj) {
     $('#modal-updateProjectCustomerFinancePhone').val(td.eq(7).text())
     $('#modal-updateProjectAmount').val(td.eq(8).text())
     $('#modal-updateProjectReceiptPrice').val(td.eq(9).text())
-    $('#modal-updateProjectResponsibleName').val(td.eq(10).attr('value'))
-    $('#modal-updateProjectStartDate').val(td.eq(11).text())
-    $('#modal-updateProjectEndDate').val(td.eq(12).text())
+    $('#modal-updateProjectResponsibleName').val(td.eq(10).text())
+    $('#modal-updateProjectResponsibleName').attr('value', td.eq(10).attr('value'))
+
+    var updateProjectStartDateSplit = td.eq(11).text()
+    if(updateProjectStartDateSplit){
+        var updateProjectStartDate = new Date()
+        updateProjectStartDate.setFullYear(updateProjectStartDateSplit.split('-')[0], updateProjectStartDateSplit.split('-')[1] - 1, updateProjectStartDateSplit.split('-')[2])
+        document.getElementById("modal-updateProjectStartDate").valueAsDate = updateProjectStartDate
+    }else {
+        $('#modal-updateProjectStartDate').val('')
+    }
+    var updateProjectEndDateSplit = td.eq(12).text()
+    if(updateProjectEndDateSplit){
+        var updateProjectEndDate = new Date()
+        updateProjectEndDate.setFullYear(updateProjectEndDateSplit.split('-')[0], updateProjectEndDateSplit.split('-')[1] - 1, updateProjectEndDateSplit.split('-')[2])
+        document.getElementById("modal-updateProjectEndDate").valueAsDate = updateProjectEndDate
+    }else {
+        $('#modal-updateProjectEndDate').val('')
+    }
+
+    $.ajax({
+        url:ipPort + '/project/getUsersByProject?id=' + td.eq(1).text(),
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                var staffsID = ''
+                var staffsName = ''
+                for(var i = 0; i < obj.data.length; i++){
+                    staffsID = staffsID + obj.data[i].id
+                    staffsName = staffsName + obj.data[i].name
+                    if(i != obj.data.length - 1){
+                        staffsID = staffsID + '_'
+                        staffsName = staffsName + '、'
+                    }
+                }
+                $('#modal-updateProjectStaffs').val(staffsName)
+                $('#modal-updateProjectStaffs').attr('value', staffsID)
+            }
+            else{
+                alert(obj.message)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
 }
 /*
 修改合同/
@@ -153,27 +245,41 @@ function updateProjectContract() {
     var projectID = $('#modal-updateProjectID').val()
     var projectName = $('#modal-updateProjectName').val()
     var contractCustomerName = $('#modal-updateProjectCustomerName').val()
-    var contractStartDate = $('#modal-updateProjectStartDate').val()
-    var contractEndDate = $('#modal-updateProjectEndDate').val()
+
+    var contractStartDate = new Date(($('#modal-updateProjectStartDate').val()))
+    if(contractStartDate != 'Invalid Date'){
+        contractStartDate = (contractStartDate.toLocaleDateString()).replace(/\//g, '-')
+    }else{
+        contractStartDate = ''
+    }
+    var contractEndDate = new Date(($('#modal-updateProjectEndDate').val()))
+    if(contractEndDate != 'Invalid Date'){
+        contractEndDate = (contractEndDate.toLocaleDateString()).replace(/\//g, '-')
+    }else{
+        contractEndDate = ''
+    }
+
     var contractAmount = $('#modal-updateProjectAmount').val()
     var contractReceiptPrice = $('#modal-updateProjectReceiptPrice').val()
     var contractCustomerOfficePhone = $('#modal-updateProjectCustomerOfficePhone').val()
     var contractCustomerFinancePhone = $('#modal-updateProjectCustomerFinancePhone').val()
     var projectStatus = $('#modal-updateProjectStatus').attr('value')
-    var contractResponsibleName = $('#modal-updateProjectResponsibleName').val()
+    var contractResponsibleName = $('#modal-updateProjectResponsibleName').attr('value').split('_')
+    var projectStaffs = $('#modal-updateProjectStaffs').attr('value').split('_')
     if(projectName == ''){
         alert("请输入项目名称")
         return
     }
     var urlStr = ipPort + '/project/update?name='+ projectName + '&id=' + projectID + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate + '&price=' + contractAmount
         + '&receiptPrice=' + contractReceiptPrice + '&customerOfficePhone=' + contractCustomerOfficePhone + '&customerFinancePhone=' + contractCustomerFinancePhone
-        + '&customerUnit=' + contractCustomerName + '&leader=' + contractResponsibleName + '&projectStatus=' + projectStatus
+        + '&customerUnit=' + contractCustomerName + '&leader=' + contractResponsibleName + '&projectStatus=' + projectStatus + '&userIds=' + projectStaffs
     console.log(urlStr)
     $.ajax({
         url:urlStr,
         dataType:'json',
         success:function (obj) {
             alert(obj.message)
+            getAllProjectContractInformation()
         },
         error:function (error) {
             console.log(error)
@@ -181,11 +287,18 @@ function updateProjectContract() {
     })
 }
 /*
-删除单个合同信息/
+设置makeSureModal的value/
  */
-function deleteProjectContract(thisObj) {
+function setMakeSureDeleteButtonValue(thisObj) {
     var td = $(thisObj).parent().parent().parent().find('td')
     var contractId = td.eq(1).text()
+    $('#myModal-makeSureDelete').attr('value', contractId)
+}
+/*
+删除单个合同信息/
+ */
+function deleteProjectContract() {
+    var contractId = $('#myModal-makeSureDelete').attr('value')
     var urlStr = ipPort + '/project/deleteById?id='+ contractId
     $.ajax({
         url:urlStr,
@@ -265,4 +378,291 @@ function getInformationByProjectName() {
             console.log(error)
         }
     })
+}
+/*
+获取所有员工姓名/
+ */
+function getAllStaff(thisObj) {
+    $('.selectedStaffs-button').attr('value', $(thisObj).attr('data-value'))
+    var staffInformationDepartmentA = $('.selectStaff-department-ul .selectStaff-department-li .departmentName-span')
+    $.ajax({
+        url:ipPort + '/department/getAll',
+        dataType:'json',
+        success:function (obj) {
+            $('.selectedStaff-staff-ul').find('li').remove()
+            for(var i = 0; i < obj.data.length; i++){
+                staffInformationDepartmentA.eq(i).parent().removeClass('hidden')
+                staffInformationDepartmentA.eq(i).text(obj.data[i].name)
+                staffInformationDepartmentA.eq(i).attr('value', obj.data[i].id)
+                staffInformationDepartmentA.eq(i).parent().find('li').remove()
+            }
+            $.ajax({
+                url:ipPort + '/user/getAll',
+                dataType:'json',
+                success:function (obj_) {
+                    if(obj_.data.length != 0){
+                        for(var j = 0; j < obj_.data.length; j++){
+                            for(var m = 0; m < obj.data.length; m++){
+                                if(obj_.data[j].department.id == obj.data[m].id){
+                                    var staffUl = staffInformationDepartmentA.eq(m).parent().find('.selectStaff-staff-ul')
+                                    var appendStr = '<li onclick="selectedStaff(this)"><img src="imgs/mine.png" height="20px" style="margin-top: -2px"><span ' + 'value="' + obj_.data[j].id + '">' + obj_.data[j].name + '</span></li>'
+                                    staffUl.append(appendStr)
+                                    break
+                                }
+                            }
+                        }
+                    }
+                },
+                error:function (error) {
+                    console.log(error)
+                }
+            })
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+选区人员/
+ */
+function selectedStaff(thisObj) {
+    var selectedStaffUl = $('.selectedStaff-staff-ul')
+    var appendStr = '<li><img src="imgs/mine.png" height="20px" style="margin-top: -2px"><span class="selectedStaff-span" ' + 'value="' + $(thisObj).find("span").attr("value") + '">' + $(thisObj).find("span").text() + '</span><span class="cancel-span" onclick="cancelSelectStaff(this)" aria-hidden="true" style="display: block; float: right">&times;</span></li>'
+    selectedStaffUl.append(appendStr)
+}
+/*
+取消选区/
+ */
+function cancelSelectStaff(thisObj) {
+    $(thisObj).parent().remove()
+}
+/*
+选定人员/
+ */
+function selectedPeople(thisObj) {
+    if($(thisObj).attr('value') == 'contractResponsibleName'){
+        var selectedStaff_span = $('.selectedStaff-span')
+        var strID = ''
+        var strName = ''
+        for(var i = 0; i < selectedStaff_span.length; i++){
+            strID = strID + selectedStaff_span.eq(i).attr('value')
+            strName = strName + selectedStaff_span.eq(i).text()
+            if(i != selectedStaff_span.length - 1){
+                strID = strID + '_'
+                strName = strName + '、'
+            }
+        }
+        $('#modal-contractResponsibleName').attr('value', strID)
+        $('#modal-contractResponsibleName').val(strName)
+    }else if($(thisObj).attr('value') == 'contractStaffs'){
+        var selectedStaff_span = $('.selectedStaff-span')
+        var strID = ''
+        var strName = ''
+        for(var i = 0; i < selectedStaff_span.length; i++){
+            strID = strID + selectedStaff_span.eq(i).attr('value')
+            strName = strName + selectedStaff_span.eq(i).text()
+            if(i != selectedStaff_span.length - 1){
+                strID = strID + '_'
+                strName = strName + '、'
+            }
+        }
+        $('#modal-contractStaffs').attr('value', strID)
+        $('#modal-contractStaffs').val(strName)
+    }else if($(thisObj).attr('value') == 'updateProjectResponsibleName'){
+        var selectedStaff_span = $('.selectedStaff-span')
+        var strID = ''
+        var strName = ''
+        for(var i = 0; i < selectedStaff_span.length; i++){
+            strID = strID + selectedStaff_span.eq(i).attr('value')
+            strName = strName + selectedStaff_span.eq(i).text()
+            if(i != selectedStaff_span.length - 1){
+                strID = strID + '_'
+                strName = strName + '、'
+            }
+        }
+        $('#modal-updateProjectResponsibleName').attr('value', strID)
+        $('#modal-updateProjectResponsibleName').val(strName)
+    }else if($(thisObj).attr('value') == 'updateProjectStaffs'){
+        var selectedStaff_span = $('.selectedStaff-span')
+        var strID = ''
+        var strName = ''
+        for(var i = 0; i < selectedStaff_span.length; i++){
+            strID = strID + selectedStaff_span.eq(i).attr('value')
+            strName = strName + selectedStaff_span.eq(i).text()
+            if(i != selectedStaff_span.length - 1){
+                strID = strID + '_'
+                strName = strName + '、'
+            }
+        }
+        $('#modal-updateProjectStaffs').attr('value', strID)
+        $('#modal-updateProjectStaffs').val(strName)
+    }
+
+}
+/*
+设置项目收款记录表modal/
+ */
+function setProjectReceiptModalInformation(thisObj) {
+    var td = $(thisObj).parent().parent().parent().find('td')
+    $('#projectReceipt-projectName-th').attr('value-id', td.eq(1).text())
+    $('#projectReceipt-projectName-th').attr('value-name', td.eq(2).text())
+    var projectID = td.eq(1).text()
+    $.ajax({
+        url:ipPort + '/projectReceipt/getByProjectByPage?project=' + projectID,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                setProjectReceiptModalTableInformation(obj)
+            }
+            else{
+                alert(obj.message)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+设置项目收款记录表Table/
+ */
+function setProjectReceiptModalTableInformation(obj) {
+    if(obj.data.numberOfElements != 0){
+        var table_trr = $('.table-trr')
+        var projectReceipt_projectName = $('.projectReceipt-projectName')
+        var projectReceipt_price = $('.projectReceipt-price')
+        var projectReceipt_time = $('.projectReceipt-time')
+        var projectReceipt_description = $('.projectReceipt-description')
+        var projectReceipt_operator = $('.projectReceipt-operator')
+        for(var  i = 0; i < obj.data.numberOfElements; i++){
+            table_trr.eq(i).removeClass('hidden')
+            if(obj.data.content[i].project){
+                projectReceipt_projectName.eq(i).text(obj.data.content[i].project.name)
+                projectReceipt_projectName.eq(i).attr('value', obj.data.content[i].project.id)
+            }else {
+                projectReceipt_projectName.eq(i).text('')
+                projectReceipt_projectName.eq(i).attr('value', '')
+            }
+            projectReceipt_price.eq(i).text(obj.data.content[i].price)
+            projectReceipt_time.eq(i).text(obj.data.content[i].time)
+            projectReceipt_description.eq(i).text(obj.data.content[i].description)
+            if(obj.data.content[i].operator){
+                projectReceipt_operator.eq(i).text(obj.data.content[i].operator.name)
+                projectReceipt_operator.eq(i).attr('value', obj.data.content[i].operator.id)
+            }else {
+                projectReceipt_operator.eq(i).text('')
+                projectReceipt_operator.eq(i).attr('value', '')
+            }
+        }
+        for (var i = obj.data.numberOfElements; i < 50; i++){
+            table_trr.eq(i).addClass('hidden')
+        }
+    }else{
+        for (var i = 0; i < 50; i++){
+            var table_trr = $('.table-trr')
+            table_trr.eq(i).addClass('hidden')
+        }
+    }
+}
+/*
+设置添加收款记录modal/
+ */
+function setAddProjectReceiptModalInformation() {
+    $('#modal-addProjectReceipt-price').val('')
+    $('#modal-addProjectReceipt-description').val('')
+    $('#modal-addProjectReceipt-operator').val('')
+    $('#modal-addProjectReceipt-projectName').val($('#projectReceipt-projectName-th').attr('value-name'))
+    $('#modal-addProjectReceipt-projectName').attr('value', $('#projectReceipt-projectName-th').attr('value-id'))
+    // var format = ''
+    // var nTime = new Date()
+    // format += nTime.getFullYear()+"-";
+    // format += (nTime.getMonth()+1)<10?"0"+(nTime.getMonth()+1):(nTime.getMonth()+1);
+    // format += "-";
+    // format += nTime.getDate()<10?"0"+(nTime.getDate()):(nTime.getDate());
+    // format += "T";
+    // format += nTime.getHours()<10?"0"+(nTime.getHours()):(nTime.getHours());
+    // format += ":";
+    // format += nTime.getMinutes()<10?"0"+(nTime.getMinutes()):(nTime.getMinutes());
+    // format += ":00";
+    // document.getElementById("modal-addProjectReceipt-time").value = format
+}
+/*
+添加收款记录/
+ */
+function addProjectReceipt() {
+    var projectID = $('#modal-addProjectReceipt-projectName').attr('value')
+    var price = $('#modal-addProjectReceipt-price').val()
+    // var time = new Date(($('#modal-addProjectReceipt-time').val()))
+    // time = (time.toLocaleString()).replace(/\//g, '-')
+    // time = time.replace('上午', '')
+    // time = time.replace('下午', '')
+    var description = $('#modal-addProjectReceipt-description').val()
+    var operator = $('#modal-addProjectReceipt-operator').attr('value')
+    var urlStr = ipPort + '/projectReceipt/add?project=' + projectID + '&price=' + price + '&description=' + description + '&operator=' + operator
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                alert(obj.message)
+            }
+            else{
+                alert(obj.message)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+
+/*
+获取所有员工姓名/
+ */
+function getAllOneStaff() {
+    var staffInformationDepartmentA = $('.selectOneStaff-department-ul .selectOneStaff-department-li .departmentName-span')
+    $.ajax({
+        url:ipPort + '/department/getAll',
+        dataType:'json',
+        success:function (obj) {
+            for(var i = 0; i < obj.data.length; i++){
+                staffInformationDepartmentA.eq(i).parent().removeClass('hidden')
+                staffInformationDepartmentA.eq(i).text(obj.data[i].name)
+                staffInformationDepartmentA.eq(i).attr('value', obj.data[i].id)
+                staffInformationDepartmentA.eq(i).parent().find('li').remove()
+            }
+            $.ajax({
+                url:ipPort + '/user/getAll',
+                dataType:'json',
+                success:function (obj_) {
+                    if(obj_.data.length != 0){
+                        for(var j = 0; j < obj_.data.length; j++){
+                            for(var m = 0; m < obj.data.length; m++){
+                                if(obj_.data[j].department.id == obj.data[m].id){
+                                    var staffUl = staffInformationDepartmentA.eq(m).parent().find('.selectOneStaff-staff-ul')
+                                    var appendStr = '<li data-dismiss="modal" onclick="selectedOneStaff(this)"><img src="imgs/mine.png" height="20px" style="margin-top: -2px"><span ' + 'value="' + obj_.data[j].id + '">' + obj_.data[j].name + '</span></li>'
+                                    staffUl.append(appendStr)
+                                    break
+                                }
+                            }
+                        }
+                    }
+                },
+                error:function (error) {
+                    console.log(error)
+                }
+            })
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+选区人员/
+ */
+function selectedOneStaff(thisObj) {
+    $('#modal-addProjectReceipt-operator').val( $(thisObj).find("span").text())
+    $('#modal-addProjectReceipt-operator').attr('value', $(thisObj).find("span").attr("value"))
 }
