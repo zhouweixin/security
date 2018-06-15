@@ -12,7 +12,7 @@
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/style.js"></script>
-    <script src="js/attendanceClassManager.js"></script>
+    <script src="js/attendanceClassType.js"></script>
 
     <style type="text/css" rel="stylesheet">
         .tbody-td-id{
@@ -81,12 +81,12 @@
                             考勤组管理
                         </a>
                     </li>
-                    <li class="sub-menu-li sub-li-active">
+                    <li class="sub-menu-li">
                         <a href="attendanceClassManager.html" class="sub-menu-link">
                             班次管理
                         </a>
                     </li>
-                    <li class="sub-menu-li">
+                    <li class="sub-menu-li sub-li-active">
                         <a href="attendanceClassType.html" class="sub-menu-link">
                             班次类型
                         </a>
@@ -119,11 +119,6 @@
                             原始记录
                         </a>
                     </li>
-                    <li class="sub-menu-li">
-                        <a href="attendanceClassType.html" class="sub-menu-link">
-                            班次类型
-                        </a>
-                    </li>
                 </ul>
             </li>
         </ul>
@@ -132,7 +127,7 @@
         <div class="nav-path">
             <div class="path-title">
                 <ul class="path-ul">
-                    <li>班次管理</li>
+                    <li>班次类型</li>
                 </ul>
             </div>
         </div>
@@ -141,18 +136,15 @@
                 <div class="search-content" style="height: 34px;">
                     <div class="search-left">
                         <div class="input-group col-xs-4">
-                            <input type="text" class="form-control" id="schedule_name" placeholder="请输入班次名称">
+                            <input type="text" class="form-control" id="Cname" placeholder="请输入班次类型名称">
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" onclick="searchScheduleByName()">搜索</button>
-                                 <button class="btn btn-default" type="button" onclick="getAllScheduleInformation()">搜索全部</button>
+                                <button class="btn btn-default" type="button" onclick="searchCByName()">搜索</button>
+                                 <button class="btn btn-default" type="button" onclick="getClassType()">搜索全部</button>
                             </span>
                         </div>
                     </div>
                     <div class="search-right">
                         <span class="btn-group">
-                            <button class="btn btn-default" type="button"  data-toggle="modal" data-target="#myModal-addClass">
-                            添加班次
-                            </button>
                             <button class="btn btn-default" type="button"  data-toggle="modal" data-target="#myModal-addClassType">
                             添加班次类型
                             </button>
@@ -163,99 +155,91 @@
             <div class="table-body">
                 <table class="table table-striped">
                     <thead >
-                    <tr>
-                        <th><input id="select-all" class="select-box" type="checkbox"> 班次ID</th>
-                        <th>班次名称</th>
-                        <th>操作<a class="deleteClassInBatch-button" onclick="deleteClassInBatch()">批量删除</a></th>
-                    </tr>
+                        <th><input id="select-all" class="select-box" type="checkbox">编号</th>
+                        <th>名称</th>
+                        <th>上班时间</th>
+                        <th>下班时间</th>
+                        <th>提前打卡(分钟)</th>
+                        <th>结束打卡(分钟)</th>
+                        <th>开始休息时间</th>
+                        <th>结束休息时间</th>
+                        <th>班次ID</th>
+                        <th>操作<a class="deleteDepartmentInBatch-button" onclick="deleteDepartmentInBatch()">批量删除</a></th>
                     </thead>
                     <tbody>
                     <tr class="table-tr hidden">
-                        <td class="class-id tbody-td-id"></td>
-                        <td class="class-name"></td>
+                        <td class="id tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="name"></td>
+                        <td class="startWorkTime"></td>
+                        <td class="endWorkTime"></td>
+                        <td class="beforeTime"></td>
+                        <td class="afterTime"></td>
+                        <td class="startBreakTime"></td>
+                        <td class="endBreakTime"></td>
+                        <td class="schedule"></td>
                         <td class="operating">
-                            <a class="edit-a">编辑</a>
-                            <a onclick="deleteSchedule(this)" >删除</a>
+                            <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyDepartment" onclick="setModifyModalInformation(this)">修改</a>
+                            <a onclick="deleteClass(this)">删除</a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
-                        <td class="class-id tbody-td-id"></td>
-                        <td class="class-name"></td>
+                        <td class="id tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="name"></td>
+                        <td class="startWorkTime"></td>
+                        <td class="endWorkTime"></td>
+                        <td class="beforeTime"></td>
+                        <td class="afterTime"></td>
+                        <td class="startBreakTime"></td>
+                        <td class="endBreakTime"></td>
+                        <td class="schedule"></td>
                         <td class="operating">
-                            <a class="edit-a">编辑</a>
-                            <a onclick="deleteSchedule(this)" >删除</a>
+                            <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyDepartment" onclick="setModifyModalInformation(this)">修改</a>
+                            <a onclick="deleteClass(this)">删除</a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
-                        <td class="class-id tbody-td-id"></td>
-                        <td class="class-name"></td>
+                        <td class="id tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="name"></td>
+                        <td class="startWorkTime"></td>
+                        <td class="endWorkTime"></td>
+                        <td class="beforeTime"></td>
+                        <td class="afterTime"></td>
+                        <td class="startBreakTime"></td>
+                        <td class="endBreakTime"></td>
+                        <td class="schedule"></td>
                         <td class="operating">
-                            <a class="edit-a">编辑</a>
-                            <a onclick="deleteSchedule(this)" >删除</a>
+                            <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyDepartment" onclick="setModifyModalInformation(this)">修改</a>
+                            <a onclick="deleteClass(this)">删除</a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
-                        <td class="class-id tbody-td-id"></td>
-                        <td class="class-name"></td>
+                        <td class="id tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="name"></td>
+                        <td class="startWorkTime"></td>
+                        <td class="endWorkTime"></td>
+                        <td class="beforeTime"></td>
+                        <td class="afterTime"></td>
+                        <td class="startBreakTime"></td>
+                        <td class="endBreakTime"></td>
+                        <td class="schedule"></td>
                         <td class="operating">
-                            <a class="edit-a">编辑</a>
-                            <a onclick="deleteSchedule(this)" >删除</a>
+                            <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyDepartment" onclick="setModifyModalInformation(this)">修改</a>
+                            <a onclick="deleteClass(this)">删除</a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
-                        <td class="class-id tbody-td-id"></td>
-                        <td class="class-name"></td>
+                        <td class="id tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="name"></td>
+                        <td class="startWorkTime"></td>
+                        <td class="endWorkTime"></td>
+                        <td class="beforeTime"></td>
+                        <td class="afterTime"></td>
+                        <td class="startBreakTime"></td>
+                        <td class="endBreakTime"></td>
+                        <td class="schedule"></td>
                         <td class="operating">
-                            <a class="edit-a">编辑</a>
-                            <a onclick="deleteSchedule(this)" >删除</a>
-                        </td>
-                    </tr>
-                    <tr class="table-tr hidden">
-                        <td class="class-id tbody-td-id"></td>
-                        <td class="class-name"></td>
-                        <td class="operating">
-                            <a class="edit-a">编辑</a>
-                            <a onclick="deleteSchedule(this)" >删除</a>
-                        </td>
-                    </tr>
-                    <tr class="table-tr hidden">
-                        <td class="class-id tbody-td-id"></td>
-                        <td class="class-name"></td>
-                        <td class="operating">
-                            <a class="edit-a">编辑</a>
-                            <a onclick="deleteSchedule(this)" >删除</a>
-                        </td>
-                    </tr>
-                    <tr class="table-tr hidden">
-                        <td class="class-id tbody-td-id"></td>
-                        <td class="class-name"></td>
-                        <td class="operating">
-                            <a class="edit-a">编辑</a>
-                            <a onclick="deleteSchedule(this)" >删除</a>
-                        </td>
-                    </tr>
-                    <tr class="table-tr hidden">
-                        <td class="class-id tbody-td-id"></td>
-                        <td class="class-name"></td>
-                        <td class="operating">
-                            <a class="edit-a">编辑</a>
-                            <a onclick="deleteSchedule(this)" >删除</a>
-                        </td>
-                    </tr>
-                    <tr class="table-tr hidden">
-                        <td class="class-id tbody-td-id"></td>
-                        <td class="class-name"></td>
-                        <td class="operating">
-                            <a class="edit-a">编辑</a>
-                            <a onclick="deleteSchedule(this)" >删除</a>
-                        </td>
-                    </tr>
-                    <tr class="table-tr hidden">
-                        <td class="class-id tbody-td-id"></td>
-                        <td class="class-name"></td>
-                        <td class="operating">
-                            <a class="edit-a">编辑</a>
-                            <a onclick="deleteSchedule(this)" >删除</a>
+                            <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyDepartment" onclick="setModifyModalInformation(this)">修改</a>
+                            <a onclick="deleteClass(this)">删除</a>
                         </td>
                     </tr>
                     </tbody>
@@ -267,7 +251,7 @@
                         <div class="input-group" style="width: 110px">
                             <input type="text" id="page_num" class="form-control" placeholder="0">
                             <span class="input-group-btn">
-                                <button id="jump-button" onclick="" class="btn btn-default" type="button">跳转</button>
+                                <button id="jump-button" onclick="getClassType()" class="btn btn-default" type="button">跳转</button>
                              </span>
                         </div>
                     </li>
