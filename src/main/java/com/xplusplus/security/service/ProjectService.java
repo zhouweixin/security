@@ -93,10 +93,10 @@ public class ProjectService {
 		// 计算周期
 		project.setPeriod(GlobalUtil.computePeriod(project.getStartDate(), project.getEndDate()));
 
-        Project save = projectRepository.save(project);
+		Project save = projectRepository.save(project);
 
-        // 分配用户到项目
-        projectUserService.assignUsersToProject(save.getId(), userIds);
+		// 分配用户到项目
+		projectUserService.assignUsersToProject(project.getId(), userIds);
 
 		return save;
 	}
