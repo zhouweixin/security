@@ -33,7 +33,7 @@ function getClassType(){
     var sortFieldName = 'id'
     var asc = 1
     var urlStr =  'http://39.108.89.212:8080/security/scheduleType/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    alert(urlStr)
+   // alert(urlStr)
     $.ajax({
         url:urlStr,
         dataType:'json',
@@ -104,7 +104,7 @@ function searchCByName() {
     var asc = 1;
     var name =$('#Cname').val();
     var urlStr = 'http://39.108.89.212:8080/security/scheduleType/getByNameLikeByPage?page='+ page +'&name='+ name + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc;
-    alert(urlStr);
+   // alert(urlStr);
     $.ajax({
         url:urlStr,
         dataType:'json',

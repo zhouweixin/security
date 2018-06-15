@@ -273,7 +273,7 @@ function deleteGroup(thisObj) {
         success:function (obj) {
             if(obj.code == 0){
                 alert("删除信息成功！");
-                setAllGroupInformation(obj)
+                getAllGroupInformation()
             }else {
                 alert(obj.message)
             }
@@ -362,7 +362,7 @@ function setgUserInformation2(obj) {  // 将员工信息填入表中
 
 
 /* ******************************修改考勤组----通过考勤组ID获取所有负责人的信息****************************** */
-function getGroupLeaders(){
+/*function getGroupLeaders(){
     var td = $(obj).parent().parent().find('td')
     $('#modal-modifygroupID').val(td.eq(0).text())
     var groupid= $('#modal-modifygroupId');
@@ -396,7 +396,7 @@ function setGroupLeaders(obj){
 }
 
 /* ******************************修改考勤组----通过考勤组ID获取所有员工的信息（分页 ）****************************** */
-function getGroupUsers(){
+/*  function getGroupUsers(){
     var groupid= $('#modal-modifygroupId');
     var urlStr = 'http://39.108.89.212:8080/security/attendanceGroup/getUsers?id='+ groupid ;
     alert(urlStr);

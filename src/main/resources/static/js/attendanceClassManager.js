@@ -150,7 +150,7 @@ function addScheduleType() {
         var urlStr = 'http://39.108.89.212:8080/security/scheduleType/add?name=' + classTypeName + '&startTime=' + workTime1 + '&endTime=' + workTime2 + '&beforeMinute=' + punchTime1 + '&afterMinute=' + punchTime2
             + '&startBreakTime=' + breakTime1 + '&endBreakTime=' + breakTime2 + '&schedule=' + classId;
         // http://39.108.89.212:8080/security/scheduleType/add?name=%E7%99%BD%E7%8F%AD&startTime=08:00&endTime=12:00&beforeMinute=5&afterMinute=5&startBreakTime=10:00&endBreakTime=10:30&schedule=1
-        alert(urlStr);
+      //  alert(urlStr);
         $.ajax({
             url: urlStr,
             dataType: 'json',
@@ -178,7 +178,7 @@ function searchScheduleByName() {
     var asc = 1;
     var name =$('#schedule_name').val();
     var urlStr = 'http://39.108.89.212:8080/security/schedule/getByNameLikeByPage?page='+ page +'&name='+ name + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc;
-    alert(urlStr);
+  //  alert(urlStr);
     $.ajax({
         url:urlStr,
         dataType:'json',
