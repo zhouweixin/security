@@ -44,7 +44,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="personnelList.html">人事</a></li>
-                <li class="active"><a href="attendanceManagement.html">考勤</a></li>
+                <li class="active"><a href="attendanceHomePage.html">考勤</a></li>
                 <li><a href="salaryManagement.html">薪酬</a></li>
                 <li><a href="processManagement.html">流程</a></li>
                 <li><a href="assetsManagement.html">资产</a></li>
@@ -144,9 +144,14 @@
                         </div>
                     </div>
                     <div class="search-right">
-                        <button class="btn btn-default" type="button" data-toggle="modal" data-target="#myModal-addClass">
+                        <span class="btn-group">
+                            <button class="btn btn-default" type="button"  data-toggle="modal" data-target="#myModal-addClass">
                             添加班次
-                        </button>
+                            </button>
+                            <button class="btn btn-default" type="button"  data-toggle="modal" data-target="#myModal-addClassType">
+                            添加班次类型
+                            </button>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -165,7 +170,7 @@
                         <td class="class-name"></td>
                         <td class="operating">
                             <a class="edit-a">编辑</a>
-                            <a onclick="deleteSchedule()" >删除</a>
+                            <a onclick="deleteSchedule(this)" >删除</a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
@@ -173,7 +178,7 @@
                         <td class="class-name"></td>
                         <td class="operating">
                             <a class="edit-a">编辑</a>
-                            <a onclick="deleteSchedule()" >删除</a>
+                            <a onclick="deleteSchedule(this)" >删除</a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
@@ -181,7 +186,7 @@
                         <td class="class-name"></td>
                         <td class="operating">
                             <a class="edit-a">编辑</a>
-                            <a onclick="deleteSchedule()" >删除</a>
+                            <a onclick="deleteSchedule(this)" >删除</a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
@@ -189,7 +194,7 @@
                         <td class="class-name"></td>
                         <td class="operating">
                             <a class="edit-a">编辑</a>
-                            <a onclick="deleteSchedule()" >删除</a>
+                            <a onclick="deleteSchedule(this)" >删除</a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
@@ -197,7 +202,55 @@
                         <td class="class-name"></td>
                         <td class="operating">
                             <a class="edit-a">编辑</a>
-                            <a onclick="deleteSchedule()" >删除</a>
+                            <a onclick="deleteSchedule(this)" >删除</a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="class-id tbody-td-id"></td>
+                        <td class="class-name"></td>
+                        <td class="operating">
+                            <a class="edit-a">编辑</a>
+                            <a onclick="deleteSchedule(this)" >删除</a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="class-id tbody-td-id"></td>
+                        <td class="class-name"></td>
+                        <td class="operating">
+                            <a class="edit-a">编辑</a>
+                            <a onclick="deleteSchedule(this)" >删除</a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="class-id tbody-td-id"></td>
+                        <td class="class-name"></td>
+                        <td class="operating">
+                            <a class="edit-a">编辑</a>
+                            <a onclick="deleteSchedule(this)" >删除</a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="class-id tbody-td-id"></td>
+                        <td class="class-name"></td>
+                        <td class="operating">
+                            <a class="edit-a">编辑</a>
+                            <a onclick="deleteSchedule(this)" >删除</a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="class-id tbody-td-id"></td>
+                        <td class="class-name"></td>
+                        <td class="operating">
+                            <a class="edit-a">编辑</a>
+                            <a onclick="deleteSchedule(this)" >删除</a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="class-id tbody-td-id"></td>
+                        <td class="class-name"></td>
+                        <td class="operating">
+                            <a class="edit-a">编辑</a>
+                            <a onclick="deleteSchedule(this)" >删除</a>
                         </td>
                     </tr>
                     </tbody>
@@ -221,12 +274,13 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="myModal-addClass" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">添加班次</h4>
+                <h4 class="modal-title" >添加班次</h4>
             </div>
             <div class="modal-body" style="padding: 15px 20px;font-size: 12px">
                 <form class="form-horizontal">
@@ -236,7 +290,37 @@
                             <input type="text" class="form-control" id="modal-className" >
                         </div>
                     </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="addSchedule()" data-dismiss="modal">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
 
+<div class="modal fade" id="myModal-addClassType" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">添加班次类型</h4>
+            </div>
+            <div class="modal-body" style="padding: 15px 20px;font-size: 12px">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="modal-classTypeName" class="col-xs-2 control-label">班次类型名称</label>
+                        <div class="col-xs-4">
+                            <input type="text" class="form-control" id="modal-classTypeName" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-classId" class="col-xs-2 control-label">班次ID</label>
+                        <div class="col-xs-4">
+                            <input type="text" class="form-control" id="modal-classId" >
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <label class="col-xs-2 control-label">打卡时间</label>
@@ -306,10 +390,11 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary">确认</button>
+                <button type="button" class="btn btn-primary" onclick="addScheduleType()" data-dismiss="modal">确认</button>
             </div>
         </div>
     </div>
 </div>
+
 </body>
 </html>
