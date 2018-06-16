@@ -93,7 +93,6 @@ function addSchedule() {
     var className = $('#modal-className').val();
     if(!className){
         alert("请输入班次名称！");
-
     }else {
         var urlStr = 'http://39.108.89.212:8080/security/schedule/add?name=' + className;
       //  alert(urlStr)
@@ -123,22 +122,18 @@ function addScheduleType() {
     var punchTime2 = $('#modal-goOffPunchTime').val();
 
     $('#modal-startWorkTime').change(function(){
-
         $('#modal-startWorkTime').attr("value",$(this).val()); //赋值
     });
 
     $('#modal-goOffWorkTime').change(function(){
-
         $('#modal-goOffWorkTime').attr("value",$(this).val()); //赋值
     });
 
     $('#modal-startBreakTime').change(function(){
-
         $('#modal-startBreakTime').attr("value",$(this).val()); //赋值
     });
 
     $('#modal-goOffBreakTime').change(function(){
-
         $('#modal-goOffBreakTime').attr("value",$(this).val()); //赋值
     });
 
@@ -194,7 +189,6 @@ function searchScheduleByName() {
             console.log(error)
         }
     })
-
 }
 
 /*-----------------------------------------修改班次信息-------------------------------------------------------------*/
@@ -203,7 +197,6 @@ function setModifyClass(obj){
     $('#modal-modifyClassID').val(td.eq(0).text())
     $('#modal-modifyClassName').val(td.eq(1).text())
 }
-
 function modifyClass(){
     var classID = $('#modal-modifyClassID').val()
     var className = $('#modal-modifyClassName').val()

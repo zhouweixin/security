@@ -433,7 +433,7 @@ function setModifyGroupInformation(obj) {
     $('#modal-modifygroupId').val(td.eq(0).text())
     $('#modal-modifygroupName').val(td.eq(1).text())
   //  getGroupLeaders(obj)
-   // getGroupUsers(obj)
+    // getGroupUsers(obj)
 
 }
 

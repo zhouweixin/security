@@ -67,7 +67,6 @@ function setScheduleType(obj) {
         btime.eq(i).text(obj.data.content[i].beforeMinute);
         atime.eq(i).text(obj.data.content[i].afterMinute);
         s_id.eq(i).text(obj.data.content[i].schedule.id);
-
     }
     for (var i = obj.data.numberOfElements; i < 5; i++){
         table_tr.eq(i).addClass('hidden')
@@ -151,8 +150,7 @@ function modifyScheduleType(){
     }else {
         var urlStr = 'http://39.108.89.212:8080/security/scheduleType/update?name=' + classTypeName + '&id='+ classTypeId + '&startTime=' + workTime1 + '&endTime=' + workTime2 + '&beforeMinute=' + punchTime1 + '&afterMinute=' + punchTime2
             + '&startBreakTime=' + breakTime1 + '&endBreakTime=' + breakTime2 + '&schedule=' + classId;
-        // http://39.108.89.212:8080/security/scheduleType/add?name=%E7%99%BD%E7%8F%AD&startTime=08:00&endTime=12:00&beforeMinute=5&afterMinute=5&startBreakTime=10:00&endBreakTime=10:30&schedule=1
-         alert(urlStr);
+         //alert(urlStr);
         $.ajax({
             url: urlStr,
             dataType: 'json',
