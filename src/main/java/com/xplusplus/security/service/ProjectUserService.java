@@ -214,14 +214,25 @@ public class ProjectUserService {
      */
 	@Transactional
 	public int assignUsersToProject(Long projectId, String[] userIds) {
+
+		if(userIds == null){
+            throw new SecurityExceptions(EnumExceptions.FAILED_NOT_USERIDS);
+		}
+
 	    // 验证项目是否存在
         Project project = projectRepository.findOne(projectId);
         if(project == null){
             throw new SecurityExceptions(EnumExceptions.ASSIGN_FAILED_PROJECT_NOT_EXIST);
         }
 
-        // 删除已分配的记录
-        projectUserRepository.deleteByProject(project);
+        while(true) {
+            // 删除已分配的记录
+            projectUserRepository.deleteByProject(project);
+            List<ProjectUser> projectUsers = projectUserRepository.findByProject(project);
+            if(projectUsers == null || projectUsers.size() == 0){
+                break;
+            }
+        }
 
         // 用set去重
         HashSet<String> userIdSet = new HashSet<>(Arrays.asList(userIds));

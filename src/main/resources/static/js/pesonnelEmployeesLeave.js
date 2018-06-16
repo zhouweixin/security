@@ -11,44 +11,28 @@ $(document).ready(function () {
     })
 
     var leavingTabSelectDepartmentA = $('.leavingTab-selectDepartment-ul li a')
-    for(var i = 1; i < departmentsName.length + 1; i++){
-        leavingTabSelectDepartmentA.eq(i).parent().removeClass('hidden')
-        leavingTabSelectDepartmentA.eq(i).text(departmentsName[i - 1])
-        leavingTabSelectDepartmentA.eq(i).attr('value', departmentsID[i - 1])
-    }
+    getAllDepartmentsName(leavingTabSelectDepartmentA)
     $('.leavingTab-selectDepartment-ul li a').on('click', function () {
         $('#leavingTab-selectDepartment').html($(this).text() + '<span style="margin-left:4px" class="caret"></span>')
         $('#leavingTab-selectDepartment').attr('value', $(this).attr('value'))
     })
 
     var leftTabSelectDepartmentA = $('.leftTab-selectDepartment-ul li a')
-    for(var i = 1; i < departmentsName.length + 1; i++){
-        leftTabSelectDepartmentA.eq(i).parent().removeClass('hidden')
-        leftTabSelectDepartmentA.eq(i).text(departmentsName[i - 1])
-        leftTabSelectDepartmentA.eq(i).attr('value', departmentsID[i - 1])
-    }
+    getAllDepartmentsName(leftTabSelectDepartmentA)
     $('.leftTab-selectDepartment-ul li a').on('click', function () {
         $('#leftTab-selectDepartment').html($(this).text() + '<span style="margin-left:4px" class="caret"></span>')
         $('#leftTab-selectDepartment').attr('value', $(this).attr('value'))
     })
 
     var allTabSelectDepartmentA = $('.allTab-selectDepartment-ul li a')
-    for(var i = 1; i < departmentsName.length + 1; i++){
-        allTabSelectDepartmentA.eq(i).parent().removeClass('hidden')
-        allTabSelectDepartmentA.eq(i).text(departmentsName[i - 1])
-        allTabSelectDepartmentA.eq(i).attr('value', departmentsID[i - 1])
-    }
+    getAllDepartmentsName(allTabSelectDepartmentA)
     $('.allTab-selectDepartment-ul li a').on('click', function () {
         $('#allTab-selectDepartment').html($(this).text() + '<span style="margin-left:4px" class="caret"></span>')
         $('#allTab-selectDepartment').attr('value', $(this).attr('value'))
     })
 
     var leftAndBanTabSelectDepartmentA = $('.leftAndBanTab-selectDepartment-ul li a')
-    for(var i = 1; i < departmentsName.length + 1; i++){
-        leftAndBanTabSelectDepartmentA.eq(i).parent().removeClass('hidden')
-        leftAndBanTabSelectDepartmentA.eq(i).text(departmentsName[i - 1])
-        leftAndBanTabSelectDepartmentA.eq(i).attr('value', departmentsID[i - 1])
-    }
+    getAllDepartmentsName(leftAndBanTabSelectDepartmentA)
     $('.leftAndBanTab-selectDepartment-ul li a').on('click', function () {
         $('#leftAndBanTab-selectDepartment').html($(this).text() + '<span style="margin-left:4px" class="caret"></span>')
         $('#leftAndBanTab-selectDepartment').attr('value', $(this).attr('value'))
@@ -287,7 +271,6 @@ function leftAndBanTabGetAllStaffInformation() {
 设置全部离职table/
  */
 function setAllLeaveStaffTableInformation(obj) {
-    console.log(obj)
     var table_tr = $('.table-tr')
     if(obj.data.numberOfElements > 0){
         var staffName = $('.allTab-staff-name')
@@ -304,12 +287,18 @@ function setAllLeaveStaffTableInformation(obj) {
                 staffName.eq(i).text(obj.data.content[j].name)
                 staffName.eq(i).attr('value', obj.data.content[j].id)
                 staffID.eq(i).text(obj.data.content[j].id)
-                staffDepartment.eq(i).text(obj.data.content[j].department.name)
-                staffRole.eq(i).text(obj.data.content[j].role.name)
-                staffJobNature.eq(i).text(obj.data.content[j].jobNature.name)
-                staffJobNature.eq(i).attr('value', obj.data.content[j].jobNature.id)
+                if(obj.data.content[j].department){
+                    staffDepartment.eq(i).text(obj.data.content[j].department.name)
+                }
+                if(obj.data.content[j].role){
+                    staffRole.eq(i).text(obj.data.content[j].role.name)
+                }
+                if(obj.data.content[j].jobNature){
+                    staffJobNature.eq(i).text(obj.data.content[j].jobNature.name)
+                    staffJobNature.eq(i).attr('value', obj.data.content[j].jobNature.id)
+                }
                 staffJoinDate.eq(i).text(obj.data.content[j].employDate)
-                staffLeaveDate.eq(i).text('')
+                staffLeaveDate.eq(i).text(obj.data.content[j].resignDate)
                 i++
                 number++
             }
@@ -339,12 +328,18 @@ function setLeftLeaveStaffTableInformation(obj) {
                 staffName.eq(i).text(obj.data.content[j].name)
                 staffName.eq(i).attr('value', obj.data.content[j].id)
                 staffID.eq(i).text(obj.data.content[j].id)
-                staffDepartment.eq(i).text(obj.data.content[j].department.name)
-                staffRole.eq(i).text(obj.data.content[j].role.name)
-                staffJobNature.eq(i).text(obj.data.content[j].jobNature.name)
-                staffJobNature.eq(i).attr('value', obj.data.content[j].jobNature.id)
+                if(obj.data.content[j].department){
+                    staffDepartment.eq(i).text(obj.data.content[j].department.name)
+                }
+                if(obj.data.content[j].role){
+                    staffRole.eq(i).text(obj.data.content[j].role.name)
+                }
+                if(obj.data.content[j].jobNature){
+                    staffJobNature.eq(i).text(obj.data.content[j].jobNature.name)
+                    staffJobNature.eq(i).attr('value', obj.data.content[j].jobNature.id)
+                }
                 staffJoinDate.eq(i).text(obj.data.content[j].employDate)
-                staffLeaveDate.eq(i).text('')
+                staffLeaveDate.eq(i).text(obj.data.content[j].resignDate)
                 i++
                 number++
             }
@@ -374,12 +369,18 @@ function setLeavingLeaveStaffTableInformation(obj) {
                 staffName.eq(i).text(obj.data.content[j].name)
                 staffName.eq(i).attr('value', obj.data.content[j].id)
                 staffID.eq(i).text(obj.data.content[j].id)
-                staffDepartment.eq(i).text(obj.data.content[j].department.name)
-                staffRole.eq(i).text(obj.data.content[j].role.name)
-                staffJobNature.eq(i).text(obj.data.content[j].jobNature.name)
-                staffJobNature.eq(i).attr('value', obj.data.content[j].jobNature.id)
+                if(obj.data.content[j].department){
+                    staffDepartment.eq(i).text(obj.data.content[j].department.name)
+                }
+                if(obj.data.content[j].role){
+                    staffRole.eq(i).text(obj.data.content[j].role.name)
+                }
+                if(obj.data.content[j].jobNature){
+                    staffJobNature.eq(i).text(obj.data.content[j].jobNature.name)
+                    staffJobNature.eq(i).attr('value', obj.data.content[j].jobNature.id)
+                }
                 staffJoinDate.eq(i).text(obj.data.content[j].employDate)
-                staffLeaveDate.eq(i).text('')
+                staffLeaveDate.eq(i).text(obj.data.content[j].resignDate)
                 i++
                 number++
             }
@@ -409,12 +410,18 @@ function setLeftAndBanLeaveStaffTableInformation(obj) {
                 staffName.eq(i).text(obj.data.content[j].name)
                 staffName.eq(i).attr('value', obj.data.content[j].id)
                 staffID.eq(i).text(obj.data.content[j].id)
-                staffDepartment.eq(i).text(obj.data.content[j].department.name)
-                staffRole.eq(i).text(obj.data.content[j].role.name)
-                staffJobNature.eq(i).text(obj.data.content[j].jobNature.name)
-                staffJobNature.eq(i).attr('value', obj.data.content[j].jobNature.id)
+                if(obj.data.content[j].department){
+                    staffDepartment.eq(i).text(obj.data.content[j].department.name)
+                }
+                if(obj.data.content[j].role){
+                    staffRole.eq(i).text(obj.data.content[j].role.name)
+                }
+                if(obj.data.content[j].jobNature){
+                    staffJobNature.eq(i).text(obj.data.content[j].jobNature.name)
+                    staffJobNature.eq(i).attr('value', obj.data.content[j].jobNature.id)
+                }
                 staffJoinDate.eq(i).text(obj.data.content[j].employDate)
-                staffLeaveDate.eq(i).text('')
+                staffLeaveDate.eq(i).text(obj.data.content[j].resignDate)
                 i++
                 number++
             }
@@ -429,7 +436,8 @@ function setLeftAndBanLeaveStaffTableInformation(obj) {
  */
 function forbiddenLeftButton(thisObj) {
     var staffID = $(thisObj).parent().parent().parent().parent().parent().find('td').eq(1).text()
-    var urlStr = ipPort + '/user/update?jobNature=8' + '&id=' + staffID
+    var urlStr = ipPort + '/user/updateJobNatureById?jobNatureId=8' + '&id=' + staffID
+    console.log(urlStr)
     $.ajax({
         url:urlStr,
         dataType:'json',
@@ -451,7 +459,7 @@ function forbiddenLeftButton(thisObj) {
  */
 function recoveryJobButton(thisObj) {
     var staffID = $(thisObj).parent().parent().parent().parent().parent().find('td').eq(1).text()
-    var urlStr = ipPort + '/user/update?jobNature=1' + '&id=' + staffID
+    var urlStr = ipPort + '/user/updateJobNatureById?jobNatureId=' + 1 + '&id=' + staffID
     $.ajax({
         url:urlStr,
         dataType:'json',
@@ -486,9 +494,9 @@ function leftToProveButton(thisObj) {
     $('.entry-day-inp').val(joinDateArr[2])
     $('.leave-department-inp').val(department)
     $('.leave-position-inp').val(role)
-    $('.leave-year-inp').val()
-    $('.leave-month-inp').val()
-    $('.leave-day-inp').val()
+    $('.leave-year-inp').val(leftDate.split('-')[0])
+    $('.leave-month-inp').val(leftDate.split('-')[1])
+    $('.leave-day-inp').val(leftDate.split('-')[2])
     $('.now-year-inp').val(date.getFullYear())
     $('.now-month-inp').val(date.getMonth() + 1)
     $('.now-day-inp').val(date.getDate())

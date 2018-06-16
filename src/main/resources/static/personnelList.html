@@ -30,7 +30,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="personnelList.html">人事</a></li>
-                <li><a href="attendanceManagement.html">考勤</a></li>
+                <li><a href="attendanceHomePage.html">考勤</a></li>
                 <li><a href="salaryManagement.html">薪酬</a></li>
                 <li><a href="processManagement.html">流程</a></li>
                 <li><a href="assetsManagement.html">资产</a></li>
@@ -216,7 +216,7 @@
                         </div>
                     </div>
                     <div class="search-right">
-                        <button class="btn btn-default" onclick="deleteStaffInBatch()">批量删除</button>
+                        <button class="btn btn-default" data-toggle="modal" data-target="#myModal-makeSureDeleteInBatch">批量删除</button>
                     </div>
                 </div>
             </div>
@@ -253,7 +253,7 @@
                                 </button>
                                 <ul class="dropdown-menu table-dropdown-menu" aria-labelledby="dropdownMenu2">
                                     <li><button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" style="width: 100%;border: none"onclick="setQuitModalInformation(this)">离职</button></li>
-                                    <li><button type="button" class="btn btn-default" style="width: 100%; border: none"onclick="deleteStaff(this)">删除</button></li>
+                                    <li><button type="button" class="btn btn-default" style="width: 100%; border: none"data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)">删除</button></li>
                                 </ul>
                             </div>
                         </td>
@@ -275,7 +275,7 @@
                                 </button>
                                 <ul class="dropdown-menu table-dropdown-menu" aria-labelledby="dropdownMenu2">
                                     <li><button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" style="width: 100%;border: none"onclick="setQuitModalInformation(this)">离职</button></li>
-                                    <li><button type="button" class="btn btn-default" style="width: 100%; border: none"onclick="deleteStaff(this)">删除</button></li>
+                                    <li><button type="button" class="btn btn-default" style="width: 100%; border: none"data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)">删除</button></li>
                                 </ul>
                             </div>
                         </td>
@@ -297,7 +297,7 @@
                                 </button>
                                 <ul class="dropdown-menu table-dropdown-menu" aria-labelledby="dropdownMenu2">
                                     <li><button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" style="width: 100%;border: none"onclick="setQuitModalInformation(this)">离职</button></li>
-                                    <li><button type="button" class="btn btn-default" style="width: 100%; border: none"onclick="deleteStaff(this)">删除</button></li>
+                                    <li><button type="button" class="btn btn-default" style="width: 100%; border: none"data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)">删除</button></li>
                                 </ul>
                             </div>
                         </td>
@@ -319,7 +319,7 @@
                                 </button>
                                 <ul class="dropdown-menu table-dropdown-menu" aria-labelledby="dropdownMenu2">
                                     <li><button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" style="width: 100%;border: none"onclick="setQuitModalInformation(this)">离职</button></li>
-                                    <li><button type="button" class="btn btn-default" style="width: 100%; border: none"onclick="deleteStaff(this)">删除</button></li>
+                                    <li><button type="button" class="btn btn-default" style="width: 100%; border: none"data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)">删除</button></li>
                                 </ul>
                             </div>
                         </td>
@@ -341,7 +341,7 @@
                                 </button>
                                 <ul class="dropdown-menu table-dropdown-menu" aria-labelledby="dropdownMenu2">
                                     <li><button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" style="width: 100%;border: none"onclick="setQuitModalInformation(this)">离职</button></li>
-                                    <li><button type="button" class="btn btn-default" style="width: 100%; border: none"onclick="deleteStaff(this)">删除</button></li>
+                                    <li><button type="button" class="btn btn-default" style="width: 100%; border: none"data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)">删除</button></li>
                                 </ul>
                             </div>
                         </td>
@@ -363,7 +363,7 @@
                                 </button>
                                 <ul class="dropdown-menu table-dropdown-menu" aria-labelledby="dropdownMenu2">
                                     <li><button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" style="width: 100%;border: none"onclick="setQuitModalInformation(this)">离职</button></li>
-                                    <li><button type="button" class="btn btn-default" style="width: 100%; border: none"onclick="deleteStaff(this)">删除</button></li>
+                                    <li><button type="button" class="btn btn-default" style="width: 100%; border: none"data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)">删除</button></li>
                                 </ul>
                             </div>
                         </td>
@@ -385,7 +385,7 @@
                                 </button>
                                 <ul class="dropdown-menu table-dropdown-menu" aria-labelledby="dropdownMenu2">
                                     <li><button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" style="width: 100%;border: none"onclick="setQuitModalInformation(this)">离职</button></li>
-                                    <li><button type="button" class="btn btn-default" style="width: 100%; border: none"onclick="deleteStaff(this)">删除</button></li>
+                                    <li><button type="button" class="btn btn-default" style="width: 100%; border: none"data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)">删除</button></li>
                                 </ul>
                             </div>
                         </td>
@@ -407,7 +407,7 @@
                                 </button>
                                 <ul class="dropdown-menu table-dropdown-menu" aria-labelledby="dropdownMenu2">
                                     <li><button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" style="width: 100%;border: none"onclick="setQuitModalInformation(this)">离职</button></li>
-                                    <li><button type="button" class="btn btn-default" style="width: 100%; border: none"onclick="deleteStaff(this)">删除</button></li>
+                                    <li><button type="button" class="btn btn-default" style="width: 100%; border: none"data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)">删除</button></li>
                                 </ul>
                             </div>
                         </td>
@@ -429,7 +429,7 @@
                                 </button>
                                 <ul class="dropdown-menu table-dropdown-menu" aria-labelledby="dropdownMenu2">
                                     <li><button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" style="width: 100%;border: none"onclick="setQuitModalInformation(this)">离职</button></li>
-                                    <li><button type="button" class="btn btn-default" style="width: 100%; border: none"onclick="deleteStaff(this)">删除</button></li>
+                                    <li><button type="button" class="btn btn-default" style="width: 100%; border: none"data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)">删除</button></li>
                                 </ul>
                             </div>
                         </td>
@@ -451,7 +451,7 @@
                                 </button>
                                 <ul class="dropdown-menu table-dropdown-menu" aria-labelledby="dropdownMenu2">
                                     <li><button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" style="width: 100%;border: none"onclick="setQuitModalInformation(this)">离职</button></li>
-                                    <li><button type="button" class="btn btn-default" style="width: 100%; border: none"onclick="deleteStaff(this)">删除</button></li>
+                                    <li><button type="button" class="btn btn-default" style="width: 100%; border: none"data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)">删除</button></li>
                                 </ul>
                             </div>
                         </td>
@@ -493,7 +493,7 @@
                     <h5 class="panel-title">人员信息</h5>
                 </div>
                 <div class="panel-body">
-                    <form class="form-horizontal" style="height: 300px; overflow:visible">
+                    <form class="form-horizontal" style="height: 340px; overflow:visible">
                         <div class="form-group col-xs-6">
                             <label class="col-xs-3 control-label"><span>*</span>姓名：</label>
                             <div class="col-xs-7">
@@ -510,7 +510,7 @@
                             <label class="col-xs-3 control-label"><span>*</span>性别：</label>
                             <div class="col-xs-7">
                                 <div class="dropdown input-group">
-                                    <input id="staffInformation-sex" type="text" class="form-control" placeholder="请选择" disabled="disabled">
+                                    <input id="staffInformation-sex" type="text" value="" class="form-control" placeholder="请选择" disabled="disabled">
                                     <span class="input-group-btn">
                                     <button class="btn btn-default dropdown-toggle disable" disabled="disabled" type="button" id="select-staffInformation-sex" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="caret"></span>
@@ -527,7 +527,7 @@
                             <label class="col-xs-3 control-label">实习周期：</label>
                             <div class="col-xs-7">
                                 <div class="dropdown input-group">
-                                    <input id="staffInformation-cycle" type="text" class="form-control" placeholder="请选择" disabled="disabled">
+                                    <input id="staffInformation-cycle" type="text" value="" class="form-control" placeholder="请选择" disabled="disabled">
                                     <span class="input-group-btn">
                                     <button class="btn btn-default dropdown-toggle disable" disabled="disabled" type="button" id="select-staffInformation-cycle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="caret"></span>
@@ -549,7 +549,7 @@
                             <label class="col-xs-3 control-label"><span>*</span>部门：</label>
                             <div class="col-xs-7">
                                 <div class="dropdown input-group">
-                                    <input id="staffInformation-department" type="text" class="form-control" placeholder="请选择" disabled="disabled">
+                                    <input id="staffInformation-department" type="text" value="" class="form-control" placeholder="请选择" disabled="disabled">
                                     <span class="input-group-btn">
                                     <button class="btn btn-default dropdown-toggle disable" disabled="disabled" type="button" id="select-staffInformation-department" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="caret"></span>
@@ -585,7 +585,7 @@
                             <label class="col-xs-3 control-label"><span>*</span>职位：</label>
                             <div class="col-xs-7">
                                 <div class="dropdown input-group">
-                                    <input id="staffInformation-role" type="text" class="form-control" placeholder="请选择" disabled="disabled">
+                                    <input id="staffInformation-role" type="text" value="" class="form-control" placeholder="请选择" disabled="disabled">
                                     <span class="input-group-btn">
                                     <button  class="btn btn-default dropdown-toggle disable" disabled="disabled" type="button" id="select-staffInformation-role" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="caret"></span>
@@ -617,9 +617,9 @@
                             </div>
                         </div>
                         <div class="form-group col-xs-6">
-                            <label class="col-xs-3 control-label">入职日期：</label>
+                            <label for="staffInformation-joinDate" class="col-xs-3 control-label">入职日期：</label>
                             <div class="col-xs-7">
-                                <input id="staffInformation-joinDate" type="text" class="form-control" disabled="disabled">
+                                <input type="date" class="form-control" id="staffInformation-joinDate" disabled="disabled">
                             </div>
                         </div>
                         <div class="form-group col-xs-6">
@@ -644,7 +644,7 @@
                             <label class="col-xs-3 control-label"><span>*</span>工作性质：</label>
                             <div class="col-xs-7">
                                 <div class="dropdown input-group">
-                                    <input id="staffInformation-jobNature" type="text" class="form-control" placeholder="请选择" disabled="disabled">
+                                    <input id="staffInformation-jobNature" type="text" value="" class="form-control" placeholder="请选择" disabled="disabled">
                                     <span class="input-group-btn">
                                     <button  class="btn btn-default dropdown-toggle disable" disabled="disabled" type="button" id="select-staffInformation-jobNature" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="caret"></span>
@@ -676,6 +676,34 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group col-xs-6">
+                            <label class="col-xs-3 control-label"><span>*</span>离职类型：</label>
+                            <div class="col-xs-7">
+                                <div class="dropdown input-group">
+                                    <input id="staffInformation-resignType" type="text" value="" class="form-control" placeholder="请选择" disabled="disabled">
+                                    <span class="input-group-btn">
+                                    <button  class="btn btn-default dropdown-toggle disable" disabled="disabled" type="button" id="select-staffInformation-resignType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu staffInformation-resignType-menu-ul" aria-labelledby="select-staffInformation-resignType">
+                                        <li><a value =''>请选择</a></li>
+                                        <li class="hidden"><a></a></li>
+                                        <li class="hidden"><a></a></li>
+                                        <li class="hidden"><a></a></li>
+                                        <li class="hidden"><a></a></li>
+                                        <li class="hidden"><a></a></li>
+                                        <li class="hidden"><a></a></li>
+                                    </ul>
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-6">
+                            <label for="staffInformation-resignDate" class="col-xs-3 control-label">离职日期：</label>
+                            <div class="col-xs-7">
+                                <input type="date" class="form-control" id="staffInformation-resignDate" disabled="disabled">
+                            </div>
+                        </div>
                     </form>
                     <div class="button-body">
                         <a class="btn btn-default" value="staff" onclick="editButtonOnClick(this)">编辑</a>
@@ -700,7 +728,7 @@
                             <label class="col-xs-3 control-label">民族：</label>
                             <div class="col-xs-7">
                                 <div class="dropdown input-group">
-                                    <input id="archiveInformation-nation" type="text" class="form-control" placeholder="请选择" disabled="disabled">
+                                    <input id="archiveInformation-nation" value="" type="text" class="form-control" placeholder="请选择" disabled="disabled">
                                     <span class="input-group-btn">
                                     <button class="btn btn-default dropdown-toggle disable" type="button" disabled="disabled" id="select-archiveInformation-nation" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="caret"></span>
@@ -761,7 +789,7 @@
                             <label class="col-xs-3 control-label">婚姻状况：</label>
                             <div class="col-xs-7">
                                 <div class="dropdown input-group">
-                                    <input id="archiveInformation-maritalStatus" type="text" class="form-control" placeholder="请选择" disabled="disabled">
+                                    <input id="archiveInformation-maritalStatus" value="" type="text" class="form-control" placeholder="请选择" disabled="disabled">
                                     <span class="input-group-btn">
                                     <button class="btn btn-default dropdown-toggle disable"disabled="disabled" type="button" id="select-archiveInformation-maritalStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="caret"></span>
@@ -784,7 +812,7 @@
                             <label class="col-xs-3 control-label">兵役情况：</label>
                             <div class="col-xs-7">
                                 <div class="dropdown input-group">
-                                    <input id="archiveInformation-militaryStatus" type="text" class="form-control" placeholder="请选择" disabled="disabled">
+                                    <input id="archiveInformation-militaryStatus" value="" type="text" class="form-control" placeholder="请选择" disabled="disabled">
                                     <span class="input-group-btn">
                                     <button class="btn btn-default dropdown-toggle disable"disabled="disabled" type="button" id="select-archiveInformation-militaryStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="caret"></span>
@@ -807,7 +835,7 @@
                             <label class="col-xs-3 control-label">政治面貌：</label>
                             <div class="col-xs-7">
                                 <div class="dropdown input-group">
-                                    <input id="archiveInformation-politicalStatus" type="text" class="form-control" placeholder="请选择" disabled="disabled">
+                                    <input id="archiveInformation-politicalStatus" value="" type="text" class="form-control" placeholder="请选择" disabled="disabled">
                                     <span class="input-group-btn">
                                     <button class="btn btn-default dropdown-toggle disable"disabled="disabled" type="button" id="select-archiveInformation-politicalStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="caret"></span>
@@ -833,7 +861,7 @@
                             <label class="col-xs-3 control-label">学历：</label>
                             <div class="col-xs-7">
                                 <div class="dropdown input-group">
-                                    <input id="archiveInformation-education" type="text" class="form-control" placeholder="请选择" disabled="disabled">
+                                    <input id="archiveInformation-education" value="" type="text" class="form-control" placeholder="请选择" disabled="disabled">
                                     <span class="input-group-btn">
                                     <button class="btn btn-default dropdown-toggle disable"disabled="disabled" type="button" id="select-archiveInformation-education" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="caret"></span>
@@ -874,9 +902,9 @@
                             </div>
                         </div>
                         <div class="form-group col-xs-6">
-                            <label class="col-xs-3 control-label">参加工作日期：</label>
+                            <label for="archiveInformation-firstWorkDate" class="col-xs-3 control-label">参加工作日期：</label>
                             <div class="col-xs-7">
-                                <input id="archiveInformation-firstWorkDate" type="text" class="form-control" placeholder="输入如：2018-05-30" disabled="disabled">
+                                <input type="date" class="form-control" id="archiveInformation-firstWorkDate" disabled="disabled">
                             </div>
                         </div>
                         <div class="form-group col-xs-6">
@@ -895,7 +923,7 @@
                             <label class="col-xs-3 control-label">健康状况：</label>
                             <div class="col-xs-7">
                                 <div class="dropdown input-group">
-                                    <input id="archiveInformation-healthStatus" type="text" class="form-control" placeholder="请选择" disabled="disabled">
+                                    <input id="archiveInformation-healthStatus" value="" type="text" class="form-control" placeholder="请选择" disabled="disabled">
                                     <span class="input-group-btn">
                                     <button class="btn btn-default dropdown-toggle disable" disabled="disabled"type="button" id="select-archiveInformation-healthStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="caret"></span>
@@ -930,7 +958,7 @@
                             <label class="col-xs-3 control-label">保险状况：</label>
                             <div class="col-xs-7">
                                 <div class="dropdown input-group">
-                                    <input id="archiveInformation-insurance" type="text" class="form-control" placeholder="请选择" disabled="disabled">
+                                    <input id="archiveInformation-insurance" value="" type="text" class="form-control" placeholder="请选择" disabled="disabled">
                                     <span class="input-group-btn">
                                     <button class="btn btn-default dropdown-toggle disable"disabled="disabled" type="button" id="select-archiveInformation-insurance" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="caret"></span>
@@ -989,15 +1017,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-xs-6">
-                                    <label class="col-xs-3 control-label">合同开始日期：</label>
+                                    <label for="formalContractStartDate" class="col-xs-3 control-label">合同开始日期：</label>
                                     <div class="col-xs-7">
-                                        <input id="formalContractStartDate" type="text" class="form-control" placeholder="请输入，如：2018-05-20" disabled="disabled">
+                                        <input type="date" class="form-control" id="formalContractStartDate" disabled="disabled">
                                     </div>
                                 </div>
                                 <div class="form-group col-xs-6">
-                                    <label class="col-xs-3 control-label">合同结束日期：</label>
+                                    <label for="formalContractEndDate" class="col-xs-3 control-label">合同结束日期：</label>
                                     <div class="col-xs-7">
-                                        <input id="formalContractEndDate" type="text" class="form-control" placeholder="请输入，如：2018-05-20" disabled="disabled">
+                                        <input type="date" class="form-control" id="formalContractEndDate" disabled="disabled">
                                     </div>
                                 </div>
                                 <div class="form-group col-xs-6">
@@ -1010,7 +1038,7 @@
                                     <label class="col-xs-3 control-label">合同状态：</label>
                                     <div class="col-xs-7">
                                         <div class="dropdown input-group">
-                                            <input id="formalContractStatus" type="text" class="form-control" placeholder="请选择" disabled="disabled">
+                                            <input id="formalContractStatus" value="" type="text" class="form-control" placeholder="请选择" disabled="disabled">
                                             <span class="input-group-btn">
                                     <button class="btn btn-default dropdown-toggle disable" type="button" id="select-formalContractStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="caret"></span>
@@ -1065,15 +1093,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-xs-6">
-                                    <label class="col-xs-3 control-label">合同开始日期：</label>
+                                    <label for="temporaryContractStartDate" class="col-xs-3 control-label">合同开始日期：</label>
                                     <div class="col-xs-7">
-                                        <input id="temporaryContractStartDate" type="text" class="form-control" placeholder="请输入，如：2018-05-20" disabled="disabled">
+                                        <input type="date" class="form-control" id="temporaryContractStartDate" disabled="disabled">
                                     </div>
                                 </div>
                                 <div class="form-group col-xs-6">
-                                    <label class="col-xs-3 control-label">合同结束日期：</label>
+                                    <label for="temporaryContractEndDate" class="col-xs-3 control-label">合同结束日期：</label>
                                     <div class="col-xs-7">
-                                        <input id="temporaryContractEndDate" type="text" class="form-control" placeholder="请输入，如：2018-05-20" disabled="disabled">
+                                        <input type="date" class="form-control" id="temporaryContractEndDate" disabled="disabled">
                                     </div>
                                 </div>
                                 <div class="form-group col-xs-6">
@@ -1086,7 +1114,7 @@
                                     <label class="col-xs-3 control-label">合同状态：</label>
                                     <div class="col-xs-7">
                                         <div class="dropdown input-group">
-                                            <input id="temporaryContractStatus" type="text" class="form-control" placeholder="请选择" disabled="disabled">
+                                            <input id="temporaryContractStatus" value="" type="text" class="form-control" placeholder="请选择" disabled="disabled">
                                             <span class="input-group-btn">
                                     <button class="btn btn-default dropdown-toggle disable" type="button" id="select-temporaryContractStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="caret"></span>
@@ -1141,15 +1169,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-xs-6">
-                                    <label class="col-xs-3 control-label">合同开始日期：</label>
+                                    <label for="internshipAgreementStartDate" class="col-xs-3 control-label">合同开始日期：</label>
                                     <div class="col-xs-7">
-                                        <input id="internshipAgreementDate" type="text" class="form-control" placeholder="请输入，如：2018-05-20" disabled="disabled">
+                                        <input type="date" class="form-control" id="internshipAgreementStartDate" disabled="disabled">
                                     </div>
                                 </div>
                                 <div class="form-group col-xs-6">
-                                    <label class="col-xs-3 control-label">合同结束日期：</label>
+                                    <label for="internshipAgreementEndDate" class="col-xs-3 control-label">合同结束日期：</label>
                                     <div class="col-xs-7">
-                                        <input id="internshipAgreementEndDate" type="text" class="form-control" placeholder="请输入，如：2018-05-20" disabled="disabled">
+                                        <input type="date" class="form-control" id="internshipAgreementEndDate" disabled="disabled">
                                     </div>
                                 </div>
                                 <div class="form-group col-xs-6">
@@ -1162,7 +1190,7 @@
                                     <label class="col-xs-3 control-label">合同状态：</label>
                                     <div class="col-xs-7">
                                         <div class="dropdown input-group">
-                                            <input id="internshipAgreementStatus" type="text" class="form-control" placeholder="请选择" disabled="disabled">
+                                            <input id="internshipAgreementStatus" value="" type="text" class="form-control" placeholder="请选择" disabled="disabled">
                                             <span class="input-group-btn">
                                     <button class="btn btn-default dropdown-toggle disable" type="button" id="select-internshipAgreementStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="caret"></span>
@@ -1228,7 +1256,7 @@
                         <label class="col-xs-3 control-label"><span>*</span>性别：</label>
                         <div class="col-xs-7">
                             <div class="dropdown input-group">
-                                <input id="modal-addStaffSex" type="text" class="form-control" placeholder="请选择">
+                                <input id="modal-addStaffSex" type="text" value="" class="form-control" placeholder="请选择" disabled="disabled">
                                 <span class="input-group-btn">
                                     <button class="btn btn-default dropdown-toggle" type="button" id="select-addStaffSex" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="caret"></span>
@@ -1251,7 +1279,7 @@
                         <label class="col-xs-3 control-label"><span>*</span>部门：</label>
                         <div class="col-xs-7">
                             <div class="dropdown input-group">
-                                <input id="modal-addStaffDepartment" type="text" class="form-control" placeholder="请选择">
+                                <input id="modal-addStaffDepartment" value="" type="text" class="form-control" placeholder="请选择"disabled="disabled">
                                 <span class="input-group-btn">
                                     <button class="btn btn-default dropdown-toggle" type="button" id="select-addStaffDepartment" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="caret"></span>
@@ -1299,7 +1327,7 @@
                         <label class="col-xs-3 control-label"><span>*</span>职位：</label>
                         <div class="col-xs-7">
                             <div class="dropdown input-group">
-                                <input id="modal-addStaffPosition" type="text" class="form-control" placeholder="请选择">
+                                <input id="modal-addStaffPosition" value="" type="text" class="form-control" placeholder="请选择"disabled="disabled">
                                 <span class="input-group-btn">
                                     <button class="btn btn-default dropdown-toggle" type="button" id="select-addStaffPosition" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="caret"></span>
@@ -1335,7 +1363,7 @@
                         <label class="col-xs-3 control-label"><span>*</span>工作性质：</label>
                         <div class="col-xs-7">
                             <div class="dropdown input-group">
-                                <input id="modal-addStaffJobNature" type="text" class="form-control" placeholder="请选择">
+                                <input id="modal-addStaffJobNature" value="" type="text" class="form-control" placeholder="请选择"disabled="disabled">
                                 <span class="input-group-btn">
                                     <button class="btn btn-default dropdown-toggle" type="button" id="select-addStaffJobNature" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="caret"></span>
@@ -1377,7 +1405,7 @@
                         <label class="col-xs-3 control-label">实习周期：</label>
                         <div class="col-xs-7">
                             <div class="dropdown input-group">
-                                <input id="modal-addStaffInternshipCycle" type="text" class="form-control" placeholder="请选择">
+                                <input id="modal-addStaffInternshipCycle" value="" type="text" class="form-control" placeholder="请选择"disabled="disabled">
                                 <span class="input-group-btn">
                                     <button class="btn btn-default dropdown-toggle" type="button" id="select-addStaffInternshipCycle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="caret"></span>
@@ -1441,14 +1469,19 @@
                         <label for="modal-leaveType" class="col-xs-2 control-label">离职类型</label>
                         <div class="col-xs-9">
                             <div class="dropdown input-group">
-                                <input id="modal-leaveType" type="text" class="form-control" placeholder="请选择离职类型">
+                                <input id="modal-leaveType" type="text" value="" class="form-control" placeholder="请选择离职类型">
                                 <span class="input-group-btn">
                                     <button class="btn btn-default dropdown-toggle" type="button" id="select-leaveType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu leaveType-menu-ul" aria-labelledby="select-leaveType">
-                                        <li><a>自请离职</a></li>
-                                        <li><a>解雇离职</a></li>
+                                        <li><a value="">请选择</a></li>
+                                        <li class="hidden"><a></a></li>
+                                        <li class="hidden"><a></a></li>
+                                        <li class="hidden"><a></a></li>
+                                        <li class="hidden"><a></a></li>
+                                        <li class="hidden"><a></a></li>
+                                        <li class="hidden"><a></a></li>
                                     </ul>
                                 </span>
                             </div>
@@ -1459,6 +1492,40 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                 <button type="button" class="btn btn-primary" onclick="leaveJob()" data-dismiss="modal">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bs-example-modal-sm" id="myModal-makeSureDelete" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" value="">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 5px 15px">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                是否确认要删除？
+                <button type="button" class="btn btn-default" data-dismiss="modal" style="float: right; margin-left: 5px">取消</button>
+                <button type="button" class="btn btn-primary" style="float: right;" onclick="deleteStaff()">确认</button>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bs-example-modal-sm" id="myModal-makeSureDeleteInBatch" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 5px 15px">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                是否确认要批量删除？
+                <button type="button" class="btn btn-default" data-dismiss="modal" style="float: right; margin-left: 5px">取消</button>
+                <button type="button" class="btn btn-primary" style="float: right;" onclick="deleteStaffInBatch()">确认</button>
+            </div>
+            <div class="modal-footer">
+
             </div>
         </div>
     </div>

@@ -24,7 +24,6 @@ function addContractStatus() {
             url:urlStr,
             dataType:'json',
             success:function (obj) {
-                console.log(obj)
                 if(obj.code == 8){
                     alert(obj.message)
                 }else{

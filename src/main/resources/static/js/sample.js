@@ -85,3 +85,129 @@ $('.departmentName-span').on('click', function () {
 
 
 
+<div class="modal fade" id="myModal-selectStaff" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+<h4 class="modal-title" id="myModalLabel">选择员工</h4>
+    </div>
+    <div class="modal-body" style="padding: 0px 20px;font-size: 14px">
+    <form class="form-horizontal">
+    <div class="form-group " style="margin-bottom: 0px;">
+    <ul class="selectStaff-department-ul col-xs-6" style="height: 200px;overflow-y: scroll">
+    <li class="selectStaff-department-li hidden" style="cursor: pointer">
+    <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+    <span class="departmentName-span"></span>
+    <ul class="selectStaff-staff-ul hidden">
+    </ul>
+    </li>
+    <li class="selectStaff-department-li hidden" style="cursor: pointer">
+    <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+    <span class="departmentName-span"></span>
+    <ul class="selectStaff-staff-ul hidden">
+    </ul>
+    </li>
+    <li class="selectStaff-department-li hidden" style="cursor: pointer">
+    <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+    <span class="departmentName-span"></span>
+    <ul class="selectStaff-staff-ul hidden">
+    </ul>
+    </li>
+    <li class="selectStaff-department-li hidden" style="cursor: pointer">
+    <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+    <span class="departmentName-span"></span>
+    <ul class="selectStaff-staff-ul hidden">
+    </ul>
+    </li>
+    <li class="selectStaff-department-li hidden" style="cursor: pointer">
+    <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+    <span class="departmentName-span"></span>
+    <ul class="selectStaff-staff-ul hidden">
+    </ul>
+    </li>
+    <li class="selectStaff-department-li hidden" style="cursor: pointer">
+    <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+    <span class="departmentName-span"></span>
+    <ul class="selectStaff-staff-ul hidden">
+    </ul>
+    </li>
+    <li class="selectStaff-department-li hidden" style="cursor: pointer">
+    <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+    <span class="departmentName-span"></span>
+    <ul class="selectStaff-staff-ul hidden">
+    </ul>
+    </li>
+    <li class="selectStaff-department-li hidden" style="cursor: pointer">
+    <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+    <span class="departmentName-span"></span>
+    <ul class="selectStaff-staff-ul hidden">
+    </ul>
+    </li>
+    <li class="selectStaff-department-li hidden" style="cursor: pointer">
+    <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+    <span class="departmentName-span"></span>
+    <ul class="selectStaff-staff-ul hidden">
+    </ul>
+    </li>
+    <li class="selectStaff-department-li hidden" style="cursor: pointer">
+    <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+    <span class="departmentName-span"></span>
+    <ul class="selectStaff-staff-ul hidden">
+    </ul>
+    </li>
+    </ul>
+    <div class="col-xs-6" style="border-left: 1px solid #E5E5E5; height: 200px;overflow-y: scroll">
+    <ul class="selectedStaff-staff-ul">
+    </ul>
+    </div>
+    </div>
+    </form>
+    </div>
+    <div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+    <button type="button" class="btn btn-primary selectedStaffs-button" value="" onclick="selected" data-dismiss="modal">确认</button>
+    </div>
+    </div>
+    </div>
+    </div>
+
+
+
+
+
+
+        .departmentName-span{
+    font-size: 16px;
+}
+.selectStaff-staff-ul li{
+    margin-left: 22px;
+    margin-top: 2px;
+    color: #4EB1E4;
+    width: 60%;
+}
+.selectStaff-department-li{
+    margin-top: 5px;
+}
+.departmentName-span:hover{
+    color: #7D7D7D;
+}
+.selectedStaff-staff-ul{
+    margin-top: 10px;
+    color: #4EB1E4;
+}
+.selectStaff-staff-ul li:hover{
+    font-size: 16px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
+}
+.selectedStaff-staff-ul li{
+    margin-top: 2px;
+    width: 80%;
+}
+.selectedStaff-staff-ul li:hover{
+    cursor: pointer;
+    font-size: 16px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
+}
