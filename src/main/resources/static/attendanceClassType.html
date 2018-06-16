@@ -27,6 +27,11 @@
         }
 
     </style>
+    <script type="text/javascript">
+        window.onload=function(){
+            getClassType()
+        }
+    </script>
 
 </head>
 <body>
@@ -135,7 +140,7 @@
             <div class="top-body" style="margin-top: 30px">
                 <div class="search-content" style="height: 34px;">
                     <div class="search-left">
-                        <div class="input-group col-xs-4">
+                        <div class="input-group col-xs-8">
                             <input type="text" class="form-control" id="Cname" placeholder="请输入班次类型名称">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button" onclick="searchCByName()">搜索</button>
@@ -144,17 +149,13 @@
                         </div>
                     </div>
                     <div class="search-right">
-                  <!--      <span class="btn-group">
-                            <button class="btn btn-default" type="button"  data-toggle="modal" data-target="#myModal-addClassType">
-                            添加班次类型
-                            </button>
-                        </span>-->
+
                     </div>
                 </div>
             </div>
             <div class="table-body">
-                <table class="table table-striped">
-                    <thead >
+                <table class="table table-bordered">
+                    <thead style="background-color: #F9FAFB">
                         <th><input id="select-all" class="select-box" type="checkbox">编号</th>
                         <th>名称</th>
                         <th>上班时间</th>
@@ -178,8 +179,8 @@
                         <td class="endBreakTime"></td>
                         <td class="schedule"></td>
                         <td class="operating">
-                            <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyDepartment" onclick="setModifyModalInformation(this)">修改</a>
-                            <a onclick="deleteClass(this)">删除</a>
+                            <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyClassType" onclick="setModifyModalInformation(this)">修改</a>
+                            <a onclick="deleteClassType(this)">删除</a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
@@ -193,8 +194,8 @@
                         <td class="endBreakTime"></td>
                         <td class="schedule"></td>
                         <td class="operating">
-                            <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyDepartment" onclick="setModifyModalInformation(this)">修改</a>
-                            <a onclick="deleteClass(this)">删除</a>
+                            <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyClassType" onclick="setModifyModalInformation(this)">修改</a>
+                            <a onclick="deleteClassType(this)">删除</a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
@@ -208,8 +209,8 @@
                         <td class="endBreakTime"></td>
                         <td class="schedule"></td>
                         <td class="operating">
-                            <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyDepartment" onclick="setModifyModalInformation(this)">修改</a>
-                            <a onclick="deleteClass(this)">删除</a>
+                            <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyClassType" onclick="setModifyModalInformation(this)">修改</a>
+                            <a onclick="deleteClassType(this)">删除</a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
@@ -223,8 +224,8 @@
                         <td class="endBreakTime"></td>
                         <td class="schedule"></td>
                         <td class="operating">
-                            <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyDepartment" onclick="setModifyModalInformation(this)">修改</a>
-                            <a onclick="deleteClass(this)">删除</a>
+                            <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyClassType" onclick="setModifyModalInformation(this)">修改</a>
+                            <a onclick="deleteClassType(this)">删除</a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
@@ -238,8 +239,8 @@
                         <td class="endBreakTime"></td>
                         <td class="schedule"></td>
                         <td class="operating">
-                            <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyDepartment" onclick="setModifyModalInformation(this)">修改</a>
-                            <a onclick="deleteClass(this)">删除</a>
+                            <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyClassType" onclick="setModifyModalInformation(this)">修改</a>
+                            <a onclick="deleteClassType(this)">删除</a>
                         </td>
                     </tr>
                     </tbody>
@@ -264,40 +265,22 @@
     </div>
 </div>
 
-<div class="modal fade" id="myModal-addClass" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+<div class="modal fade" id="myModal-modifyClassType" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" >添加班次</h4>
+                <h4 class="modal-title" id="myModalLabel">修改班次类型</h4>
             </div>
             <div class="modal-body" style="padding: 15px 20px;font-size: 12px">
                 <form class="form-horizontal">
                     <div class="form-group">
-                        <label for="modal-className" class="col-xs-2 control-label">班次名称</label>
+                        <label for="modal-classTypeID" class="col-xs-2 control-label">班次类型ID</label>
                         <div class="col-xs-4">
-                            <input type="text" class="form-control" id="modal-className" >
+                            <input type="text" class="form-control" id="modal-classTypeID" >
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" onclick="addSchedule()" data-dismiss="modal">确认</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="myModal-addClassType" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">添加班次类型</h4>
-            </div>
-            <div class="modal-body" style="padding: 15px 20px;font-size: 12px">
-                <form class="form-horizontal">
                     <div class="form-group">
                         <label for="modal-classTypeName" class="col-xs-2 control-label">班次类型名称</label>
                         <div class="col-xs-4">
@@ -349,37 +332,11 @@
                         </div>
                     </div>
 
-                    <!--        <hr style="border:0.5px solid #E5E5E5;margin-bottom: 10px">
-                          <label style="color: #949494;font-size: 12px;margin-bottom: 15px">人性化班次</label>
-                           <div class="form-group">
-                               <div class="col-xs-3 checkbox-div">
-                                   <input class="checkbox" type="checkbox" ><label>允许迟到分钟数</label>
-                               </div>
-                               <div class="col-xs-3">
-                                   <input type="text" value="30" class="form-control" id="" >
-                               </div>
-                           </div>
-                           <div class="form-group">
-                               <div class="col-xs-3 checkbox-div">
-                                   <input class="checkbox" type="checkbox" ><label>严重迟到分钟数</label>
-                               </div>
-                               <div class="col-xs-3">
-                                   <input type="text" value="30" class="form-control" id="" >
-                               </div>
-                           </div>
-                           <div class="form-group">
-                               <div class="col-xs-3 checkbox-div">
-                                   <input class="checkbox" type="checkbox" ><label>旷工迟到分钟数</label>
-                               </div>
-                               <div class="col-xs-3">
-                                   <input type="text" value="30" class="form-control" id="" >
-                               </div>
-                           </div>   -->
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" onclick="addScheduleType()" data-dismiss="modal">确认</button>
+                <button type="button" class="btn btn-primary" onclick="modifyScheduleType()" data-dismiss="modal">确认</button>
             </div>
         </div>
     </div>

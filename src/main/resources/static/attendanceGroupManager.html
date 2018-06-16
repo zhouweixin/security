@@ -8,20 +8,7 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    <link href="css/attendanceClassManager.css" rel="stylesheet">
-    <style type="text/css" rel="stylesheet">
-        .tbody-td-id{
-            position: relative;
-        }
-        input.select-box{
-            height: 18px;
-            width: 18px;
-            position: absolute;
-            left: 8px;
-            top: 5px;
-        }
-
-    </style>
+    <link href="css/attendanceGroupManager.css" rel="stylesheet">
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script sec="js/style.js"></script>
@@ -193,7 +180,7 @@ function MoveBack(index)
             <div class="top-body" style="margin-top: 30px">
                 <div class="search-content" style="height: 34px;">
                     <div class="search-left">
-                        <div class="input-group col-xs-4">
+                        <div class="input-group col-xs-8">
                             <input type="text" id ="search-groupName" class="form-control" placeholder="请输入考勤组名称">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button" onclick="searchByName()">搜索</button>
@@ -209,7 +196,7 @@ function MoveBack(index)
                 </div>
             </div>
 
-            <div class="table-body">
+            <div class="table-body1">
                 <table class="table table-bordered">
                     <thead style="background-color: #F9FAFB">
                     <tr>
@@ -227,7 +214,7 @@ function MoveBack(index)
                         <td class="enable"></td>
                         <td class="schedule-name"></td>
                         <td class="staff-operating">
-                            <a class="edit-a" data-toggle="modal" onclick="setmodifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
+                            <a class="edit-a" data-toggle="modal" onclick="setModifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
                             <a onclick="deleteGroup(this)">删除</a>
                         </td>
                     </tr>
@@ -237,7 +224,7 @@ function MoveBack(index)
                         <td class="enable"></td>
                         <td class="schedule-name"></td>
                         <td class="staff-operating">
-                            <a class="edit-a" data-toggle="modal" onclick="setmodifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
+                            <a class="edit-a" data-toggle="modal" onclick="setModifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
                             <a onclick="deleteGroup(this)">删除</a>
                         </td>
                     </tr>
@@ -247,7 +234,7 @@ function MoveBack(index)
                         <td class="enable"></td>
                         <td class="schedule-name"></td>
                         <td class="staff-operating">
-                            <a class="edit-a" data-toggle="modal" onclick="setmodifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
+                            <a class="edit-a" data-toggle="modal" onclick="setModifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
                             <a onclick="deleteGroup(this)">删除</a>
                         </td>
                     </tr>
@@ -257,7 +244,7 @@ function MoveBack(index)
                         <td class="enable"></td>
                         <td class="schedule-name"></td>
                         <td class="staff-operating">
-                            <a class="edit-a" data-toggle="modal" onclick="setmodifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
+                            <a class="edit-a" data-toggle="modal" onclick="setModifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
                             <a onclick="deleteGroup(this)">删除</a>
                         </td>
                     </tr>
@@ -267,7 +254,7 @@ function MoveBack(index)
                         <td class="enable"></td>
                         <td class="schedule-name"></td>
                         <td class="staff-operating">
-                            <a class="edit-a" data-toggle="modal" onclick="setmodifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
+                            <a class="edit-a" data-toggle="modal" onclick="setModifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
                             <a onclick="deleteGroup(this)">删除</a>
                         </td>
                     </tr>
@@ -277,7 +264,7 @@ function MoveBack(index)
                         <td class="enable"></td>
                         <td class="schedule-name"></td>
                         <td class="staff-operating">
-                            <a class="edit-a" data-toggle="modal" onclick="setmodifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
+                            <a class="edit-a" data-toggle="modal" onclick="setModifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
                             <a onclick="deleteGroup(this)">删除</a>
                         </td>
                     </tr>
@@ -287,7 +274,7 @@ function MoveBack(index)
                         <td class="enable"></td>
                         <td class="schedule-name"></td>
                         <td class="staff-operating">
-                            <a class="edit-a" data-toggle="modal" onclick="setmodifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
+                            <a class="edit-a" data-toggle="modal" onclick="setModifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
                             <a onclick="deleteGroup(this)">删除</a>
                         </td>
                     </tr>
@@ -297,7 +284,7 @@ function MoveBack(index)
                         <td class="enable"></td>
                         <td class="schedule-name"></td>
                         <td class="staff-operating">
-                            <a class="edit-a" data-toggle="modal" onclick="setmodifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
+                            <a class="edit-a" data-toggle="modal" onclick="setModifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
                             <a onclick="deleteGroup(this)">删除</a>
                         </td>
                     </tr>
@@ -307,7 +294,7 @@ function MoveBack(index)
                         <td class="enable"></td>
                         <td class="schedule-name"></td>
                         <td class="staff-operating">
-                            <a class="edit-a" data-toggle="modal" onclick="setmodifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
+                            <a class="edit-a" data-toggle="modal" onclick="setModifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
                             <a onclick="deleteGroup(this)">删除</a>
                         </td>
                     </tr>
@@ -317,7 +304,7 @@ function MoveBack(index)
                         <td class="enable"></td>
                         <td class="schedule-name"></td>
                         <td class="staff-operating">
-                            <a class="edit-a" data-toggle="modal" onclick="setmodifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
+                            <a class="edit-a" data-toggle="modal" onclick="setModifyGroupInformation(this)" data-target="#myModal-modifyGroup">修改</a>
                             <a onclick="deleteGroup(this)">删除</a>
                         </td>
                     </tr>
@@ -379,13 +366,11 @@ function MoveBack(index)
                     <div class="form-group">
                         <label class="col-xs-3 control-label"></label>
                         <div class="col-xs-9">
-                            <div class="table-responsive">
-                                <table  id="lt" class="table table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th><input id="select-all" class="select-box" type="checkbox">考勤负责人ID</th>
+                            <div class="table-body">
+                                <table  id="lt" class="table table-bordered">
+                                    <thead style="background-color: #F9FAFB">
+                                        <th>考勤负责人ID</th>
                                         <th>考勤负责人姓名</th>
-                                    </tr>
                                     </thead>
                                     <tbody>
                                     <tr class="table-tr1 hidden">
@@ -411,6 +396,7 @@ function MoveBack(index)
                                     </tbody>
                                 </table>
                             </div>
+                            </div>
                             <div class="page-body">
                                 <ul class="page-ul">
                                     <li class="page-ul-li">
@@ -427,7 +413,6 @@ function MoveBack(index)
                                 </ul>
                             </div>
                         </div>
-                    </div>
 
                     <div class="form-group">
                         <div>
@@ -440,13 +425,11 @@ function MoveBack(index)
                     <div class="form-group">
                         <label class="col-xs-3 control-label"></label>
                         <div class="col-xs-9">
-                            <div class="table-responsive">
-                           <table id="ut" class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th><input id="select-allu" class="select-box" type="checkbox">员工ID</th>
+                            <div class="table-body">
+                           <table id="ut" class="table table-bordered">
+                                <thead style="background-color: #F9FAFB">
+                                    <th>员工ID</th>
                                     <th>员工姓名</th>
-                                </tr>
                                 </thead>
                                 <tbody>
                                 <tr class="table-tr2 hidden">
@@ -472,21 +455,21 @@ function MoveBack(index)
                                 </tbody>
                             </table>
                             </div>
-                            <div class="page-body">
-                                <ul class="page-ul">
-                                    <li class="page-ul-li">
-                                        <div class="input-group" style="width: 110px">
-                                            <input type="text" id="page_num2"class="form-control" placeholder="0">
-                                            <span class="input-group-btn">
+                        </div>
+                        <div class="page-body">
+                            <ul class="page-ul">
+                                <li class="page-ul-li">
+                                    <div class="input-group" style="width: 110px">
+                                        <input type="text" id="page_num2"class="form-control" placeholder="0">
+                                        <span class="input-group-btn">
                                 <button id="jump-button2"  onclick="getAllUserInformation2()" class="btn btn-default" type="button">跳转</button>
                              </span>
-                                        </div>
-                                    </li>
-                                    <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-left"></span></a></li>
-                                    <li class="page-ul-li" style="margin-top: 8px"><span>1/255</span></li>
-                                    <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-right"></span></a></li>
-                                </ul>
-                            </div>
+                                    </div>
+                                </li>
+                                <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-left"></span></a></li>
+                                <li class="page-ul-li" style="margin-top: 8px"><span>1/255</span></li>
+                                <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-right"></span></a></li>
+                            </ul>
                         </div>
                     </div>
 
@@ -501,14 +484,12 @@ function MoveBack(index)
 
                     <div class="form-group">
                         <label class="col-xs-3 control-label"></label>
-                        <div class="col-xs-9" style="border:1px solid #F2F2F2">
-                        <div class="table-responsive">
-                        <table id="st" class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th> <input id="select-alls" class="select-box" type="checkbox">班次ID</th>
+                        <div class="col-xs-9" >
+                            <div class="table-body">
+                        <table id="st" class="table table-bordered">
+                            <thead style="background-color: #F9FAFB">
+                                    <th> 班次ID</th>
                                     <th>班次名称</th>
-                                </tr>
                             </thead>
                             <tbody>
                                 <tr class="table-tr4 hidden">
@@ -529,15 +510,15 @@ function MoveBack(index)
                                 </tr>
                             </tbody>
                         </table>
-                        </div>
+                            </div>
                             <div class="page-body">
                                 <ul class="page-ul">
                                     <li class="page-ul-li">
                                         <div class="input-group" style="width: 110px">
                                             <input type="text" id="page_num3"class="form-control" placeholder="0">
                                             <span class="input-group-btn">
-                                <button id="jump-button3"  onclick="getAllschedules()" class="btn btn-default" type="button">跳转</button>
-                             </span>
+                                                <button id="jump-button3"  onclick="getAllschedules()" class="btn btn-default" type="button">跳转</button>
+                                            </span>
                                         </div>
                                     </li>
                                     <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-left"></span></a></li>
@@ -545,70 +526,14 @@ function MoveBack(index)
                                     <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-right"></span></a></li>
                                 </ul>
                             </div>
+                        </div>
                     </div>
-                    </div>
 
-                    <!-- <div class="form-group">
-                              <div>
-                              <label class="col-xs-3 control-label">考勤方式</label>
-                              <div class="col-xs-9" >
-                                  <span>根据办公地点考勤（可添加多个考勤地点）有效范围
-                                      <form>
-                                          <select>
-                                              <option>100米</option>
-                                              <option>200米</option>
-                                              <option selected="selected">300米</option>
-                                              <option>400米</option>
-                                              <option>500米</option>
-                                              <option>600米</option>
-                                              <option>700米</option>
-                                              <option>800米</option>
-                                              <option>900米</option>
-                                              <option>1000米</option>
-                                              <option>2000米</option>
-                                              <option>3000米</option>
-                                          </select>
-                                      </form>
-                                  </span>
-                              </div>
-                              </div>
-                          </div>
-
-                           <div class="form-group">
-                              <label class="col-xs-3 control-label"></label>
-                              <div class="col-xs-8" style="border:1px solid #F2F2F2">
-                              <div class="table-responsive">
-                              <table class="table">
-                                  <thead>
-                                      <tr>
-                                          <th>考勤地址</th>
-                                          <th>操作</th>
-                                      </tr>
-                                  </thead>
-                                  <tbody>
-                                      <tr>
-                                          <td></td>
-                                          <td></td>
-                                      </tr>
-                                  </tbody>
-                              </table>
-                              </div>
-                          </div>
-                          </div>
-
-                        <div class="form-group">
-                              <label class="col-xs-3 control-label"></label>
-                              <div class="col-xs-9">
-                                  <span>
-                                      <a href="#">添加考勤地点</a>（查询地点的经纬度请使用高德地图<a href="http://lbs.amap.com/console/show/picker">查看</a>）
-                                  </span>
-                              </div>
-                          </div> -->
+                     <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-primary" onclick="addGroup()">确认</button>
+                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" onclick="addGroup()">确认</button>
             </div>
         </div>
     </div>
@@ -635,7 +560,7 @@ function MoveBack(index)
                     <div class="form-group">
                         <label for="modal-modifygroupName" class="col-xs-3 control-label">考勤组名称</label>
                         <div class="col-xs-4">
-                            <input type="text" class="form-control" id="modal-modifygroupName" disabled="disabled">
+                            <input type="text" class="form-control" id="modal-modifygroupName" >
                         </div>
                     </div>
 
@@ -651,13 +576,11 @@ function MoveBack(index)
                     <div class="form-group">
                         <label class="col-xs-3 control-label"></label>
                         <div class="col-xs-9">
-                            <div class="table-responsive">
-                                <table  id="glt" class="table table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th><input id="select-allgl" class="select-box" type="checkbox">考勤负责人ID</th>
+                            <div class="table-body">
+                                <table  id="glt" class="table table-bordered">
+                                    <thead style="background-color: #F9FAFB">
+                                        <th>考勤负责人ID</th>
                                         <th>考勤负责人姓名</th>
-                                    </tr>
                                     </thead>
                                     <tbody>
                                     <tr class="table-tr5 hidden">
@@ -689,8 +612,8 @@ function MoveBack(index)
                                         <div class="input-group" style="width: 110px">
                                             <input type="text" id="page_num4"class="form-control" placeholder="0">
                                             <span class="input-group-btn">
-                                <button id="jump-button4"  onclick="getAllgUserInformation1()" class="btn btn-default" type="button">跳转</button>
-                             </span>
+                                                <button id="jump-button4"  onclick="getAllgUserInformation1()" class="btn btn-default" type="button">跳转</button>
+                                            </span>
                                         </div>
                                     </li>
                                     <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-left"></span></a></li>
@@ -712,13 +635,11 @@ function MoveBack(index)
                     <div class="form-group">
                         <label class="col-xs-3 control-label"></label>
                         <div class="col-xs-9">
-                            <div class="table-responsive">
-                                <table id="gut" class="table table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th><input id="select-allgu" class="select-box" type="checkbox">员工ID</th>
+                            <div class="table-body">
+                                <table id="gut" class="table table-bordered">
+                                    <thead style="background-color: #F9FAFB">
+                                        <th>员工ID</th>
                                         <th>员工姓名</th>
-                                    </tr>
                                     </thead>
                                     <tbody>
                                     <tr class="table-tr6 hidden">
@@ -748,10 +669,10 @@ function MoveBack(index)
                                 <ul class="page-ul">
                                     <li class="page-ul-li">
                                         <div class="input-group" style="width: 110px">
-                                            <input type="text" id="page_num5"class="form-control" placeholder="0">
-                                            <span class="input-group-btn">
-                                <button id="jump-button5"  onclick="getAllgUserInformation2()" class="btn btn-default" type="button">跳转</button>
-                             </span>
+                                                <input type="text" id="page_num5"class="form-control" placeholder="0">
+                                                <span class="input-group-btn">
+                                                        <button id="jump-button5"  onclick="getAllgUserInformation2()" class="btn btn-default" type="button">跳转</button>
+                                                </span>
                                         </div>
                                     </li>
                                     <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-left"></span></a></li>
@@ -762,64 +683,6 @@ function MoveBack(index)
                         </div>
                     </div>
 
-
-
-                    <div class="form-group">
-                        <div>
-                            <label class="col-xs-3 control-label">考勤方式</label>
-                            <div class="col-xs-9" >
-                            <span>根据办公地点考勤（可添加多个考勤地点）有效范围
-                                <form>
-                                    <select>
-                                        <option>100米</option>
-                                        <option>200米</option>
-                                        <option selected="selected">300米</option>
-                                        <option>400米</option>
-                                        <option>500米</option>
-                                        <option>600米</option>
-                                        <option>700米</option>
-                                        <option>800米</option>
-                                        <option>900米</option>
-                                        <option>1000米</option>
-                                        <option>2000米</option>
-                                        <option>3000米</option>
-                                    </select>
-                                </form>
-                            </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-xs-3 control-label"></label>
-                        <div class="col-xs-8" style="border:1px solid #F2F2F2">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th>考勤地址</th>
-                                        <th>操作</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-xs-3 control-label"></label>
-                        <div class="col-xs-9">
-                            <span>
-                                <a href="#">添加考勤地点</a>（查询地点的经纬度请使用高德地图<a href="http://lbs.amap.com/console/show/picker">查看</a>）
-                            </span>
-                        </div>
-                    </div>
                 </form>
             </div>
             <div class="modal-footer">

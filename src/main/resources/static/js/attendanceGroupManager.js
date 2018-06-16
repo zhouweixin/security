@@ -396,7 +396,7 @@ function setGroupLeaders(obj){
 }
 
 /* ******************************修改考勤组----通过考勤组ID获取所有员工的信息（分页 ）****************************** */
-/*  function getGroupUsers(){
+/*function getGroupUsers(){
     var groupid= $('#modal-modifygroupId');
     var urlStr = 'http://39.108.89.212:8080/security/attendanceGroup/getUsers?id='+ groupid ;
     alert(urlStr);
@@ -428,12 +428,12 @@ function setGroupUsers(obj){
 }
 
 /* ******************************修改考勤组----获取被修改考勤组的某些关键信息****************************** */
-function setmodifyGroupInformation(obj) {
+function setModifyGroupInformation(obj) {
     var td = $(obj).parent().parent().find('td')
     $('#modal-modifygroupId').val(td.eq(0).text())
     $('#modal-modifygroupName').val(td.eq(1).text())
   //  getGroupLeaders(obj)
-  //  getGroupUsers(obj)
+   // getGroupUsers(obj)
 
 }
 
