@@ -1,17 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>**公司</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>**公司</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    <link href="css/attendanceManagement.css" rel="stylesheet">
+    <link href="css/attendanceClassManager.css" rel="stylesheet">
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/style.js"></script>
+    <script src="js/attendanceClassType.js"></script>
+
+    <style type="text/css" rel="stylesheet">
+        .tbody-td-id{
+            position: relative;
+        }
+        input.select-box{
+            height: 18px;
+            width: 18px;
+            position: absolute;
+            left: 8px;
+            top: 5px;
+        }
+
+    </style>
+    <script type="text/javascript">
+        window.onload=function(){
+            getClassType()
+        }
+    </script>
+
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
@@ -28,7 +49,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="personnelList.html">人事</a></li>
-                <li class="active"><a href="attendanceManagement.html">考勤</a></li>
+                <li class="active"><a href="attendanceHomePage.html">考勤</a></li>
                 <li><a href="salaryManagement.html">薪酬</a></li>
                 <li><a href="processManagement.html">流程</a></li>
                 <li><a href="assetsManagement.html">资产</a></li>
@@ -56,10 +77,10 @@
             </li>
             <li class="left-nav-menu-li">
                 <a class="menu-link">
-                    <img src="imgs/brush.png">
-                    <div>考勤设置    <span class="glyphicon glyphicon-triangle-right"></span></div>
+                    <img src="imgs/brush_fill.png">
+                    <div>考勤设置    <span class="glyphicon glyphicon-triangle-bottom"></span></div>
                 </a>
-                <ul class="sub-menu none">
+                <ul class="sub-menu">
                     <li class="sub-menu-li">
                         <a href="attendanceGroupManager.html" class="sub-menu-link">
                             考勤组管理
@@ -70,17 +91,17 @@
                             考勤组负责人
                         </a>
                     </li>
-                    <li class="sub-menu-li">
+                    <li class="sub-menu-li sub-li-active">
                         <a href="attendanceAdress.html" class="sub-menu-link">
                             考勤地点
                         </a>
                     </li>
                     <li class="sub-menu-li">
-                        <a  href="attendanceClassManager.html" class="sub-menu-link">
+                        <a href="attendanceClassManager.html" class="sub-menu-link">
                             班次管理
                         </a>
                     </li>
-                    <li class="sub-menu-li">
+                    <li class="sub-menu-li ">
                         <a href="attendanceClassType.html" class="sub-menu-link">
                             班次类型
                         </a>
@@ -99,7 +120,7 @@
                 </a>
                 <ul class="sub-menu none">
                     <li class="sub-menu-li">
-                        <a  href="attendanceMonthSummary.html" class="sub-menu-link">
+                        <a href="attendanceMonthSummary.html" class="sub-menu-link">
                             月度汇总
                         </a>
                     </li>
@@ -126,55 +147,67 @@
         <div class="nav-path">
             <div class="path-title">
                 <ul class="path-ul">
-                    <li>考勤首页</li>
+                    <li>考勤组地点</li>
                 </ul>
             </div>
         </div>
-
         <div class="main-body-content">
-            <div style="margin-top: 30px;height: 34px;border:0px solid gray">
-            </div>
-            <div onclick="window.location.href='attendanceGroupManager.html'" style="width:966px;height:122px;text-align:right;border:1px solid #EBEBEB;position:relative;cursor:pointer;">
-                <table background="imgs/hp1.png" cellspacing="0" width="100%" height="100%">
-                    <tr height="25%">
-                        <td width="50%"></td> <td width="30%"></td> <td width="5%"></td> <td width="15%"></td>
-                    </tr>
-                    <tr height="50%">
-                        <td ></td>
-                        <td class="attendanceGroup">
-                            <a style="color:rgb(102,102,102);font-size:32px;">快速管理排班</a></br>
-                            <a style="color:rgb(102,102,102);font-size:14px;">Excel批量导入排班，线上排班，修改考勤规则</a>
-                        </td>
-                        <td><img src="imgs/to.png" width="25px" height="25px"></td>
-                        <td></td>
-                    </tr>
-                    <tr height="25%">
-                        <td ></td> <td></td> <td></td> <td></td>
-                    </tr>
-                </table>
-            </div>
-            <div onclick="window.location.href='attendanceMonthSummary.html'" style="margin-top:20px;width:966px;height:122px;text-align:right;border:1px solid #EBEBEB;position:relative;cursor:pointer;">
-                <table background="imgs/hp2.png" cellspacing="0" width="100%" height="100%">
-                    <tr height="25%">
-                        <td width="50%"></td> <td width="30%"></td> <td width="5%"></td> <td width="15%"></td>
-                    </tr>
-                    <tr height="50%">
-                        <td ></td>
-                        <td class="attendanceSummary">
-                            <a style="color:rgb(102,102,102);font-size:32px;">考勤报表</a></br>
-                            <a style="color:rgb(102,102,102);font-size:14px;">请假出勤自动汇总，一键导出报表</a>
-                        </td>
-                        <td><img src="imgs/to.png" width="25px" height="25px"></td>
-                        <td></td>
-                    </tr>
-                    <tr height="25%">
-                        <td ></td> <td></td> <td></td> <td></td>
-                    </tr>
-                </table>
-            </div>
+            <div class="top-body" style="margin-top: 30px">
+                <div class="search-content" style="height: 34px;">
+                    <div class="search-left">
+                        <div class="input-group col-xs-8">
+                            <input type="text" class="form-control" id="Cname" placeholder="请输入班次ID">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" onclick="searchCByName()">搜索</button>
+                                 <button class="btn btn-default" type="button" onclick="getClassType()">搜索全部</button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="search-right">
 
+                    </div>
+                </div>
+            </div>
+            <div class="table-body">
+                <table class="table table-bordered">
+                    <thead style="background-color: #F9FAFB">
+                    <th><input id="select-all" class="select-box" type="checkbox">编号</th>
+                    <th>班次ID</th>
+                    <th>考勤地址</th>
+                    <th>操作</th>
+                    </thead>
+                    <tbody>
+                    <tr class="table-tr hidden">
+                        <td class="id tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="schedule"></td>
+                        <td class="adress"></td>
+                        <td class="operating">
+                            <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyClassType" onclick="setModifyModalInformation(this)">修改</a>
+                            <a onclick="deleteClassType(this)">删除</a>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="page-body">
+                <ul class="page-ul">
+                    <li class="page-ul-li">
+                        <div class="input-group" style="width: 110px">
+                            <input type="text" id="page_num" class="form-control" placeholder="0">
+                            <span class="input-group-btn">
+                                <button id="jump-button" onclick="" class="btn btn-default" type="button">跳转</button>
+                             </span>
+                        </div>
+                    </li>
+                    <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-left"></span></a></li>
+                    <li class="page-ul-li" style="margin-top: 8px"><span>1/255</span></li>
+                    <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-right"></span></a></li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
+
 </body>
 </html>

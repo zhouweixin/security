@@ -58,7 +58,7 @@ function setScheduleType(obj) {
     var s_id= $('.schedule');
     for(var i = 0; i < obj.data.numberOfElements; i++){
         table_tr.eq(i).removeClass('hidden');
-        st_id.eq(i).html("<input class=\"select-box select-sub-box\" type=\"checkbox\"" +  "value='" + obj.data.content[i].id + "'" + ">"+obj.data.content[i].id);
+        st_id.eq(i).text(obj.data.content[i].id);
         st_name.eq(i).text(obj.data.content[i].name);
         worktime1.eq(i).text(obj.data.content[i].startTime);
         worktime2.eq(i).text(obj.data.content[i].endTime);

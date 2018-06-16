@@ -12,11 +12,17 @@
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/style.js"></script>
-    <script src="js/attendanceClassType.js"></script>
+    <script src="js/attendanceGroupLeader.js"></script>
 
     <style type="text/css" rel="stylesheet">
         .tbody-td-id{
             position: relative;
+        }
+        .table-body th{
+            text-align: center;
+        }
+        .table-body tr1{
+            text-align: center;
         }
         input.select-box{
             height: 18px;
@@ -29,7 +35,7 @@
     </style>
     <script type="text/javascript">
         window.onload=function(){
-            getClassType()
+
         }
     </script>
 
@@ -86,7 +92,7 @@
                             考勤组管理
                         </a>
                     </li>
-                    <li class="sub-menu-li">
+                    <li class="sub-menu-li  sub-li-active">
                         <a href="attendanceGroupLeader.html" class="sub-menu-link">
                             考勤组负责人
                         </a>
@@ -101,7 +107,7 @@
                             班次管理
                         </a>
                     </li>
-                    <li class="sub-menu-li sub-li-active">
+                    <li class="sub-menu-li">
                         <a href="attendanceClassType.html" class="sub-menu-link">
                             班次类型
                         </a>
@@ -147,112 +153,86 @@
         <div class="nav-path">
             <div class="path-title">
                 <ul class="path-ul">
-                    <li>班次类型</li>
+                    <li>考勤组负责人</li>
                 </ul>
             </div>
         </div>
         <div class="main-body-content">
+
+            <div style="border:0px solid gray">
             <div class="top-body" style="margin-top: 30px">
                 <div class="search-content" style="height: 34px;">
                     <div class="search-left">
                         <div class="input-group col-xs-8">
-                            <input type="text" class="form-control" id="Cname" placeholder="请输入班次类型名称">
+                            <input type="text" class="form-control" id="GroupId" placeholder="请输考勤组ID">
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" onclick="searchCByName()">搜索</button>
-                                 <button class="btn btn-default" type="button" onclick="getClassType()">搜索全部</button>
+                                <button class="btn btn-default" type="button" onclick="getGroupLeaders()">搜索负责人</button>
                             </span>
                         </div>
-                    </div>
-                    <div class="search-right">
-
                     </div>
                 </div>
             </div>
             <div class="table-body">
                 <table class="table table-bordered">
                     <thead style="background-color: #F9FAFB">
-                        <th>编号</th>
-                        <th>名称</th>
-                        <th>上班时间</th>
-                        <th>下班时间</th>
-                        <th>提前打卡(分钟)</th>
-                        <th>结束打卡(分钟)</th>
-                        <th>开始休息时间</th>
-                        <th>结束休息时间</th>
-                        <th>班次ID</th>
-                        <th>操作</th>
+                    <th><input id="select-all" class="select-box" type="checkbox">编号</th>
+                    <th>考勤组ID</th>
+                    <th>班次ID</th>
+                    <th>负责人ID</th>
+                    <th>负责人姓名</th>
+                    <th>操作</th>
                     </thead>
                     <tbody>
                     <tr class="table-tr hidden">
-                        <td class="id tbody-td-id"></td>
-                        <td class="name"></td>
-                        <td class="startWorkTime"></td>
-                        <td class="endWorkTime"></td>
-                        <td class="beforeTime"></td>
-                        <td class="afterTime"></td>
-                        <td class="startBreakTime"></td>
-                        <td class="endBreakTime"></td>
-                        <td class="schedule"></td>
+                        <td class="id tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="group-id"></td>
+                        <td class="class-id"></td>
+                        <td class="group-leader"></td>
+                        <td class="leader-name"></td>
                         <td class="operating">
                             <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyClassType" onclick="setModifyModalInformation(this)">修改</a>
                             <a onclick="deleteClassType(this)">删除</a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
-                        <td class="id tbody-td-id"></td>
-                        <td class="name"></td>
-                        <td class="startWorkTime"></td>
-                        <td class="endWorkTime"></td>
-                        <td class="beforeTime"></td>
-                        <td class="afterTime"></td>
-                        <td class="startBreakTime"></td>
-                        <td class="endBreakTime"></td>
-                        <td class="schedule"></td>
+                        <td class="id tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="group-id"></td>
+                        <td class="class-id"></td>
+                        <td class="group-leader"></td>
+                        <td class="leader-name"></td>
                         <td class="operating">
                             <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyClassType" onclick="setModifyModalInformation(this)">修改</a>
                             <a onclick="deleteClassType(this)">删除</a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
-                        <td class="id tbody-td-id"></td>
-                        <td class="name"></td>
-                        <td class="startWorkTime"></td>
-                        <td class="endWorkTime"></td>
-                        <td class="beforeTime"></td>
-                        <td class="afterTime"></td>
-                        <td class="startBreakTime"></td>
-                        <td class="endBreakTime"></td>
-                        <td class="schedule"></td>
+                        <td class="id tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="group-id"></td>
+                        <td class="class-id"></td>
+                        <td class="group-leader"></td>
+                        <td class="leader-name"></td>
                         <td class="operating">
                             <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyClassType" onclick="setModifyModalInformation(this)">修改</a>
                             <a onclick="deleteClassType(this)">删除</a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
-                        <td class="id tbody-td-id"></td>
-                        <td class="name"></td>
-                        <td class="startWorkTime"></td>
-                        <td class="endWorkTime"></td>
-                        <td class="beforeTime"></td>
-                        <td class="afterTime"></td>
-                        <td class="startBreakTime"></td>
-                        <td class="endBreakTime"></td>
-                        <td class="schedule"></td>
+                        <td class="id tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="group-id"></td>
+                        <td class="class-id"></td>
+                        <td class="group-leader"></td>
+                        <td class="leader-name"></td>
                         <td class="operating">
                             <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyClassType" onclick="setModifyModalInformation(this)">修改</a>
                             <a onclick="deleteClassType(this)">删除</a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
-                        <td class="id tbody-td-id"></td>
-                        <td class="name"></td>
-                        <td class="startWorkTime"></td>
-                        <td class="endWorkTime"></td>
-                        <td class="beforeTime"></td>
-                        <td class="afterTime"></td>
-                        <td class="startBreakTime"></td>
-                        <td class="endBreakTime"></td>
-                        <td class="schedule"></td>
+                        <td class="id tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="group-id"></td>
+                        <td class="class-id"></td>
+                        <td class="group-leader"></td>
+                        <td class="leader-name"></td>
                         <td class="operating">
                             <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyClassType" onclick="setModifyModalInformation(this)">修改</a>
                             <a onclick="deleteClassType(this)">删除</a>
@@ -276,87 +256,101 @@
                     <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-right"></span></a></li>
                 </ul>
             </div>
+            </div>
+            <!--
+            <div style="border:0px solid gray;margin-top:20px">
+                <div class="top-body" style="margin-top: 30px">
+                    <div class="search-content" style="height: 34px;">
+                        <div class="search-left">
+                            <div class="input-group col-xs-8">
+                                <input type="text" class="form-control" id="GroupId1" placeholder="请输考勤组ID">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" onclick="getGroupUsers()">搜索员工</button>
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-body">
+                    <table class="table table-bordered">
+                        <thead style="background-color: #F9FAFB">
+                        <th>编号</th>
+                        <th>考勤组ID</th>
+                        <th>班次ID</th>
+                        <th>员工ID</th>
+                        <th>员工姓名</th>
+                        <th>操作<a class="deleteDepartmentInBatch-button" onclick="deleteDepartmentInBatch()">批量删除</a></th>
+                        </thead>
+                        <tbody>
+                        <tr class="table-tr1 hidden">
+                            <td class="id tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                            <td class="group-id1"></td>
+                            <td class="class-id1"></td>
+                            <td class="user-id"></td>
+                            <td class="user-name"></td>
+                            <td class="operating">
+                                <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyClassType" onclick="setModifyModalInformation(this)">修改</a>
+                                <a onclick="deleteClassType(this)">删除</a>
+                            </td>
+                        </tr>
+                        <tr class="table-tr1 hidden">
+                            <td class="id tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                            <td class="group-id1"></td>
+                            <td class="class-id1"></td>
+                            <td class="user-id"></td>
+                            <td class="user-name"></td>
+                            <td class="operating">
+                                <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyClassType" onclick="setModifyModalInformation(this)">修改</a>
+                                <a onclick="deleteClassType(this)">删除</a>
+                            </td>
+                        </tr>
+                        <tr class="table-tr1 hidden">
+                            <td class="id tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                            <td class="group-id1"></td>
+                            <td class="class-id1"></td>
+                            <td class="user-id"></td>
+                            <td class="user-name"></td>
+                            <td class="operating">
+                                <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyClassType" onclick="setModifyModalInformation(this)">修改</a>
+                                <a onclick="deleteClassType(this)">删除</a>
+                            </td>
+                        </tr>
+                        <tr class="table-tr1 hidden">
+                            <td class="id tbody-td-id"><input class="select-box select-sub-box" type="checkbox"></td>
+                            <td class="group-id1"></td>
+                            <td class="class-id1"></td>
+                            <td class="user-id"></td>
+                            <td class="user-name"></td>
+                            <td class="operating">
+                                <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyClassType" onclick="setModifyModalInformation(this)">修改</a>
+                                <a onclick="deleteClassType(this)">删除</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="page-body">
+                    <ul class="page-ul">
+                        <li class="page-ul-li">
+                            <div class="input-group" style="width: 110px">
+                                <input type="text" id="page_num1" class="form-control" placeholder="0">
+                                <span class="input-group-btn">
+                                <button  onclick="getClassType()" class="btn btn-default" type="button">跳转</button>
+                             </span>
+                            </div>
+                        </li>
+                        <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-left"></span></a></li>
+                        <li class="page-ul-li" style="margin-top: 8px"><span>1/255</span></li>
+                        <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-right"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+                -->
+
         </div>
     </div>
 </div>
 
-
-<div class="modal fade" id="myModal-modifyClassType" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">修改班次类型</h4>
-            </div>
-            <div class="modal-body" style="padding: 15px 20px;font-size: 12px">
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <label for="modal-classTypeID" class="col-xs-2 control-label">班次类型ID</label>
-                        <div class="col-xs-4">
-                            <input type="text" class="form-control" id="modal-classTypeID" >
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="modal-classTypeName" class="col-xs-2 control-label">班次类型名称</label>
-                        <div class="col-xs-4">
-                            <input type="text" class="form-control" id="modal-classTypeName" >
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="modal-classId" class="col-xs-2 control-label">班次ID</label>
-                        <div class="col-xs-4">
-                            <input type="text" class="form-control" id="modal-classId" >
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label">打卡时间</label>
-                        <label for="modal-startPunchTime" class="col-xs-3 control-label">几分钟前开始打卡：</label>
-                        <div class="col-xs-2">
-                            <input type="text" class="form-control" id="modal-startPunchTime" >
-                        </div>
-                        <label for="modal-goOffPunchTime" class="col-xs-3 control-label">几分钟后结束打卡：</label>
-                        <div class="col-xs-2">
-                            <input type="text" class="form-control" id="modal-goOffPunchTime" >
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label">上下班时间</label>
-                        <label for="modal-startWorkTime" class="col-xs-2 control-label">上班：</label>
-                        <div class="col-xs-3">
-                            <input type="time" class="form-control" id="modal-startWorkTime" >
-                        </div>
-                        <label for="modal-goOffWorkTime" class="col-xs-2 control-label">下班：</label>
-                        <div class="col-xs-3">
-                            <input type="time" class="form-control" id="modal-goOffWorkTime" >
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-xs-2 checkbox-div">
-                            <label >休息时间</label>
-                        </div>
-                        <label for="modal-startBreakTime" class="col-xs-2 control-label">休息开始：</label>
-                        <div class="col-xs-3">
-                            <input type="time" class="form-control" id="modal-startBreakTime" >
-                        </div>
-                        <label for="modal-goOffBreakTime" class="col-xs-2 control-label">休息结束：</label>
-                        <div class="col-xs-3">
-                            <input type="time" class="form-control" id="modal-goOffBreakTime" >
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" onclick="modifyScheduleType()" data-dismiss="modal">确认</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 </body>
 </html>
