@@ -18,6 +18,27 @@ $(document).ready(function () {
         }
     })
 
+    /*
+    选择员工Modal/
+     */
+    $('.selectStaff-department-li img').on('click', function () {
+        if($(this).parent().find('.hidden').length == 0){
+            $(this).parent().find('.selectStaff-staff-ul').addClass('hidden')
+            $(this).parent().find('.departmentName-img').attr('src', 'imgs/addition.png')
+        }else{
+            $(this).parent().find('.selectStaff-staff-ul').removeClass('hidden')
+            $(this).parent().find('.departmentName-img').attr('src', 'imgs/offline.png')
+        }
+    })
+    $('.departmentName-span').on('click', function () {
+        if($(this).parent().find('.hidden').length == 0){
+            $(this).parent().find('.selectStaff-staff-ul').addClass('hidden')
+            $(this).parent().find('.departmentName-img').attr('src', 'imgs/addition.png')
+        }else{
+            $(this).parent().find('.selectStaff-staff-ul').removeClass('hidden')
+            $(this).parent().find('.departmentName-img').attr('src', 'imgs/offline.png')
+        }
+    })
 
 })
 
@@ -273,7 +294,7 @@ function deleteGroup(thisObj) {
         success:function (obj) {
             if(obj.code == 0){
                 alert("删除信息成功！");
-                getAllGroupInformation()
+                setAllGroupInformation(obj)
             }else {
                 alert(obj.message)
             }
@@ -361,13 +382,79 @@ function setgUserInformation2(obj) {  // 将员工信息填入表中
 }
 
 
+/* ******************************修改考勤组----通过考勤组ID获取所有负责人的信息****************************** */
+function getGroupLeaders(){
+    var td = $(obj).parent().parent().find('td')
+    $('#modal-modifygroupID').val(td.eq(0).text())
+    var groupid= $('#modal-modifygroupId');
+    var urlStr = 'http://39.108.89.212:8080/security/attendanceGroup/getLeaders?id='+ groupid ;
+    alert(urlStr);
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        cache:false,
+        success:function (obj) {
+            setGroupLeaders(obj)
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+function setGroupLeaders(obj){
+    var table_tr = $('.table-tr5');
+    var user_id = $('.user-id2');
+    var user_name = $('.user-name2');
+    for (var i = 0; i < obj.data.length; i++) {
+        table_tr.eq(i).removeClass('hidden');
+        user_id.eq(i).html("<input class=\"select-box select-sub-box\" type=\"checkbox\"" +  "value='" +obj.data[i].leader.id + "'" + ">"+obj.data[i].leader.id);
+        user_name.eq(i).text(obj.data[i].leader.name);
+
+    }
+    for (var i = obj.data.length; i < 5; i++) {
+        table_tr.eq(i).addClass('hidden')
+    }
+}
+
+/* ******************************修改考勤组----通过考勤组ID获取所有员工的信息（分页 ）****************************** */
+function getGroupUsers(){
+    var groupid= $('#modal-modifygroupId');
+    var urlStr = 'http://39.108.89.212:8080/security/attendanceGroup/getUsers?id='+ groupid ;
+    alert(urlStr);
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        cache:false,
+        success:function (obj) {
+            setGroupUsers(obj)
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+function setGroupUsers(obj){
+    var table_tr = $('.table-tr6');
+    var user_id = $('.user-id2');
+    var user_name = $('.user-name2');
+    for (var i = 0; i < obj.data.length; i++) {
+        table_tr.eq(i).removeClass('hidden');
+        user_id.eq(i).html("<input class=\"select-box select-sub-box\" type=\"checkbox\"" +  "value='" +obj.data[i].id + "'" + ">"+obj.data[i].id);
+        user_name.eq(i).text(obj.data[i].name);
+
+    }
+    for (var i = obj.data.length; i < 15; i++) {
+        table_tr.eq(i).addClass('hidden')
+    }
+}
+
 /* ******************************修改考勤组----获取被修改考勤组的某些关键信息****************************** */
-function setModifyGroupInformation(obj) {
+function setmodifyGroupInformation(obj) {
     var td = $(obj).parent().parent().find('td')
     $('#modal-modifygroupId').val(td.eq(0).text())
     $('#modal-modifygroupName').val(td.eq(1).text())
   //  getGroupLeaders(obj)
-    // getGroupUsers(obj)
+  //  getGroupUsers(obj)
 
 }
 
@@ -424,7 +511,155 @@ function modifyGroup() {
     })
 }
 
+/*
+获取所有员工姓名/
+ */
+function getAllStaff(thisObj) {
+    $('.selectedStaffs-button').attr('value', $(thisObj).attr('data-value'))
+    var staffInformationDepartmentA = $('.selectStaff-department-ul .selectStaff-department-li .departmentName-span')
+    $.ajax({
+        url:ipPort + '/department/getAll',
+        dataType:'json',
+        success:function (obj) {
+            $('.selectedStaff-staff-ul').find('li').remove()
+            for(var i = 0; i < obj.data.length; i++){
+                staffInformationDepartmentA.eq(i).parent().removeClass('hidden')
+                staffInformationDepartmentA.eq(i).text(obj.data[i].name)
+                staffInformationDepartmentA.eq(i).attr('value', obj.data[i].id)
+                staffInformationDepartmentA.eq(i).parent().find('li').remove()
+            }
+            $.ajax({
+                url:ipPort + '/user/getAll',
+                dataType:'json',
+                success:function (obj_) {
+                    if(obj_.data.length != 0){
+                        for(var j = 0; j < obj_.data.length; j++){
+                            for(var m = 0; m < obj.data.length; m++){
+                                if(obj_.data[j].department.id == obj.data[m].id){
+                                    var staffUl = staffInformationDepartmentA.eq(m).parent().find('.selectStaff-staff-ul')
+                                    var appendStr = '<li onclick="selectedStaff(this)"><img src="imgs/mine.png" height="20px" style="margin-top: -2px"><span ' + 'value="' + obj_.data[j].id + '">' + obj_.data[j].name + '</span></li>'
+                                    staffUl.append(appendStr)
+                                    break
+                                }
+                            }
+                        }
+                    }
+                },
+                error:function (error) {
+                    console.log(error)
+                }
+            })
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+选区人员/
+ */
+function selectedStaff(thisObj) {
+    var selectedStaffUl = $('.selectedStaff-staff-ul')
+    var appendStr = '<li><img src="imgs/mine.png" height="20px" style="margin-top: -2px"><span class="selectedStaff-span" ' + 'value="' + $(thisObj).find("span").attr("value") + '">' + $(thisObj).find("span").text() + '</span><span class="cancel-span" onclick="cancelSelectStaff(this)" aria-hidden="true" style="display: block; float: right">&times;</span></li>'
+    selectedStaffUl.append(appendStr)
+}
+/*
+取消选区/
+ */
+function cancelSelectStaff(thisObj) {
+    $(thisObj).parent().remove()
+}
+/*
+选定人员/
+ */
+function selectedPeople(thisObj) {
+    if($(thisObj).attr('value') == 'attendanceGroupLeads'){
+        var selectedStaff_span = $('.selectedStaff-span')
+        var strID = ''
+        var strName = ''
+        for(var i = 0; i < selectedStaff_span.length; i++){
+            strID = strID + selectedStaff_span.eq(i).attr('value')
+            strName = strName + selectedStaff_span.eq(i).text()
+            if(i != selectedStaff_span.length - 1){
+                strID = strID + '_'
+                strName = strName + '、'
+            }
+        }
+        $('#modal-leadersName').attr('value', strID)
+        $('#modal-leadersName').val(strName)
+    }else if($(thisObj).attr('value') == 'attendanceGroupUsers'){
+        var selectedStaff_span = $('.selectedStaff-span')
+        var strID = ''
+        var strName = ''
+        for(var i = 0; i < selectedStaff_span.length; i++){
+            strID = strID + selectedStaff_span.eq(i).attr('value')
+            strName = strName + selectedStaff_span.eq(i).text()
+            if(i != selectedStaff_span.length - 1){
+                strID = strID + '_'
+                strName = strName + '、'
+            }
+        }
+        $('#modal-usersName').attr('value', strID)
+        $('#modal-usersName').val(strName)
+    }else if($(thisObj).attr('value') == 'updateProjectResponsibleName'){
+        var selectedStaff_span = $('.selectedStaff-span')
+        var strID = ''
+        var strName = ''
+        for(var i = 0; i < selectedStaff_span.length; i++){
+            strID = strID + selectedStaff_span.eq(i).attr('value')
+            strName = strName + selectedStaff_span.eq(i).text()
+            if(i != selectedStaff_span.length - 1){
+                strID = strID + '_'
+                strName = strName + '、'
+            }
+        }
+        $('#modal-updateProjectResponsibleName').attr('value', strID)
+        $('#modal-updateProjectResponsibleName').val(strName)
+    }else if($(thisObj).attr('value') == 'updateProjectStaffs'){
+        var selectedStaff_span = $('.selectedStaff-span')
+        var strID = ''
+        var strName = ''
+        for(var i = 0; i < selectedStaff_span.length; i++){
+            strID = strID + selectedStaff_span.eq(i).attr('value')
+            strName = strName + selectedStaff_span.eq(i).text()
+            if(i != selectedStaff_span.length - 1){
+                strID = strID + '_'
+                strName = strName + '、'
+            }
+        }
+        $('#modal-updateProjectStaffs').attr('value', strID)
+        $('#modal-updateProjectStaffs').val(strName)
+    }
 
+}
 
-
-
+/*
+获取所有班次/
+ */
+function getAllSchedule() {
+    $('.selectSchedule-schedule-ul').find('li').remove()
+    $.ajax({
+        url:ipPort + '/schedule/getAll',
+        dataType:'json',
+        success:function (obj) {
+            console.log(obj)
+            if(obj.data.length != 0){
+                for(var j = 0; j < obj.data.length; j++){
+                    var staffUl = $('.selectSchedule-schedule-ul')
+                    var appendStr = '<li data-dismiss="modal" onclick="selectedOneSchedule(this)"><img src="imgs/workbench.png" height="20px" style="margin-top: -2px"><span ' + 'value="' + obj.data[j].id + '">' + obj.data[j].name + '</span></li>'
+                    staffUl.append(appendStr)
+                }
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+选取班次/
+ */
+function selectedOneSchedule(thisObj) {
+    $('#modal-scheduleName').val( $(thisObj).find("span").text())
+    $('#modal-scheduleName').attr('value', $(thisObj).find("span").attr("value"))
+}
