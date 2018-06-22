@@ -50,6 +50,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 	 * @param id
 	 */
 	@Modifying
-	@Query(value = "update Project p set p.receiptPrice=receiptPrice-?1 where id=?2")
+	@Query(value = "update Project p set p.receiptPrice=receiptPrice+?1 where id=?2")
 	public void updateReceiptPriceById(Double receiptPrice, Long id);
 }

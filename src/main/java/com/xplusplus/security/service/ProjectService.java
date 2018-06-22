@@ -131,7 +131,8 @@ public class ProjectService {
 	 * @return
 	 */
 	public Project findOne(Long id) {
-		return projectRepository.findOne(id);
+        System.out.println(projectRepository.findOne(id));
+        return projectRepository.findOne(id);
 	}
 
 	/**
