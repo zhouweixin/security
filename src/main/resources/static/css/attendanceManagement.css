@@ -23,7 +23,7 @@
     padding: 16px 12px;
 }
 .search-left{
-    width: 700px;
+    width: 930px;
     float: left;
 }
 .search-left .dropdown{
@@ -64,21 +64,18 @@
     border: 1px solid #38ADFF;
     border-radius: 4px;
 }
-#myModal-addClass input,#myModal-addClass button{
-    height:28px;
-    font-size: 12px;
-}
+
 .checkbox-div{
     height: 28px;
     float:left;
-    padding-left: 48px;
+    padding-left: 18px;
     padding-top: 8px;
     color: #666;
     position: relative;
 }
 .checkbox{
     position: absolute;
-    top:5px;
+    top:2px;
     height: 20px;
 }
 .checkbox-div label{
@@ -86,23 +83,11 @@
     overflow: hidden;
     position: absolute;
     top:8px;
-    left:74px;
+    left:38px;
 }
-.edit-a:after{
-    content: '';
-    display: inline-block;
-    vertical-align: middle;
-    width: 2px;
-    height: 13px;
-    margin-left: 10px;
-    margin-right: 10px;
-    background-color: #DDDDDD;
-}
-.staff-operating a{
+.attendanceGroup a{
     text-decoration: none;
 }
-.table-body table thead tr th{
-    text-align: center;
-    color: #666;
-    position: relative;
+.attendanceSummary a{
+    text-decoration: none;
 }

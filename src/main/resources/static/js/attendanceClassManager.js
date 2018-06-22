@@ -24,6 +24,7 @@ $(document).ready(function () {
     getAllScheduleInformation()
 });
 
+/*-----------------------------------------获取所有的班次信息-------------------------------------------------------------*/
 function getAllScheduleInformation() {
     if($('#page_num').val()==''){
         var page=0
@@ -63,7 +64,7 @@ function setScheduleTableInformation(obj) {
     }
 }
 
-
+/*-----------------------------------------通过ID删除班次信息-------------------------------------------------------------*/
 function deleteSchedule(thisObj) {
     var td = $(thisObj).parent().parent().find('td');
     var scheduleID = td.eq(0).text();
@@ -87,11 +88,11 @@ function deleteSchedule(thisObj) {
     })
 }
 
+/*-----------------------------------------添加班次信息-------------------------------------------------------------*/
 function addSchedule() {
     var className = $('#modal-className').val();
     if(!className){
         alert("请输入班次名称！");
-
     }else {
         var urlStr = 'http://39.108.89.212:8080/security/schedule/add?name=' + className;
       //  alert(urlStr)
@@ -113,36 +114,33 @@ function addSchedule() {
     }
 }
 
+/*-----------------------------------------添加班次类型-------------------------------------------------------------*/
 function addScheduleType() {
     var classTypeName = $('#modal-classTypeName').val();
     var classId = $('#modal-classId').val();
-    var  punchTime1= $('#modal-startPunchTime').val();;
+    var  punchTime1= $('#modal-startPunchTime').val();
     var punchTime2 = $('#modal-goOffPunchTime').val();
 
     $('#modal-startWorkTime').change(function(){
-
         $('#modal-startWorkTime').attr("value",$(this).val()); //赋值
     });
 
     $('#modal-goOffWorkTime').change(function(){
-
         $('#modal-goOffWorkTime').attr("value",$(this).val()); //赋值
     });
 
     $('#modal-startBreakTime').change(function(){
-
         $('#modal-startBreakTime').attr("value",$(this).val()); //赋值
     });
 
     $('#modal-goOffBreakTime').change(function(){
-
         $('#modal-goOffBreakTime').attr("value",$(this).val()); //赋值
     });
 
     var workTime1= $('#modal-startWorkTime').val();
     var workTime2= $('#modal-goOffWorkTime').val();
     var  breakTime1= $('#modal-startBreakTime').val();
-    var breakTime2 = $('#modal-goOffbreakTime').val();
+    var breakTime2 = $('#modal-goOffBreakTime').val();
     if(!classTypeName){
         alert("请输入班次类型名称！");
 
@@ -150,7 +148,7 @@ function addScheduleType() {
         var urlStr = 'http://39.108.89.212:8080/security/scheduleType/add?name=' + classTypeName + '&startTime=' + workTime1 + '&endTime=' + workTime2 + '&beforeMinute=' + punchTime1 + '&afterMinute=' + punchTime2
             + '&startBreakTime=' + breakTime1 + '&endBreakTime=' + breakTime2 + '&schedule=' + classId;
         // http://39.108.89.212:8080/security/scheduleType/add?name=%E7%99%BD%E7%8F%AD&startTime=08:00&endTime=12:00&beforeMinute=5&afterMinute=5&startBreakTime=10:00&endBreakTime=10:30&schedule=1
-        alert(urlStr);
+      //  alert(urlStr);
         $.ajax({
             url: urlStr,
             dataType: 'json',
@@ -167,4 +165,51 @@ function addScheduleType() {
             }
         })
     }
+}
+
+/*-----------------------------------------通过名称查询班次信息-------------------------------------------------------------*/
+function searchScheduleByName() {
+    if($('#page_num').val()==''){
+        var page=0
+    }else page =$('#page_num').val();
+    var size = 5;
+    var sortFieldName = 'id';
+    var asc = 1;
+    var name =$('#schedule_name').val();
+    var urlStr = 'http://39.108.89.212:8080/security/schedule/getByNameLikeByPage?page='+ page +'&name='+ name + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc;
+  //  alert(urlStr);
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        cache:false,
+        success:function (obj) {
+            setScheduleTableInformation(obj)
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+
+/*-----------------------------------------修改班次信息-------------------------------------------------------------*/
+function setModifyClass(obj){
+    var td = $(obj).parent().parent().find('td')
+    $('#modal-modifyClassID').val(td.eq(0).text())
+    $('#modal-modifyClassName').val(td.eq(1).text())
+}
+function modifyClass(){
+    var classID = $('#modal-modifyClassID').val()
+    var className = $('#modal-modifyClassName').val()
+    var urlStr = 'http://39.108.89.212:8080/security/schedule/update?id='+ classID + "&name=" + className
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+                alert(obj.message)
+                getAllScheduleInformation()
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
 }

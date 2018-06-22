@@ -1,0 +1,227 @@
+.nav-path{
+    font-size: 16px;
+    padding: 18px 16px 14px 16px;
+    border-bottom: 1px solid #DCDDDE;
+}
+.path-ul{
+    display: inline-block;
+    vertical-align: middle;
+}
+.path-title:before{
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    width: 3px;
+    height: 18px;
+    margin-right: 10px;
+    background-color: #222222;
+}
+*:before{
+    box-sizing: border-box;
+}
+.main-body-content{
+    padding: 16px 12px;
+}
+.search-left{
+    width: 500px;
+    float: left;
+}
+.search-left .dropdown{
+    float:left;
+}
+.select-date{
+    height: 34px;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+}
+.search-right{
+    float: right;
+}
+
+.table-body1{
+    margin-top: 20px;
+}
+.table-body{
+    margin-top: 5px;
+}
+.table-body1 table th{
+    text-align: center;
+    color: #666;
+}
+.table-body1 table tr{
+    text-align: center;
+}
+
+.table-body table th{
+    text-align: center;
+    color: #666;
+}
+.table-body table tr{
+    text-align: center;
+}
+.tbody-td-id{
+    position: relative;
+}
+
+.table-body table tr1{
+    text-align: center;
+}
+.table-body table tr2{
+    text-align: center;
+}
+.table-body table tr3{
+    text-align: center;
+}
+.table-body table tr4{
+    text-align: center;
+}
+.table-body table tr5{
+    text-align: center;
+}
+.table-body table tr6{
+    text-align: center;
+}
+
+input.select-box{
+    height: 18px;
+    width: 18px;
+    position: absolute;
+    left: 8px;
+    top: 5px;
+}
+
+.numbersOfWork{
+    float: left;
+    text-align: center;
+    line-height: 28px;
+    color: #666;
+    border-right: 1px solid #e8e9ea;
+    overflow: hidden;
+}
+.numbersOfWork:hover{
+    cursor: pointer;
+    color: #38ADFF;
+}
+.numbersOfWork.active{
+    color: #38ADFF;
+    border: 1px solid #38ADFF;
+    border-radius: 4px;
+}
+#myModal-addClass input,#myModal-addClass button{
+    height:28px;
+    font-size: 12px;
+}
+.checkbox-div{
+    height: 28px;
+    float:left;
+    padding-left: 18px;
+    padding-top: 8px;
+    color: #666;
+    position: relative;
+}
+.checkbox{
+    position: absolute;
+    top:2px;
+    height: 20px;
+}
+.checkbox-div label{
+    height: 17px;
+    overflow: hidden;
+    position: absolute;
+    top:8px;
+    left:38px;
+}
+.edit-a:after{
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    width: 2px;
+    height: 13px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: #DDDDDD;
+}
+.staff-operating a{
+    text-decoration: none;
+}
+.departmentName-span{
+    font-size: 16px;
+}
+.selectStaff-staff-ul li{
+    margin-left: 22px;
+    margin-top: 2px;
+    color: #4EB1E4;
+    width: 60%;
+}
+.selectStaff-department-li{
+    margin-top: 5px;
+}
+.departmentName-span:hover{
+    color: #7D7D7D;
+}
+.selectedStaff-staff-ul{
+    margin-top: 10px;
+    color: #4EB1E4;
+}
+.selectStaff-staff-ul li:hover{
+    font-size: 16px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
+}
+.selectedStaff-staff-ul li{
+    margin-top: 2px;
+    width: 80%;
+}
+.selectedStaff-staff-ul li:hover{
+    cursor: pointer;
+    font-size: 16px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
+}
+.departmentName-span_{
+    font-size: 16px;
+}
+.selectOneStaff-staff-ul li{
+    margin-left: 22px;
+    margin-top: 2px;
+    color: #4EB1E4;
+    width: 60%;
+}
+.selectOneStaff-department-li{
+    margin-top: 5px;
+}
+.departmentName-span:hover{
+    color: #7D7D7D;
+}
+.selectOneedStaff-staff-ul{
+    margin-top: 10px;
+    color: #4EB1E4;
+}
+.selectOneStaff-staff-ul li:hover{
+    font-size: 16px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
+}
+.selectOneedStaff-staff-ul li{
+    margin-top: 2px;
+    width: 80%;
+}
+.selectOneedStaff-staff-ul li:hover{
+    cursor: pointer;
+    font-size: 16px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
+}
+.selectSchedule-schedule-ul li{
+    margin-left: 22px;
+    margin-top: 2px;
+    color: #4EB1E4;
+    width: 60%;
+}
+.selectSchedule-schedule-ul li:hover{
+    cursor: pointer;
+    font-size: 16px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
+}
+
