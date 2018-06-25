@@ -30,6 +30,14 @@ public class AttendanceAddress {
 	@Column(precision = 2)
 	private Double domainRadius;
 
+	// 径度
+	@Column(precision = 6)
+    private Double longitude;
+
+	// 纬度
+    @Column(precision = 6)
+	private Double latitude;
+
 	// 考勤组
 	@ManyToOne(targetEntity = AttendanceGroup.class)
 	@JoinColumn(name = "attendance_group_id", referencedColumnName = "id")
@@ -75,10 +83,32 @@ public class AttendanceAddress {
 		this.detailName = detailName;
 	}
 
-	@Override
-	public String toString() {
-		return "AttendanceAddress [id=" + id + ", name=" + name + ", detailName=" + detailName + ", domainRadius="
-				+ domainRadius + ", attendanceGroup=" + attendanceGroup + "]";
-	}
+    public Double getLongitude() {
+        return longitude;
+    }
 
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    @Override
+    public String toString() {
+        return "AttendanceAddress{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", detailName='" + detailName + '\'' +
+                ", domainRadius=" + domainRadius +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
+                ", attendanceGroup=" + attendanceGroup +
+                '}';
+    }
 }
