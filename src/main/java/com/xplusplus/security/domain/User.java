@@ -66,6 +66,13 @@ public class User {
 	 */
 	private String password;
 
+    /**
+     * 出生日期
+     */
+    @Temporal(value = TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date bornDate;
+
 	/**
 	 * 部门
 	 */
@@ -294,5 +301,13 @@ public class User {
 
     public void setAccountBank(String accountBank) {
         this.accountBank = accountBank;
+    }
+
+    public Date getBornDate() {
+        return bornDate;
+    }
+
+    public void setBornDate(Date bornDate) {
+        this.bornDate = bornDate;
     }
 }

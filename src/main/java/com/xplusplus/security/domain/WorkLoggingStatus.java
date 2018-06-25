@@ -7,7 +7,7 @@ import javax.persistence.Id;
 
 /**
  * @Author: zhouweixin
- * @Description: 工作记录状态表
+ * @Description: 工作记录状态表:0进行中；1有效；2无效
  * @Date: Created in 下午3:32:58 2018年5月27日
  */
 @Entity

@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import com.xplusplus.security.domain.Project;
 import com.xplusplus.security.domain.ProjectStatus;
 
+import java.util.List;
+
 /**
  * @Author: zhouweixin
  * @Description:
@@ -33,6 +35,8 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 	 * @return
 	 */
 	public Page<Project> findByProjectStatus(ProjectStatus projectStatus, Pageable pageable);
+
+    public List<Project> findByProjectStatus(ProjectStatus projectStatus);
 
 	/**
 	 * 通过客户单位模糊查询-分页

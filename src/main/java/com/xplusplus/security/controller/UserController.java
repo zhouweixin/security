@@ -1,5 +1,6 @@
 package com.xplusplus.security.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import com.xplusplus.security.domain.*;
+import com.xplusplus.security.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -272,5 +274,60 @@ public class UserController {
         userService.updateIcById(id, ic);
         return ResultUtil.success();
     }
-	
+
+    /**
+     * 统计男女人数
+     *
+     * @return
+     */
+    @RequestMapping(value = "/getUserNumber")
+    public Result<UserNumberVO> getUserNumber(){
+        return ResultUtil.success(userService.findUserNumber());
+    }
+
+    /**
+     * 统计不同年龄段的人数
+     *
+     * @return
+     */
+    @RequestMapping(value = "/getUserNumberByPage")
+    public Result<UserAgeNumberVO> getUserNumberByPage(){
+        return ResultUtil.success(userService.getUserNumberByPage());
+    }
+
+    /**
+     * 统计不同项目的人数
+     *
+     * @return
+     */
+    @RequestMapping(value = "/getUserNumberByProject")
+    public Result<List<UserProjectNumberVO>> getUserNumberByProject(){
+        return ResultUtil.success(userService.getUserNumberByProject());
+    }
+
+    /**
+     * 统计不同学历的人数
+     *
+     * @return
+     */
+    @RequestMapping(value = "/getUserNumberByEducation")
+    public Result<List<UserEducationNumberVO>> getUserNumberByEducation(){
+        return ResultUtil.success(userService.getUserNumberByEducation());
+    }
+
+    /**
+     * 统计某天不同项目参加考勤的人数
+     *
+     * @return
+     */
+    @RequestMapping(value = "/getUserNumberByProjectAttenAndDate")
+    public Result<List<UserProjectAttendanceNumberVO>> getUserNumberByProjectAttenAndDate(
+           @RequestParam(defaultValue = "1970-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date){
+
+        if(new SimpleDateFormat("yyyy-MM-dd").format(date).equals("1970-01-01")){
+            return ResultUtil.success(userService.getUserNumberByProjectAttenAndDate(new Date()));
+        }
+
+        return ResultUtil.success(userService.getUserNumberByProjectAttenAndDate(date));
+    }
 }

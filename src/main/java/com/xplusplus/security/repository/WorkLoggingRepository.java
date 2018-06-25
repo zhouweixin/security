@@ -1,5 +1,6 @@
 package com.xplusplus.security.repository;
 
+import com.xplusplus.security.domain.Project;
 import com.xplusplus.security.domain.User;
 import com.xplusplus.security.domain.WorkLogging;
 import com.xplusplus.security.domain.WorkLoggingStatus;
@@ -50,4 +51,12 @@ public interface WorkLoggingRepository extends JpaRepository<WorkLogging, Long> 
     @Modifying
     @Query(value = "update WorkLogging w set w.status=?1, w.note=?2 where w.id=?3")
     public void updateStatusAndNoteAndModifyUserAndModifyDateById(WorkLoggingStatus workLoggingStatus, String note, User modifyUser, Date modifyDate, Long id);
+
+    /**
+     * 查询某天某项目有效打卡的人数
+     *
+     * @return
+     */
+    @Query(value = "select count(w.user) from WorkLogging w where w.project=?1 and w.startTime>=?2 and w.startTime<?3 and w.status=1")
+    public int findByProjectAndStartTimeAndStatus(Project project, Date date1, Date date2);
 }

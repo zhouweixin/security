@@ -1,15 +1,16 @@
 package com.xplusplus.security.service;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.temporal.TemporalField;
+import java.util.*;
 import java.util.regex.Pattern;
 
 import javax.transaction.Transactional;
 
 import com.xplusplus.security.domain.*;
 import com.xplusplus.security.repository.*;
+import com.xplusplus.security.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -48,6 +49,21 @@ public class UserService {
 
     @Autowired
     private ResignTypeRepository resignTypeRepository;
+
+    @Autowired
+    private ProjectRepository projectRepository;
+
+    @Autowired
+    private ProjectUserRepository projectUserRepository;
+
+    @Autowired
+    private EducationRepository educationRepository;
+
+    @Autowired
+    private ArchiveRepository archiveRepository;
+
+    @Autowired
+    private WorkLoggingRepository workLoggingRepository;
 
     /**
      * 新增
@@ -455,7 +471,7 @@ public class UserService {
         }
     }
 
-    public void updateUserWage(Integer wageId, String userId){
+    public void updateUserWage(Integer wageId, String userId) {
         Wage wage = wageRepository.findOne(wageId);
         if (wage == null) {
             throw new SecurityExceptions(EnumExceptions.ASSIGN_FAILED_WAGE_NOT_EXIST);
@@ -470,7 +486,7 @@ public class UserService {
      * @param attendanceGroup
      * @return
      */
-    public List<User> findByAttendanceGroup(AttendanceGroup attendanceGroup){
+    public List<User> findByAttendanceGroup(AttendanceGroup attendanceGroup) {
         return userRepository.findByAttendanceGroup(attendanceGroup);
     }
 
@@ -480,7 +496,7 @@ public class UserService {
      * @param wage
      * @return
      */
-    public List<User> findByWage(Wage wage){
+    public List<User> findByWage(Wage wage) {
         return userRepository.findByWage(wage);
     }
 
@@ -523,15 +539,15 @@ public class UserService {
      * @param id
      */
     @Transactional
-    public void updateResignDateAndResignType(Date date, Integer resignTypeId, String id){
+    public void updateResignDateAndResignType(Date date, Integer resignTypeId, String id) {
         // 验证离职类型
         ResignType resignType = resignTypeRepository.findOne(resignTypeId);
-        if(resignType == null){
+        if (resignType == null) {
             throw new SecurityExceptions(EnumExceptions.UPDATE_FAILED_RESIGN_TYPE_NOT_EXIST);
         }
 
         // 验证用户是否存在
-        if(userRepository.findOne(id) == null){
+        if (userRepository.findOne(id) == null) {
             throw new SecurityExceptions(EnumExceptions.UPDATE_FAILED_USER_NOT_EXIST);
         }
 
@@ -546,10 +562,129 @@ public class UserService {
      */
     @Transactional
     public void updateIcById(String id, String ic) {
-        if(userRepository.findFirstByIc(ic) != null){
+        if (userRepository.findFirstByIc(ic) != null) {
             throw new SecurityExceptions(EnumExceptions.SET_IC_CARD_FAILED_EXIST);
         }
 
         userRepository.updateIcById(ic, id);
+    }
+
+    /**
+     * 统计男女人数
+     *
+     * @return
+     */
+    public UserNumberVO findUserNumber() {
+        UserNumberVO userNumberVO = new UserNumberVO();
+        userNumberVO.setMaleNumber(userRepository.findCountBySex(0));
+        userNumberVO.setFemaleNumber(userRepository.findCountBySex(1));
+        return userNumberVO;
+    }
+
+    /**
+     * 统计不同年龄段的人数
+     *
+     * @return
+     */
+    public UserAgeNumberVO getUserNumberByPage() {
+        UserAgeNumberVO userAgeNumberVO = new UserAgeNumberVO();
+        Calendar c1 = Calendar.getInstance();
+        Calendar c2 = Calendar.getInstance();
+        c1.set(Calendar.HOUR, 0);
+        c1.set(Calendar.MINUTE, 0);
+        c1.set(Calendar.SECOND, 0);
+        c2.set(Calendar.HOUR, 0);
+        c2.set(Calendar.MINUTE, 0);
+        c2.set(Calendar.SECOND, 0);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        c1.add(Calendar.YEAR, -20);
+        c2.add(Calendar.YEAR, -0);
+        userAgeNumberVO.setTwentyLowerNumber(userRepository.findCountByBornDateGreaterThanEqualAndBornDateLessThan(c1.getTime(), c2.getTime()));
+
+        c1.add(Calendar.YEAR, -10);
+        c2.add(Calendar.YEAR, -20);
+        userAgeNumberVO.setTwentyToThirtyNumber(userRepository.findCountByBornDateGreaterThanEqualAndBornDateLessThan(c1.getTime(), c2.getTime()));
+
+        c1.add(Calendar.YEAR, -10);
+        c2.add(Calendar.YEAR, -10);
+        userAgeNumberVO.setThirtyToFortyNumber(userRepository.findCountByBornDateGreaterThanEqualAndBornDateLessThan(c1.getTime(), c2.getTime()));
+
+        c1.add(Calendar.YEAR, -10);
+        c2.add(Calendar.YEAR, -10);
+        userAgeNumberVO.setFortyToFiftyNumber(userRepository.findCountByBornDateGreaterThanEqualAndBornDateLessThan(c1.getTime(), c2.getTime()));
+
+        c1.add(Calendar.YEAR, -200);
+        c2.add(Calendar.YEAR, -10);
+        userAgeNumberVO.setFiftyUpperNumber(userRepository.findCountByBornDateGreaterThanEqualAndBornDateLessThan(c1.getTime(), c2.getTime()));
+        return userAgeNumberVO;
+    }
+
+    /**
+     * 统计不同项目的人数
+     *
+     * @return
+     */
+    public List<UserProjectNumberVO> getUserNumberByProject() {
+        List<UserProjectNumberVO> userProjectNumberVOs = new ArrayList<>();
+
+        // 1.查询所有未结束的项目
+        ProjectStatus projectStatus = new ProjectStatus();
+        projectStatus.setId(1);
+        List<Project> projects = projectRepository.findByProjectStatus(projectStatus);
+
+        // 2.分别查询每个项目的人数
+        for (Project project : projects) {
+            int num = projectUserRepository.findCountByProject(project);
+            userProjectNumberVOs.add(new UserProjectNumberVO(project, num));
+        }
+
+        return userProjectNumberVOs;
+    }
+
+    /**
+     * 统计不同学历的人数
+     *
+     * @return
+     */
+    public List<UserEducationNumberVO> getUserNumberByEducation() {
+        List<UserEducationNumberVO> userEducationNumberVOS = new ArrayList<>();
+
+        List<Education> educations = educationRepository.findAll();
+        for (Education education : educations) {
+            int num = archiveRepository.findCountByEducation(education);
+
+            userEducationNumberVOS.add(new UserEducationNumberVO(education, num));
+        }
+        return userEducationNumberVOS;
+    }
+
+    /**
+     * 统计某天参与考勤的人数
+     *
+     * @return
+     */
+    public List<UserProjectAttendanceNumberVO> getUserNumberByProjectAttenAndDate(Date date) {
+
+        Calendar c1 = Calendar.getInstance();
+        Calendar c2 = Calendar.getInstance();
+        c1.setTime(date);
+        c2.setTime(date);
+        c2.add(Calendar.DAY_OF_MONTH, 1);
+
+        List<UserProjectAttendanceNumberVO> userProjectAttendanceNumberVOS = new ArrayList<>();
+
+        // 1.查询所有未结束的项目
+        ProjectStatus projectStatus = new ProjectStatus();
+        projectStatus.setId(1);
+        List<Project> projects = projectRepository.findByProjectStatus(projectStatus);
+
+        // 2.分别查询每个项目的人数
+        for (Project project : projects) {
+            int num = workLoggingRepository.findByProjectAndStartTimeAndStatus(project, c1.getTime(), c2.getTime());
+            userProjectAttendanceNumberVOS.add(new UserProjectAttendanceNumberVO(project, num));
+        }
+
+        return userProjectAttendanceNumberVOS;
     }
 }

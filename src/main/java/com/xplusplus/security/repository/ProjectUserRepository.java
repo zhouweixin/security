@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.xplusplus.security.domain.Project;
@@ -67,4 +68,13 @@ public interface ProjectUserRepository extends JpaRepository<ProjectUser, Long> 
 	 * @param project
 	 */
 	public void deleteByProject(Project project);
+
+    /**
+     * 查询项目里的人数
+     *
+     * @param project
+     * @return
+     */
+	@Query(value = "select count(pu) from ProjectUser pu where pu.project=?1")
+	public int findCountByProject(Project project);
 }

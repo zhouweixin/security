@@ -214,4 +214,23 @@ public interface UserRepository extends JpaRepository<User, String> {
      * @return
      */
 	public User findFirstByIc(String ic);
+
+    /**
+     * 通过性别查询数量
+     *
+     * @param sex
+     * @return
+     */
+	@Query(value = "select count(u) from User u where u.sex=?1")
+	public int findCountBySex(Integer sex);
+
+    /**
+     * 通过年龄段查询
+     *
+     * @param date1
+     * @param date2
+     * @return
+     */
+    @Query(value = "select count(u) from User u where u.bornDate>=?1 and u.bornDate<?2")
+	public int findCountByBornDateGreaterThanEqualAndBornDateLessThan(Date date1, Date date2);
 }
