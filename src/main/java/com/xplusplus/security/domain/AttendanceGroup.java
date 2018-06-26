@@ -19,12 +19,26 @@ public class AttendanceGroup {
     private String name;
 
     // 班次
-    @ManyToOne(targetEntity = Schedule.class)    //
+    @ManyToOne(targetEntity = Schedule.class)
     @JoinColumn(name = "schedule_id", referencedColumnName = "id")
     private Schedule schedule;
 
     // 允许外勤打卡
     private Boolean enableOut;
+
+    /**
+     * 项目
+     */
+    @OneToOne(targetEntity = Project.class)
+    @JoinColumn(name = "project_id", referencedColumnName = "id")
+    private Project project;
+
+    public AttendanceGroup() {
+    }
+
+    public AttendanceGroup(int id) {
+        this.id = id;
+    }
 
     public Integer getId() {
         return id;
@@ -56,5 +70,13 @@ public class AttendanceGroup {
 
     public void setEnableOut(Boolean enableOut) {
         this.enableOut = enableOut;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 }

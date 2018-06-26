@@ -2,6 +2,7 @@ package com.xplusplus.security.repository;
 
 import com.xplusplus.security.domain.AttendanceGroup;
 import com.xplusplus.security.domain.AttendanceGroupLeader;
+import com.xplusplus.security.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -17,9 +18,18 @@ public interface AttendanceGroupLeaderRepository extends JpaRepository<Attendanc
     /**
      * 通过考勤组删除
      */
-     void deleteByAttendanceGroup(AttendanceGroup attendanceGroup);
+     public void deleteByAttendanceGroup(AttendanceGroup attendanceGroup);
     /**
      * 通过考勤组查找
      */
-    List<AttendanceGroupLeader> findByAttendanceGroup(AttendanceGroup attendanceGroup);
+    public List<AttendanceGroupLeader> findByAttendanceGroup(AttendanceGroup attendanceGroup);
+
+    /**
+     * 通过考勤组和负责人查询
+     *
+     * @param attendanceGroup
+     * @param leader
+     * @return
+     */
+    public AttendanceGroupLeader findFirstByAttendanceGroupAndLeader(AttendanceGroup attendanceGroup, User leader);
 }

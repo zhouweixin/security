@@ -162,5 +162,4 @@ public class ScheduleType {
 				+ ", startBreakTime=" + startBreakTime + ", endBreakTime=" + endBreakTime + ", breakPeriod="
 				+ breakPeriod + ", workPeriod=" + workPeriod + "]";
 	}
-
 }

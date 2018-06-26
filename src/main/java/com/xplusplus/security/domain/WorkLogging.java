@@ -30,6 +30,13 @@ public class WorkLogging {
 	@ManyToOne(targetEntity = User.class)
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;
+
+    /**
+     * 打卡人
+     */
+    @ManyToOne(targetEntity = User.class)
+    @JoinColumn(name = "card_user_id", referencedColumnName = "id")
+	private User cardUser;
 	
 	// 日期
 	@Temporal(value = TemporalType.DATE)
@@ -81,9 +88,9 @@ public class WorkLogging {
 	private AttendanceAddress attendanceAddress;
 
 	// 缺卡
-	private Boolean noCard;
+	private Boolean noCard = false;
 
-	// 工作记录状态
+	// 工作记录状态:0进行中；1有效；2无效
 	@ManyToOne(targetEntity = WorkLoggingStatus.class)
 	@JoinColumn(name = "status_id", referencedColumnName = "id")
 	private WorkLoggingStatus status;
@@ -245,11 +252,20 @@ public class WorkLogging {
         this.modifyDate = modifyDate;
     }
 
+    public User getCardUser() {
+        return cardUser;
+    }
+
+    public void setCardUser(User cardUser) {
+        this.cardUser = cardUser;
+    }
+
     @Override
     public String toString() {
         return "WorkLogging{" +
                 "id=" + id +
                 ", user=" + user +
+                ", cardUser=" + cardUser +
                 ", date=" + date +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +

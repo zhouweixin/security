@@ -1,9 +1,6 @@
 package com.xplusplus.security.controller;
 
-import com.xplusplus.security.domain.Result;
-import com.xplusplus.security.domain.User;
-import com.xplusplus.security.domain.WorkLogging;
-import com.xplusplus.security.domain.WorkLoggingStatus;
+import com.xplusplus.security.domain.*;
 import com.xplusplus.security.service.WorkLoggingService;
 import com.xplusplus.security.utils.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,6 +102,64 @@ public class WorkLoggingController {
     @RequestMapping(value = "/updateStatus")
     public Result<Object> updateStatusAndNoteAndModifyUserAndModifyDateById(Integer statusId, String note, String modifyUserId, Long id){
         workLoggingService.updateStatusAndNoteAndModifyUserAndModifyDateById(statusId, note, modifyUserId, id);
+        return ResultUtil.success();
+    }
+
+    /**
+     * 上班打卡
+     *
+     * @param userId 用户编码
+     * @param longitude 经度
+     * @param latitude 纬度
+     * @return
+     */
+    @RequestMapping(value = "/goWork")
+    public Result<Object> goWork(String userId, double longitude, double latitude){
+        workLoggingService.goWork(userId, userId, longitude, latitude);
+        return ResultUtil.success();
+    }
+
+    /**
+     * 下班
+     *
+     * @param userId
+     * @param longitude
+     * @param latitude
+     * @return
+     */
+    @RequestMapping(value = "/offWork")
+    public Result<Object> offWork(String userId, double longitude, double latitude){
+        workLoggingService.offWork(userId, longitude, latitude);
+        return ResultUtil.success();
+    }
+
+    /**
+     * 批量上班打卡
+     *
+     * @param leaderId
+     * @param userIds
+     * @param longitude
+     * @param latitude
+     * @return
+     */
+    @RequestMapping(value = "/goWorkBatch")
+    public Result<Object> goWorkBatch(int attenceGroupId, String leaderId, String[] userIds, double longitude, double latitude){
+        workLoggingService.goWorkBatch(attenceGroupId, leaderId, userIds, longitude, latitude);
+        return ResultUtil.success();
+    }
+
+    /**
+     * 批量下班打卡
+     *
+     * @param leaderId
+     * @param userIds
+     * @param longitude
+     * @param latitude
+     * @return
+     */
+    @RequestMapping(value = "/offWorkBatch")
+    public Result<Object> offWorkBatch(int attenceGroupId, String leaderId, String[] userIds, double longitude, double latitude){
+        workLoggingService.offWorkBatch(attenceGroupId, leaderId, userIds, longitude, latitude);
         return ResultUtil.success();
     }
 }

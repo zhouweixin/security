@@ -151,6 +151,13 @@ public class User {
      */
     private String accountBank;
 
+    public User() {
+    }
+
+    public User(String id) {
+        this.id = id;
+    }
+
     public String getId() {
         return id;
     }

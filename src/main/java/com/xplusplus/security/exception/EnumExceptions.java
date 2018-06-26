@@ -41,6 +41,13 @@ public enum EnumExceptions {
 	ASSIGN_FAILED_PROJECT_NOT_EXIST(30, "分配失败, 项目不存在"),
 	SET_IC_CARD_FAILED_EXIST(31, "设置IC卡失败, 已被用"),
     FAILED_NOT_USERIDS(32, "请传参数userIds"),
+    CARD_FAILED_USER_NOT_EXIST(33, "打卡失败, 用户不存在"),
+    CARD_FAILED_ATTENDANCE_GROUP_NOT_EXIST(34, "打卡失败, 用户的考勤组不存在"),
+    CARD_FAILED_WORKING(35, "打卡失败, 已打卡"),
+    CARD_FAILED_SCHEDULE_NOT_EXIST(36, "打卡失败, 班次不存在"),
+    CARD_FAILED_NOT_EXIST(37, "打卡失败, 没有待下班的记录"),
+    CARD_FAILED_ADDRESS_NOT_FIT(38, "打卡失败, 打卡地点不存在"),
+    CARD_FAILED_LEADER_NOT_LAWER(39, "批量打卡失败, 该用户不是合法的考勤组负责人"),
 
 	;
 

@@ -4,6 +4,7 @@ import com.xplusplus.security.domain.Project;
 import com.xplusplus.security.domain.User;
 import com.xplusplus.security.domain.WorkLogging;
 import com.xplusplus.security.domain.WorkLoggingStatus;
+import com.xplusplus.security.service.WorkLoggingService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -59,4 +60,13 @@ public interface WorkLoggingRepository extends JpaRepository<WorkLogging, Long> 
      */
     @Query(value = "select count(w.user) from WorkLogging w where w.project=?1 and w.startTime>=?2 and w.startTime<?3 and w.status=1")
     public int findByProjectAndStartTimeAndStatus(Project project, Date date1, Date date2);
+
+    /**
+     * 通过用户和状态查询
+     *
+     * @param user
+     * @param status
+     * @return
+     */
+    public WorkLogging findFirstByUserAndStatus(User user, WorkLoggingStatus status);
 }

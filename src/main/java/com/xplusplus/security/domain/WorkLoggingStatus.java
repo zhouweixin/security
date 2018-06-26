@@ -20,7 +20,14 @@ public class WorkLoggingStatus {
 	// 名称
 	private String name;
 
-	public Integer getId() {
+    public WorkLoggingStatus() {
+    }
+
+    public WorkLoggingStatus(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getId() {
 		return id;
 	}
 
