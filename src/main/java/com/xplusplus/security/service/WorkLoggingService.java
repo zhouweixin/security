@@ -203,8 +203,6 @@ public class WorkLoggingService {
         // 计算距离是否合法
         for (AttendanceAddress attendanceAddress : attendanceAddresses) {
             double distance = GlobalUtil.getDistance(attendanceAddress.getLongitude(), attendanceAddress.getLatitude(), longitude, latitude);
-            System.out.print("=========================");
-            System.out.println(distance);
             if (distance < attendanceAddress.getDomainRadius()) {
                 WorkLogging workLogging = new WorkLogging();
                 workLogging.setDate(new Date());
