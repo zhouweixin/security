@@ -18,7 +18,7 @@ public class AttendanceAddress {
 	// 主键: 自增长
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 
 	// 名称
 	private String name;
@@ -38,16 +38,11 @@ public class AttendanceAddress {
     @Column(precision = 6)
 	private Double latitude;
 
-	// 考勤组
-	@ManyToOne(targetEntity = AttendanceGroup.class)
-	@JoinColumn(name = "attendance_group_id", referencedColumnName = "id")
-	private AttendanceGroup attendanceGroup;
-
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -65,14 +60,6 @@ public class AttendanceAddress {
 
 	public void setDomainRadius(Double domainRadius) {
 		this.domainRadius = domainRadius;
-	}
-
-	public AttendanceGroup getAttendanceGroup() {
-		return attendanceGroup;
-	}
-
-	public void setAttendanceGroup(AttendanceGroup attendanceGroup) {
-		this.attendanceGroup = attendanceGroup;
 	}
 
 	public String getDetailName() {
@@ -97,18 +84,5 @@ public class AttendanceAddress {
 
     public void setLatitude(Double latitude) {
         this.latitude = latitude;
-    }
-
-    @Override
-    public String toString() {
-        return "AttendanceAddress{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", detailName='" + detailName + '\'' +
-                ", domainRadius=" + domainRadius +
-                ", longitude=" + longitude +
-                ", latitude=" + latitude +
-                ", attendanceGroup=" + attendanceGroup +
-                '}';
     }
 }

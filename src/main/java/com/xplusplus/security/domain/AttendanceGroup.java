@@ -1,6 +1,7 @@
 package com.xplusplus.security.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**

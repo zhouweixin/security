@@ -48,6 +48,9 @@ public enum EnumExceptions {
     CARD_FAILED_NOT_EXIST(37, "打卡失败, 没有待下班的记录"),
     CARD_FAILED_ADDRESS_NOT_FIT(38, "打卡失败, 打卡地点不存在"),
     CARD_FAILED_LEADER_NOT_LAWER(39, "批量打卡失败, 该用户不是合法的考勤组负责人"),
+    ADD_FAILED_ADDRESS_NOT_EXIST(40, "新增失败， 地址不存在"),
+    ADD_FAILED_SCHEDULE_TYPE_NOT_EXIST(41, "新增失败， 班次类型不存在"),
+    ADD_FAILED_LATE_TYPE_NOT_EXIST(42, "新增失败， 迟到类型不存在"),
 
 	;
 

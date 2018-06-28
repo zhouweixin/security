@@ -28,35 +28,40 @@ import java.util.*;
 public class AttendanceGroupController {
     @Autowired
     private AttendanceGroupService attendanceGroupService;
+
     /**
      * 新增考勤组
      */
     @RequestMapping(value = "/add")
     public Result<AttendanceGroup> add(@Valid AttendanceGroup attendanceGroup, BindingResult bindingResult,
-                                       String[] leaderIds){
-
-        if(bindingResult.hasErrors()){
+                                       String[] leaderIds, Long[] attendanceAddressIds) {
+        if (bindingResult.hasErrors()) {
             return ResultUtil.error(bindingResult.getFieldError().getDefaultMessage());
         }
-        return ResultUtil.success(attendanceGroupService.save(attendanceGroup, new HashSet<String>(Arrays.asList(leaderIds))));
+        return ResultUtil.success(attendanceGroupService.save(attendanceGroup,
+                new HashSet<String>(Arrays.asList(leaderIds)),
+                new HashSet<Long>(Arrays.asList(attendanceAddressIds))));
     }
+
     /**
      * 更新
      */
     @RequestMapping(value = "/update")
     public Result<AttendanceGroup> update(@Valid AttendanceGroup attendanceGroup, BindingResult bindingResult,
-                                        String[] ids, String[] leaderIds ){
-        if(bindingResult.hasErrors()){
+                                          String[] leaderIds, Long[] attendanceAddressIds) {
+        if (bindingResult.hasErrors()) {
             return ResultUtil.error(bindingResult.getFieldError().getDefaultMessage());
         }
-        return ResultUtil.success(attendanceGroupService.update(attendanceGroup, new HashSet<String>(Arrays.asList(leaderIds))));
+        return ResultUtil.success(attendanceGroupService.update(attendanceGroup,
+                new HashSet<String>(Arrays.asList(leaderIds)),
+                new HashSet<Long>(Arrays.asList(attendanceAddressIds))));
     }
 
     /**
      * 删除考勤组
      */
     @RequestMapping(value = "/deleteById")
-    public Result<Object> deleteById(Integer id){
+    public Result<Object> deleteById(Integer id) {
         attendanceGroupService.delete(id);
         return ResultUtil.success();
     }
@@ -73,16 +78,16 @@ public class AttendanceGroupController {
     /**
      * 查询考勤组员工
      */
-    @RequestMapping(value="/getUsers")
-    public Result<List<User>> findUser(Integer id){
+    @RequestMapping(value = "/getUsers")
+    public Result<List<User>> findUser(Integer id) {
         return ResultUtil.success(attendanceGroupService.findUser(id));
     }
 
     /**
      * 查询考勤组负责人
      */
-    @RequestMapping(value="/getLeaders")
-    public Result<List<AttendanceGroupLeader>> findLeader(Integer id){
+    @RequestMapping(value = "/getLeaders")
+    public Result<List<AttendanceGroupLeader>> findLeader(Integer id) {
         return ResultUtil.success(attendanceGroupService.findLeaders(id));
     }
 
@@ -100,9 +105,9 @@ public class AttendanceGroupController {
      */
     @RequestMapping(value = "/getAllByPage")
     public Result<Page<AttendanceGroup>> getAllByPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
-                                               @RequestParam(value = "size", defaultValue = "10") Integer size,
-                                               @RequestParam(value = "sortFieldName", defaultValue = "id") String sortFieldName,
-                                               @RequestParam(value = "asc", defaultValue = "1") Integer asc) {
+                                                      @RequestParam(value = "size", defaultValue = "10") Integer size,
+                                                      @RequestParam(value = "sortFieldName", defaultValue = "id") String sortFieldName,
+                                                      @RequestParam(value = "asc", defaultValue = "1") Integer asc) {
         return ResultUtil.success(attendanceGroupService.findAllByPage(page, size, sortFieldName, asc));
     }
 
@@ -111,10 +116,10 @@ public class AttendanceGroupController {
      */
     @RequestMapping(value = "/getByNameLikeByPage")
     public Result<Page<AttendanceGroup>> getByNameLikeByPage(@RequestParam(value = "name", defaultValue = "") String name,
-                                                      @RequestParam(value = "page", defaultValue = "0") Integer page,
-                                                      @RequestParam(value = "size", defaultValue = "10") Integer size,
-                                                      @RequestParam(value = "sortFieldName", defaultValue = "id") String sortFieldName,
-                                                      @RequestParam(value = "asc", defaultValue = "1") Integer asc) {
+                                                             @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                             @RequestParam(value = "size", defaultValue = "10") Integer size,
+                                                             @RequestParam(value = "sortFieldName", defaultValue = "id") String sortFieldName,
+                                                             @RequestParam(value = "asc", defaultValue = "1") Integer asc) {
 
         return ResultUtil.success(attendanceGroupService.findByNameLikeByPage(name, page, size, sortFieldName, asc));
     }

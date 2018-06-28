@@ -28,22 +28,22 @@ public class ScheduleController {
      * 新增班次
      */
     @RequestMapping(value = "/add")
-    public Result<Schedule> add(@Valid Schedule schedule, BindingResult bindingResult){
+    public Result<Schedule> add(@Valid Schedule schedule, BindingResult bindingResult, Integer[] scheduleTypeIds, Integer[] lateTypeIds){
 
         if(bindingResult.hasErrors()){
             return ResultUtil.error(bindingResult.getFieldError().getDefaultMessage());
         }
-        return ResultUtil.success(scheduleService.save(schedule));
+        return ResultUtil.success(scheduleService.save(schedule, scheduleTypeIds, lateTypeIds));
     }
     /**
      * 更新
      */
     @RequestMapping(value = "/update")
-    public Result<Schedule> update(@Valid Schedule schedule, BindingResult bindingResult){
+    public Result<Schedule> update(@Valid Schedule schedule, BindingResult bindingResult, Integer[] scheduleTypeIds, Integer[] lateTypeIds){
         if(bindingResult.hasErrors()){
             return ResultUtil.error(bindingResult.getFieldError().getDefaultMessage());
         }
-        return ResultUtil.success(scheduleService.update(schedule));
+        return ResultUtil.success(scheduleService.update(schedule, scheduleTypeIds, lateTypeIds));
     }
 
     /**

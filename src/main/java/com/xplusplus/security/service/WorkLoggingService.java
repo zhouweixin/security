@@ -45,6 +45,9 @@ public class WorkLoggingService {
     @Autowired
     private AttendanceGroupRepository attendanceGroupRepository;
 
+    @Autowired
+    private AttendanceGroupAddressRepository attendanceGroupAddressRepository;
+
 
     /**
      * 查询所有
@@ -201,9 +204,10 @@ public class WorkLoggingService {
         }
 
         // 验证地点是否合法
-        List<AttendanceAddress> attendanceAddresses = attendanceAddressRepository.findByAttendanceGroup(attendanceGroup);
+        List<AttendanceGroupAddress> attendanceAddresses = attendanceGroupAddressRepository.findByAttendanceGroup(attendanceGroup);
         // 计算距离是否合法
-        for (AttendanceAddress attendanceAddress : attendanceAddresses) {
+        for (AttendanceGroupAddress attendanceGroupAddress : attendanceAddresses) {
+            AttendanceAddress attendanceAddress = attendanceGroupAddress.getAttendanceAddress();
             double distance = GlobalUtil.getDistance(attendanceAddress.getLongitude(), attendanceAddress.getLatitude(), longitude, latitude);
             if (distance < attendanceAddress.getDomainRadius()) {
                 WorkLogging workLogging = new WorkLogging();
@@ -250,9 +254,10 @@ public class WorkLoggingService {
         }
 
         // 验证地点是否合法
-        List<AttendanceAddress> attendanceAddresses = attendanceAddressRepository.findByAttendanceGroup(attendanceGroup);
+        List<AttendanceGroupAddress> attendanceAddresses = attendanceGroupAddressRepository.findByAttendanceGroup(attendanceGroup);
         // 计算距离是否合法
-        for (AttendanceAddress attendanceAddress : attendanceAddresses) {
+        for (AttendanceGroupAddress attendanceGroupAddress : attendanceAddresses) {
+            AttendanceAddress attendanceAddress = attendanceGroupAddress.getAttendanceAddress();
             double distance = GlobalUtil.getDistance(attendanceAddress.getLongitude(), attendanceAddress.getLatitude(), longitude, latitude);
             if (distance < attendanceAddress.getDomainRadius()) {
                 workLogging.setEndTime(new Date());
