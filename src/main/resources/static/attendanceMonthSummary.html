@@ -8,11 +8,12 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    <link href="css/attendanceClassManager.css" rel="stylesheet">
+    <link href="css/attendanceMonthSummary.css" rel="stylesheet">
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/style.js"></script>
-    <script src="js/attendanceClassManager.js"></script>
+    <script src="js/attendanceMonthSummary.js"></script>
+    <script src="js/global.js"></script>
     <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
     <script>
     $(document).ready(function(){
@@ -190,30 +191,20 @@
         </div>
         <ul class="left-nav-menu">
             <li class="left-nav-menu-li">
-                <a href="attendanceManagement.html" class="menu-link">
+                <a href="attendanceHomePage.html" class="menu-link">
                     <img src="imgs/task.png">
                     <div>考勤首页</div>
                 </a>
             </li>
             <li class="left-nav-menu-li">
                 <a class="menu-link">
-                    <img src="imgs/brush_fill.png">
-                    <div>考勤设置    <span class="glyphicon glyphicon-triangle-bottom"></span></div>
+                    <img src="imgs/brush.png">
+                    <div>考勤设置    <span class="glyphicon glyphicon-triangle-right"></span></div>
                 </a>
-                <ul class="sub-menu">
+                <ul class="sub-menu none">
                     <li class="sub-menu-li">
                         <a href="attendanceGroupManager.html" class="sub-menu-link">
                             考勤组管理
-                        </a>
-                    </li>
-                    <li class="sub-menu-li">
-                        <a href="attendanceGroupLeader.html" class="sub-menu-link">
-                            考勤组负责人
-                        </a>
-                    </li>
-                    <li class="sub-menu-li">
-                        <a href="attendanceAdress.html" class="sub-menu-link">
-                            考勤地点
                         </a>
                     </li>
                     <li class="sub-menu-li">
@@ -222,23 +213,18 @@
                         </a>
                     </li>
                     <li class="sub-menu-li">
-                        <a href="attendanceClassType.html" class="sub-menu-link">
-                            班次类型
-                        </a>
-                    </li>
-                    <li class="sub-menu-li">
-                        <a href="attendanceLateType.html" class="sub-menu-link">
-                            班次迟到类型
+                        <a href="attendanceJiaBan.html" class="sub-menu-link">
+                            加班规则
                         </a>
                     </li>
                 </ul>
             </li>
             <li class="left-nav-menu-li">
                 <a class="menu-link">
-                    <img src="imgs/brush.png">
-                    <div>考勤统计    <span class="glyphicon glyphicon-triangle-right"></span></div>
+                    <img src="imgs/brush_fill.png">
+                    <div>考勤统计    <span class="glyphicon glyphicon-triangle-bottom"></span></div>
                 </a>
-                <ul class="sub-menu none">
+                <ul class="sub-menu">
                     <li class="sub-menu-li  sub-li-active">
                         <a class="sub-menu-link">
                             月度汇总

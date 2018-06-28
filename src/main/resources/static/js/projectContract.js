@@ -44,19 +44,19 @@ $(document).ready(function () {
     $('.selectOneStaff-department-li img').on('click', function () {
         if($(this).parent().find('.hidden').length == 0){
             $(this).parent().find('.selectOneStaff-staff-ul').addClass('hidden')
-            $(this).parent().find('.departmentName-img').attr('src', 'imgs/addition.png')
+            $(this).parent().find('.departmentName-img_').attr('src', 'imgs/addition.png')
         }else{
             $(this).parent().find('.selectOneStaff-staff-ul').removeClass('hidden')
-            $(this).parent().find('.departmentName-img').attr('src', 'imgs/offline.png')
+            $(this).parent().find('.departmentName-img_').attr('src', 'imgs/offline.png')
         }
     })
-    $('.departmentName-span').on('click', function () {
+    $('.departmentName-span_').on('click', function () {
         if($(this).parent().find('.hidden').length == 0){
             $(this).parent().find('.selectOneStaff-staff-ul').addClass('hidden')
-            $(this).parent().find('.departmentName-img').attr('src', 'imgs/addition.png')
+            $(this).parent().find('.departmentName-img_').attr('src', 'imgs/addition.png')
         }else{
             $(this).parent().find('.selectOneStaff-staff-ul').removeClass('hidden')
-            $(this).parent().find('.departmentName-img').attr('src', 'imgs/offline.png')
+            $(this).parent().find('.departmentName-img_').attr('src', 'imgs/offline.png')
         }
     })
 })
@@ -509,7 +509,7 @@ function setProjectReceiptModalInformation(thisObj) {
     $('#projectReceipt-projectName-th').attr('value-name', td.eq(2).text())
     var projectID = td.eq(1).text()
     $.ajax({
-        url:ipPort + '/projectReceipt/getByProjectByPage?project=' + projectID,
+        url:ipPort + '/projectReceipt/getByProjectByPage?project=' + projectID + '&size=' + 50,
         dataType:'json',
         success:function (obj) {
             if(obj.code == 0){
@@ -539,13 +539,14 @@ function setProjectReceiptModalTableInformation(obj) {
             table_trr.eq(i).removeClass('hidden')
             if(obj.data.content[i].project){
                 projectReceipt_projectName.eq(i).text(obj.data.content[i].project.name)
-                projectReceipt_projectName.eq(i).attr('value', obj.data.content[i].project.id)
+                projectReceipt_projectName.eq(i).attr('value', obj.data.content[i].id)
             }else {
                 projectReceipt_projectName.eq(i).text('')
                 projectReceipt_projectName.eq(i).attr('value', '')
             }
             projectReceipt_price.eq(i).text(obj.data.content[i].price)
-            projectReceipt_time.eq(i).text(obj.data.content[i].time)
+            var time = new Date(obj.data.content[i].time)
+            projectReceipt_time.eq(i).text(time.toLocaleString())
             projectReceipt_description.eq(i).text(obj.data.content[i].description)
             if(obj.data.content[i].operator){
                 projectReceipt_operator.eq(i).text(obj.data.content[i].operator.name)
@@ -572,6 +573,7 @@ function setAddProjectReceiptModalInformation() {
     $('#modal-addProjectReceipt-price').val('')
     $('#modal-addProjectReceipt-description').val('')
     $('#modal-addProjectReceipt-operator').val('')
+    $('#modal-addProjectReceipt-operator').attr('value', '')
     $('#modal-addProjectReceipt-projectName').val($('#projectReceipt-projectName-th').attr('value-name'))
     $('#modal-addProjectReceipt-projectName').attr('value', $('#projectReceipt-projectName-th').attr('value-id'))
     // var format = ''
@@ -606,6 +608,21 @@ function addProjectReceipt() {
         success:function (obj) {
             if(obj.code == 0){
                 alert(obj.message)
+                $.ajax({
+                    url:ipPort + '/projectReceipt/getByProjectByPage?project=' + projectID + '&size=' + 50,
+                    dataType:'json',
+                    success:function (obj) {
+                        if(obj.code == 0){
+                            setProjectReceiptModalTableInformation(obj)
+                        }
+                        else{
+                            alert(obj.message)
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error)
+                    }
+                })
             }
             else{
                 alert(obj.message)
@@ -616,12 +633,67 @@ function addProjectReceipt() {
         }
     })
 }
-
+/*
+设置修改收款记录Modal/
+ */
+function setUpdateProjectReceiptModalInformation(thisObj) {
+    var td = $(thisObj).parent().parent().parent().find('td')
+    $('#modal-updateProjectReceipt-id').val(td.eq(0).attr('value'))
+    $('#modal-updateProjectReceipt-price').val(td.eq(1).text())
+    $('#modal-updateProjectReceipt-description').val(td.eq(3).text())
+    $('#modal-updateProjectReceipt-operator').val(td.eq(4).text())
+    $('#modal-updateProjectReceipt-operator').attr('value', td.eq(4).attr('value'))
+    $('#modal-updateProjectReceipt-projectName').val(td.eq(0).text())
+}
+/*
+修改收款记录/
+ */
+function updateProjectReceipt() {
+    var id = $('#modal-updateProjectReceipt-id').val()
+    var price = $('#modal-updateProjectReceipt-price').val()
+    // var time = new Date(($('#modal-addProjectReceipt-time').val()))
+    // time = (time.toLocaleString()).replace(/\//g, '-')
+    // time = time.replace('上午', '')
+    // time = time.replace('下午', '')
+    var description = $('#modal-updateProjectReceipt-description').val()
+    var operator = $('#modal-updateProjectReceipt-operator').attr('value')
+    var urlStr = ipPort + '/projectReceipt/update?id=' + id + '&price=' + price + '&description=' + description + '&operator=' + operator
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                alert(obj.message)
+                $.ajax({
+                    url:ipPort + '/projectReceipt/getByProjectByPage?project=' +  $('#projectReceipt-projectName-th').attr('value-id') + '&size=' + 50,
+                    dataType:'json',
+                    success:function (obj) {
+                        if(obj.code == 0){
+                            setProjectReceiptModalTableInformation(obj)
+                        }
+                        else{
+                            alert(obj.message)
+                        }
+                    },
+                    error:function (error) {
+                        console.log(error)
+                    }
+                })
+            }
+            else{
+                alert(obj.message)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
 /*
 获取所有员工姓名/
  */
 function getAllOneStaff() {
-    var staffInformationDepartmentA = $('.selectOneStaff-department-ul .selectOneStaff-department-li .departmentName-span')
+    var staffInformationDepartmentA = $('.selectOneStaff-department-ul .selectOneStaff-department-li .departmentName-span_')
     $.ajax({
         url:ipPort + '/department/getAll',
         dataType:'json',
@@ -665,4 +737,6 @@ function getAllOneStaff() {
 function selectedOneStaff(thisObj) {
     $('#modal-addProjectReceipt-operator').val( $(thisObj).find("span").text())
     $('#modal-addProjectReceipt-operator').attr('value', $(thisObj).find("span").attr("value"))
+    $('#modal-updateProjectReceipt-operator').val( $(thisObj).find("span").text())
+    $('#modal-updateProjectReceipt-operator').attr('value', $(thisObj).find("span").attr("value"))
 }

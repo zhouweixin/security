@@ -64,10 +64,4 @@ public class Schedule {
     public void setLateTypes(Set<LateType> lateTypes) {
         this.lateTypes = lateTypes;
     }
-
-    @Override
-	public String toString() {
-		return "Schedule [id=" + id + ", name=" + name + "]";
-	}
-
 }

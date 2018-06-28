@@ -33,12 +33,12 @@ public class AttendanceGroupController {
      */
     @RequestMapping(value = "/add")
     public Result<AttendanceGroup> add(@Valid AttendanceGroup attendanceGroup, BindingResult bindingResult,
-                                       String[] ids, String[] leaderIds){
+                                       String[] leaderIds){
 
         if(bindingResult.hasErrors()){
             return ResultUtil.error(bindingResult.getFieldError().getDefaultMessage());
         }
-        return ResultUtil.success(attendanceGroupService.save(attendanceGroup, new HashSet<String>(Arrays.asList(ids)), new HashSet<String>(Arrays.asList(leaderIds))));
+        return ResultUtil.success(attendanceGroupService.save(attendanceGroup, new HashSet<String>(Arrays.asList(leaderIds))));
     }
     /**
      * 更新
@@ -49,7 +49,7 @@ public class AttendanceGroupController {
         if(bindingResult.hasErrors()){
             return ResultUtil.error(bindingResult.getFieldError().getDefaultMessage());
         }
-        return ResultUtil.success(attendanceGroupService.update(attendanceGroup,new HashSet<String>(Arrays.asList(ids)), new HashSet<String>(Arrays.asList(leaderIds))));
+        return ResultUtil.success(attendanceGroupService.update(attendanceGroup, new HashSet<String>(Arrays.asList(leaderIds))));
     }
 
     /**

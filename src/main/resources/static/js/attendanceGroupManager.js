@@ -1,3 +1,9 @@
+var map
+var geoc
+var markersArray = [];
+var geolocation
+var point
+
 $(document).ready(function () {
 
     $('#select-allu').on('click', function () {
@@ -17,7 +23,6 @@ $(document).ready(function () {
             $('.select-sub-box2').prop('checked',false)
         }
     })
-
     /*
     选择员工Modal/
      */
@@ -39,8 +44,70 @@ $(document).ready(function () {
             $(this).parent().find('.departmentName-img').attr('src', 'imgs/offline.png')
         }
     })
+    /*
+    地图/
+     */
+    map = new BMap.Map("allmap");
+    geoc = new BMap.Geocoder();   //地址解析对象
+    markersArray = [];
+    geolocation = new BMap.Geolocation();
+    point = new BMap.Point(116.331398, 39.897445);
 
+    $('#modal-addMap').on('click', function () {
+        $('#modal-selectMap-address').val('')
+        $('#modal-selectMap-address').attr('value', '')
+        if (document.getElementById('allmap').style.display == 'none') {
+            document.getElementById('allmap').style.display = 'block';
+        }
+    })
+    map.centerAndZoom(point, 12); // 中心点
+    geolocation.getCurrentPosition(function (r) {
+        if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+            var mk = new BMap.Marker(r.point);
+            map.addOverlay(mk);
+            map.panTo(r.point);
+            map.enableScrollWheelZoom(true);
+        }
+        else {
+            alert('failed' + this.getStatus());
+        }
+    }, {enableHighAccuracy: true})
+    map.addEventListener("click", function (e) {
+        $('#modal-selectMap-address').attr('value', e.point.lng + '_' + e.point.lat)
+        geoc.getLocation(e.point, function (rs) {
+            var addComp = rs.addressComponents;
+            var address = addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber;
+            $('#modal-selectMap-address').val(address)
+        });
+        addMarker(e.point);
+    });
 })
+/* **************************地图*********************************************** */
+//清除标识
+function clearOverlays() {
+    if (markersArray) {
+        for (i in markersArray) {
+            map.removeOverlay(markersArray[i])
+        }
+    }
+}
+//地图上标注
+function addMarker(point) {
+    var marker = new BMap.Marker(point);
+    markersArray.push(marker);
+    clearOverlays();
+    map.addOverlay(marker);
+}
+/*
+设置考勤地址table/
+ */
+function setAttendanceAddressTable() {
+    var address = $('#modal-selectMap-address').val()
+    var address_ = $('#modal-selectMap-address').attr('value').split('_')//经纬度
+    $('#modal-attendanceAddressTable tbody').find('tr').eq(0).find('td').eq(0).text(address)
+    $('#modal-attendanceAddressTable tbody').find('tr').eq(0).find('td').eq(0).attr('value',address_)
+}
+/* ************************************************************************* */
 
 /* *******************************************添加考勤组信息************************************************ */
 function addGroup(){
@@ -110,8 +177,7 @@ function getAllGroupInformation() {
     var size = 10;
     var sortFieldName = 'id';
     var asc = 1;
-    var urlStr = 'http://39.108.89.212:8080/security/attendanceGroup/getAllByPage?page= '+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc;
-   //  alert(urlStr);
+    var urlStr = ipPort +  '/attendanceGroup/getAllByPage?page= '+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc;
     $.ajax({
         url:urlStr,
         dataType:'json',
@@ -132,12 +198,14 @@ function setAllGroupInformation(obj) {    //  将考勤组信息填入表中
     var schedule_name = $('.schedule-name');
     for(var i = 0; i < obj.data.numberOfElements; i++){
         table_tr.eq(i).removeClass('hidden');
-        group_id.eq(i).html(obj.data.content[i].id);
+        group_id.eq(i).text('');
+        group_id.eq(i).text(obj.data.content[i].id);
+        group_name.eq(i).text('');
         group_name.eq(i).text(obj.data.content[i].name);
-        enable.eq(i).html(obj.data.content[i].enableOut);
+        enable.eq(i).text('');
+        enable.eq(i).text(obj.data.content[i].enableOut);
+        schedule_name.eq(i).text('');
         schedule_name.eq(i).text(obj.data.content[i].schedule.name);
-
-
     }
     for (var i = obj.data.numberOfElements; i < 10; i++) {
         table_tr.eq(i).addClass('hidden')
@@ -154,7 +222,7 @@ function searchByName() {
     var sortFieldName = 'id';
     var asc = 1;
     var name =$('#search-groupName').val();
-    var urlStr = 'http://39.108.89.212:8080/security/attendanceGroup/getByNameLikeByPage?page='+ page +'&name='+ name + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc;
+    var urlStr =ipPort + '/attendanceGroup/getByNameLikeByPage?page='+ page +'&name='+ name + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc;
     //  alert(urlStr);
     $.ajax({
         url:urlStr,
@@ -511,6 +579,7 @@ function modifyGroup() {
     })
 }
 
+/* ***********************选人员（班次）弹出框********************************* */
 /*
 获取所有员工姓名/
  */
@@ -573,70 +642,37 @@ function cancelSelectStaff(thisObj) {
 选定人员/
  */
 function selectedPeople(thisObj) {
-    if($(thisObj).attr('value') == 'attendanceGroupLeads'){
-        var selectedStaff_span = $('.selectedStaff-span')
-        var strID = ''
-        var strName = ''
-        for(var i = 0; i < selectedStaff_span.length; i++){
-            strID = strID + selectedStaff_span.eq(i).attr('value')
-            strName = strName + selectedStaff_span.eq(i).text()
-            if(i != selectedStaff_span.length - 1){
-                strID = strID + '_'
-                strName = strName + '、'
-            }
+    var selectedStaff_span = $('.selectedStaff-span')
+    var strID = ''
+    var strName = ''
+    for(var i = 0; i < selectedStaff_span.length; i++){
+        strID = strID + selectedStaff_span.eq(i).attr('value')
+        strName = strName + selectedStaff_span.eq(i).text()
+        if(i != selectedStaff_span.length - 1){
+            strID = strID + '_'
+            strName = strName + '、'
         }
+    } if($(thisObj).attr('value') == 'attendanceGroupLeads'){
         $('#modal-leadersName').attr('value', strID)
         $('#modal-leadersName').val(strName)
     }else if($(thisObj).attr('value') == 'attendanceGroupUsers'){
-        var selectedStaff_span = $('.selectedStaff-span')
-        var strID = ''
-        var strName = ''
-        for(var i = 0; i < selectedStaff_span.length; i++){
-            strID = strID + selectedStaff_span.eq(i).attr('value')
-            strName = strName + selectedStaff_span.eq(i).text()
-            if(i != selectedStaff_span.length - 1){
-                strID = strID + '_'
-                strName = strName + '、'
-            }
-        }
         $('#modal-usersName').attr('value', strID)
         $('#modal-usersName').val(strName)
-    }else if($(thisObj).attr('value') == 'updateProjectResponsibleName'){
-        var selectedStaff_span = $('.selectedStaff-span')
-        var strID = ''
-        var strName = ''
-        for(var i = 0; i < selectedStaff_span.length; i++){
-            strID = strID + selectedStaff_span.eq(i).attr('value')
-            strName = strName + selectedStaff_span.eq(i).text()
-            if(i != selectedStaff_span.length - 1){
-                strID = strID + '_'
-                strName = strName + '、'
-            }
-        }
-        $('#modal-updateProjectResponsibleName').attr('value', strID)
-        $('#modal-updateProjectResponsibleName').val(strName)
-    }else if($(thisObj).attr('value') == 'updateProjectStaffs'){
-        var selectedStaff_span = $('.selectedStaff-span')
-        var strID = ''
-        var strName = ''
-        for(var i = 0; i < selectedStaff_span.length; i++){
-            strID = strID + selectedStaff_span.eq(i).attr('value')
-            strName = strName + selectedStaff_span.eq(i).text()
-            if(i != selectedStaff_span.length - 1){
-                strID = strID + '_'
-                strName = strName + '、'
-            }
-        }
-        $('#modal-updateProjectStaffs').attr('value', strID)
-        $('#modal-updateProjectStaffs').val(strName)
+    }else if($(thisObj).attr('value') == 'modifyAttendanceGroupLeads'){
+        $('#modal-modify-leadersName').attr('value', strID)
+        $('#modal-modify-leadersName').val(strName)
     }
-
+    else if($(thisObj).attr('value') == 'modifyAttendanceGroupUsers'){
+        $('#modal-modify-usersName').attr('value', strID)
+        $('#modal-modify-usersName').val(strName)
+    }
 }
 
 /*
 获取所有班次/
  */
-function getAllSchedule() {
+function getAllSchedule(thisObj) {
+    $('.selectSchedule-button').attr('value', $(thisObj).attr('data-value'))
     $('.selectSchedule-schedule-ul').find('li').remove()
     $.ajax({
         url:ipPort + '/schedule/getAll',
@@ -660,6 +696,189 @@ function getAllSchedule() {
 选取班次/
  */
 function selectedOneSchedule(thisObj) {
-    $('#modal-scheduleName').val( $(thisObj).find("span").text())
-    $('#modal-scheduleName').attr('value', $(thisObj).find("span").attr("value"))
+    if($('.selectSchedule-button').attr('value') == 'addSelectSchedule'){
+        $('#modal-scheduleName').val( $(thisObj).find("span").text())
+        $('#modal-scheduleName').attr('value', $(thisObj).find("span").attr("value"))
+    }else if($('.selectSchedule-button').attr('value') == 'modifySelectSchedule'){
+        $('#modal-modify-scheduleName').val( $(thisObj).find("span").text())
+        $('#modal-modify-scheduleName').attr('value', $(thisObj).find("span").attr("value"))
+    }
+}
+/* ****************************************************************************** */
+/*
+添加考勤组/
+ */
+function addAttendanceGroup() {
+    var attendanceGroupName = $('#modal-attendanceGroupName').val()
+    if(!attendanceGroupName){
+        alert("请输入考勤组名称！")
+        return
+    }
+    if(!$('#modal-leadersName').val()){
+        alert("请选择考勤组负责人！")
+        return
+    }
+    var attendanceLeaders = $('#modal-leadersName').attr('value').split('_')
+
+    if(!$('#modal-usersName').val()){
+        alert("请选择考勤人员！")
+        return
+    }
+    var attendanceUsers = $('#modal-usersName').attr('value').split('_')
+
+    if(!$('#modal-scheduleName').val()){
+        alert("请选择班次！")
+        return
+    }
+    var attendanceSchedule= $('#modal-scheduleName').attr('value')
+
+    var urlStr = ipPort + '/addAttendanceGroup/add?name=' + attendanceGroupName + '&users=' + attendanceUsers + '&leaders=' + attendanceLeaders + '&shedule=' + attendanceSchedule
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            console.log(obj)
+            if(obj.code == 0){
+                alert('添加考勤组成功')
+            }
+            else {
+                alert(obj.message)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+修改考勤组/
+ */
+function setUpdateModalInformation(thisObj) {
+    //清空modal内容
+    $('#modal-modify-attendanceGroupID').val('')
+    $('#modal-modify-attendanceGroupName').val('')
+    $('#modal-modify-leadersName').val('')
+    $('#modal-modify-leadersName').attr('value', '')
+    $('#modal-modify-usersName').val('')
+    $('#modal-modify-usersName').attr('value', '')
+    $('#modal-modify-scheduleName').val('')
+    $('#modal-modify-scheduleName').attr('value', '')
+
+    var td = $(thisObj).parent().parent().find('td')
+    var attendanceGroupID = td.eq(0).text()
+    $.ajax({
+        url:ipPort + '/attendanceGroup/getById?id=' + attendanceGroupID,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                $('#modal-modify-attendanceGroupID').val(obj.data.id)
+                $('#modal-modify-attendanceGroupName').val(obj.data.name)
+                $('#modal-modify-scheduleName').attr('value', obj.data.schedule.id)
+                $('#modal-modify-scheduleName').val(obj.data.schedule.name)
+            }
+            else {
+                alert(obj.message)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+    $.ajax({
+        url:ipPort + '/attendanceGroup/getUsers?id=' + attendanceGroupID,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                var usersName = ''
+                var userID = ''
+                for(var i = 0; i < obj.data.length; i++){
+                    if(i != obj.data.length - 1){
+                        usersName = usersName + obj.data[i].user.name + '、'
+                        userID = userID + obj.data[i].user.id + '_'
+                    }else {
+                        usersName = usersName + obj.data[i].user.name
+                        userID = userID + obj.data[i].user.id
+                    }
+                }
+                $('#modal-modify-usersName').attr('value', userID)
+                $('#modal-modify-usersName').val(usersName)
+            }
+            else {
+                alert(obj.message)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+    $.ajax({
+        url:ipPort + '/attendanceGroup/getLeaders?id=' + attendanceGroupID,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                var leadersName = ''
+                var leadersID = ''
+                for(var i = 0; i < obj.data.length; i++){
+                    if(i != obj.data.length - 1){
+                        leadersName = leadersName + obj.data[i].leader.name + '、'
+                        leadersID = leadersID + obj.data[i].leader.id + '_'
+                    }else {
+                        leadersName = leadersName + obj.data[i].leader.name
+                        leadersID = leadersID + obj.data[i].leader.id
+                    }
+                }
+                $('#modal-modify-leadersName').attr('value', leadersID)
+                $('#modal-modify-leadersName').val(leadersName)
+            }
+            else {
+                alert(obj.message)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+清空添加考勤组modal/
+ */
+function emptyAddGroupModal() {
+    $('#modal-attendanceGroupName').val('')
+    $('#modal-leadersName').val('')
+    $('#modal-leadersName').attr('value', '')
+    $('#modal-usersName').val('')
+    $('#modal-usersName').attr('value', '')
+    $('#modal-scheduleName').val('')
+    $('#modal-scheduleName').attr('value', '')
+}
+/*
+设置makeSureModal的value/
+ */
+function setMakeSureDeleteButtonValue(thisObj) {
+    var td = $(thisObj).parent().parent().find('td')
+    var attendanceGroupID = td.eq(0).text()
+    $('#myModal-makeSureDelete').attr('value', attendanceGroupID)
+}
+/*
+确认删除考勤组/
+ */
+function deleteAttendanceGroup() {
+    var ID = $('#myModal-makeSureDelete').attr('value')
+    var urlStr = ipPort + '/attendanceGroup/deleteById?id='+ ID
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                alert('删除成功!')
+                getAllGroupInformation()
+            }
+            else{
+                alert(obj.message)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
 }

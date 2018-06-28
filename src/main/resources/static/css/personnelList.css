@@ -202,5 +202,8 @@ a.page-button{
 .tbody-td-id{
     position: relative;
 }
+.details-text:hover{
+    font-size: 26px;
+}
 
 

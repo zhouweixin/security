@@ -23,7 +23,7 @@
     padding: 16px 12px;
 }
 .search-left{
-    width: 500px;
+    width: 930px;
     float: left;
 }
 .search-left .dropdown{
@@ -100,4 +100,12 @@
 }
 .staff-operating a{
     text-decoration: none;
+}
+input.selectLateType-box{
+    margin-top: 0px;
+    height: 14px;
+    width: 14px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
 }

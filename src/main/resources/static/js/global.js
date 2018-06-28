@@ -226,6 +226,25 @@ function getAllPersonnelContractTypeName(contractType){
     })
 }
 /*
+获取所有迟到类型名称/
+ */
+function getAllLateTypeName(lateType){
+    $.ajax({
+        url:ipPort + '/lateType/getAll',
+        dataType:'json',
+        success:function (obj) {
+            for(var i = 1; i < obj.data.length + 1; i ++ ){
+                lateType.eq(i).parent().removeClass('hidden')
+                lateType.eq(i).text(obj.data[i - 1].name)
+                lateType.eq(i).attr('value', obj.data[i - 1].id)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
 设置合同类型/
  */
 function setContractType(contractType, i){

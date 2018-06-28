@@ -23,7 +23,7 @@
     padding: 16px 12px;
 }
 .search-left{
-    width: 500px;
+    width: 930px;
     float: left;
 }
 .search-left .dropdown{
@@ -37,21 +37,12 @@
 .search-right{
     float: right;
 }
-
-.table-body1{
+.top-body{
     margin-top: 20px;
 }
 .table-body{
-    margin-top: 5px;
+    margin-top: 20px;
 }
-.table-body1 table th{
-    text-align: center;
-    color: #666;
-}
-.table-body1 table tr{
-    text-align: center;
-}
-
 .table-body table th{
     text-align: center;
     color: #666;
@@ -59,90 +50,37 @@
 .table-body table tr{
     text-align: center;
 }
-.tbody-td-id{
-    position: relative;
+.table-body table tbody ul{
+    min-width: 90px;
 }
-
-.table-body table tr1{
-    text-align: center;
+a.page-button{
+    border: none;
 }
-.table-body table tr2{
-    text-align: center;
+.caret-right{
+    border-left: none;
+    border-right: 6px solid #666;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
 }
-.table-body table tr3{
-    text-align: center;
+.caret-left{
+    border-left: 6px solid #666;
+    border-right: none;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
 }
-.table-body table tr4{
-    text-align: center;
-}
-.table-body table tr5{
-    text-align: center;
-}
-.table-body table tr6{
-    text-align: center;
-}
-
-input.select-box{
-    height: 18px;
-    width: 18px;
-    position: absolute;
-    left: 8px;
-    top: 5px;
-}
-
-.numbersOfWork{
-    float: left;
-    text-align: center;
-    line-height: 28px;
-    color: #666;
-    border-right: 1px solid #e8e9ea;
-    overflow: hidden;
-}
-.numbersOfWork:hover{
-    cursor: pointer;
-    color: #38ADFF;
-}
-.numbersOfWork.active{
-    color: #38ADFF;
-    border: 1px solid #38ADFF;
-    border-radius: 4px;
-}
-#myModal-addClass input,#myModal-addClass button{
-    height:28px;
-    font-size: 12px;
-}
-.checkbox-div{
-    height: 28px;
-    float:left;
-    padding-left: 18px;
-    padding-top: 8px;
-    color: #666;
-    position: relative;
-}
-.checkbox{
-    position: absolute;
-    top:2px;
-    height: 20px;
-}
-.checkbox-div label{
-    height: 17px;
-    overflow: hidden;
-    position: absolute;
-    top:8px;
-    left:38px;
-}
-.edit-a:after{
-    content: '';
+#jump-text{
     display: inline-block;
     vertical-align: middle;
-    width: 2px;
-    height: 13px;
-    margin-left: 10px;
-    margin-right: 10px;
-    background-color: #DDDDDD;
 }
-.staff-operating a{
-    text-decoration: none;
+.page-ul-li{
+    display: inline-block;
+    float: right;
+    top: 1px;
+}
+.table-body table thead tr th{
+    text-align: center;
+    color: #666;
+    position: relative;
 }
 .departmentName-span{
     font-size: 16px;
@@ -224,4 +162,3 @@ input.select-box{
     background-color: #CECECE;
     border-radius: 5px 5px;
 }
-

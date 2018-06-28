@@ -13,7 +13,7 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/style.js"></script>
     <script src="js/attendanceClassManager.js"></script>
-
+    <script src="js/global.js"></script>
     <style type="text/css" rel="stylesheet">
         .tbody-td-id{
             position: relative;
@@ -65,7 +65,7 @@
         </div>
         <ul class="left-nav-menu">
             <li class="left-nav-menu-li">
-                <a href="attendanceManagement.html" class="menu-link">
+                <a href="attendanceHomePage.html" class="menu-link">
                     <img src="imgs/task.png">
                     <div>考勤首页</div>
                 </a>
@@ -81,29 +81,14 @@
                             考勤组管理
                         </a>
                     </li>
-                    <li class="sub-menu-li">
-                        <a href="attendanceGroupLeader.html" class="sub-menu-link">
-                            考勤组负责人
-                        </a>
-                    </li>
-                    <li class="sub-menu-li">
-                        <a href="attendanceAdress.html" class="sub-menu-link">
-                            考勤地点
-                        </a>
-                    </li>
                     <li class="sub-menu-li sub-li-active">
                         <a href="attendanceClassManager.html" class="sub-menu-link">
                             班次管理
                         </a>
                     </li>
                     <li class="sub-menu-li">
-                        <a href="attendanceClassType.html" class="sub-menu-link">
-                            班次类型
-                        </a>
-                    </li>
-                    <li class="sub-menu-li">
-                        <a href="attendanceLateType.html" class="sub-menu-link">
-                            班次迟到类型
+                        <a class="sub-menu-link">
+                            加班规则
                         </a>
                     </li>
                 </ul>
@@ -134,11 +119,6 @@
                             原始记录
                         </a>
                     </li>
-                    <li class="sub-menu-li">
-                        <a href="attendanceClassType.html" class="sub-menu-link">
-                            班次类型
-                        </a>
-                    </li>
                 </ul>
             </li>
         </ul>
@@ -155,125 +135,63 @@
             <div class="top-body" style="margin-top: 30px">
                 <div class="search-content" style="height: 34px;">
                     <div class="search-left">
-                        <div class="input-group col-xs-8">
-                            <input type="text" class="form-control" id="schedule_name" placeholder="请输入班次名称">
+                        <div class="input-group col-xs-4">
+                            <input type="text" class="form-control" placeholder="请输入班次名称">
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" onclick="searchScheduleByName()">搜索</button>
+                                <button class="btn btn-default" type="button" onclick="searchsByName()">搜索</button>
                                  <button class="btn btn-default" type="button" onclick="getAllScheduleInformation()">搜索全部</button>
                             </span>
                         </div>
                     </div>
                     <div class="search-right">
+                        <button class="btn btn-default" data-toggle="modal" data-target="#myModal-makeSureDeleteInBatch">批量删除</button>
                         <span class="btn-group">
+                            <button class="btn btn-default" type="button"  data-toggle="modal" data-target="#myModal-lateType" onclick="getAllLateType()">
+                            迟到类型
+                            </button>
+                            <button class="btn btn-default" type="button"  data-toggle="modal" data-target="#myModal-classType" onclick="getAllClassType()">
+                            班次类型
+                            </button>
                             <button class="btn btn-default" type="button"  data-toggle="modal" data-target="#myModal-addClass">
                             添加班次
-                            </button>
-                            <button class="btn btn-default" type="button"  data-toggle="modal" data-target="#myModal-addClassType">
-                            添加班次类型
-                            </button>
-                             <button class="btn btn-default" type="button"  data-toggle="modal" data-target="#myModal-addLateType">
-                            添加班次迟到类型
                             </button>
                         </span>
                     </div>
                 </div>
             </div>
             <div class="table-body">
-                <table class="table table-bordered">
+                <table class="table table-bordered" style="margin-top: 50px">
                     <thead style="background-color: #F9FAFB">
                     <tr>
-                        <th><input id="select-all" class="select-box" type="checkbox"> 班次ID</th>
+                        <th style="width: 34px;position: relative"><input id="select-all" class="select-box" type="checkbox"></th>
                         <th>班次名称</th>
-                        <th>操作<a class="deleteClassInBatch-button" onclick="deleteClassInBatch()">批量删除</a></th>
+                        <th>班次类型</th>
+                        <th>迟到类型</th>
+                        <th style="width: 50px">修改</th>
+                        <th style="width: 50px">删除</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="table-tr hidden">
-                        <td class="class-id tbody-td-id"></td>
+                    <tr class="table-tr ">
+                        <td class="class-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
                         <td class="class-name"></td>
-                        <td class="operating">
-                            <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyClass" onclick ="setModifyClass(this)">编辑</a>
-                            <a onclick="deleteSchedule(this)" >删除</a>
+                        <td class="class-classTypeName" style="padding: 0">
+                            <span>上午班<br>上午班<br>上午班</span>
                         </td>
-                    </tr>
-                    <tr class="table-tr hidden">
-                        <td class="class-id tbody-td-id"></td>
-                        <td class="class-name"></td>
-                        <td class="operating">
-                            <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyClass" onclick ="setModifyClass(this)">编辑</a>
-                            <a onclick="deleteSchedule(this)" >删除</a>
+                        <td class="class-lateTypeName" style="padding: 0">
+                            <span style="display:block; line-height: 25px;height: 50px">严重迟到<br>轻微迟到</span>
                         </td>
-                    </tr>
-                    <tr class="table-tr hidden">
-                        <td class="class-id tbody-td-id"></td>
-                        <td class="class-name"></td>
-                        <td class="operating">
-                            <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyClass" onclick ="setModifyClass(this)">编辑</a>
-                            <a onclick="deleteSchedule(this)" >删除</a>
+                        <td class="">
+                            <div>
+                                <a class="" data-toggle="modal" data-target="#myModal-updateProjectContract" onclick="setUpdateModalInformation(this)">
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                </a>
+                            </div>
                         </td>
-                    </tr>
-                    <tr class="table-tr hidden">
-                        <td class="class-id tbody-td-id"></td>
-                        <td class="class-name"></td>
-                        <td class="operating">
-                            <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyClass" onclick ="setModifyClass(this)">编辑</a>
-                            <a onclick="deleteSchedule(this)" >删除</a>
-                        </td>
-                    </tr>
-                    <tr class="table-tr hidden">
-                        <td class="class-id tbody-td-id"></td>
-                        <td class="class-name"></td>
-                        <td class="operating">
-                            <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyClass" onclick ="setModifyClass(this)">编辑</a>
-                            <a onclick="deleteSchedule(this)" >删除</a>
-                        </td>
-                    </tr>
-                    <tr class="table-tr hidden">
-                        <td class="class-id tbody-td-id"></td>
-                        <td class="class-name"></td>
-                        <td class="operating">
-                            <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyClass" onclick ="setModifyClass(this)">编辑</a>
-                            <a onclick="deleteSchedule(this)" >删除</a>
-                        </td>
-                    </tr>
-                    <tr class="table-tr hidden">
-                        <td class="class-id tbody-td-id"></td>
-                        <td class="class-name"></td>
-                        <td class="operating">
-                            <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyClass" onclick ="setModifyClass(this)">编辑</a>
-                            <a onclick="deleteSchedule(this)" >删除</a>
-                        </td>
-                    </tr>
-                    <tr class="table-tr hidden">
-                        <td class="class-id tbody-td-id"></td>
-                        <td class="class-name"></td>
-                        <td class="operating">
-                            <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyClass" onclick ="setModifyClass(this)">编辑</a>
-                            <a onclick="deleteSchedule(this)" >删除</a>
-                        </td>
-                    </tr>
-                    <tr class="table-tr hidden">
-                        <td class="class-id tbody-td-id"></td>
-                        <td class="class-name"></td>
-                        <td class="operating">
-                            <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyClass" onclick ="setModifyClass(this)">编辑</a>
-                            <a onclick="deleteSchedule(this)" >删除</a>
-                        </td>
-                    </tr>
-                    <tr class="table-tr hidden">
-                        <td class="class-id tbody-td-id"></td>
-                        <td class="class-name"></td>
-                        <td class="operating">
-                            <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyClass" onclick ="setModifyClass(this)">编辑</a>
-                            <a onclick="deleteSchedule(this)" >删除</a>
-                        </td>
-                    </tr>
-                    <tr class="table-tr hidden">
-                        <td class="class-id tbody-td-id"></td>
-                        <td class="class-name"></td>
-                        <td class="operating">
-                            <a class="edit-a" data-toggle="modal" data-target="#myModal-modifyClass" onclick ="setModifyClass(this)">编辑</a>
-                            <a onclick="deleteSchedule(this)" >删除</a>
+                        <td>
+                            <div>
+                                <a data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                            </div>
                         </td>
                     </tr>
                     </tbody>
@@ -297,7 +215,7 @@
         </div>
     </div>
 </div>
-
+<!------------------------------------------------添加班次modal--------------------------------------------------->
 <div class="modal fade" id="myModal-addClass" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -305,13 +223,29 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" >添加班次</h4>
             </div>
-            <div class="modal-body" style="padding: 15px 20px;font-size: 12px">
+            <div class="modal-body" style="padding: 15px 20px;font-size: 14px">
                 <form class="form-horizontal">
                     <div class="form-group">
-                        <label for="modal-className" class="col-xs-2 control-label">班次名称</label>
-                        <div class="col-xs-4">
+                        <label for="modal-className" class="col-xs-3 control-label">班次名称</label>
+                        <div class="col-xs-7">
                             <input type="text" class="form-control" id="modal-className" >
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-selectClassType" class="col-xs-3 control-label">班次类型</label>
+                        <div class="col-xs-7">
+                            <input type="text" class="form-control" id="modal-selectClassType" >
+                        </div>
+                    </div>
+                    <hr style="border:0.5px solid #E5E5E5;margin-bottom: 10px">
+                    <div class="form-group" style="margin-top: 10px">
+                        <label class="col-xs-3">迟到类型(可多选)</label>
+                        <ul class=" SelectLateType-menu-ul col-xs-7">
+                            <li style="position: relative"><input class="selectLateType-box" id="select-all-lateType-add" type="checkbox"><a value="" style="margin-left: 20px;color: #2e6da4">全选</a></li>
+                            <li class="hidden" style="position: relative;margin-top: 1px"><input class="selectLateType-box select-sub-box-add" type="checkbox"><a value="" style="margin-left: 20px"></a></li>
+                            <li class="hidden" style="position: relative;margin-top: 1px"><input class="selectLateType-box select-sub-box-add" type="checkbox"><a value="" style="margin-left: 20px"></a></li>
+                            <li class="hidden" style="position: relative;margin-top: 1px"><input class="selectLateType-box select-sub-box-add" type="checkbox"><a value="" style="margin-left: 20px"></a></li>
+                        </ul>
                     </div>
                 </form>
             </div>
@@ -323,76 +257,145 @@
     </div>
 </div>
 
-<div class="modal fade" id="myModal-addClassType" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+
+<!----------------------------------迟到类型modal-------------------------------------------->
+<div class="modal fade" id="myModal-lateType" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">添加班次类型</h4>
+                <h4 class="modal-title" >迟到类型</h4>
             </div>
-            <div class="modal-body" style="padding: 15px 20px;font-size: 12px">
+            <div class="modal-body" style="padding: 0px 20px;font-size: 12px">
                 <form class="form-horizontal">
                     <div class="form-group">
-                        <label for="modal-classId" class="col-xs-2 control-label">班次ID</label>
-                        <div class="col-xs-4">
-                            <input type="text" class="form-control" id="modal-classId" >
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="modal-classTypeName" class="col-xs-2 control-label">班次类型名称</label>
-                        <div class="col-xs-4">
-                            <input type="text" class="form-control" id="modal-classTypeName" >
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label">打卡时间</label>
-                        <label for="modal-startPunchTime" class="col-xs-3 control-label">几分钟前开始打卡：</label>
-                        <div class="col-xs-2">
-                            <input type="text" class="form-control" id="modal-startPunchTime" >
-                        </div>
-                        <label for="modal-goOffPunchTime" class="col-xs-3 control-label">几分钟后结束打卡：</label>
-                        <div class="col-xs-2">
-                            <input type="text" class="form-control" id="modal-goOffPunchTime" >
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label">上下班时间</label>
-                        <label for="modal-startWorkTime" class="col-xs-2 control-label">上班：</label>
-                        <div class="col-xs-3">
-                            <input type="time" class="form-control" id="modal-startWorkTime" >
-                        </div>
-                        <label for="modal-goOffWorkTime" class="col-xs-2 control-label">下班：</label>
-                        <div class="col-xs-3">
-                            <input type="time" class="form-control" id="modal-goOffWorkTime" >
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-xs-2 checkbox-div">
-                            <label >休息时间</label>
-                        </div>
-                        <label for="modal-startBreakTime" class="col-xs-2 control-label">休息开始：</label>
-                        <div class="col-xs-3">
-                            <input type="time" class="form-control" id="modal-startBreakTime" >
-                        </div>
-                        <label for="modal-goOffBreakTime" class="col-xs-2 control-label">休息结束：</label>
-                        <div class="col-xs-3">
-                            <input type="time" class="form-control" id="modal-goOffBreakTime" >
+                        <div class="table-body" style="margin-top: 0px">
+                            <table class="table table-striped">
+                                <thead >
+                                <tr>
+                                    <th>名称</th>
+                                    <th style="border-right:1px solid #E5E5E5">分钟数</th>
+                                    <th style="width: 50px">修改</th>
+                                    <th style="width: 50px">删除</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="table-tr hidden">
+                                    <td class="lateType-name"></td>
+                                    <td class="lateType-minutes" style="border-right:1px solid #E5E5E5"></td>
+                                    <td class="">
+                                        <a class="" data-toggle="modal" data-target="#myModal-modifyLateType" onclick="setModifyLateTypeModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                    </td>
+                                    <td>
+                                        <a data-toggle="modal" data-target="#myModal-makeSureDeleteLateType" onclick="setMakeSureDeleteLateTypeValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    </td>
+                                </tr>
+                                <tr class="table-tr hidden">
+                                    <td class="lateType-name"></td>
+                                    <td class="lateType-minutes" style="border-right:1px solid #E5E5E5"></td>
+                                    <td class="">
+                                        <a class="" data-toggle="modal" data-target="#myModal-modifyLateType" onclick="setModifyLateTypeModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                    </td>
+                                    <td>
+                                        <a data-toggle="modal" data-target="#myModal-makeSureDeleteLateType" onclick="setMakeSureDeleteLateTypeValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    </td>
+                                </tr>
+                                <tr class="table-tr hidden">
+                                    <td class="lateType-name"></td>
+                                    <td class="lateType-minutes" style="border-right:1px solid #E5E5E5"></td>
+                                    <td class="">
+                                        <a class="" data-toggle="modal" data-target="#myModal-modifyLateType" onclick="setModifyLateTypeModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                    </td>
+                                    <td>
+                                        <a data-toggle="modal" data-target="#myModal-makeSureDeleteLateType" onclick="setMakeSureDeleteLateTypeValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    </td>
+                                </tr>
+                                <tr class="table-tr hidden">
+                                    <td class="lateType-name"></td>
+                                    <td class="lateType-minutes" style="border-right:1px solid #E5E5E5"></td>
+                                    <td class="">
+                                        <a class="" data-toggle="modal" data-target="#myModal-modifyLateType" onclick="setModifyLateTypeModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                    </td>
+                                    <td>
+                                        <a data-toggle="modal" data-target="#myModal-makeSureDeleteLateType" onclick="setMakeSureDeleteLateTypeValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    </td>
+                                </tr>
+                                <tr class="table-tr hidden">
+                                    <td class="lateType-name"></td>
+                                    <td class="lateType-minutes" style="border-right:1px solid #E5E5E5"></td>
+                                    <td class="">
+                                        <a class="" data-toggle="modal" data-target="#myModal-modifyLateType" onclick="setModifyLateTypeModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                    </td>
+                                    <td>
+                                        <a data-toggle="modal" data-target="#myModal-makeSureDeleteLateType" onclick="setMakeSureDeleteLateTypeValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    </td>
+                                </tr>
+                                <tr class="table-tr hidden">
+                                    <td class="lateType-name"></td>
+                                    <td class="lateType-minutes" style="border-right:1px solid #E5E5E5"></td>
+                                    <td class="">
+                                        <a class="" data-toggle="modal" data-target="#myModal-modifyLateType" onclick="setModifyLateTypeModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                    </td>
+                                    <td>
+                                        <a data-toggle="modal" data-target="#myModal-makeSureDeleteLateType" onclick="setMakeSureDeleteLateTypeValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    </td>
+                                </tr>
+                                <tr class="table-tr hidden">
+                                    <td class="lateType-name"></td>
+                                    <td class="lateType-minutes" style="border-right:1px solid #E5E5E5"></td>
+                                    <td class="">
+                                        <a class="" data-toggle="modal" data-target="#myModal-modifyLateType" onclick="setModifyLateTypeModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                    </td>
+                                    <td>
+                                        <a data-toggle="modal" data-target="#myModal-makeSureDeleteLateType" onclick="setMakeSureDeleteLateTypeValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    </td>
+                                </tr>
+                                <tr class="table-tr hidden">
+                                    <td class="lateType-name"></td>
+                                    <td class="lateType-minutes" style="border-right:1px solid #E5E5E5"></td>
+                                    <td class="">
+                                        <a class="" data-toggle="modal" data-target="#myModal-modifyLateType" onclick="setModifyLateTypeModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                    </td>
+                                    <td>
+                                        <a data-toggle="modal" data-target="#myModal-makeSureDeleteLateType" onclick="setMakeSureDeleteLateTypeValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    </td>
+                                </tr>
+                                <tr class="table-tr hidden">
+                                    <td class="lateType-name"></td>
+                                    <td class="lateType-minutes" style="border-right:1px solid #E5E5E5"></td>
+                                    <td class="">
+                                        <a class="" data-toggle="modal" data-target="#myModal-modifyLateType" onclick="setModifyLateTypeModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                    </td>
+                                    <td>
+                                        <a data-toggle="modal" data-target="#myModal-makeSureDeleteLateType" onclick="setMakeSureDeleteLateTypeValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    </td>
+                                </tr>
+                                <tr class="table-tr hidden">
+                                    <td class="lateType-name"></td>
+                                    <td class="lateType-minutes" style="border-right:1px solid #E5E5E5"></td>
+                                    <td class="">
+                                        <a class="" data-toggle="modal" data-target="#myModal-modifyLateType" onclick="setModifyLateTypeModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                    </td>
+                                    <td>
+                                        <a data-toggle="modal" data-target="#myModal-makeSureDeleteLateType" onclick="setMakeSureDeleteLateTypeValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" onclick="addScheduleType()" data-dismiss="modal">确认</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal-addLateType">添加</button>
             </div>
         </div>
     </div>
 </div>
 
+<!----------------------------------添加迟到类型modal-------------------------------------------->
 <div class="modal fade" id="myModal-addLateType" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -400,18 +403,18 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" >添加迟到类型</h4>
             </div>
-            <div class="modal-body" style="padding: 15px 20px;font-size: 12px">
+            <div class="modal-body" style="padding: 15px 20px;font-size: 14px">
                 <form class="form-horizontal">
                     <div class="form-group">
-                        <label for="modal-classTypeName" class="col-xs-2 control-label">迟到类型名称</label>
-                        <div class="col-xs-4">
-                            <input type="text" class="form-control" id="modal-lateTypeName" >
+                        <label for="modal-addLateTypeName" class="col-xs-3 control-label">迟到类型名称</label>
+                        <div class="col-xs-7">
+                            <input type="text" class="form-control" id="modal-addLateTypeName" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="modal-lateTime" class="col-xs-2 control-label">迟到分钟数</label>
-                        <div class="col-xs-4">
-                            <input type="text" class="form-control" id="modal-lateTime" >
+                        <label for="modal-addLateTypeMinutes" class="col-xs-3 control-label">迟到分钟数</label>
+                        <div class="col-xs-7">
+                            <input type="text" class="form-control" id="modal-addLateTypeMinutes" >
                         </div>
                     </div>
                 </form>
@@ -424,36 +427,442 @@
     </div>
 </div>
 
-<div class="modal fade" id="myModal-modifyClass" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!----------------------------------修改迟到类型modal-------------------------------------------->
+<div class="modal fade" id="myModal-modifyLateType" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" >修改班次信息</h4>
+                <h4 class="modal-title" >修改迟到类型</h4>
             </div>
-            <div class="modal-body" style="padding: 15px 20px;font-size: 12px">
+            <div class="modal-body" style="padding: 15px 20px;font-size: 14px">
                 <form class="form-horizontal">
                     <div class="form-group">
-                        <label for="modal-modifyClassID" class="col-xs-2 control-label">班次ID</label>
-                        <div class="col-xs-4">
-                            <input type="text" class="form-control" id="modal-modifyClassID" >
+                        <label for="modal-modifyLateTypeID" class="col-xs-3 control-label">迟到类型ID</label>
+                        <div class="col-xs-7">
+                            <input type="text" class="form-control" id="modal-modifyLateTypeID" disabled="disabled">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="modal-modifyClassName" class="col-xs-2 control-label">班次名称</label>
-                        <div class="col-xs-4">
-                            <input type="text" class="form-control" id="modal-modifyClassName" >
+                        <label for="modal-modifyLateTypeName" class="col-xs-3 control-label">迟到类型名称</label>
+                        <div class="col-xs-7">
+                            <input type="text" class="form-control" id="modal-modifyLateTypeName" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-modifyLateTypeMinutes" class="col-xs-3 control-label">迟到分钟数</label>
+                        <div class="col-xs-7">
+                            <input type="text" class="form-control" id="modal-modifyLateTypeMinutes" >
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" onclick="modifyClass()" data-dismiss="modal">确认</button>
+                <button type="button" class="btn btn-primary" onclick="modifyLateType()" data-dismiss="modal">确认</button>
             </div>
         </div>
     </div>
 </div>
 
+<!------确定删除迟到类型modal------->
+<div class="modal fade bs-example-modal-sm" id="myModal-makeSureDeleteLateType" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" value="">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 5px 15px">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                是否确认要删除？
+                <button type="button" class="btn btn-default" data-dismiss="modal" style="float: right; margin-left: 5px">取消</button>
+                <button type="button" class="btn btn-primary" style="float: right;" onclick="deleteLateType()" data-dismiss="modal">确认</button>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!------------------------------班次类型modal------------------------------->
+<div class="modal fade bs-example-modal-lg" style="width: 90%; margin-left: 5%" id="myModal-classType" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" style="margin: 30px 0px;width: 100%" role="document">
+        <div class="modal-content" style="width: 100%">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" >班次类型</h4>
+            </div>
+            <div class="modal-body" style="padding: 15px 20px;">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <div class="table-body" style="margin-top: 0px">
+                            <table class="table table-striped">
+                                <thead >
+                                <tr>
+                                    <th style="width: 100px">名称</th>
+                                    <th>开始时间</th>
+                                    <th>结束时间</th>
+                                    <th>多少分钟前开始打卡</th>
+                                    <th>多少分钟后结束打卡</th>
+                                    <th>休息开始时间</th>
+                                    <th>休息结束时间</th>
+                                    <th>休息时间</th>
+                                    <th style="border-right:1px solid #E5E5E5">工作时间</th>
+                                    <th style="width: 50px">修改</th>
+                                    <th style="width: 50px">删除</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="table-tr hidden">
+                                    <td class="classType-name"></td>
+                                    <td class="classType-startTime"></td>
+                                    <td class="classType-endTime"></td>
+                                    <td class="classType-beforeMinute"></td>
+                                    <td class="classType-afterMinute"></td>
+                                    <td class="classType-startBreakTime"></td>
+                                    <td class="classType-endBreakTime"></td>
+                                    <td class="classType-breakPeriod"></td>
+                                    <td class="classType-workPeriod" style="border-right:1px solid #E5E5E5"></td>
+                                    <td class="">
+                                        <a class="" data-toggle="modal" data-target="#myModal-modifyClassType" onclick="setModifyClassTypeModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                    </td>
+                                    <td>
+                                        <a data-toggle="modal" data-target="#myModal-makeSureDeleteClassType" onclick="setMakeSureDeleteClassTypeValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    </td>
+                                </tr>
+                                <tr class="table-tr hidden">
+                                    <td class="classType-name"></td>
+                                    <td class="classType-startTime"></td>
+                                    <td class="classType-endTime"></td>
+                                    <td class="classType-beforeMinute"></td>
+                                    <td class="classType-afterMinute"></td>
+                                    <td class="classType-startBreakTime"></td>
+                                    <td class="classType-endBreakTime"></td>
+                                    <td class="classType-breakPeriod"></td>
+                                    <td class="classType-workPeriod" style="border-right:1px solid #E5E5E5"></td>
+                                    <td class="">
+                                        <a class="" data-toggle="modal" data-target="#myModal-modifyClassType" onclick="setModifyClassTypeModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                    </td>
+                                    <td>
+                                        <a data-toggle="modal" data-target="#myModal-makeSureDeleteClassType" onclick="setMakeSureDeleteClassTypeValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    </td>
+                                </tr>
+                                <tr class="table-tr hidden">
+                                    <td class="classType-name"></td>
+                                    <td class="classType-startTime"></td>
+                                    <td class="classType-endTime"></td>
+                                    <td class="classType-beforeMinute"></td>
+                                    <td class="classType-afterMinute"></td>
+                                    <td class="classType-startBreakTime"></td>
+                                    <td class="classType-endBreakTime"></td>
+                                    <td class="classType-breakPeriod"></td>
+                                    <td class="classType-workPeriod" style="border-right:1px solid #E5E5E5"></td>
+                                    <td class="">
+                                        <a class="" data-toggle="modal" data-target="#myModal-modifyClassType" onclick="setModifyClassTypeModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                    </td>
+                                    <td>
+                                        <a data-toggle="modal" data-target="#myModal-makeSureDeleteClassType" onclick="setMakeSureDeleteClassTypeValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    </td>
+                                </tr>
+                                <tr class="table-tr hidden">
+                                    <td class="classType-name"></td>
+                                    <td class="classType-startTime"></td>
+                                    <td class="classType-endTime"></td>
+                                    <td class="classType-beforeMinute"></td>
+                                    <td class="classType-afterMinute"></td>
+                                    <td class="classType-startBreakTime"></td>
+                                    <td class="classType-endBreakTime"></td>
+                                    <td class="classType-breakPeriod"></td>
+                                    <td class="classType-workPeriod" style="border-right:1px solid #E5E5E5"></td>
+                                    <td class="">
+                                        <a class="" data-toggle="modal" data-target="#myModal-modifyClassType" onclick="setModifyClassTypeModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                    </td>
+                                    <td>
+                                        <a data-toggle="modal" data-target="#myModal-makeSureDeleteClassType" onclick="setMakeSureDeleteClassTypeValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    </td>
+                                </tr>
+                                <tr class="table-tr hidden">
+                                    <td class="classType-name"></td>
+                                    <td class="classType-startTime"></td>
+                                    <td class="classType-endTime"></td>
+                                    <td class="classType-beforeMinute"></td>
+                                    <td class="classType-afterMinute"></td>
+                                    <td class="classType-startBreakTime"></td>
+                                    <td class="classType-endBreakTime"></td>
+                                    <td class="classType-breakPeriod"></td>
+                                    <td class="classType-workPeriod" style="border-right:1px solid #E5E5E5"></td>
+                                    <td class="">
+                                        <a class="" data-toggle="modal" data-target="#myModal-modifyClassType" onclick="setModifyClassTypeModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                    </td>
+                                    <td>
+                                        <a data-toggle="modal" data-target="#myModal-makeSureDeleteClassType" onclick="setMakeSureDeleteClassTypeValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    </td>
+                                </tr>
+                                <tr class="table-tr hidden">
+                                    <td class="classType-name"></td>
+                                    <td class="classType-startTime"></td>
+                                    <td class="classType-endTime"></td>
+                                    <td class="classType-beforeMinute"></td>
+                                    <td class="classType-afterMinute"></td>
+                                    <td class="classType-startBreakTime"></td>
+                                    <td class="classType-endBreakTime"></td>
+                                    <td class="classType-breakPeriod"></td>
+                                    <td class="classType-workPeriod" style="border-right:1px solid #E5E5E5"></td>
+                                    <td class="">
+                                        <a class="" data-toggle="modal" data-target="#myModal-modifyClassType" onclick="setModifyClassTypeModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                    </td>
+                                    <td>
+                                        <a data-toggle="modal" data-target="#myModal-makeSureDeleteClassType" onclick="setMakeSureDeleteClassTypeValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    </td>
+                                </tr>
+                                <tr class="table-tr hidden">
+                                    <td class="classType-name"></td>
+                                    <td class="classType-startTime"></td>
+                                    <td class="classType-endTime"></td>
+                                    <td class="classType-beforeMinute"></td>
+                                    <td class="classType-afterMinute"></td>
+                                    <td class="classType-startBreakTime"></td>
+                                    <td class="classType-endBreakTime"></td>
+                                    <td class="classType-breakPeriod"></td>
+                                    <td class="classType-workPeriod" style="border-right:1px solid #E5E5E5"></td>
+                                    <td class="">
+                                        <a class="" data-toggle="modal" data-target="#myModal-modifyClassType" onclick="setModifyClassTypeModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                    </td>
+                                    <td>
+                                        <a data-toggle="modal" data-target="#myModal-makeSureDeleteClassType" onclick="setMakeSureDeleteClassTypeValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    </td>
+                                </tr>
+                                <tr class="table-tr hidden">
+                                    <td class="classType-name"></td>
+                                    <td class="classType-startTime"></td>
+                                    <td class="classType-endTime"></td>
+                                    <td class="classType-beforeMinute"></td>
+                                    <td class="classType-afterMinute"></td>
+                                    <td class="classType-startBreakTime"></td>
+                                    <td class="classType-endBreakTime"></td>
+                                    <td class="classType-breakPeriod"></td>
+                                    <td class="classType-workPeriod" style="border-right:1px solid #E5E5E5"></td>
+                                    <td class="">
+                                        <a class="" data-toggle="modal" data-target="#myModal-modifyClassType" onclick="setModifyClassTypeModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                    </td>
+                                    <td>
+                                        <a data-toggle="modal" data-target="#myModal-makeSureDeleteClassType" onclick="setMakeSureDeleteClassTypeValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    </td>
+                                </tr>
+                                <tr class="table-tr hidden">
+                                    <td class="classType-name"></td>
+                                    <td class="classType-startTime"></td>
+                                    <td class="classType-endTime"></td>
+                                    <td class="classType-beforeMinute"></td>
+                                    <td class="classType-afterMinute"></td>
+                                    <td class="classType-startBreakTime"></td>
+                                    <td class="classType-endBreakTime"></td>
+                                    <td class="classType-breakPeriod"></td>
+                                    <td class="classType-workPeriod" style="border-right:1px solid #E5E5E5"></td>
+                                    <td class="">
+                                        <a class="" data-toggle="modal" data-target="#myModal-modifyClassType" onclick="setModifyClassTypeModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                    </td>
+                                    <td>
+                                        <a data-toggle="modal" data-target="#myModal-makeSureDeleteClassType" onclick="setMakeSureDeleteClassTypeValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    </td>
+                                </tr>
+                                <tr class="table-tr hidden">
+                                    <td class="classType-name"></td>
+                                    <td class="classType-startTime"></td>
+                                    <td class="classType-endTime"></td>
+                                    <td class="classType-beforeMinute"></td>
+                                    <td class="classType-afterMinute"></td>
+                                    <td class="classType-startBreakTime"></td>
+                                    <td class="classType-endBreakTime"></td>
+                                    <td class="classType-breakPeriod"></td>
+                                    <td class="classType-workPeriod" style="border-right:1px solid #E5E5E5"></td>
+                                    <td class="">
+                                        <a class="" data-toggle="modal" data-target="#myModal-modifyClassType" onclick="setModifyClassTypeModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                    </td>
+                                    <td>
+                                        <a data-toggle="modal" data-target="#myModal-makeSureDeleteClassType" onclick="setMakeSureDeleteClassTypeValue(this)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal-addClassType">添加</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!----------------------------------添加班次类型modal-------------------------------------------->
+<div class="modal fade" id="myModal-addClassType" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">添加班次类型</h4>
+            </div>
+            <div class="modal-body" style="padding: 15px 20px;font-size: 12px">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="modal-addClassTypeName" class="col-xs-2 control-label">班次类型名称</label>
+                        <div class="col-xs-4">
+                            <input type="text" class="form-control" id="modal-addClassTypeName" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">打卡时间</label>
+                        <label for="modal-addClassTypeBeforeMinute" class="col-xs-3 control-label">几分钟前开始打卡：</label>
+                        <div class="col-xs-2">
+                            <input type="text" class="form-control" id="modal-addClassTypeBeforeMinute" >
+                        </div>
+                        <label for="modal-addClassTypeAfterMinute" class="col-xs-3 control-label">几分钟后结束打卡：</label>
+                        <div class="col-xs-2">
+                            <input type="text" class="form-control" id="modal-addClassTypeAfterMinute" >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">上下班时间</label>
+                        <label for="modal-addClassTypeStartTime" class="col-xs-2 control-label">上班：</label>
+                        <div class="col-xs-3">
+                            <input type="time" class="form-control" id="modal-addClassTypeStartTime" >
+                        </div>
+                        <label for="modal-addClassTypeEndTime" class="col-xs-2 control-label">下班：</label>
+                        <div class="col-xs-3">
+                            <input type="time" class="form-control" id="modal-addClassTypeEndTime" >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-2 checkbox-div">
+                            <label >休息时间</label>
+                        </div>
+                        <label for="modal-addClassTypeStartBreakTime" class="col-xs-2 control-label">休息开始：</label>
+                        <div class="col-xs-3">
+                            <input type="time" class="form-control" id="modal-addClassTypeStartBreakTime" >
+                        </div>
+                        <label for="modal-addClassTypeEndBreakTime" class="col-xs-2 control-label">休息结束：</label>
+                        <div class="col-xs-3">
+                            <input type="time" class="form-control" id="modal-addClassTypeEndBreakTime" >
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="addClassType()">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!----------------------------------修改班次类型modal-------------------------------------------->
+<div class="modal fade" id="myModal-modifyClassType" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" >修改班次类型</h4>
+            </div>
+            <div class="modal-body" style="padding: 15px 20px;font-size: 14px">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="modal-modifyClassTypeID" class="col-xs-2 control-label">班次类型ID</label>
+                        <div class="col-xs-4">
+                            <input type="text" class="form-control" id="modal-modifyClassTypeID" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-modifyClassTypeName" class="col-xs-2 control-label">班次类型名称</label>
+                        <div class="col-xs-4">
+                            <input type="text" class="form-control" id="modal-modifyClassTypeName" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">打卡时间</label>
+                        <label for="modal-modifyClassTypeBeforeMinute" class="col-xs-3 control-label">几分钟前开始打卡：</label>
+                        <div class="col-xs-2">
+                            <input type="text" class="form-control" id="modal-modifyClassTypeBeforeMinute" >
+                        </div>
+                        <label for="modal-modifyClassTypeAfterMinute" class="col-xs-3 control-label">几分钟后结束打卡：</label>
+                        <div class="col-xs-2">
+                            <input type="text" class="form-control" id="modal-modifyClassTypeAfterMinute" >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">上下班时间</label>
+                        <label for="modal-modifyClassTypeStartTime" class="col-xs-2 control-label">上班：</label>
+                        <div class="col-xs-3">
+                            <input type="time" class="form-control" id="modal-modifyClassTypeStartTime" >
+                        </div>
+                        <label for="modal-modifyClassTypeEndTime" class="col-xs-2 control-label">下班：</label>
+                        <div class="col-xs-3">
+                            <input type="time" class="form-control" id="modal-modifyClassTypeEndTime" >
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-xs-2 checkbox-div">
+                            <label >休息时间</label>
+                        </div>
+                        <label for="modal-modifyClassTypeStartBreakTime" class="col-xs-2 control-label">休息开始：</label>
+                        <div class="col-xs-3">
+                            <input type="time" class="form-control" id="modal-modifyClassTypeStartBreakTime" >
+                        </div>
+                        <label for="modal-modifyClassTypeEndBreakTime" class="col-xs-2 control-label">休息结束：</label>
+                        <div class="col-xs-3">
+                            <input type="time" class="form-control" id="modal-modifyClassTypeEndBreakTime" >
+                        </div>
+                    </div>
+                    <hr style="border:0.5px solid #E5E5E5;margin-bottom: 10px">
+                    <div class="form-group" style="margin-top: 10px">
+                        <label class="col-xs-3">迟到类型(可多选)</label>
+                        <ul class=" modifyClassTypeSelectLateType-menu-ul col-xs-7">
+                            <li style="position: relative"><input class="selectLateType-box" id="select-all-lateType-modify" type="checkbox"><a value="" style="margin-left: 20px;color: #2e6da4">全选</a></li>
+                            <li class="hidden" style="position: relative;margin-top: 3px"><input class="selectLateType-box select-sub-box-modify" type="checkbox"><a value="" style="margin-left: 20px"></a></li>
+                            <li class="hidden" style="position: relative;margin-top: 3px"><input class="selectLateType-box select-sub-box-modify" type="checkbox"><a value="" style="margin-left: 20px"></a></li>
+                            <li class="hidden" style="position: relative;margin-top: 3px"><input class="selectLateType-box select-sub-box-modify" type="checkbox"><a value="" style="margin-left: 20px"></a></li>
+                            <li class="hidden" style="position: relative;margin-top: 3px"><input class="selectLateType-box select-sub-box-modify" type="checkbox"><a value="" style="margin-left: 20px"></a></li>
+                            <li class="hidden" style="position: relative;margin-top: 3px"><input class="selectLateType-box select-sub-box-modify" type="checkbox"><a value="" style="margin-left: 20px"></a></li>
+                            <li class="hidden" style="position: relative;margin-top: 3px"><input class="selectLateType-box select-sub-box-modify" type="checkbox"><a value="" style="margin-left: 20px"></a></li>
+                            <li class="hidden" style="position: relative;margin-top: 3px"><input class="selectLateType-box select-sub-box-modify" type="checkbox"><a value="" style="margin-left: 20px"></a></li>
+                            <li class="hidden" style="position: relative;margin-top: 3px"><input class="selectLateType-box select-sub-box-modify" type="checkbox"><a value="" style="margin-left: 20px"></a></li>
+                            <li class="hidden" style="position: relative;margin-top: 3px"><input class="selectLateType-box select-sub-box-modify" type="checkbox"><a value="" style="margin-left: 20px"></a></li>
+                            <li class="hidden" style="position: relative;margin-top: 3px"><input class="selectLateType-box select-sub-box-modify" type="checkbox"><a value="" style="margin-left: 20px"></a></li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="modifyClassType()" data-dismiss="modal">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!------确定删除班次类型modal------->
+<div class="modal fade bs-example-modal-sm" id="myModal-makeSureDeleteClassType" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" value="">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 5px 15px">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                是否确认要删除？
+                <button type="button" class="btn btn-default" data-dismiss="modal" style="float: right; margin-left: 5px">取消</button>
+                <button type="button" class="btn btn-primary" style="float: right;" onclick="deleteClassType()" data-dismiss="modal">确认</button>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
