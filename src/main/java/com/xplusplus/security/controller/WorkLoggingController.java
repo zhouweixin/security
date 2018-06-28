@@ -108,14 +108,15 @@ public class WorkLoggingController {
     /**
      * 上班打卡
      *
+     * @param attendanceGroupId 考勤组编码
      * @param userId 用户编码
      * @param longitude 经度
      * @param latitude 纬度
      * @return
      */
     @RequestMapping(value = "/goWork")
-    public Result<Object> goWork(String userId, double longitude, double latitude){
-        workLoggingService.goWork(userId, userId, longitude, latitude);
+    public Result<Object> goWork(int attendanceGroupId, String userId, double longitude, double latitude){
+        workLoggingService.goWork(attendanceGroupId, userId, userId, longitude, latitude);
         return ResultUtil.success();
     }
 
@@ -128,8 +129,8 @@ public class WorkLoggingController {
      * @return
      */
     @RequestMapping(value = "/offWork")
-    public Result<Object> offWork(String userId, double longitude, double latitude){
-        workLoggingService.offWork(userId, longitude, latitude);
+    public Result<Object> offWork(int attendanceGroupId, String userId, double longitude, double latitude){
+        workLoggingService.offWork(attendanceGroupId, userId, longitude, latitude);
         return ResultUtil.success();
     }
 
@@ -143,8 +144,8 @@ public class WorkLoggingController {
      * @return
      */
     @RequestMapping(value = "/goWorkBatch")
-    public Result<Object> goWorkBatch(int attenceGroupId, String leaderId, String[] userIds, double longitude, double latitude){
-        workLoggingService.goWorkBatch(attenceGroupId, leaderId, userIds, longitude, latitude);
+    public Result<Object> goWorkBatch(int attendanceGroupId, int attenceGroupId, String leaderId, String[] userIds, double longitude, double latitude){
+        workLoggingService.goWorkBatch(attendanceGroupId, attenceGroupId, leaderId, userIds, longitude, latitude);
         return ResultUtil.success();
     }
 

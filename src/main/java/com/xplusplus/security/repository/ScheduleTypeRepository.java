@@ -16,6 +16,4 @@ public interface ScheduleTypeRepository extends JpaRepository<ScheduleType,Integ
      * 通过名称模糊查询-分页
      */
     public Page<ScheduleType> findByNameLike(String name, Pageable pageable);
-
-    public List<ScheduleType> findBySchedule(Schedule schedule);
 }

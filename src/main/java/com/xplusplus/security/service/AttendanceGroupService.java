@@ -59,12 +59,8 @@ public class AttendanceGroupService {
         { throw new SecurityExceptions(EnumExceptions.ADD_FAILED_ATTENDANCEGROUP_NOT_EXIST);}
         **/
 
-
         //调用AttendanceGroupLeaderService新增负责人
        attendanceGroupLeaderService.addLeadersToAttendanceGroup(attendanceGroup.getId(),leaderIds);
-//        调用UserService新增考勤员工
-        userService.assignUsersToAttendanceGroup(attendanceGroup.getId(),ids);
-
 
         return save;
     }
@@ -92,9 +88,6 @@ public class AttendanceGroupService {
         AttendanceGroup save = attendanceGroupRepository.save(attendanceGroup);
         //调用AttendanceGroupleaderService新增负责人
         attendanceGroupLeaderService.addLeadersToAttendanceGroup(attendanceGroup.getId(),leaderIds);
-        //调用UserService新增考勤员工
-        userService.assignUsersToAttendanceGroup(attendanceGroup.getId(),ids);
-
 
         return save;
     }

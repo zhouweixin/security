@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -175,14 +176,5 @@ public class Project {
 
 	public void setScanningCopy(String scanningCopy) {
 		this.scanningCopy = scanningCopy;
-	}
-
-	@Override
-	public String toString() {
-		return "Project [id=" + id + ", name=" + name + ", startDate=" + startDate + ", endDate=" + endDate
-				+ ", period=" + period + ", price=" + price + ", receiptPrice=" + receiptPrice
-				+ ", customerOfficePhone=" + customerOfficePhone + ", customerFinancePhone=" + customerFinancePhone
-				+ ", customerUnit=" + customerUnit + ", scanningCopy=" + scanningCopy + ", projectStatus="
-				+ projectStatus + ", leader=" + leader + "]";
 	}
 }

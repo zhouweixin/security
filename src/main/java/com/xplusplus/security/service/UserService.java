@@ -416,34 +416,6 @@ public class UserService {
     }
 
     /**
-     * 分配用户到考勤组
-     *
-     * @param attendanceGroupId
-     * @param userIds
-     */
-    @Transactional
-    public void assignUsersToAttendanceGroup(Integer attendanceGroupId, Set<String> userIds) {
-        // 判断考勤组是否存在
-        AttendanceGroup attendanceGroup = attendanceGroupRepository.findOne(attendanceGroupId);
-        if (attendanceGroup == null) {
-            throw new SecurityExceptions(EnumExceptions.ASSIGN_FAILED_ATTENDANCE_GROUP_NOT_EXIST);
-        }
-
-        // 清空考勤组的员工
-        userRepository.nullAttendanceGroupByAttendanceGroup(attendanceGroup);
-
-        // 分别分配每个用户
-        for (String userId : userIds) {
-            if (userRepository.findOne(userId) == null) {
-                EnumExceptions.ASSIGN_FAILED_USER_NOT_EXIST.setMessage("分配失败, 员工" + userId + "不存在");
-                throw new SecurityExceptions(EnumExceptions.ASSIGN_FAILED_USER_NOT_EXIST);
-            }
-
-            userRepository.updateAttendanceGroupById(attendanceGroup, userId);
-        }
-    }
-
-    /**
      * 分配用户到薪资方案
      *
      * @param wageId
@@ -487,7 +459,22 @@ public class UserService {
      * @return
      */
     public List<User> findByAttendanceGroup(AttendanceGroup attendanceGroup) {
-        return userRepository.findByAttendanceGroup(attendanceGroup);
+        List<User> users = new ArrayList<>();
+        if (attendanceGroup == null || attendanceGroup.getId() == null) {
+            return users;
+        }
+
+        AttendanceGroup one = attendanceGroupRepository.findOne(attendanceGroup.getId());
+        if (one == null || one.getProject() == null) {
+            return users;
+        }
+
+        List<ProjectUser> projectUsers = projectUserRepository.findByProject(one.getProject());
+        for (ProjectUser projectUser : projectUsers) {
+            users.add(projectUser.getUser());
+        }
+
+        return users;
     }
 
     /**

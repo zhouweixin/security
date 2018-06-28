@@ -26,9 +26,7 @@ public class AttendanceGroup {
     // 允许外勤打卡
     private Boolean enableOut;
 
-    /**
-     * 项目
-     */
+    // 项目
     @OneToOne(targetEntity = Project.class)
     @JoinColumn(name = "project_id", referencedColumnName = "id")
     private Project project;

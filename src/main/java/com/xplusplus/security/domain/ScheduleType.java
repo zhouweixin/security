@@ -56,11 +56,6 @@ public class ScheduleType {
 	// 多少分钟后结束打卡
 	private Integer afterMinute;
 
-	// 班次
-	@ManyToOne(targetEntity = Schedule.class)
-	@JoinColumn(name = "schedule_id", referencedColumnName = "id")
-	private Schedule schedule;
-
 	// 休息时间，单位：分钟
 	private long breakPeriod;
 
@@ -115,14 +110,6 @@ public class ScheduleType {
 		this.afterMinute = afterMinute;
 	}
 
-	public Schedule getSchedule() {
-		return schedule;
-	}
-
-	public void setSchedule(Schedule schedule) {
-		this.schedule = schedule;
-	}
-
 	public Date getStartBreakTime() {
 		return startBreakTime;
 	}
@@ -153,13 +140,5 @@ public class ScheduleType {
 
 	public void setWorkPeriod(long workPeriod) {
 		this.workPeriod = workPeriod;
-	}
-
-	@Override
-	public String toString() {
-		return "ScheduleType [id=" + id + ", name=" + name + ", startTime=" + startTime + ", endTime=" + endTime
-				+ ", beforeMinute=" + beforeMinute + ", afterMinute=" + afterMinute + ", schedule=" + schedule
-				+ ", startBreakTime=" + startBreakTime + ", endBreakTime=" + endBreakTime + ", breakPeriod="
-				+ breakPeriod + ", workPeriod=" + workPeriod + "]";
 	}
 }

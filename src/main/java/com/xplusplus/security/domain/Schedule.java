@@ -1,9 +1,8 @@
 package com.xplusplus.security.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @Author: zhouweixin
@@ -19,6 +18,20 @@ public class Schedule {
 
 	// 名称
 	private String name;
+
+	// 班次类型
+    @ManyToMany(targetEntity = ScheduleType.class)
+    @JoinTable(name = "schedule_schedule_type",
+            joinColumns = {@JoinColumn(name = "schedule_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "schedule_type_id", referencedColumnName = "id")})
+    private Set<ScheduleType> scheduleTypes = new HashSet<>();
+
+    // 迟到类型
+    @ManyToMany(targetEntity = LateType.class)
+    @JoinTable(name = "schedule_late_type",
+            joinColumns = {@JoinColumn(name = "schedule_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "late_type_id", referencedColumnName = "id")})
+    private Set<LateType> lateTypes = new HashSet<>();
 
 	public Integer getId() {
 		return id;
@@ -36,7 +49,23 @@ public class Schedule {
 		this.name = name;
 	}
 
-	@Override
+    public Set<ScheduleType> getScheduleTypes() {
+        return scheduleTypes;
+    }
+
+    public void setScheduleTypes(Set<ScheduleType> scheduleTypes) {
+        this.scheduleTypes = scheduleTypes;
+    }
+
+    public Set<LateType> getLateTypes() {
+        return lateTypes;
+    }
+
+    public void setLateTypes(Set<LateType> lateTypes) {
+        this.lateTypes = lateTypes;
+    }
+
+    @Override
 	public String toString() {
 		return "Schedule [id=" + id + ", name=" + name + "]";
 	}

@@ -125,24 +125,6 @@ public interface UserRepository extends JpaRepository<User, String> {
 	 * @return
 	 */
 	public List<User> findByJobNatureAndNameLike(JobNature jobNature, String string);
-	
-	/**
-	 * 把用户从指定考勤组里清除
-	 * 
-	 * @param attendanceGroup
-	 */
-	@Modifying
-	@Query(value = "update User u set u.attendanceGroup=null where u.attendanceGroup=?1")
-	public void nullAttendanceGroupByAttendanceGroup(AttendanceGroup attendanceGroup);
-	
-	/** 给用户分配考勤组
-	 * 
-	 * @param attendenceGroup
-	 * @param id
-	 */
-	@Modifying
-	@Query(value = "update User u set u.attendanceGroup=?1 where u.id=?2")
-	public void updateAttendanceGroupById(AttendanceGroup attendenceGroup, String id);
 
     /**
      * 把用户从指定薪资方案里清除
@@ -177,14 +159,6 @@ public interface UserRepository extends JpaRepository<User, String> {
      * @return
      */
     public Page<User> findByWage(Wage wage, Pageable pageable);
-
-    /**
-     * 通过考勤组查询
-     *
-     * @param attendanceGroup
-     * @return
-     */
-	public List<User> findByAttendanceGroup(AttendanceGroup attendanceGroup);
 
     /**
      * 离职

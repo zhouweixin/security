@@ -1,9 +1,6 @@
 package com.xplusplus.security.service;
 
-import com.xplusplus.security.controller.AttendanceGroupController;
-import com.xplusplus.security.domain.AttendanceGroup;
 import com.xplusplus.security.domain.Schedule;
-import com.xplusplus.security.domain.ScheduleLateType;
 import com.xplusplus.security.exception.EnumExceptions;
 import com.xplusplus.security.exception.SecurityExceptions;
 import com.xplusplus.security.repository.AttendanceGroupRepository;

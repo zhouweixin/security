@@ -127,13 +127,6 @@ public class User {
     @JoinColumn(name = "resign_type_id", referencedColumnName = "id")
 	private ResignType resignType;
 
-	/**
-	 * 考勤组
-	 */
-	@ManyToOne(targetEntity = AttendanceGroup.class)
-	@JoinColumn(name = "attendance_group_id", referencedColumnName = "id")
-	private AttendanceGroup attendanceGroup;
-
     /**
      * 薪资方案
      */
@@ -276,14 +269,6 @@ public class User {
 
     public void setResignType(ResignType resignType) {
         this.resignType = resignType;
-    }
-
-    public AttendanceGroup getAttendanceGroup() {
-        return attendanceGroup;
-    }
-
-    public void setAttendanceGroup(AttendanceGroup attendanceGroup) {
-        this.attendanceGroup = attendanceGroup;
     }
 
     public Wage getWage() {

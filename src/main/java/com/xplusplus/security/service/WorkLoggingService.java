@@ -42,6 +42,8 @@ public class WorkLoggingService {
     @Autowired
     private AttendanceGroupLeaderRepository attendanceGroupLeaderRepository;
 
+    @Autowired
+    private AttendanceGroupRepository attendanceGroupRepository;
 
 
     /**
@@ -180,22 +182,22 @@ public class WorkLoggingService {
      * @param latitude
      */
     @Transactional
-    public void goWork(String leaderId, String userId, double longitude, double latitude) {
+    public void goWork(Integer attendanceGroupId, String leaderId, String userId, double longitude, double latitude) {
         // 判断用户是否存在
         User user = userRepository.findOne(userId);
         if (user == null) {
             throw new SecurityExceptions(EnumExceptions.CARD_FAILED_USER_NOT_EXIST);
         }
 
+        // 判断所在考勤组是否存在
+        AttendanceGroup attendanceGroup = attendanceGroupRepository.findOne(attendanceGroupId);
+        if (attendanceGroup == null) {
+            throw new SecurityExceptions(EnumExceptions.CARD_FAILED_ATTENDANCE_GROUP_NOT_EXIST);
+        }
+
         // 判断是否有未完成的打卡
         if (workLoggingRepository.findFirstByUserAndStatus(user, new WorkLoggingStatus(0)) != null) {
             throw new SecurityExceptions(EnumExceptions.CARD_FAILED_WORKING);
-        }
-
-        // 判断所在考勤组是否存在
-        AttendanceGroup attendanceGroup = user.getAttendanceGroup();
-        if (attendanceGroup == null) {
-            throw new SecurityExceptions(EnumExceptions.CARD_FAILED_ATTENDANCE_GROUP_NOT_EXIST);
         }
 
         // 验证地点是否合法
@@ -227,7 +229,7 @@ public class WorkLoggingService {
      * @param longitude
      * @param latitude
      */
-    public void offWork(String userId, double longitude, double latitude) {
+    public void offWork(Integer attendanceGroupId, String userId, double longitude, double latitude) {
         // 判断用户是否存在
         User user = userRepository.findOne(userId);
         if (user == null) {
@@ -235,16 +237,16 @@ public class WorkLoggingService {
             throw new SecurityExceptions(EnumExceptions.CARD_FAILED_USER_NOT_EXIST);
         }
 
+        // 判断所在考勤组是否存在
+        AttendanceGroup attendanceGroup = attendanceGroupRepository.findOne(attendanceGroupId);
+        if (attendanceGroup == null) {
+            throw new SecurityExceptions(EnumExceptions.CARD_FAILED_ATTENDANCE_GROUP_NOT_EXIST);
+        }
+
         // 判断是否有未完成的打卡
         WorkLogging workLogging = workLoggingRepository.findFirstByUserAndStatus(user, new WorkLoggingStatus(0));
         if (workLogging == null) {
             throw new SecurityExceptions(EnumExceptions.CARD_FAILED_NOT_EXIST);
-        }
-
-        // 判断所在考勤组是否存在
-        AttendanceGroup attendanceGroup = user.getAttendanceGroup();
-        if (attendanceGroup == null) {
-            throw new SecurityExceptions(EnumExceptions.CARD_FAILED_ATTENDANCE_GROUP_NOT_EXIST);
         }
 
         // 验证地点是否合法
@@ -271,15 +273,15 @@ public class WorkLoggingService {
      * @param longitude
      * @param latitude
      */
-    public void goWorkBatch(int attenceGroupId, String leaderId, String[] userIds, double longitude, double latitude) {
+    public void goWorkBatch(int attendanceGroupId, int attenceGroupId, String leaderId, String[] userIds, double longitude, double latitude) {
         // 判断负责人是否合法
         AttendanceGroupLeader attendanceGroupLeader = attendanceGroupLeaderRepository.findFirstByAttendanceGroupAndLeader(new AttendanceGroup(attenceGroupId), new User(leaderId));
-        if(attendanceGroupLeader == null){
+        if (attendanceGroupLeader == null) {
             throw new SecurityExceptions(EnumExceptions.CARD_FAILED_LEADER_NOT_LAWER);
         }
 
         for (String userId : userIds) {
-            goWork(userId, userId, longitude, latitude);
+            goWork(attendanceGroupId, userId, userId, longitude, latitude);
         }
     }
 
@@ -291,15 +293,16 @@ public class WorkLoggingService {
      * @param longitude
      * @param latitude
      */
-    public void offWorkBatch(int attenceGroupId, String leaderId, String[] userIds, double longitude, double latitude) {
+    public void offWorkBatch(int attendanceGroupId, String leaderId, String[] userIds, double longitude, double latitude) {
         // 判断负责人是否合法
-        AttendanceGroupLeader attendanceGroupLeader = attendanceGroupLeaderRepository.findFirstByAttendanceGroupAndLeader(new AttendanceGroup(attenceGroupId), new User(leaderId));
-        if(attendanceGroupLeader == null){
+        AttendanceGroupLeader attendanceGroupLeader = attendanceGroupLeaderRepository.findFirstByAttendanceGroupAndLeader(
+                new AttendanceGroup(attendanceGroupId), new User(leaderId));
+        if (attendanceGroupLeader == null) {
             throw new SecurityExceptions(EnumExceptions.CARD_FAILED_LEADER_NOT_LAWER);
         }
 
         for (String userId : userIds) {
-            goWork(userId, userId, longitude, latitude);
+            goWork(attendanceGroupId, userId, userId, longitude, latitude);
         }
     }
 }
