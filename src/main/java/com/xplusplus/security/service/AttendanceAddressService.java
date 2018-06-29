@@ -1,13 +1,10 @@
 package com.xplusplus.security.service;
 
-import com.xplusplus.security.domain.AttendanceAddress;
-import com.xplusplus.security.domain.AttendanceGroupLeader;
+import com.xplusplus.security.domain.*;
 import com.xplusplus.security.domain.AttendanceAddress;
 import com.xplusplus.security.exception.EnumExceptions;
 import com.xplusplus.security.exception.SecurityExceptions;
-import com.xplusplus.security.repository.AttendanceAddressRepository;
-import com.xplusplus.security.repository.AttendanceGroupLeaderRepository;
-import com.xplusplus.security.repository.AttendanceGroupRepository;
+import com.xplusplus.security.repository.*;
 import com.xplusplus.security.repository.AttendanceAddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -28,6 +26,9 @@ import java.util.List;
 public class AttendanceAddressService {
     @Autowired
     private AttendanceAddressRepository attendanceAddressRepository;
+
+    @Autowired
+    private AttendanceGroupAddressRepository attendanceGroupAddressRepository;
 
     /**
      * 新增
@@ -164,4 +165,20 @@ public class AttendanceAddressService {
         Pageable pageable = new PageRequest(page, size, sort);
         return attendanceAddressRepository.findByNameLike("%" + name + "%", pageable);
     }
+
+    /**
+     * 通过考勤组查询所有考勤地址
+     *
+     * @param attendanceGroup
+     * @return
+     */
+    public List<AttendanceAddress> findByAttendanceGroup(AttendanceGroup attendanceGroup) {
+        List<AttendanceAddress> attendanceAddresses = new ArrayList<>();
+        List<AttendanceGroupAddress> attendanceGroupAddresses = attendanceGroupAddressRepository.findByAttendanceGroup(attendanceGroup);
+        for(AttendanceGroupAddress attendanceGroupAddress:attendanceGroupAddresses){
+            attendanceAddresses.add(attendanceGroupAddress.getAttendanceAddress());
+        }
+        return attendanceAddresses;
+    }
+
 }

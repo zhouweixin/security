@@ -20,14 +20,14 @@ public class Schedule {
 	private String name;
 
 	// 班次类型
-    @ManyToMany(targetEntity = ScheduleType.class, cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = ScheduleType.class)
     @JoinTable(name = "schedule_schedule_type",
             joinColumns = {@JoinColumn(name = "schedule_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "schedule_type_id", referencedColumnName = "id")})
     private Set<ScheduleType> scheduleTypes = new HashSet<>();
 
     // 迟到类型
-    @ManyToMany(targetEntity = LateType.class, cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = LateType.class)
     @JoinTable(name = "schedule_late_type",
             joinColumns = {@JoinColumn(name = "schedule_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "late_type_id", referencedColumnName = "id")})

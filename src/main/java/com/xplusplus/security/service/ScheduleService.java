@@ -78,6 +78,27 @@ public class ScheduleService {
                 || scheduleRepository.findOne(schedule.getId()) == null) {
             throw new SecurityExceptions(EnumExceptions.UPDATE_FAILED_NOT_EXIST);
         }
+
+        // 班次类型
+        for (int scheduleTypeId : scheduleTypeIds) {
+            ScheduleType scheduleType = scheduleTypeRepository.findOne(scheduleTypeId);
+            if (scheduleType == null) {
+                EnumExceptions.ADD_FAILED_SCHEDULE_TYPE_NOT_EXIST.setMessage("更新失败， 班次类型" + scheduleTypeId + "不存在");
+                throw new SecurityExceptions(EnumExceptions.ADD_FAILED_SCHEDULE_TYPE_NOT_EXIST);
+            }
+            schedule.getScheduleTypes().add(scheduleType);
+        }
+
+        // 迟到类型
+        for (int lateTypeId : lateTypeIds) {
+            LateType lateType = lateTypeRepository.findOne(lateTypeId);
+            if (lateType == null) {
+                EnumExceptions.ADD_FAILED_LATE_TYPE_NOT_EXIST.setMessage("更新失败， 迟到类型" + lateTypeId + "不存在");
+                throw new SecurityExceptions(EnumExceptions.ADD_FAILED_LATE_TYPE_NOT_EXIST);
+            }
+            schedule.getLateTypes().add(lateType);
+        }
+
         //是否被考勤组使用中,使用中的班次修改需要。？
         return scheduleRepository.save(schedule);
     }

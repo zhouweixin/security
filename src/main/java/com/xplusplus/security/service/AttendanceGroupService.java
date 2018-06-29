@@ -121,13 +121,16 @@ public class AttendanceGroupService {
     /**
      * 删除考勤组
      */
+    @Transactional
     public void delete(Integer id) {
         //验证是否存在
         if (attendanceGroupRepository.findOne(id) == null) {
             throw new SecurityExceptions(EnumExceptions.DELETE_FAILED_NOT_EXIST);
         }
+
         //先删除 考勤负责人
         attendanceGroupLeaderRepository.deleteByAttendanceGroup(attendanceGroupRepository.getOne(id));
+
         //再删除考勤组
         attendanceGroupRepository.delete(id);
     }

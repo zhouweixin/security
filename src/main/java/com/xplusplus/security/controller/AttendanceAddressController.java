@@ -1,6 +1,7 @@
 package com.xplusplus.security.controller;
 
 import com.xplusplus.security.domain.AttendanceAddress;
+import com.xplusplus.security.domain.AttendanceGroup;
 import com.xplusplus.security.domain.Result;
 import com.xplusplus.security.service.AttendanceAddressService;
 import com.xplusplus.security.utils.ResultUtil;
@@ -142,5 +143,16 @@ public class AttendanceAddressController {
                                                     @RequestParam(value = "asc", defaultValue = "1") Integer asc) {
 
         return ResultUtil.success(attendanceAddressService.findByNameLikeByPage(name, page, size, sortFieldName, asc));
+    }
+
+    /**
+     * 通过考勤组查询
+     *
+     * @param attendanceGroup
+     * @return
+     */
+    @RequestMapping(value = "/getByAttendanceGroup")
+    public Result<List<AttendanceAddress>> getByAttendanceGroup(AttendanceGroup attendanceGroup){
+        return ResultUtil.success(attendanceAddressService.findByAttendanceGroup(attendanceGroup));
     }
 }
