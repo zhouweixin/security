@@ -24,7 +24,7 @@
     </style>
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script sec="js/style.js"></script>
+    <script src="js/style.js"></script>
     <script src="js/attendanceGroupManager.js"></script>
     <script src="js/global.js"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=7scToNnXDjo5stP1HctvVwAGkED76OPw"></script>
@@ -81,7 +81,7 @@ function MoveBack(index)
     </script>
     <script type="text/javascript">
         window.onload=function(){
-            getAllGroupInformation()
+            //getAllGroupInformation()
         }
     </script>
 </head>
@@ -99,7 +99,7 @@ function MoveBack(index)
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="personnelList.html">人事</a></li>
+                <li><a href="personnelAnalysis.html">人事</a></li>
                 <li class="active"><a href="attendanceHomePage.html">考勤</a></li>
                 <li><a href="salaryManagement.html">薪酬</a></li>
                 <li><a href="processManagement.html">流程</a></li>
@@ -142,7 +142,7 @@ function MoveBack(index)
                             班次管理
                         </a>
                     </li>
-                    <li class="sub-menu-li">
+                    <li class="sub-menu-li none">
                         <a href="attendanceJiaBan.html" class="sub-menu-link">
                             加班规则
                         </a>
@@ -165,7 +165,7 @@ function MoveBack(index)
                             每日统计
                         </a>
                     </li>
-                    <li class="sub-menu-li">
+                    <li class="sub-menu-li none">
                         <a href="attendancePunchTime.html" class="sub-menu-link">
                             打卡时间
                         </a>
@@ -218,6 +218,7 @@ function MoveBack(index)
                         <th>考勤组编号</th>
                         <th>考勤组名称</th>
                         <th>是否允许外勤打卡</th>
+                        <th>对应项目</th>
                         <th>对应班次</th>
                         <th style="width: 50px">修改</th>
                         <th style="width: 50px">删除</th>
@@ -228,120 +229,130 @@ function MoveBack(index)
                         <td class="group-id"></td>
                         <td class="group-name"></td>
                         <td class="enable"></td>
+                        <td class="project-name"></td>
                         <td class="schedule-name"></td>
                         <td class="">
-                            <a class="" data-toggle="modal" data-target="#myModal-modifyGroup" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                            <a class="" data-toggle="modal" data-target="#myModal-modifyAttendanceGroup" onclick="setUpdateAttendanceGroupModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                         </td>
                         <td>
-                            <a data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)" value="dueDate"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                            <a data-toggle="modal" data-target="#myModal-makeSureDeleteAttendanceGroup" onclick="setMakeSureDeleteAttendanceGroupButtonValue(this)" value=""><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
                         <td class="group-id"></td>
                         <td class="group-name"></td>
                         <td class="enable"></td>
+                        <td class="project-name"></td>
                         <td class="schedule-name"></td>
                         <td class="">
-                            <a class="" data-toggle="modal" data-target="#myModal-modifyGroup" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                            <a class="" data-toggle="modal" data-target="#myModal-modifyAttendanceGroup" onclick="setUpdateAttendanceGroupModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                         </td>
                         <td>
-                            <a data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)" value="dueDate"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                            <a data-toggle="modal" data-target="#myModal-makeSureDeleteAttendanceGroup" onclick="setMakeSureDeleteAttendanceGroupButtonValue(this)" value=""><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
                         <td class="group-id"></td>
                         <td class="group-name"></td>
                         <td class="enable"></td>
+                        <td class="project-name"></td>
                         <td class="schedule-name"></td>
                         <td class="">
-                            <a class="" data-toggle="modal" data-target="#myModal-modifyGroup" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                            <a class="" data-toggle="modal" data-target="#myModal-modifyAttendanceGroup" onclick="setUpdateAttendanceGroupModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                         </td>
                         <td>
-                            <a data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)" value="dueDate"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                            <a data-toggle="modal" data-target="#myModal-makeSureDeleteAttendanceGroup" onclick="setMakeSureDeleteAttendanceGroupButtonValue(this)" value=""><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
                         <td class="group-id"></td>
                         <td class="group-name"></td>
                         <td class="enable"></td>
+                        <td class="project-name"></td>
                         <td class="schedule-name"></td>
                         <td class="">
-                            <a class="" data-toggle="modal" data-target="#myModal-modifyGroup" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                            <a class="" data-toggle="modal" data-target="#myModal-modifyAttendanceGroup" onclick="setUpdateAttendanceGroupModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                         </td>
                         <td>
-                            <a data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)" value="dueDate"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                            <a data-toggle="modal" data-target="#myModal-makeSureDeleteAttendanceGroup" onclick="setMakeSureDeleteAttendanceGroupButtonValue(this)" value=""><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
                         <td class="group-id"></td>
                         <td class="group-name"></td>
                         <td class="enable"></td>
+                        <td class="project-name"></td>
                         <td class="schedule-name"></td>
                         <td class="">
-                            <a class="" data-toggle="modal" data-target="#myModal-modifyGroup" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                            <a class="" data-toggle="modal" data-target="#myModal-modifyAttendanceGroup" onclick="setUpdateAttendanceGroupModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                         </td>
                         <td>
-                            <a data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)" value="dueDate"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                            <a data-toggle="modal" data-target="#myModal-makeSureDeleteAttendanceGroup" onclick="setMakeSureDeleteAttendanceGroupButtonValue(this)" value=""><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
                         <td class="group-id"></td>
                         <td class="group-name"></td>
                         <td class="enable"></td>
+                        <td class="project-name"></td>
                         <td class="schedule-name"></td>
                         <td class="">
-                            <a class="" data-toggle="modal" data-target="#myModal-modifyGroup" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                            <a class="" data-toggle="modal" data-target="#myModal-modifyAttendanceGroup" onclick="setUpdateAttendanceGroupModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                         </td>
                         <td>
-                            <a data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)" value="dueDate"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                            <a data-toggle="modal" data-target="#myModal-makeSureDeleteAttendanceGroup" onclick="setMakeSureDeleteAttendanceGroupButtonValue(this)" value=""><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
                         <td class="group-id"></td>
                         <td class="group-name"></td>
                         <td class="enable"></td>
+                        <td class="project-name"></td>
                         <td class="schedule-name"></td>
                         <td class="">
-                            <a class="" data-toggle="modal" data-target="#myModal-modifyGroup" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                            <a class="" data-toggle="modal" data-target="#myModal-modifyAttendanceGroup" onclick="setUpdateAttendanceGroupModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                         </td>
                         <td>
-                            <a data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)" value="dueDate"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                            <a data-toggle="modal" data-target="#myModal-makeSureDeleteAttendanceGroup" onclick="setMakeSureDeleteAttendanceGroupButtonValue(this)" value=""><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
                         <td class="group-id"></td>
                         <td class="group-name"></td>
                         <td class="enable"></td>
+                        <td class="project-name"></td>
                         <td class="schedule-name"></td>
                         <td class="">
-                            <a class="" data-toggle="modal" data-target="#myModal-modifyGroup" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                            <a class="" data-toggle="modal" data-target="#myModal-modifyAttendanceGroup" onclick="setUpdateAttendanceGroupModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                         </td>
                         <td>
-                            <a data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)" value="dueDate"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                            <a data-toggle="modal" data-target="#myModal-makeSureDeleteAttendanceGroup" onclick="setMakeSureDeleteAttendanceGroupButtonValue(this)" value=""><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
                         <td class="group-id"></td>
                         <td class="group-name"></td>
                         <td class="enable"></td>
+                        <td class="project-name"></td>
                         <td class="schedule-name"></td>
                         <td class="">
-                            <a class="" data-toggle="modal" data-target="#myModal-modifyGroup" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                            <a class="" data-toggle="modal" data-target="#myModal-modifyAttendanceGroup" onclick="setUpdateAttendanceGroupModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                         </td>
                         <td>
-                            <a data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)" value="dueDate"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                            <a data-toggle="modal" data-target="#myModal-makeSureDeleteAttendanceGroup" onclick="setMakeSureDeleteAttendanceGroupButtonValue(this)" value=""><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
                         <td class="group-id"></td>
                         <td class="group-name"></td>
                         <td class="enable"></td>
+                        <td class="project-name"></td>
                         <td class="schedule-name"></td>
                         <td class="">
-                            <a class="" data-toggle="modal" data-target="#myModal-modifyGroup" onclick="setUpdateModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                            <a class="" data-toggle="modal" data-target="#myModal-modifyAttendanceGroup" onclick="setUpdateAttendanceGroupModalInformation(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                         </td>
                         <td>
-                            <a data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)" value="dueDate"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                            <a data-toggle="modal" data-target="#myModal-makeSureDeleteAttendanceGroup" onclick="setMakeSureDeleteAttendanceGroupButtonValue(this)" value=""><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                         </td>
                     </tr>
                     </tbody>
@@ -395,9 +406,9 @@ function MoveBack(index)
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="modal-usersName" class="col-xs-3 control-label"><span>*</span>参与考勤人员</label>
+                        <label for="modal-project" class="col-xs-3 control-label"><span>*</span>考勤项目</label>
                         <div class="col-xs-7">
-                            <textarea data-toggle="modal" onclick="getAllStaff(this)"  value="" data-value="attendanceGroupUsers" data-target="#myModal-selectLeaders"class="form-control" id="modal-usersName" style="height: 90px; overflow-y: auto"></textarea>
+                            <input type="text" data-toggle="modal" data-value="addAttendanceGroupProject" onclick="getAllProject(this)" data-target="#myModal-selectProjects" class="form-control" id="modal-project" placeholder="请选择项目">
                         </div>
                     </div>
                     <div class="form-group">
@@ -407,23 +418,10 @@ function MoveBack(index)
                         </div>
                     </div>
                     <div class="form-group" style="margin-bottom: 0px">
-                        <label class="col-xs-3 control-label"><span>*</span>考勤地址</label>
+                        <label class="col-xs-3 control-label">考勤地址</label>
                         <div class="col-xs-7" style="margin-top: 7px">
-                           <span style="font-size: 12px;color: #999999;">根据办公地点 <a id="modal-addMap" data-toggle="modal" data-target=".modal-selectMap">添加考勤地点</a>有效范围
-                                <select style="border: 1px solid #E5E5E5">
-                                        <option>100米</option>
-                                        <option>200米</option>
-                                        <option selected="selected">300米</option>
-                                        <option>400米</option>
-                                        <option>500米</option>
-                                        <option>600米</option>
-                                        <option>700米</option>
-                                        <option>800米</option>
-                                        <option>900米</option>
-                                        <option>1000米</option>
-                                        <option>2000米</option>
-                                        <option>3000米</option>
-                                </select>
+                           <span style="font-size: 12px;color: #999999;"><a id="modal-selectMap" data-toggle="modal" data-target="#myModal-selectAttendanceAddress" onclick="getAllAttendanceAddress()">选择考勤地点</a> 或 <a id="modal-addMap" value="add" onclick="setModalSelectMapModalValue(this)" data-toggle="modal" data-target=".modal-selectMap">添加新考勤地点</a>
+
                             </span>
                         </div>
                     </div>
@@ -434,47 +432,10 @@ function MoveBack(index)
                                     <thead style="background-color: #FBFBFB">
                                     <tr>
                                         <th style="border-right:1px solid #E5E5E5">考勤地址</th>
-                                        <th style="width: 50px">修改</th>
                                         <th style="width: 50px">删除</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="table-tr">
-                                        <td class="dueDate-contractCondition" style="color:#999999;border-right:1px solid #E5E5E5"></td>
-                                        <td class="">
-                                            <a class="" href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                                        </td>
-                                        <td>
-                                            <a data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)" value="dueDate"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                                        </td>
-                                    </tr>
-                                    <tr class="table-tr">
-                                        <td class="dueDate-contractCondition" style="border-right:1px solid #E5E5E5"></td>
-                                        <td class="">
-                                            <a class="" href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                                        </td>
-                                        <td>
-                                            <a data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)" value="dueDate"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                                        </td>
-                                    </tr>
-                                    <tr class="table-tr">
-                                        <td class="dueDate-contractCondition" style="border-right:1px solid #E5E5E5"></td>
-                                        <td class="">
-                                            <a class="" href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                                        </td>
-                                        <td>
-                                            <a data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)" value="dueDate"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                                        </td>
-                                    </tr>
-                                    <tr class="table-tr">
-                                        <td class="dueDate-contractCondition" style="border-right:1px solid #E5E5E5"></td>
-                                        <td class="">
-                                            <a class="" href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                                        </td>
-                                        <td>
-                                            <a data-toggle="modal" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)" value="dueDate"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                                        </td>
-                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -492,7 +453,7 @@ function MoveBack(index)
 </div>
 <!----------------------------------------------------------------修改考勤组（模态框）------------------------------------------------------------------------------------>
 <!---------------------------------------------------------------------------------------------------------------------------------------------------->
-<div class="modal fade" id="myModal-modifyGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="myModal-modifyAttendanceGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -520,9 +481,9 @@ function MoveBack(index)
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="modal-modify-usersName" class="col-xs-3 control-label"><span>*</span>参与考勤人员</label>
+                        <label for="modal-modify-project" class="col-xs-3 control-label"><span>*</span>考勤项目</label>
                         <div class="col-xs-7">
-                            <textarea data-toggle="modal" onclick="getAllStaff(this)"  value="" data-value="modifyAttendanceGroupUsers" data-target="#myModal-selectLeaders" class="form-control" id="modal-modify-usersName" style="height: 90px; overflow-y: auto"></textarea>
+                            <input type="text" data-toggle="modal" data-value="modifyAttendanceGroupProject" onclick="getAllProject(this)" data-target="#myModal-selectProjects" class="form-control" id="modal-modify-project" placeholder="请选择项目">
                         </div>
                     </div>
                     <div class="form-group">
@@ -532,23 +493,10 @@ function MoveBack(index)
                         </div>
                     </div>
                     <div class="form-group" style="margin-bottom: 0px">
-                        <label class="col-xs-3 control-label"><span>*</span>考勤地址</label>
+                        <label class="col-xs-3 control-label">考勤地址</label>
                         <div class="col-xs-7" style="margin-top: 7px">
-                           <span style="font-size: 12px;color: #999999;">根据办公地点 <a href="#">添加考勤地点</a>有效范围
-                                <select style="border: 1px solid #E5E5E5">
-                                        <option>100米</option>
-                                        <option>200米</option>
-                                        <option selected="selected">300米</option>
-                                        <option>400米</option>
-                                        <option>500米</option>
-                                        <option>600米</option>
-                                        <option>700米</option>
-                                        <option>800米</option>
-                                        <option>900米</option>
-                                        <option>1000米</option>
-                                        <option>2000米</option>
-                                        <option>3000米</option>
-                                </select>
+                           <span style="font-size: 12px;color: #999999;"><a id="modal-modify-selectMap" data-toggle="modal" data-target="#myModal-modify-selectAttendanceAddress" onclick="getAllAttendanceAddress_modify()">选择考勤地点</a> 或 <a id="modal-modify-addMap" onclick="setModalSelectMapModalValue(this)" value="modify" data-toggle="modal" data-target=".modal-selectMap">添加新考勤地点</a>
+
                             </span>
                         </div>
                     </div>
@@ -559,47 +507,10 @@ function MoveBack(index)
                                     <thead style="background-color: #FBFBFB">
                                     <tr>
                                         <th style="border-right:1px solid #E5E5E5">考勤地址</th>
-                                        <th style="width: 50px">修改</th>
                                         <th style="width: 50px">删除</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="table-tr">
-                                        <td class="dueDate-contractCondition" style="border-right:1px solid #E5E5E5"></td>
-                                        <td class="">
-                                            <a class="" href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                                        </td>
-                                        <td>
-                                            <a data-toggle="modal-modify" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)" value="dueDate"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                                        </td>
-                                    </tr>
-                                    <tr class="table-tr">
-                                        <td class="dueDate-contractCondition" style="border-right:1px solid #E5E5E5"></td>
-                                        <td class="">
-                                            <a class="" href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                                        </td>
-                                        <td>
-                                            <a data-toggle="modal-modify" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)" value="dueDate"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                                        </td>
-                                    </tr>
-                                    <tr class="table-tr">
-                                        <td class="dueDate-contractCondition" style="border-right:1px solid #E5E5E5"></td>
-                                        <td class="">
-                                            <a class="" href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                                        </td>
-                                        <td>
-                                            <a data-toggle="modal-modify" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)" value="dueDate"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                                        </td>
-                                    </tr>
-                                    <tr class="table-tr">
-                                        <td class="dueDate-contractCondition" style="border-right:1px solid #E5E5E5"></td>
-                                        <td class="">
-                                            <a class="" href="#"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                                        </td>
-                                        <td>
-                                            <a data-toggle="modal-modify" data-target="#myModal-makeSureDelete" onclick="setMakeSureDeleteButtonValue(this)" value="dueDate"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                                        </td>
-                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -610,7 +521,7 @@ function MoveBack(index)
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" onclick="addAttendanceGroup()">确认</button>
+                <button type="button" class="btn btn-primary" onclick="modifyAttendanceGroup()"data-dismiss="modal">确认</button>
             </div>
         </div>
     </div>
@@ -703,6 +614,30 @@ function MoveBack(index)
         </div>
     </div>
 </div>
+<!-------------------------------------------------------------选择项目 （模态框）--------------------------------------------------------------------------------------->
+<!---------------------------------------------------------------------------------------------------------------------------------------------------->
+<div class="modal fade bs-example-modal-sm" id="myModal-selectProjects" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">选择考勤项目</h4>
+            </div>
+            <div class="modal-body" style="padding: 0px 20px;font-size: 14px">
+                <form class="form-horizontal">
+                    <div class="form-group " style="margin-bottom: 0px;">
+                        <ul class="selectProjects-ul" style="height: 200px;overflow-y: scroll">
+                        </ul>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" value="" class=" btn btn-primary selectProject-button">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-------------------------------------------------------------选择班次 （模态框）--------------------------------------------------------------------------------------->
 <!---------------------------------------------------------------------------------------------------------------------------------------------------->
 <div class="modal fade bs-example-modal-sm" id="myModal-selectSchedule" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -727,8 +662,64 @@ function MoveBack(index)
         </div>
     </div>
 </div>
-<!------确定删除modal------->
-<div class="modal fade bs-example-modal-sm" id="myModal-makeSureDelete" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" value="">
+<!-------------------------------------------------------------选择考勤地点 （模态框）--------------------------------------------------------------------------------------->
+<!---------------------------------------------------------------------------------------------------------------------------------------------------->
+<div class="modal fade" id="myModal-selectAttendanceAddress" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">选择考勤地点</h4>
+            </div>
+            <div class="modal-body" style="padding: 0px 20px;font-size: 14px">
+                <form class="form-horizontal">
+                    <div class="form-group " style="margin-bottom: 0px;">
+                        <ul class="selectAttendanceAddress-ul col-xs-6" style="height: 200px;overflow-y: scroll">
+                        </ul>
+                        <div class="col-xs-6" style="border-left: 1px solid #E5E5E5; height: 200px;overflow-y: scroll">
+                            <ul class="selectedAttendanceAddress-ul">
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" value="" onclick="selectedAttendanceAddress()" data-dismiss="modal">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-------------------------------------------------------------选择modify考勤地点 （模态框）--------------------------------------------------------------------------------------->
+<!---------------------------------------------------------------------------------------------------------------------------------------------------->
+<div class="modal fade" id="myModal-modify-selectAttendanceAddress" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">选择考勤地点</h4>
+            </div>
+            <div class="modal-body" style="padding: 0px 20px;font-size: 14px">
+                <form class="form-horizontal">
+                    <div class="form-group " style="margin-bottom: 0px;">
+                        <ul class="selectModifyAttendanceAddress-ul col-xs-6" style="height: 200px;overflow-y: scroll">
+                        </ul>
+                        <div class="col-xs-6" style="border-left: 1px solid #E5E5E5; height: 200px;overflow-y: scroll">
+                            <ul class="selectedModifyAttendanceAddress-ul">
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" value="" onclick="selectedAttendanceAddress_modify()" data-dismiss="modal">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!------确定删除makeSureDeleteAttendanceGroup-modal------->
+<div class="modal fade bs-example-modal-sm" id="myModal-makeSureDeleteAttendanceGroup" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" value="">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header" style="padding: 5px 15px">
@@ -737,7 +728,25 @@ function MoveBack(index)
             <div class="modal-body">
                 是否确认要删除？
                 <button type="button" class="btn btn-default" data-dismiss="modal" style="float: right; margin-left: 5px">取消</button>
-                <button type="button" class="btn btn-primary" style="float: right;" onclick="deleteAttendanceGroup()">确认</button>
+                <button type="button" class="btn btn-primary" style="float: right;" onclick="deleteAttendanceGroup()" value="">确认</button>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!------确定删除makeSureDeleteAttendanceAddress-modal------->
+<div class="modal fade bs-example-modal-sm" id="myModal-makeSureDeleteAttendanceAddress" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" value="">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 5px 15px">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                是否确认要删除此考勤地址？
+                <button type="button" class="btn btn-default" data-dismiss="modal" style="float: right; margin-left: 5px">取消</button>
+                <button type="button" class="btn btn-primary" style="float: right;" onclick="deleteAttendanceAddress()">确认</button>
             </div>
             <div class="modal-footer">
 
@@ -753,11 +762,31 @@ function MoveBack(index)
             <div class="modal-body" style="padding: 15px 20px;">
                 <form class="form-horizontal">
                     <div class="form-group">
-                        <label for="modal-selectMap-address" class="col-xs-2 control-label">详细地址</label>
-                        <div class="col-xs-9">
+                        <label for="modal-selectMap-address" class="col-xs-3 control-label">详细地址</label>
+                        <div class="col-xs-8">
                             <input type="text" class="form-control" value="" id="modal-selectMap-address" disabled="disabled">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">有效范围（米）</label>
+                        <div class="col-xs-8">
+                            <select id="modal-selectMap-domainRadius" style="border: 1px solid #999999;height: 28px">
+                                <option>100</option>
+                                <option>200</option>
+                                <option selected="selected">300</option>
+                                <option>400</option>
+                                <option>500</option>
+                                <option>600</option>
+                                <option>700</option>
+                                <option>800</option>
+                                <option>900</option>
+                                <option>1000</option>
+                                <option>2000</option>
+                                <option>3000</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <div class="main-div col-xs-12">
                             <div id='allmap' style='width: 80%; height: 600px; margin-left:10%; display: none'></div>
@@ -767,7 +796,7 @@ function MoveBack(index)
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" onclick="setAttendanceAddressTable()" data-dismiss="modal">确认</button>
+                <button type="button" class="btn btn-primary" onclick="setAttendanceAddressTableAndAddAddress()" data-dismiss="modal">确认</button>
             </div>
         </div>
     </div>

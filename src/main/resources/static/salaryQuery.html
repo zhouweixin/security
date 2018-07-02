@@ -27,7 +27,7 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="personnelList.html">人事</a></li>
+                <li><a href="personnelAnalysis.html">人事</a></li>
                 <li><a href="attendanceHomePage.html">考勤</a></li>
                 <li class="active"><a href="salaryManagement.html">薪酬</a></li>
                 <li><a href="processManagement.html">流程</a></li>
@@ -69,10 +69,10 @@
             <li class="left-nav-menu-li">
                 <a class="menu-link" href="salaryExamine.html">
                     <img src="imgs/addressbook.png">
-                    <div>当月工资审核</div>
+                    <div>工资审核</div>
                 </a>
             </li>
-            <li class="left-nav-menu-li ">
+            <li class="left-nav-menu-li none ">
                 <a class="menu-link"href="salaryReport.html">
                     <img src="imgs/addressbook.png">
                     <div>薪资报表</div>
@@ -92,68 +92,16 @@
             <div class="top-body" style="margin-top: 30px">
                 <div class="search-content" style="height: 34px;">
                     <div class="search-left">
-                        <div class="dropdown col-xs-2 select-department" style="padding: 0 0">
-                            <button class="btn btn-default dropdown-toggle" type="button" id="selectDepartment-dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                选择月份
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu selectDepartment-dropdownMenu-ul" aria-labelledby="selectDepartment-dropdownMenu">
-                                <li ><a value="">选择月份</a></li>
-                                <li ><a>1月</a></li>
-                                <li ><a>2月</a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                            </ul>
+                        <div style="display: inline-block;float: left;margin-right: 5px; margin-left: 5px"class="input-group">
+                            <label for="dailyStatistics-date" style="font-weight: normal">选择月份：</label>
+                            <input id="dailyStatistics-date" class="select-date" type="date">
                         </div>
-                        <div class="dropdown col-xs-2 select-department" style="padding: 0 0">
-                            <button class="btn btn-default dropdown-toggle" type="button" id="selectDepartment-dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                选择项目
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu selectDepartment-dropdownMenu-ul" aria-labelledby="selectDepartment-dropdownMenu">
-                                <li ><a value="">选择项目</a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                                <li class="hidden"><a></a></li>
-                            </ul>
-                        </div>
-                        <div class="input-group col-xs-5">
-                            <input type="text" class="form-control" id="staffName-searchInput" placeholder="按姓名搜索">
+                        <div class="input-group" style="width: 350px">
+                            <input type="text" id="dailyStatistics-userName" class="form-control" placeholder="按姓名搜索">
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" onclick="searchByDepartmentAndStaffName()">搜索</button>
+                                <button class="btn btn-default" type="button" onclick="getInformationByParameters()">搜索</button>
                                 <button class="btn btn-default" type="button" onclick="getAllContractInformation()">搜索全部</button>
-                             </span>
+                            </span>
                         </div>
                     </div>
                     <div class="search-right">
