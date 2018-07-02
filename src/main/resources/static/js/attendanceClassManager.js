@@ -22,14 +22,14 @@ $(document).ready(function () {
         }
     });
    // getAllScheduleInformation()
-
+    getAllClassInformation()
     /*
     班次类型modal/
      */
     //获取迟到类型
     var addClassTypeSelectLateTypeA = $('.SelectLateType-menu-ul li a')
     getAllLateTypeName(addClassTypeSelectLateTypeA)
-    var modifyClassTypeSelectLateTypeA = $('.modifyClassTypeSelectLateType-menu-ul li a')
+    var modifyClassTypeSelectLateTypeA = $('.modifyLateType-menu-ul li a')
     getAllLateTypeName(modifyClassTypeSelectLateTypeA)
     //全选checkBox
     $('#select-all-lateType-add').on('click', function () {
@@ -193,6 +193,106 @@ $(document).ready(function () {
 //         })
 //     }
 // }
+/*
+获取所有班次信息/
+ */
+function getAllClassInformation() {
+    var page = 0
+    var size = 10;
+    var sortFieldName = 'id';
+    var asc = 1;
+    var urlStr = ipPort +  '/schedule/getAllByPage?page= '+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc;
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        cache:false,
+        success:function (obj) {
+            if(obj.code == 0){
+                setAllClassTable(obj)
+            }else {
+                alert(obj.message)
+            }
+
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+设置班次Table/
+ */
+function setAllClassTable(obj) {
+    if(obj.data.numberOfElements != 0){
+        var table_tr = $('.table-tr');
+        var class_name = $('.class-name');
+        var class_classTypeName = $('.class-classTypeName');
+        var class_lateTypeName = $('.class-lateTypeName');
+        for(var i = 0; i < obj.data.numberOfElements; i++){
+            table_tr.eq(i).removeClass('hidden');
+
+            class_name.eq(i).attr('value','');
+            class_name.eq(i).attr('value',obj.data.content[i].id);
+            class_name.eq(i).text('');
+            class_name.eq(i).text(obj.data.content[i].name);
+
+            var classTypeIds = ''
+            var classTypeName = '<span>'
+            for(var j = 0; j < obj.data.content[i].scheduleTypes.length; j++){
+                if(j != obj.data.content[i].scheduleTypes.length - 1){
+                    classTypeIds = classTypeIds + obj.data.content[i].scheduleTypes[j].id + '_'
+                    classTypeName = classTypeName + obj.data.content[i].scheduleTypes[j].name + '<br>'
+                }else{
+                    classTypeIds = classTypeIds + obj.data.content[i].scheduleTypes[j].id
+                    classTypeName = classTypeName + obj.data.content[i].scheduleTypes[j].name + '</span>'
+                }
+            }
+            class_classTypeName.eq(i).attr('value', '')
+            class_classTypeName.eq(i).attr('value', classTypeIds)
+            class_classTypeName.eq(i).html('')
+            class_classTypeName.eq(i).html(classTypeName)
+
+            var lateTypeIds = ''
+            var lateTypeName = '<span>'
+            for(var j = 0; j < obj.data.content[i].lateTypes.length; j++){
+                if(j != obj.data.content[i].lateTypes.length - 1){
+                    lateTypeIds = lateTypeIds + obj.data.content[i].lateTypes[j].id + '_'
+                    lateTypeName = lateTypeName + obj.data.content[i].lateTypes[j].name + '<br>'
+                }else{
+                    lateTypeIds = lateTypeIds + obj.data.content[i].lateTypes[j].id
+                    lateTypeName = lateTypeName + obj.data.content[i].lateTypes[j].name + '</span>'
+                }
+            }
+            class_lateTypeName.eq(i).attr('value', '')
+            class_lateTypeName.eq(i).attr('value', lateTypeIds)
+            class_lateTypeName.eq(i).html('')
+            class_lateTypeName.eq(i).html(lateTypeName)
+
+            //调整table中内容的格式
+            var td = table_tr.eq(i).find('td')
+            var tr_height = table_tr.eq(i).outerHeight(true)
+            var margin_top = (tr_height - 18)/2 - 5
+            td.eq(0).find('input').css('marginTop', margin_top)
+            var padding_top = (tr_height - 14)/2
+            td.eq(1).css('paddingTop', padding_top)
+            var span_height = td.eq(2).find('span').height()
+            padding_top = (tr_height - span_height)/2
+            td.eq(2).css('paddingTop', padding_top)
+            span_height = td.eq(3).find('span').height()
+            padding_top = (tr_height - span_height)/2
+            td.eq(3).css('paddingTop', padding_top)
+            var div_height = td.eq(4).find('div').height()
+            padding_top = (tr_height - div_height)/2
+            td.eq(4).css('paddingTop', padding_top)
+            var a_height = td.eq(5).find('a').height() + 4
+            padding_top = (tr_height - a_height)/2
+            td.eq(5).css('paddingTop', padding_top)
+        }
+        for (var i = obj.data.numberOfElements; i < 10; i++) {
+            table_tr.eq(i).addClass('hidden')
+        }
+    }
+}
 /*
 获取所有迟到类型/
  */
@@ -562,4 +662,253 @@ function deleteClassType() {
             console.log(error)
         }
     })
+}
+/*********************************************班次*******************************************************/
+/*
+添加班次/
+ */
+function addMyClass() {
+    var className = $('#modal-className').val()
+    if(!className){
+        alert("请输入班次名称！")
+        return
+    }
+    if(!$('#modal-selectClassType').val()){
+        alert("请选择班次类型！")
+        return
+    }
+    var classType = $('#modal-selectClassType').attr('value').split('_')
+
+    var li = $('.SelectLateType-menu-ul').find('li')
+    var li_hidden = $('.SelectLateType-menu-ul').find('li.hidden')
+    var lateType = []
+    for(var i = 0; i < li.length - li_hidden.length; i++){
+        if(li.eq(i).find('.select-sub-box-add').is(':checked') == true){
+            lateType.push(li.eq(i).find('a').attr('value'))
+        }
+    }
+    var urlStr = ipPort + '/schedule/add?name=' + className + '&scheduleTypeIds=' + classType + '&lateTypeIds=' + lateType
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            console.log(obj)
+            if(obj.code == 0){
+                alert('添加班次成功')
+                getAllClassInformation()
+            }
+            else {
+                alert(obj.message)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+清空添加班次Modal/
+ */
+function emptyAddClassModal() {
+    $('#modal-className').val('')
+    $('#modal-selectClassType').attr('value', '')
+    $('#modal-selectClassType').val('')
+    $('#select-all-lateType-add').prop('checked',false)
+    $('.select-sub-box-add').prop('checked',false)
+}
+/*
+设置修改班次Modal/
+ */
+function setModifyClassModal(thisObj) {
+    $('#modal-modifyClassID').val('')
+    $('#modal-modifyClassName').val('')
+    $('#modal-modifyClassType').attr('value', '')
+    $('#modal-modifyClassType').val('')
+    $('#select-all-lateType-modify').prop('checked',false)
+    $('.select-sub-box-modify').prop('checked',false)
+    var classID = $(thisObj).parent().parent().parent().find('td').eq(1).attr('value')
+    $.ajax({
+        url:ipPort + '/schedule/getById?id=' + classID,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                $('#modal-modifyClassID').val(obj.data.id)
+                $('#modal-modifyClassName').val(obj.data.name)
+                var scheduleTypeIds = ''
+                var scheduleTypeName = ''
+                for(var i = 0; i < obj.data.scheduleTypes.length; i++){
+                    if(i != obj.data.scheduleTypes.length - 1){
+                        scheduleTypeIds = scheduleTypeIds + obj.data.scheduleTypes[i].id + '_'
+                        scheduleTypeName = scheduleTypeName + obj.data.scheduleTypes[i].name + '、'
+                    }else{
+                        scheduleTypeIds = scheduleTypeIds + obj.data.scheduleTypes[i].id
+                        scheduleTypeName = scheduleTypeName + obj.data.scheduleTypes[i].name
+                    }
+                }
+                $('#modal-modifyClassType').attr('value', scheduleTypeIds)
+                $('#modal-modifyClassType').val(scheduleTypeName)
+
+                var li = $('.modifyLateType-menu-ul').find('li')
+                var li_hidden = $('.modifyLateType-menu-ul').find('li.hidden')
+                for(var j = 0; j < obj.data.lateTypes.length; j++){
+                    for(var i = 1; i < li.length - li_hidden.length; i++){
+                        if(obj.data.lateTypes[j].id == li.eq(i).find('a').attr('value')){
+                            li.eq(i).find('.select-sub-box-modify').prop('checked',true)
+                            break
+                        }
+                    }
+                }
+            }else{
+                alert('获取当前班次信息失败！')
+                console.log(obj.message)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+修改班次/
+ */
+function modifyMyClass() {
+    var classID = $('#modal-modifyClassID').val()
+    var className = $('#modal-modifyClassName').val()
+    if(!className){
+        alert("请输入班次名称！")
+        return
+    }
+    if(!$('#modal-modifyClassType').val()){
+        alert("请选择班次类型！")
+        return
+    }
+    var classType = $('#modal-modifyClassType').attr('value').split('_')
+
+    var li = $('.modifyLateType-menu-ul').find('li')
+    var li_hidden = $('.modifyLateType-menu-ul').find('li.hidden')
+    var lateType = []
+    for(var i = 0; i < li.length - li_hidden.length; i++){
+        if(li.eq(i).find('.select-sub-box-modify').is(':checked') == true){
+            lateType.push(li.eq(i).find('a').attr('value'))
+        }
+    }
+    var urlStr = ipPort + '/schedule/update?name=' + className + '&scheduleTypeIds=' + classType + '&lateTypeIds=' + lateType + '&id=' + classID
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                alert('修改班次成功')
+                getAllClassInformation()
+            }
+            else {
+                alert(obj.message)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+获取全部班次类型/
+ */
+function getAllClassType_class(str) {
+    $('#myModal-selectClassType').attr('value', str)
+    $('.selectClassType-ul').find('li').remove()
+    $('.selectedClassType-ul').find('li').remove()
+    $.ajax({
+        url:ipPort + '/scheduleType/getAll',
+        dataType:'json',
+        success:function (obj_) {
+            if(obj_.data.length != 0){
+                var ul = $('.selectClassType-ul')
+                for(var j = 0; j < obj_.data.length; j++){
+                    var appendStr = '<li onclick="setSelectedClassType(this)"><img src="imgs/coordinates.png" height="20px" style="margin-top: -2px"><span ' + 'value="' + obj_.data[j].id + '">' + obj_.data[j].name + '</span></li>'
+                    ul.append(appendStr)
+                }
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+选取班次类型/
+ */
+function setSelectedClassType(thisObj) {
+    var ul = $('.selectedClassType-ul')
+    var appendStr = '<li><img src="imgs/coordinates.png" height="20px" style="margin-top: -2px"><span class="selectedClassType-span" ' + 'value="' + $(thisObj).find("span").attr("value") + '">' + $(thisObj).find("span").text() + '</span><span class="cancel-span" onclick="cancelSelectClassType(this)" aria-hidden="true" style="display: block; float: right">&times;</span></li>'
+    ul.append(appendStr)
+}
+/*
+取消选取/
+ */
+function cancelSelectClassType(thisObj) {
+    $(thisObj).parent().remove()
+}
+/*
+选定班次类型/
+ */
+function selectedClassType() {
+    var str = $('#myModal-selectClassType').attr('value')
+    var span = $('.selectedClassType-span')
+    var strID = ''
+    var strName = ''
+    for(var i = 0; i < span.length; i++){
+        strID = strID + span.eq(i).attr('value')
+        strName = strName + span.eq(i).text()
+        if(i != span.length - 1){
+            strID = strID + '_'
+            strName = strName + '、'
+        }
+    } if(str == 'add'){
+        $('#modal-selectClassType').attr('value', strID)
+        $('#modal-selectClassType').val(strName)
+    }else if(str == 'modify'){
+        $('#modal-modifyClassType').attr('value', strID)
+        $('#modal-modifyClassType').val(strName)
+    }
+}
+/*
+设置确定删除Modal/
+ */
+function setMakeSureDeleteModal(thisObj, str) {
+    var td = $(thisObj).parent().parent().find('td')
+    var id = td.eq(1).attr('value')
+    var name = td.eq(1).text()
+    $('#myModal-makeSureDelete').attr('value', id)
+    $('#myModal-makeSureDelete').attr('data-value', str)
+    $('#myModal-makeSureDelete').find('.modal-body').find('span').text('是否确认要删除 ' + name + ' ？')
+}
+/*
+确定删除/
+ */
+function makeSureDelete() {
+    var id = $('#myModal-makeSureDelete').attr('value')
+    if(!id){
+        alert('id为空，请重新确定id！')
+        return
+    }
+    var str =  $('#myModal-makeSureDelete').attr('data-value')
+    var urlStr = ''
+    if(str == '班次'){
+        urlStr = ipPort + '/schedule/deleteById?id=' + id
+        $.ajax({
+            url: urlStr,
+            dataType: 'json',
+            success: function (obj) {
+                if (obj.code == 0) {
+                    alert('删除成功！')
+                    getAllClassInformation()
+                } else {
+                    alert(obj.message);
+                }
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        })
+    }
 }

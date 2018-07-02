@@ -125,6 +125,7 @@ function getAllProjectContractInformation() {
  */
 function setProjectContractTableInformation(obj) {
     if(obj.data.numberOfElements != 0){
+        console.log(obj)
         var table_tr = $('.table-tr')
         var project_checkbox = $('.project-checkBox')
         var project_id = $('.project-id')

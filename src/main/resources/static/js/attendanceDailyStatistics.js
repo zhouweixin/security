@@ -1,9 +1,9 @@
 $(document).ready(function () {
-    var selectDepartmentA = $('.staffMonthSummary-department-ul li a')
+    var selectDepartmentA = $('.dailyStatistics-department-ul li a')
     getAllDepartmentsName(selectDepartmentA)
-    $('.staffMonthSummary-department-ul li a').on('click', function () {
-        $('#staffMonthSummary-department').html($(this).text() + '<span style="margin-left:4px" class="caret"></span>')
-        $('#staffMonthSummary-department').attr('value', $(this).attr('value'))
+    $('.dailyStatistics-department-ul li a').on('click', function () {
+        $('#dailyStatistics-department').html($(this).text() + '<span style="margin-left:4px" class="caret"></span>')
+        $('#dailyStatistics-department').attr('value', $(this).attr('value'))
     })
 })
 function exportOriginalRecordTable(tableID) {
