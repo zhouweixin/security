@@ -107,5 +107,39 @@ input.selectLateType-box{
     width: 14px;
     position: absolute;
     left: 0px;
-    top: 0px;
+    top: -3px;
+}
+input.modifyLateType-box{
+    margin-top: 6px;
+    height: 14px;
+    width: 14px;
+    position: absolute;
+    left: 0px;
+    top: -3px;
+}
+.selectClassType-ul li{
+    margin-left: 22px;
+    margin-top: 2px;
+    color: #4EB1E4;
+    width: 90%;
+}
+.selectClassType-ul li:hover{
+    font-size: 16px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
+    cursor: pointer;
+}
+.selectedClassType-ul{
+    margin-top: 10px;
+    color: #4EB1E4;
+}
+.selectedClassType-ul li{
+    margin-top: 2px;
+    width: 95%;
+}
+.selectedClassType-ul li:hover{
+    cursor: pointer;
+    font-size: 16px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
 }

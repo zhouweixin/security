@@ -64,7 +64,10 @@
     border: 1px solid #38ADFF;
     border-radius: 4px;
 }
-
+#myModal-addClass input,#myModal-addClass button{
+    height:28px;
+    font-size: 12px;
+}
 .checkbox-div{
     height: 28px;
     float:left;
@@ -85,9 +88,58 @@
     top:8px;
     left:38px;
 }
-.attendanceGroup a{
+.edit-a:after{
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    width: 2px;
+    height: 13px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: #DDDDDD;
+}
+.staff-operating a{
     text-decoration: none;
 }
-.attendanceSummary a{
-    text-decoration: none;
+input.selectLateType-box{
+    margin-top: 0px;
+    height: 14px;
+    width: 14px;
+    position: absolute;
+    left: 0px;
+    top: -3px;
+}
+input.modifyLateType-box{
+    margin-top: 6px;
+    height: 14px;
+    width: 14px;
+    position: absolute;
+    left: 0px;
+    top: -3px;
+}
+.selectClassType-ul li{
+    margin-left: 22px;
+    margin-top: 2px;
+    color: #4EB1E4;
+    width: 90%;
+}
+.selectClassType-ul li:hover{
+    font-size: 16px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
+    cursor: pointer;
+}
+.selectedClassType-ul{
+    margin-top: 10px;
+    color: #4EB1E4;
+}
+.selectedClassType-ul li{
+    margin-top: 2px;
+    width: 95%;
+}
+.selectedClassType-ul li:hover{
+    cursor: pointer;
+    font-size: 16px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
 }

@@ -162,3 +162,75 @@ a.page-button{
     background-color: #CECECE;
     border-radius: 5px 5px;
 }
+.selectProjects-ul li{
+    margin-left: 22px;
+    margin-top: 2px;
+    color: #4EB1E4;
+    width: 60%;
+}
+.selectProjects-ul li:hover{
+    cursor: pointer;
+    font-size: 16px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
+}
+.attendanceGroup-address{
+    color:#999999;
+    border-right:1px solid #E5E5E5
+}
+.selectAttendanceAddress-ul li{
+    margin-left: 22px;
+    margin-top: 2px;
+    color: #4EB1E4;
+    width: 90%;
+}
+.selectedAttendanceAddress-ul{
+    margin-top: 10px;
+    color: #4EB1E4;
+}
+.selectAttendanceAddress-ul li:hover{
+    font-size: 16px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
+    cursor: pointer;
+}
+.selectedAttendanceAddress-ul li{
+    margin-top: 2px;
+    width: 95%;
+}
+.selectedAttendanceAddress-ul li:hover{
+    cursor: pointer;
+    font-size: 16px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
+}
+.modifyAttendanceGroup-address{
+    color:#999999;
+    border-right:1px solid #E5E5E5
+}
+.selectModifyAttendanceAddress-ul li{
+    margin-left: 22px;
+    margin-top: 2px;
+    color: #4EB1E4;
+    width: 90%;
+}
+.selectedModifyAttendanceAddress-ul{
+    margin-top: 10px;
+    color: #4EB1E4;
+}
+.selectModifyAttendanceAddress-ul li:hover{
+    font-size: 16px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
+    cursor: pointer;
+}
+.selectedModifyAttendanceAddress-ul li{
+    margin-top: 2px;
+    width: 95%;
+}
+.selectedModifyAttendanceAddress-ul li:hover{
+    cursor: pointer;
+    font-size: 16px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
+}
