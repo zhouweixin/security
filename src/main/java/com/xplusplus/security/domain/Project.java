@@ -45,11 +45,11 @@ public class Project {
 	private Period period;
 
 	// 金额
-	@Column(precision = 2)
-	private Double price;
+	@Column(precision = 2, nullable = false, columnDefinition = "default 0.0")
+	private Double price = 0.0;
 
 	// 已收金额
-	@Column(precision = 2)
+	@Column(precision = 2, nullable = false, columnDefinition = "default 0.0")
 	private Double receiptPrice = 0.0;
 
 	// 客户办公室电话
