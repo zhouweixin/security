@@ -223,3 +223,6 @@ input.select-box{
     left: 8px;
     top: 5px;
 }
+textarea{
+    resize: none;
+}
