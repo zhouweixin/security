@@ -4,6 +4,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @Author: zhouweixin
@@ -37,6 +39,11 @@ public class GodownHeader {
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "operator_id", referencedColumnName = "id")
     private User operator;
+
+    // 入库单内容
+    @OneToMany(targetEntity = Godown.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "godown_header_id", referencedColumnName = "id")
+    private Set<Godown> godowns = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -76,5 +83,13 @@ public class GodownHeader {
 
     public void setOperator(User operator) {
         this.operator = operator;
+    }
+
+    public Set<Godown> getGodowns() {
+        return godowns;
+    }
+
+    public void setGodowns(Set<Godown> godowns) {
+        this.godowns = godowns;
     }
 }

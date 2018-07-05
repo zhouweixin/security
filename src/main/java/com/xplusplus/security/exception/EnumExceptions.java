@@ -62,6 +62,8 @@ public enum EnumExceptions {
     AUDIT_FAILED_AUDITED(51, "审核失败, 采购申请单已经审核"),
     AUDIT_FAILED_USER_NOT_EXIST(52, "审核失败, 审核人不存在"),
     AUDIT_FAILED_NOT_CUR_AUDITOR(53, "审核失败, 不是当前审核人"),
+    ADD_FAILED_PURCHASE_NOT_EXISE(54, "添加失败, 采购单不存在"),
+    ADD_FAILED_PURCHASE_NOT_AUDIT_OR_NOT(55, "添加失败, 采购单未审核或审核不通过"),
 
 	;
 

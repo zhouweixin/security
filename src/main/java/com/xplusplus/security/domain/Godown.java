@@ -1,5 +1,7 @@
 package com.xplusplus.security.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -28,6 +30,14 @@ public class Godown {
     // 数量
     private Integer number;
 
+    public Godown() {
+    }
+
+    public Godown(Material material, Integer number) {
+        this.material = material;
+        this.number = number;
+    }
+
     public Long getId() {
         return id;
     }
@@ -36,6 +46,7 @@ public class Godown {
         this.id = id;
     }
 
+    @JsonIgnore
     public GodownHeader getGodownHeader() {
         return godownHeader;
     }
