@@ -28,6 +28,9 @@ public class PurchaseAuditRecord {
     @JoinColumn(name = "auditor_id", referencedColumnName = "id")
     private User auditor;
 
+    // 状态: 0不同意;1同意
+    private Integer status = 0;
+
     // 审核意见
     private String note;
 
@@ -35,6 +38,17 @@ public class PurchaseAuditRecord {
     @Temporal(value = TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date auditTime;
+
+    public PurchaseAuditRecord() {
+    }
+
+    public PurchaseAuditRecord(PurchaseHeader purchaseHeader, User auditor, int status, String note) {
+        this.purchaseHeader = purchaseHeader;
+        this.auditor = auditor;
+        this.status = status;
+        this.note = note;
+        this.auditTime = new Date();
+    }
 
     public Long getId() {
         return id;
@@ -74,5 +88,13 @@ public class PurchaseAuditRecord {
 
     public void setAuditTime(Date auditTime) {
         this.auditTime = auditTime;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

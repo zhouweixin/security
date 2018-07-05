@@ -8,6 +8,7 @@ import javax.persistence.*;
  * @Date: Created in 10:46 2018/7/5
  * @Modified By:
  */
+@Entity
 public class ReturnMaterialUser {
     // 主键：自增长
     @Id

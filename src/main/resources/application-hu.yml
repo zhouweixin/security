@@ -4,7 +4,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://39.108.89.212:3306/securitydb
-    username: security
+    username: root
     password: Xplusplus-root-1
   jpa:
     hibernate:

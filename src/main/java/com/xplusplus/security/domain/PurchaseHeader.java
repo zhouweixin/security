@@ -3,7 +3,10 @@ package com.xplusplus.security.domain;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @Author: zhouweixin
@@ -17,6 +20,11 @@ public class PurchaseHeader {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    // 采购单
+    @OneToMany(targetEntity = Purchase.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "purchase_header_id", referencedColumnName = "id")
+    private Set<Purchase> purchases = new HashSet<>();
 
     // 申请人：外键
     @ManyToOne(targetEntity = User.class)
@@ -47,6 +55,11 @@ public class PurchaseHeader {
 
     // 审核状态：0未审核；1通过；2未通过
     private Integer status = 0;
+
+    // 当前审核人：外键
+    @ManyToOne(targetEntity = User.class)
+    @JoinColumn(name = "cur_auditor_id", referencedColumnName = "id")
+    private User curAuditor;
 
     public Long getId() {
         return id;
@@ -110,5 +123,21 @@ public class PurchaseHeader {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Set<Purchase> getPurchases() {
+        return purchases;
+    }
+
+    public void setPurchases(Set<Purchase> purchases) {
+        this.purchases = purchases;
+    }
+
+    public User getCurAuditor() {
+        return curAuditor;
+    }
+
+    public void setCurAuditor(User curAuditor) {
+        this.curAuditor = curAuditor;
     }
 }

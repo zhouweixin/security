@@ -1,6 +1,7 @@
 package com.xplusplus.security.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * @Author: zhouweixin
@@ -10,14 +11,22 @@ import javax.persistence.*;
  */
 @Entity
 public class PurchaseAuditProcess {
+    // 主键:自增长
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    // 名称
+    private String name;
+
+    // 审核人1
+    @NotNull(message = "审核人1不可为空")
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "auditor1_id", referencedColumnName = "id")
     private User auditor1;
 
+    // 审核人2
+    @NotNull(message = "审核人2不可为空")
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "auditor2_id", referencedColumnName = "id")
     private User auditor2;
@@ -44,5 +53,13 @@ public class PurchaseAuditProcess {
 
     public void setAuditor2(User auditor2) {
         this.auditor2 = auditor2;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

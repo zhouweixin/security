@@ -1,5 +1,7 @@
 package com.xplusplus.security.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -44,6 +46,7 @@ public class Purchase {
         this.id = id;
     }
 
+    @JsonIgnore
     public PurchaseHeader getPurchaseHeader() {
         return purchaseHeader;
     }

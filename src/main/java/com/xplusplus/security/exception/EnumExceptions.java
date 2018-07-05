@@ -51,6 +51,17 @@ public enum EnumExceptions {
     ADD_FAILED_ADDRESS_NOT_EXIST(40, "新增失败， 地址不存在"),
     ADD_FAILED_SCHEDULE_TYPE_NOT_EXIST(41, "新增失败， 班次类型不存在"),
     ADD_FAILED_LATE_TYPE_NOT_EXIST(42, "新增失败， 迟到类型不存在"),
+    ADD_FAILED_APPLY_USER_NOT_EXIST(43, "新增失败， 申请人不存在"),
+    ADD_FAILED_AUDIT_PROCESS_NOT_EXIST(44, "新增失败， 审核流程不存在"),
+    ADD_FAILED_PURCHASE_CONTENT_NULL(45, "新增失败， 采购内容不可为空"),
+    UPDATE_FAILED_AUDITED(46, "更新失败， 已审核的申请禁止修改"),
+    UPDATE_FAILED_AUDITING(47, "更新失败， 正在审核的申请禁止修改"),
+    UPDATE_FAILED_AUDITOR1_NOT_EXIST(48, "添加失败， 审核人1不存在"),
+    UPDATE_FAILED_AUDITOR2_NOT_EXIST(49, "添加失败， 审核人2不存在"),
+    AUDIT_FAILED_PURCHASE_NOT_EXIST(50, "审核失败, 采购申请单不存在"),
+    AUDIT_FAILED_AUDITED(51, "审核失败, 采购申请单已经审核"),
+    AUDIT_FAILED_USER_NOT_EXIST(52, "审核失败, 审核人不存在"),
+    AUDIT_FAILED_NOT_CUR_AUDITOR(53, "审核失败, 不是当前审核人"),
 
 	;
 
