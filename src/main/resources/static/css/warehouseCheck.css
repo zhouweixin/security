@@ -1,0 +1,188 @@
+.nav-path{
+    font-size: 16px;
+    padding: 18px 16px 14px 16px;
+    border-bottom: 1px solid #DCDDDE;
+}
+.path-ul{
+    display: inline-block;
+    vertical-align: middle;
+}
+.path-title:before{
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    width: 3px;
+    height: 18px;
+    margin-right: 10px;
+    background-color: #222222;
+}
+*:before{
+    box-sizing: border-box;
+}
+.main-body-content{
+    padding: 16px 12px;
+}
+.search-left{
+    width: 930px;
+    float: left;
+}
+.search-left .dropdown{
+    float:left;
+}
+.select-date{
+    height: 34px;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+}
+.search-right{
+    float: right;
+}
+.top-body{
+    margin-top: 20px;
+}
+.table-body{
+    margin-top: 20px;
+}
+.table-body table th{
+    text-align: center;
+    color: #666;
+}
+.table-body table tr{
+    text-align: center;
+}
+.table-body table tbody ul{
+    min-width: 90px;
+}
+a.page-button{
+    border: none;
+}
+.caret-right{
+    border-left: none;
+    border-right: 6px solid #666;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+}
+.caret-left{
+    border-left: 6px solid #666;
+    border-right: none;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+}
+#jump-text{
+    display: inline-block;
+    vertical-align: middle;
+}
+.page-ul-li{
+    display: inline-block;
+    float: right;
+    top: 1px;
+}
+.path-arrow-left{
+    padding: 3px 8px;
+    border: none;
+}
+.nav-path{
+    font-size: 16px;
+    padding: 18px 16px 14px 16px;
+    border-bottom: 1px solid #DCDDDE;
+}
+.path-ul{
+    display: inline-block;
+    vertical-align: middle;
+}
+.path-title:before{
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    width: 3px;
+    height: 18px;
+    margin-right: 10px;
+    background-color: #222222;
+}
+*:before{
+    box-sizing: border-box;
+}
+.main-body-content{
+    padding: 16px 12px;
+}
+.main-table{
+    border:1px solid #000000;
+    margin-top: 20px;
+    font-size: 16px;
+    padding: 0;
+}
+.table-body{
+
+}
+.table-selfDefine{
+    text-align: center;
+    margin-bottom: 0px;
+}
+.table-selfDefine thead tr th{
+    text-align: center;
+    border: none;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    color: #000000;
+}
+.table-selfDefine tbody tr td{
+    text-align: center;
+    border: none;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    padding: 0;
+}
+.table-selfDefine tbody tr td input{
+    width: 100%;
+    text-align: center;
+    border: none;
+}
+.addContent img{
+    width: 30px;
+}
+.addContent img:hover{
+    cursor: pointer;
+    width: 38px;
+}
+.check-div textarea{
+    width: 100%;
+    height: 70%;
+    overflow-y: hidden;
+    border: none;
+}
+.selectDepartment-ul li{
+    font-size: 16px;
+    margin-left: 22px;
+    margin-top: 2px;
+    color: #4EB1E4;
+    width: 60%;
+}
+.selectDepartment-ul li:hover{
+    cursor: pointer;
+    font-size: 18px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
+}
+.departmentName-span{
+    font-size: 16px;
+}
+.selectOneStaff-staff-ul li{
+    margin-left: 22px;
+    margin-top: 2px;
+    color: #4EB1E4;
+    width: 60%;
+}
+.selectOneStaff-department-li{
+    margin-top: 5px;
+}
+.departmentName-span:hover{
+    color: #7D7D7D;
+}
+#myModal-reportSpoiledDetails,#myModal-reportSpoiledDetails label,#myModal-reportSpoiledDetails span{
+    color: #000000;
+    font-size: 14px;
+    font-weight: bold;
+}
+#myModal-reportSpoiledDetails .table-selfDefine tr th{
+    font-size: 14px;
+}
