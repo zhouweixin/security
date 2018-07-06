@@ -32,8 +32,8 @@ public class ProjectReceipt {
 	private Project project;
 
 	// 收款金额
-	@Column(precision = 2)
-	private Double price;
+	@Column(precision = 2, nullable = false, columnDefinition = "default 0.0")
+	private Double price = 0.0;
 
 	// 收款时间
 	@Temporal(value = TemporalType.TIMESTAMP)
