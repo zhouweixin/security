@@ -33,6 +33,11 @@ public class ReturnEntryHeader {
     @JoinColumn(name = "operator_id", referencedColumnName = "id")
     private User operator;
 
+    // 归还单内容：外键
+    @ManyToOne(targetEntity = ReturnEntry.class)
+    @JoinColumn(name = "return_entry_header_id", referencedColumnName = "id")
+    private ReturnEntry returnEntry;
+
     public Long getId() {
         return id;
     }
@@ -63,5 +68,13 @@ public class ReturnEntryHeader {
 
     public void setOperator(User operator) {
         this.operator = operator;
+    }
+
+    public ReturnEntry getReturnEntry() {
+        return returnEntry;
+    }
+
+    public void setReturnEntry(ReturnEntry returnEntry) {
+        this.returnEntry = returnEntry;
     }
 }

@@ -53,18 +53,18 @@ public class PurchaseHeaderService {
 		}
 
 		// 验证申请人
-		if(purchaseHeader.getApplyUser() == null || userRepository.getOne(purchaseHeader.getApplyUser().getId()) == null){
+		if(purchaseHeader.getApplyUser() == null || userRepository.findOne(purchaseHeader.getApplyUser().getId()) == null){
             throw new SecurityExceptions(EnumExceptions.ADD_FAILED_APPLY_USER_NOT_EXIST);
         }
 
         // 验证申请部门
-        if(purchaseHeader.getDepartment() == null || departmentRepository.getOne(purchaseHeader.getDepartment().getId()) == null){
+        if(purchaseHeader.getDepartment() == null || departmentRepository.findOne(purchaseHeader.getDepartment().getId()) == null){
             throw new SecurityExceptions(EnumExceptions.ADD_FAILED_DEPARTMENT_NOT_EXIST);
         }
 
         // 验证采购审核流程
         PurchaseAuditProcess purchaseAuditProcess = null;
-        if(purchaseHeader.getPurchaseAuditProcess() == null || (purchaseAuditProcess = purchaseAuditProcessRepository.getOne(purchaseHeader.getPurchaseAuditProcess().getId())) == null){
+        if(purchaseHeader.getPurchaseAuditProcess() == null || (purchaseAuditProcess = purchaseAuditProcessRepository.findOne(purchaseHeader.getPurchaseAuditProcess().getId())) == null){
             throw new SecurityExceptions(EnumExceptions.ADD_FAILED_AUDIT_PROCESS_NOT_EXIST);
         }
 

@@ -1,5 +1,7 @@
 package com.xplusplus.security.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -15,7 +17,7 @@ public class ReturnEntry {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 入库单表头人：外键
+    // 归还单表头人：外键
     @ManyToOne(targetEntity = ReturnEntryHeader.class)
     @JoinColumn(name = "return_entry_header_id", referencedColumnName = "id")
     private ReturnEntryHeader returnEntryHeader;
@@ -36,6 +38,7 @@ public class ReturnEntry {
         this.id = id;
     }
 
+    @JsonIgnore
     public ReturnEntryHeader getReturnEntryHeader() {
         return returnEntryHeader;
     }
