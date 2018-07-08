@@ -28,6 +28,20 @@ public class GooutMaterialUserController {
 	@Autowired
 	private GooutMaterialUserService gooutMaterialUserService;
 
+    /**
+     * 归还物品
+     *
+     * @param gooutMaterialUserIds
+     * @param userIds
+     * @param operatorId
+     * @return
+     */
+    @RequestMapping(value = "/returnMaterials")
+    public Result<Object> returnMaterials(Long[] gooutMaterialUserIds, String[] userIds, String operatorId) {
+        gooutMaterialUserService.returnMaterials(gooutMaterialUserIds, userIds, operatorId);
+        return ResultUtil.success();
+    }
+
 	/**
 	 * 通过id查询
 	 * 

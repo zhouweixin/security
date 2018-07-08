@@ -53,7 +53,8 @@ public class GooutHeaderService {
         }
 
         // 验证经办人
-        if (gooutHeader.getOperator() == null || userRepository.findOne(gooutHeader.getOperator().getId()) == null) {
+        User operator = null;
+        if (gooutHeader.getOperator() == null || (operator = userRepository.findOne(gooutHeader.getOperator().getId())) == null) {
             throw new SecurityExceptions(EnumExceptions.ADD_FAILED_OPERATOR_NOT_EXIST);
         }
 
@@ -90,7 +91,7 @@ public class GooutHeaderService {
         // 添加出库物品与用户关系
         for (Goout goout : save.getGoouts()) {
             for(User user : users){
-                GooutMaterialUser gooutMaterialUser = new GooutMaterialUser(save, user, goout);
+                GooutMaterialUser gooutMaterialUser = new GooutMaterialUser(save, user, goout, operator);
                 gooutMaterialUserRepository.save(gooutMaterialUser);
             }
         }

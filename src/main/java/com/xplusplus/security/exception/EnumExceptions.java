@@ -67,6 +67,11 @@ public enum EnumExceptions {
     ADD_FAILED_GOOUT_CONTENT_NULL(56, "添加失败, 出库内容不可为空"),
     ADD_FAILED_GOOUT_USER_NULL(57, "添加失败, 出库人不可为空"),
     ADD_FAILED_GOOUT_USER_NOT_EXIST(58, "添加失败, 出库人不存在"),
+    ADD_FAILED_RETURN_USER_NOT_EXIST(59, "添加失败， 归还人不存在"),
+    ADD_FAILED_RETURN_CONTENT_NULL(60, "添加失败, 归还内容不可为空"),
+    RETURN_FAILED_NOT_MATERIAL(61, "归还失败, 未选择物品"),
+    RETURN_FAILED_NOT_USER(62, "归还失败, 未选择员工"),
+    RETURN_FAILED_OPERATOR_NOT_EXIST(63, "归还失败, 经办人不存在"),
 
 	;
 
