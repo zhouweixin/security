@@ -1,6 +1,7 @@
 package com.xplusplus.security.repository;
 
 import com.xplusplus.security.domain.Goout;
+import com.xplusplus.security.domain.GooutHeader;
 import com.xplusplus.security.domain.GooutMaterialUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -13,4 +14,11 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface GooutMaterialUserRepository extends JpaRepository<GooutMaterialUser, Long> {
+    /**
+     * 通过出库单表头查询
+     *
+     * @param gooutHeader
+     * @return
+     */
+    public GooutMaterialUser findFirstByGooutHeader(GooutHeader gooutHeader);
 }

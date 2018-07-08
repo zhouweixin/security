@@ -1,5 +1,7 @@
 package com.xplusplus.security.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -16,7 +18,7 @@ public class Goout {
     private Long id;
 
     // 出库单表头人：外键
-    @ManyToOne(targetEntity = GodownHeader.class)
+    @ManyToOne(targetEntity = GooutHeader.class)
     @JoinColumn(name = "goout_header_id", referencedColumnName = "id")
     private GooutHeader gooutHeader;
 
@@ -31,9 +33,6 @@ public class Goout {
     // 每个人的数量
     private Integer numPerPeople = 1;
 
-    // 人数
-    private Integer numPeople = 0;
-
     // 总数量 = 人数 * 每个人的数量
     private Integer sum = 0;
 
@@ -45,6 +44,7 @@ public class Goout {
         this.id = id;
     }
 
+    @JsonIgnore
     public GooutHeader getGooutHeader() {
         return gooutHeader;
     }
@@ -75,14 +75,6 @@ public class Goout {
 
     public void setNumPerPeople(Integer numPerPeople) {
         this.numPerPeople = numPerPeople;
-    }
-
-    public Integer getNumPeople() {
-        return numPeople;
-    }
-
-    public void setNumPeople(Integer numPeople) {
-        this.numPeople = numPeople;
     }
 
     public Integer getSum() {

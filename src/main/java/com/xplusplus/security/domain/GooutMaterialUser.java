@@ -16,7 +16,7 @@ public class GooutMaterialUser {
     private Long id;
 
     // 出库单表头人：外键
-    @ManyToOne(targetEntity = GodownHeader.class)
+    @ManyToOne(targetEntity = GooutHeader.class)
     @JoinColumn(name = "goout_header_id", referencedColumnName = "id")
     private GooutHeader gooutHeader;
 
@@ -35,4 +35,63 @@ public class GooutMaterialUser {
 
     // 状态：0未归还；1已归还；2不需要归还
     private Integer status = 0;
+
+    public GooutMaterialUser() {
+    }
+
+    public GooutMaterialUser(GooutHeader gooutHeader, User user, Goout goout) {
+        this.gooutHeader = gooutHeader;
+        this.user = user;
+        this.material = goout.getMaterial();
+        this.number = goout.getNumPerPeople();
+        this.status = goout.getNeedReturn();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public GooutHeader getGooutHeader() {
+        return gooutHeader;
+    }
+
+    public void setGooutHeader(GooutHeader gooutHeader) {
+        this.gooutHeader = gooutHeader;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Material getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(Material material) {
+        this.material = material;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 }
