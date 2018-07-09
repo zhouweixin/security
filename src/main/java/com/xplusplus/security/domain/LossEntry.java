@@ -38,8 +38,14 @@ public class LossEntry {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date applyTime;
 
-    // 数量
-    private Integer number;
+    // 库存理论量
+    private Integer stockNumber;
+
+    // 报损量
+    private Integer lossNumber;
+
+    // 库存实际量（库存理论量-报损量）
+    private Integer restNumber;
 
     // 原因
     private String reason;
@@ -49,10 +55,15 @@ public class LossEntry {
     @JoinColumn(name = "auditor_id", referencedColumnName = "id")
     private User auditor;
 
+    // 申请时间
+    @Temporal(value = TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date auditTime;
+
     // 审核意见
     private String note;
 
-    // 审核状态：0未审核；1通过；2未通过
+    // 审核状态：0未审核；1通过；2未通过; 3不需要审核
     private Integer status = 0;
 
     public Long getId() {
@@ -95,12 +106,28 @@ public class LossEntry {
         this.applyTime = applyTime;
     }
 
-    public Integer getNumber() {
-        return number;
+    public Integer getStockNumber() {
+        return stockNumber;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
+    public void setStockNumber(Integer stockNumber) {
+        this.stockNumber = stockNumber;
+    }
+
+    public Integer getLossNumber() {
+        return lossNumber;
+    }
+
+    public void setLossNumber(Integer lossNumber) {
+        this.lossNumber = lossNumber;
+    }
+
+    public Integer getRestNumber() {
+        return restNumber;
+    }
+
+    public void setRestNumber(Integer restNumber) {
+        this.restNumber = restNumber;
     }
 
     public String getReason() {
@@ -133,5 +160,13 @@ public class LossEntry {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Date getAuditTime() {
+        return auditTime;
+    }
+
+    public void setAuditTime(Date auditTime) {
+        this.auditTime = auditTime;
     }
 }

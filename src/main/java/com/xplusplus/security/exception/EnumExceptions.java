@@ -72,6 +72,10 @@ public enum EnumExceptions {
     RETURN_FAILED_NOT_MATERIAL(61, "归还失败, 未选择物品"),
     RETURN_FAILED_NOT_USER(62, "归还失败, 未选择员工"),
     RETURN_FAILED_OPERATOR_NOT_EXIST(63, "归还失败, 经办人不存在"),
+    ADD_FAILED_STOCK_NOT_EXIST(64, "新增失败, 库存不存在"),
+    ADD_FAILED_MATERIAL_NOT_EXIST(65, "新增失败, 物品不存在"),
+    ADD_FAILED_LOSS_NUMBER_GREATER_STOCK(66, "新增失败, 报损量超过库存量"),
+    DELETE_FAILED_AUDITED(67, "删除失败, 已审核"),
 
 	;
 
