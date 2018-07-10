@@ -56,6 +56,12 @@
                     <div>库存盘点</div>
                 </a>
             </li>
+            <li class="left-nav-menu-li">
+                <a href="warehouseGoodsBaseInformation.html" class="menu-link">
+                    <img src="imgs/addressbook.png">
+                    <div>物品基本信息</div>
+                </a>
+            </li>
             <li class="left-nav-menu-li li-active">
                 <a href="warehousePurchaseApply.html" class="menu-link">
                     <img src="imgs/addressbook_fill.png">
@@ -82,122 +88,14 @@
             </li>
         </ul>
     </div>
-    <!--------------------------------------------------------采购申请panel-------------------------------------------------------------->
+    <!--------------------------------------------------------申请记录panel-------------------------------------------------------------->
     <!---------------------------------------------------------------------------------------------------------------------->
-    <div id="purchaseApply" class="right-panel">
+    <div id="applyRecordsPanel" class="right-panel hidden">
+
         <div class="nav-path">
             <div class="path-title">
                 <ul class="path-ul">
                     <li>采购申请</li>
-                </ul>
-            </div>
-        </div>
-        <div class="main-body-content">
-            <div class="top-body" style="margin-top: 30px">
-                <h2 style="text-align: center"><b>采购申请表</b></h2>
-            </div>
-            <div class="main-table col-xs-8 col-xs-push-2">
-                <div style="height: 31px; border-bottom: 1px solid #000000">
-                    <div class="col-xs-3" style="text-align: center;"><label style="height: 100%; margin-bottom: 0px; line-height: 30px">申请部门</label></div>
-                    <input id="applyDepartment" class="col-xs-3" onclick="getAllDepartment()" data-toggle="modal" data-target="#myModal-selectDepartment" style="border:none; border-right: 1px solid #000000;border-left: 1px solid #000000;height: 30px">
-                    <div class="col-xs-3"  style="text-align: center;"><label style="height: 100%; margin-bottom: 0px; line-height: 30px">申请人</label></div>
-                    <input id="applyStaff" class="col-xs-3" onclick="getAllStaff()" data-toggle="modal" data-target="#myModal-selectOneStaff" style="border:none;border-left: 1px solid #000000;height: 30px">
-                </div>
-                <div style="height: 41px; border-bottom: 1px solid #000000">
-                    <div class="col-xs-2" style="text-align: center;"><label style="height: 100%; margin-bottom: 0px; line-height: 40px">原因</label></div>
-                    <textarea id="applyReason" class="col-xs-5" style="border:none; border-right: 1px solid #000000; border-left: 1px solid #000000;height: 40px;"></textarea>
-                    <div class="col-xs-2"  style="text-align: center;"><label style="height: 100%; margin-bottom: 0px; line-height: 40px">申请时间</label></div>
-                    <input id="applyTime" class="col-xs-3" type="datetime-local" style="border:none;border-left: 1px solid #000000;height: 40px">
-                </div>
-                <div class="checkTable-body">
-                    <table class="table table-bordered table-selfDefine">
-                        <thead>
-                            <tr >
-                                <th style="width: 60px;">序号</th>
-                                <th >名称</th>
-                                <th>单价</th>
-                                <th>数量</th>
-                                <th>金额</th>
-                                <th style="width: 60px;border-right: none">删除</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!--<tr class="table-tr">-->
-                                <!--<td>1</td>-->
-                                <!--<td><input></td>-->
-                                <!--<td><input></td>-->
-                                <!--<td><input></td>-->
-                                <!--<td><input></td>-->
-                                <!--<td style="border-right: none">-->
-                                    <!--<a><img style="width: 25px" src="imgs/minus-r.png"></a>-->
-                                <!--</td>-->
-                            <!--</tr>-->
-                        </tbody>
-                    </table>
-                </div>
-                <div class="addContent" style="height: 41px; border-bottom: 1px solid #000000; text-align: center; line-height: 40px">
-                    <a onclick="addApplyContent()"><img src="imgs/plus-circle.png"></a>
-                </div>
-                <div style="height: 41px; border-bottom: 1px solid #000000">
-                    <div class="col-xs-6" style="text-align: center;border-right: 1px solid #000000"><label style="height: 100%; margin-bottom: 0px; line-height: 40px">总计金额</label></div>
-                    <div class="col-xs-6"  style="text-align: center;"></div>
-                </div>
-                <div class="check-div" style="height: 111px; border-bottom: 1px solid #000000">
-                    <div class="col-xs-3" style="text-align: center;border-right: 1px solid #000000"><label style="height: 100%; margin-bottom: 0px; line-height: 110px">负责人审核</label></div>
-                    <div class="col-xs-9"  style="height:100%;text-align: center;padding: 0">
-                        <textarea></textarea>
-                        <span><b>签名:</b>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        </span>
-                        <span><b>年</b>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        </span>
-                        <span><b>月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></span>
-                        <span><b>日</b></span>
-                    </div>
-                </div>
-                <div class="check-div" style="height: 110px;">
-                    <div class="col-xs-3" style="text-align: center;border-right: 1px solid #000000"><label style="height: 100%; margin-bottom: 0px; line-height: 110px">总经理审批</label></div>
-                    <div class="col-xs-9"  style="height:100%; text-align: center;padding: 0">
-                        <textarea></textarea>
-                        <span><b>签名:</b>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        </span>
-                        <span><b>年</b>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        </span>
-                        <span><b>月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></span>
-                        <span><b>日</b></span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12" style="text-align: center;margin-top: 30px">
-                <a class="btn btn-info" onclick="submitPurchaseApplyTable()">提交</a>
-                <a href="#checkRecordTable" class="btn btn-default lookCheckRecordTable">查看审核记录表</a>
-            </div>
-        </div>
-    </div>
-    <!--------------------------------------------------------审核记录panel-------------------------------------------------------------->
-    <!---------------------------------------------------------------------------------------------------------------------->
-    <div id="checkRecordTable" class="right-panel hidden">
-
-        <div class="nav-path">
-            <div class="">
-                <a href="#purchaseApply" class="btn btn-default path-arrow-left">
-                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-                </a>
-                <ul class="path-ul">
-                    <li>审核记录</li>
                 </ul>
             </div>
         </div>
@@ -208,7 +106,7 @@
                 <div class="search-content" style="height: 34px;">
                     <div class="search-left">
                         <div class="input-group col-xs-4">
-                            <input type="text" class="form-control" placeholder="物品名称">
+                            <input type="text" class="form-control" placeholder="申请人名称">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button" onclick="searchByName()">搜索</button>
                                 <button class="btn btn-default" type="button" onclick="getAllGroupInformation()">搜索全部</button>
@@ -216,7 +114,7 @@
                         </div>
                     </div>
                     <div class="search-right">
-
+                        <button id="addApplyButton" class="btn btn-default" href="#purchaseApplyPanel">新增申请</button>
                     </div>
                 </div>
             </div>
@@ -269,6 +167,114 @@
             </div>
 
 
+        </div>
+    </div>
+    <!--------------------------------------------------------采购申请panel-------------------------------------------------------------->
+    <!---------------------------------------------------------------------------------------------------------------------->
+    <div id="purchaseApplyPanel" class="right-panel">
+        <div class="nav-path">
+            <div class="">
+                <a href="#applyRecordsPanel" class="btn btn-default path-arrow-left">
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                </a>
+                <ul class="path-ul">
+                    <li>新增申请</li>
+                </ul>
+            </div>
+        </div>
+        <div class="main-body-content">
+            <div class="top-body" style="margin-top: 30px">
+                <h2 style="text-align: center"><b>采购申请表</b></h2>
+            </div>
+            <div class="main-table col-xs-8 col-xs-push-2">
+                <div style="height: 31px; border-bottom: 1px solid #000000">
+                    <div class="col-xs-3" style="text-align: center;"><label style="height: 100%; margin-bottom: 0px; line-height: 30px">申请部门</label></div>
+                    <input id="applyDepartment" class="col-xs-3" onclick="getAllDepartment()" data-toggle="modal" data-target="#myModal-selectDepartment" style="border:none; border-right: 1px solid #000000;border-left: 1px solid #000000;height: 30px">
+                    <div class="col-xs-3"  style="text-align: center;"><label style="height: 100%; margin-bottom: 0px; line-height: 30px">申请人</label></div>
+                    <input id="applyStaff" class="col-xs-3" onclick="getAllStaff()" data-toggle="modal" data-target="#myModal-selectOneStaff" style="border:none;border-left: 1px solid #000000;height: 30px">
+                </div>
+                <div style="height: 41px; border-bottom: 1px solid #000000">
+                    <div class="col-xs-3" style="text-align: center;"><label style="height: 100%; margin-bottom: 0px; line-height: 40px">原因</label></div>
+                    <textarea id="applyReason" class="col-xs-9" style="border:none; border-left: 1px solid #000000;height: 40px;"></textarea>
+                    <!--<div class="col-xs-2"  style="text-align: center;"><label style="height: 100%; margin-bottom: 0px; line-height: 40px">申请时间</label></div>-->
+                    <!--<input id="applyTime" class="col-xs-3" type="datetime-local" style="border:none;border-left: 1px solid #000000;height: 40px">-->
+                </div>
+                <div class="checkTable-body">
+                    <table class="table table-bordered table-selfDefine">
+                        <thead>
+                            <tr >
+                                <th style="width: 60px;">序号</th>
+                                <th >名称</th>
+                                <th style="width: 150px;">单位</th>
+                                <th style="width: 100px;">单价</th>
+                                <th style="width: 100px;">数量</th>
+                                <th>金额</th>
+                                <th style="width: 60px;border-right: none">删除</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--<tr class="table-tr">-->
+                                <!--<td>1</td>-->
+                                <!--<td><input></td>-->
+                                <!--<td><input></td>-->
+                                <!--<td><input></td>-->
+                                <!--<td><input class="goodsPrice"></td>-->
+                                <!--<td style="border-right: none">-->
+                                    <!--<a><img style="width: 25px" src="imgs/minus-r.png"></a>-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="addContent" style="height: 41px; border-bottom: 1px solid #000000; text-align: center; line-height: 40px">
+                    <a onclick="addApplyContent()"><img src="imgs/plus-circle.png"></a>
+                </div>
+                <div style="height: 41px; border-bottom: 1px solid #000000">
+                    <div class="col-xs-6" style="text-align: center;border-right: 1px solid #000000"><label style="height: 100%; margin-bottom: 0px; line-height: 40px">总计金额</label></div>
+                    <div id="allGoodsPrice" class="col-xs-6"  style="text-align: center;"></div>
+                </div>
+                <div class="check-div" style="height: 111px; border-bottom: 1px solid #000000">
+                    <div class="col-xs-3" style="text-align: center;border-right: 1px solid #000000"><label style="height: 100%; margin-bottom: 0px; line-height: 110px">负责人审核</label></div>
+                    <div class="col-xs-9"  style="height:100%;text-align: center;padding: 0">
+                        <div class="note-div"></div>
+                        <span><b>签名:</b>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </span>
+                        <span><b>年</b>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </span>
+                        <span><b>月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></span>
+                        <span><b>日</b></span>
+                    </div>
+                </div>
+                <div class="check-div" style="height: 110px;">
+                    <div class="col-xs-3" style="text-align: center;border-right: 1px solid #000000"><label style="height: 100%; margin-bottom: 0px; line-height: 110px">总经理审批</label></div>
+                    <div class="col-xs-9"  style="height:100%; text-align: center;padding: 0">
+                        <div class="note-div"></div>
+                        <span><b>签名:</b>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </span>
+                        <span><b>年</b>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </span>
+                        <span><b>月&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></span>
+                        <span><b>日</b></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12" style="text-align: center;margin-top: 30px">
+                <a class="btn btn-info" onclick="submitPurchaseApplyTable()">提交</a>
+            </div>
         </div>
     </div>
 </div>
