@@ -4,6 +4,7 @@ import com.xplusplus.security.domain.*;
 import com.xplusplus.security.exception.EnumExceptions;
 import com.xplusplus.security.exception.SecurityExceptions;
 import com.xplusplus.security.repository.GodownHeaderRepository;
+import com.xplusplus.security.repository.PurchaseAuditProcessRepository;
 import com.xplusplus.security.repository.PurchaseHeaderRepository;
 import com.xplusplus.security.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class GodownHeaderService {
 
 	@Autowired
     private PurchaseHeaderRepository purchaseHeaderRepository;
+
+	@Autowired
+    private PurchaseAuditProcessRepository purchaseAuditProcessRepository;
 
 	/**
 	 * 新增

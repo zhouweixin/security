@@ -4,7 +4,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://39.108.89.212:3306/securitydb?useUnicode=true&characterEncoding=utf-8
-    username: root
+    username: security
     password: Xplusplus-root-1
   jpa:
     hibernate:

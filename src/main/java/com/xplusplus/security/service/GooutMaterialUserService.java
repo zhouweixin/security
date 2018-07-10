@@ -1,9 +1,11 @@
 package com.xplusplus.security.service;
 
 import com.xplusplus.security.domain.GooutMaterialUser;
+import com.xplusplus.security.domain.User;
 import com.xplusplus.security.exception.EnumExceptions;
 import com.xplusplus.security.exception.SecurityExceptions;
 import com.xplusplus.security.repository.GooutMaterialUserRepository;
+import com.xplusplus.security.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,8 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Author: zhouweixin
@@ -24,6 +25,54 @@ import java.util.List;
 public class GooutMaterialUserService {
 	@Autowired
 	private GooutMaterialUserRepository gooutMaterialUserRepository;
+
+	@Autowired
+    private UserRepository userRepository;
+
+    /**
+     * 归还物品
+     *
+     * @param gooutMaterialUserIds
+     * @param userIds
+     * @return
+     */
+    public void returnMaterials(Long[] gooutMaterialUserIds, String[] userIds, String operatorId) {
+        if(gooutMaterialUserIds == null){
+            throw new SecurityExceptions(EnumExceptions.RETURN_FAILED_NOT_MATERIAL);
+        }
+
+        if(userIds == null){
+            throw new SecurityExceptions(EnumExceptions.RETURN_FAILED_NOT_USER);
+        }
+
+        User operator = null;
+        if((operator = userRepository.findOne(operatorId)) == null){
+            throw new SecurityExceptions(EnumExceptions.RETURN_FAILED_OPERATOR_NOT_EXIST);
+        }
+
+        // 去重
+        Set<Long> gooutMaterialUserIdSet = new HashSet<>(Arrays.asList(gooutMaterialUserIds));
+        Set<String> userIdSet = new HashSet<>(Arrays.asList(userIds));
+
+        // 查询所有用户
+        List<User> users = userRepository.findAll(userIdSet);
+
+        // 查询未归还的记录
+        List<GooutMaterialUser> gooutMaterialUsers = gooutMaterialUserRepository.findByIdInAndUserInAndStatus(gooutMaterialUserIdSet, users,0);
+
+        if(gooutMaterialUsers == null || gooutMaterialUsers.size() == 0){
+            throw new SecurityExceptions(EnumExceptions.RETURN_FAILED_NOT_MATERIAL);
+        }
+
+        // 创建归还单
+        for(GooutMaterialUser gooutMaterialUser : gooutMaterialUsers){
+            gooutMaterialUser.setReturnTime(new Date());
+            gooutMaterialUser.setReturnOperator(operator);
+            gooutMaterialUser.setStatus(1);
+        }
+
+        gooutMaterialUserRepository.save(gooutMaterialUsers);
+    }
 
 	/**
 	 * 通过编码查询

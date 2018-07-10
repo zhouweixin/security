@@ -29,7 +29,7 @@ public enum EnumExceptions {
 	UPDATE_FAILED_PASSWORD_NULL(18, "更新失败, 密码不可为空"),
 	UPDATE_FAILED_PASSWORD_NOT_EQUALS(19, "更新失败, 旧密码不相同"),
     ASSIGN_FAILED_USER_NOT_EXIST(20, "分配失败, 员工不存在"),
-	DELETE_FAILED_USED(21, "删除失败, 对象被使用"),
+	DELETE_FAILED_USED(21, "删除失败, 有外键引用"),
 	ADD_FAILED_SCHEDULE_NOT_EXIST(22, "新增失败, 班次不存在"),
 	ADD_FAILED_NULL_EXIST(23, "新增失败, 全不可为空"),
 	ADD_FAILED_EXIST(24, "新增失败, 已存在"),
@@ -64,6 +64,18 @@ public enum EnumExceptions {
     AUDIT_FAILED_NOT_CUR_AUDITOR(53, "审核失败, 不是当前审核人"),
     ADD_FAILED_PURCHASE_NOT_EXISE(54, "添加失败, 采购单不存在"),
     ADD_FAILED_PURCHASE_NOT_AUDIT_OR_NOT(55, "添加失败, 采购单未审核或审核不通过"),
+    ADD_FAILED_GOOUT_CONTENT_NULL(56, "添加失败, 出库内容不可为空"),
+    ADD_FAILED_GOOUT_USER_NULL(57, "添加失败, 出库人不可为空"),
+    ADD_FAILED_GOOUT_USER_NOT_EXIST(58, "添加失败, 出库人不存在"),
+    ADD_FAILED_RETURN_USER_NOT_EXIST(59, "添加失败， 归还人不存在"),
+    ADD_FAILED_RETURN_CONTENT_NULL(60, "添加失败, 归还内容不可为空"),
+    RETURN_FAILED_NOT_MATERIAL(61, "归还失败, 未选择物品"),
+    RETURN_FAILED_NOT_USER(62, "归还失败, 未选择员工"),
+    RETURN_FAILED_OPERATOR_NOT_EXIST(63, "归还失败, 经办人不存在"),
+    ADD_FAILED_STOCK_NOT_EXIST(64, "新增失败, 库存不存在"),
+    ADD_FAILED_MATERIAL_NOT_EXIST(65, "新增失败, 物品不存在"),
+    ADD_FAILED_LOSS_NUMBER_GREATER_STOCK(66, "新增失败, 报损量超过库存量"),
+    DELETE_FAILED_AUDITED(67, "删除失败, 已审核"),
 
 	;
 
