@@ -25,6 +25,20 @@ $(document).ready(function () {
             $(this).parent().find('.departmentName-img').attr('src', 'imgs/offline.png')
         }
     })
+    /*
+    查看审核记录表按钮/
+     */
+    $('.lookCheckRecordTable').on('click', function () {
+        $('#purchaseApply').addClass('hidden')
+        $('#checkRecordTable').removeClass('hidden')
+    })
+    /*
+    左箭头/
+     */
+    $('.path-arrow-left').on('click', function () {
+        $('#checkRecordTable').addClass('hidden')
+        $('#purchaseApply').removeClass('hidden')
+    })
 })
 
 /*
@@ -33,7 +47,7 @@ $(document).ready(function () {
 function addApplyContent() {
     index++
     var tbody = $('.table-selfDefine tbody')
-    var appendStr = "<tr class='table-tr'><td>" + index + "</td><td><input></td><td><input></td><td><input></td><td><input></td>" +
+    var appendStr = "<tr class='table-tr'><td>" + index + "</td><td><input></td><td><input></td><td><input></td><td><input class=''></td>" +
         "<td style='border-right: none'><a onclick='cleanRowApplyContent(this)'><img src='imgs/minus-r.png'></a></td></tr>"
     tbody.append(appendStr)
 }
@@ -48,6 +62,22 @@ function cleanRowApplyContent(thisObj) {
         tr.eq(i-1).find('td').eq(0).text(i)
     }
 }
+/*
+提交采购申请表/
+ */
+function submitPurchaseApplyTable() {
+    var department = $('#applyDepartment').attr('value')
+    var applayStaff = $('#applyStaff').attr('value')
+    var reason = $('#applyReason').val()
+    var time = $('#applyTime').val()
+    var tr = $('.table-selfDefine .table-tr')
+
+}
+
+
+
+
+
 /*
 获取所有部门/
  */

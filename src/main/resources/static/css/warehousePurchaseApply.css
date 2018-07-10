@@ -101,3 +101,20 @@
 .departmentName-span:hover{
     color: #7D7D7D;
 }
+.path-arrow-left{
+    padding: 3px 8px;
+    border: none;
+}
+.top-body{
+    margin-top: 20px;
+}
+.table-body{
+    margin-top: 20px;
+}
+.table-body table th{
+    text-align: center;
+    color: #666;
+}
+.table-body table tr{
+    text-align: center;
+}
