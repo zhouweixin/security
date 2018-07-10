@@ -76,7 +76,6 @@ function submitPurchaseApplyTable() {
     var department = $('#applyDepartment').attr('value')
     var applayStaff = $('#applyStaff').attr('value')
     var reason = $('#applyReason').val()
-    var time = $('#applyTime').val()
     var tr = $('.table-selfDefine .table-tr')
 
 }
