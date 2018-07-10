@@ -40,11 +40,46 @@ $(document).ready(function () {
         $('#applyRecordsPanel').removeClass('hidden')
     })
     /*
-    金额改变函数/
+    设置申请表物品名称/
      */
-    $('.table-selfDefine').on('input', '.goodsPrice', function () {
+    $('.table-selfDefine').on('click', 'ul.applyTable-goodsName-ul li', function () {
+        $(this).parent().parent().find('div').attr('value', $(this).attr('value'))
+        $(this).parent().parent().find('div').text($(this).text())
+        $(this).parent().parent().parent().parent().find('td').eq(2).text($(this).attr('unitValue'))
+    })
+    /*
+    单价和数量改变事件/
+     */
+    $('.table-selfDefine').on('input', '.unitPriceOfGoods', function () {
+        var unitPrice = $(this).val()
+        var number = $(this).parent().parent().find('.numberOfGoods').val()
+        var price = unitPrice * number
+        $(this).parent().parent().find('.priceOfGoods').text(price)
+    })
+    $('.table-selfDefine').on('input', '.numberOfGoods', function () {
+        var number = $(this).val()
+        var unitPrice = $(this).parent().parent().find('.unitPriceOfGoods').val()
+        var price = unitPrice * number
+        $(this).parent().parent().find('.priceOfGoods').text(price)
+    })
+    /*
+    金额改变事件/
+     */
+    $('.table-selfDefine').on('DOMNodeInserted', '.priceOfGoods', function () {
         var tr = $('.table-selfDefine .table-tr')
-
+        var sumPrice = 0
+        for(var i = 0; i < tr.length; i++){
+            sumPrice = parseInt(sumPrice) + parseInt(tr.eq(i).find('.priceOfGoods').text())
+        }
+        $('#allGoodsPrice').text(sumPrice)
+    })
+    /*
+    审核流程/
+     */
+    getAllProcessName()
+    $('.applyProcess-menu-ul').on('click', ' li a', function () {
+        $('#applyProcess').text($(this).text())
+        $('#applyProcess').attr('value', $(this).attr('value'))
     })
 })
 
@@ -54,9 +89,13 @@ $(document).ready(function () {
 function addApplyContent() {
     index++
     var tbody = $('.table-selfDefine tbody')
-    var appendStr = "<tr class='table-tr'><td>" + index + "</td><td></td><td></td><td><input></td><td><input></td><td></td>" +
+    var appendStr = "<tr class='table-tr'><td>" + index + "</td><td><div class='dropdown' style='width: 100%; height: 100%'>" +
+        "<div id='alreadySigned' class='applyTable-goodsName dropdown-toggle' style='width: 100%; height: 26px' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true'>" +
+        "</div><ul class='dropdown-menu applyTable-goodsName-ul' style='width: 100%' aria-labelledby='alreadySigned'></ul></div></td>" +
+        "<td></td><td><input class='unitPriceOfGoods'></td><td><input class='numberOfGoods'></td><td class='priceOfGoods'></td>" +
         "<td style='border-right: none'><a onclick='cleanRowApplyContent(this)'><img src='imgs/minus-r.png'></a></td></tr>"
     tbody.append(appendStr)
+    getAllGoodsName()
 }
 /*
 清除申请表内容一行/
@@ -74,16 +113,15 @@ function cleanRowApplyContent(thisObj) {
  */
 function submitPurchaseApplyTable() {
     var department = $('#applyDepartment').attr('value')
-    var applayStaff = $('#applyStaff').attr('value')
+    var applayUser = $('#applyStaff').attr('value')
     var reason = $('#applyReason').val()
+    var process = $('#applyProcess').attr('value')
+    var price = $('#allGoodsPrice').text()
     var tr = $('.table-selfDefine .table-tr')
+    for(var i = 0; i < tr.length; i++){
 
+    }
 }
-
-
-
-
-
 /*
 获取所有部门/
  */
@@ -162,4 +200,59 @@ function getAllStaff() {
 function selectedOneStaff(thisObj) {
     $('#applyStaff').val( $(thisObj).find("span").text())
     $('#applyStaff').attr('value', $(thisObj).find("span").attr("value"))
+}
+/*
+获取所有物品名称/
+ */
+function getAllGoodsName() {
+    $.ajax({
+        url: ipPort + '/material/getAll',
+        success: function (obj) {
+            if(obj.code == 0){
+                setApplyTableGoodsNameUl(obj)
+            }
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+设置申请表物品名称下拉框/
+ */
+function setApplyTableGoodsNameUl(obj) {
+    var ul = $('ul.applyTable-goodsName-ul')
+    ul.find('li').remove()
+    var appendStr = ''
+    for(var i = 0; i < obj.data.length; i++){
+        appendStr = "<li class='col-xs-6' value='" + obj.data[i].id + "'" + "unitValue='" + obj.data[i].unit + "'" + ">" + obj.data[i].name + "</li>"
+        ul.append(appendStr)
+    }
+}
+/*
+获取所有流程名称/
+ */
+function getAllProcessName() {
+    $.ajax({
+        url: ipPort + '/purchaseAuditProcess/getAll',
+        success: function (obj) {
+            if(obj.code == 0){
+                setApplyTableProcessNameUl(obj)
+            }
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+设置申请表流程名称下拉框/
+ */
+function setApplyTableProcessNameUl(obj) {
+    var ul = $('ul.applyProcess-menu-ul')
+    var appendStr = ''
+    for(var i = 0; i < obj.data.length; i++){
+        appendStr = "<li><a value='" + obj.data[i].id + "'>" + obj.data[i].name + "</a></li>"
+        ul.append(appendStr)
+    }
 }

@@ -62,11 +62,23 @@
                     <div>物品基本信息</div>
                 </a>
             </li>
-            <li class="left-nav-menu-li li-active">
-                <a href="warehousePurchaseApply.html" class="menu-link">
-                    <img src="imgs/addressbook_fill.png">
-                    <div>采购申请</div>
+            <li class="left-nav-menu-li">
+                <a class="menu-link">
+                    <img src="imgs/brush_fill.png">
+                    <div>采购申请    <span class="glyphicon glyphicon-triangle-bottom"></span></div>
                 </a>
+                <ul class="sub-menu">
+                    <li class="sub-menu-li">
+                        <a href="warehousePurchaseApplyProcess.html" class="sub-menu-link">
+                            流程设置
+                        </a>
+                    </li>
+                    <li class="sub-menu-li sub-li-active">
+                        <a href="warehousePurchaseApply.html" class="sub-menu-link">
+                            采购申请
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li class="left-nav-menu-li">
                 <a href="warehouseGoodsPushIn.html" class="menu-link">
@@ -189,15 +201,19 @@
             <div class="main-table col-xs-8 col-xs-push-2">
                 <div style="height: 31px; border-bottom: 1px solid #000000">
                     <div class="col-xs-3" style="text-align: center;"><label style="height: 100%; margin-bottom: 0px; line-height: 30px">申请部门</label></div>
-                    <input id="applyDepartment" class="col-xs-3" onclick="getAllDepartment()" data-toggle="modal" data-target="#myModal-selectDepartment" style="border:none; border-right: 1px solid #000000;border-left: 1px solid #000000;height: 30px">
+                    <input id="applyDepartment" class="col-xs-3" onclick="getAllDepartment()" data-toggle="modal" data-target="#myModal-selectDepartment" style="border:none; border-right: 1px solid #000000;border-left: 1px solid #000000;height: 30px;line-height: 30px;text-align: center">
                     <div class="col-xs-3"  style="text-align: center;"><label style="height: 100%; margin-bottom: 0px; line-height: 30px">申请人</label></div>
-                    <input id="applyStaff" class="col-xs-3" onclick="getAllStaff()" data-toggle="modal" data-target="#myModal-selectOneStaff" style="border:none;border-left: 1px solid #000000;height: 30px">
+                    <input id="applyStaff" class="col-xs-3" onclick="getAllStaff()" data-toggle="modal" data-target="#myModal-selectOneStaff" style="border:none;border-left: 1px solid #000000;height: 30px;line-height: 30px;text-align: center">
                 </div>
-                <div style="height: 41px; border-bottom: 1px solid #000000">
-                    <div class="col-xs-3" style="text-align: center;"><label style="height: 100%; margin-bottom: 0px; line-height: 40px">原因</label></div>
-                    <textarea id="applyReason" class="col-xs-9" style="border:none; border-left: 1px solid #000000;height: 40px;"></textarea>
-                    <!--<div class="col-xs-2"  style="text-align: center;"><label style="height: 100%; margin-bottom: 0px; line-height: 40px">申请时间</label></div>-->
-                    <!--<input id="applyTime" class="col-xs-3" type="datetime-local" style="border:none;border-left: 1px solid #000000;height: 40px">-->
+                <div style="height: 61px; border-bottom: 1px solid #000000">
+                    <div class="col-xs-3" style="text-align: center;"><label style="height: 100%; margin-bottom: 0px; line-height: 60px">原因</label></div>
+                    <textarea id="applyReason" class="col-xs-4" style="border:none; border-left: 1px solid #000000;border-right: 1px solid #000000;height: 60px;"></textarea>
+                    <div class="col-xs-2"  style="text-align: center;"><label style="height: 100%; margin-bottom: 0px; line-height: 60px">审核流程</label></div>
+                    <div class="dropdown col-xs-3" style="border-left: 1px solid #000000;height:100%">
+                        <div id="applyProcess" class="dropdown-toggle" style="width:100%; height: 60px;line-height: 60px; text-align: center" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></div>
+                        <ul class="dropdown-menu applyProcess-menu-ul" style="width:100%" aria-labelledby="applyProcess">
+                        </ul>
+                    </div>
                 </div>
                 <div class="checkTable-body">
                     <table class="table table-bordered table-selfDefine">
@@ -212,7 +228,7 @@
                                 <th style="width: 60px;border-right: none">删除</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="asd">
                             <!--<tr class="table-tr">-->
                                 <!--<td>1</td>-->
                                 <!--<td><input></td>-->
@@ -231,7 +247,7 @@
                 </div>
                 <div style="height: 41px; border-bottom: 1px solid #000000">
                     <div class="col-xs-6" style="text-align: center;border-right: 1px solid #000000"><label style="height: 100%; margin-bottom: 0px; line-height: 40px">总计金额</label></div>
-                    <div id="allGoodsPrice" class="col-xs-6"  style="text-align: center;"></div>
+                    <div id="allGoodsPrice" class="col-xs-6"  style="height: 100%;text-align: center;line-height: 40px"></div>
                 </div>
                 <div class="check-div" style="height: 111px; border-bottom: 1px solid #000000">
                     <div class="col-xs-3" style="text-align: center;border-right: 1px solid #000000"><label style="height: 100%; margin-bottom: 0px; line-height: 110px">负责人审核</label></div>

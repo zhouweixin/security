@@ -161,6 +161,7 @@ function makeSureDelete() {
         alert('id为空，请重新确定id！')
         return
     }
+    console.log(ipPort + '/material/deleteById?id=' + id)
     $.ajax({
         url: ipPort + '/material/deleteById?id=' + id,
         success: function (obj) {

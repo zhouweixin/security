@@ -63,10 +63,22 @@
                 </a>
             </li>
             <li class="left-nav-menu-li">
-                <a href="warehousePurchaseApply.html" class="menu-link">
-                    <img src="imgs/addressbook.png">
-                    <div>采购申请</div>
+                <a class="menu-link">
+                    <img src="imgs/brush.png">
+                    <div>采购申请    <span class="glyphicon glyphicon-triangle-right"></span></div>
                 </a>
+                <ul class="sub-menu none">
+                    <li class="sub-menu-li">
+                        <a href="warehousePurchaseApplyProcess.html" class="sub-menu-link">
+                            流程设置
+                        </a>
+                    </li>
+                    <li class="sub-menu-li">
+                        <a href="warehousePurchaseApply.html" class="sub-menu-link">
+                            采购申请
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li class="left-nav-menu-li">
                 <a href="warehouseGoodsPushIn.html" class="menu-link">
@@ -355,7 +367,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" onclick="addGoodsBaseInformation()" data-dismiss="modal">确认</button>
+                <button type="button" class="btn btn-primary" onclick="addGoodsBaseInformation()">确认</button>
             </div>
         </div>
     </div>
