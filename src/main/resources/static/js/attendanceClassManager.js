@@ -223,8 +223,8 @@ function getAllClassInformation() {
 设置班次Table/
  */
 function setAllClassTable(obj) {
+    var table_tr = $('.table-tr');
     if(obj.data.numberOfElements != 0){
-        var table_tr = $('.table-tr');
         var class_name = $('.class-name');
         var class_classTypeName = $('.class-classTypeName');
         var class_lateTypeName = $('.class-lateTypeName');
@@ -289,6 +289,10 @@ function setAllClassTable(obj) {
             td.eq(5).css('paddingTop', padding_top)
         }
         for (var i = obj.data.numberOfElements; i < 10; i++) {
+            table_tr.eq(i).addClass('hidden')
+        }
+    }else{
+        for (var i = 0; i < 10; i++) {
             table_tr.eq(i).addClass('hidden')
         }
     }
@@ -512,11 +516,6 @@ function addClassType() {
         alert('请输入名称')
         return
     }
-    var classID = $('#modal-addClassID').val()
-    if(!classID){
-        alert('请输入班次')
-        return
-    }
     var beforeMinutes = $('#modal-addClassTypeBeforeMinute').val()
     if(!beforeMinutes){
         alert('请输入打卡时间')
@@ -548,7 +547,7 @@ function addClassType() {
         return
     }
     var urlStr = ipPort + '/scheduleType/add?name=' + name + '&beforeMinute=' + beforeMinutes + '&afterMinute=' + afterMinutes + '&startTime=' + startTime
-        + '&endTime=' + endTime + '&startBreakTime=' + startBreakTime + '&endBreakTime=' + endBreakTime + '&schedule=' + classID
+        + '&endTime=' + endTime + '&startBreakTime=' + startBreakTime + '&endBreakTime=' + endBreakTime
     $.ajax({
         url: urlStr,
         dataType: 'json',
@@ -573,11 +572,6 @@ function modifyClassType() {
     var name = $('#modal-modifyClassTypeName').val()
     if(!name){
         alert('请输入名称')
-        return
-    }
-    var classID = $('#modal-modifyClassID').val()
-    if(!classID){
-        alert('请输入班次')
         return
     }
     var beforeMinutes = $('#modal-modifyClassTypeBeforeMinute').val()
@@ -611,7 +605,7 @@ function modifyClassType() {
         return
     }
     var urlStr = ipPort + '/scheduleType/update?name=' + name + '&beforeMinute=' + beforeMinutes + '&afterMinute=' + afterMinutes + '&startTime=' + startTime
-        + '&endTime=' + endTime + '&startBreakTime=' + startBreakTime + '&endBreakTime=' + endBreakTime + '&schedule=' + classID + '&id=' + id
+        + '&endTime=' + endTime + '&startBreakTime=' + startBreakTime + '&endBreakTime=' + endBreakTime + '&id=' + id
     console.log(urlStr)
     $.ajax({
         url: urlStr,
@@ -911,4 +905,28 @@ function makeSureDelete() {
             }
         })
     }
+}
+/*
+根据班次名称搜索/
+ */
+function searchsByName() {
+    var name = $('#className-input').val()
+    $.ajax({
+        url: ipPort + '/schedule/getByNameLikeByPage?name=' + name,
+        success:function (obj) {
+            if(obj.code == 0){
+                if(obj.data.numberOfElements == 0){
+                    alert('无相关信息！')
+                    setAllClassTable(obj)
+                }else{
+                    setAllClassTable(obj)
+                }
+            }else{
+                alert(obj.message)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
 }

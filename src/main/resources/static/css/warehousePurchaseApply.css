@@ -144,3 +144,24 @@ ul.applyTable-goodsName-ul li:hover{
 ul.applyProcess-menu-ul li a:hover{
     font-size: 16px;
 }
+#myModal-PurchaseApplyDetails label,#myModal-PurchaseApplyDetails th,#myModal-PurchaseApplyDetails span{
+    color: #000000;
+    font-weight: bold;
+}
+.purchaseApplyDetails-table-selfDefine{
+    text-align: center;
+    margin-bottom: 0px;
+}
+.purchaseApplyDetails-table-selfDefine thead tr th{
+    text-align: center;
+    border: none;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+.purchaseApplyDetails-table-selfDefine tbody tr td{
+    text-align: center;
+    border: none;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    padding: 0;
+}

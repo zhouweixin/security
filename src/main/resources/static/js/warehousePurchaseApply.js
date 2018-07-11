@@ -54,12 +54,14 @@ $(document).ready(function () {
         var unitPrice = $(this).val()
         var number = $(this).parent().parent().find('.numberOfGoods').val()
         var price = unitPrice * number
+        price = price.toFixed(2)
         $(this).parent().parent().find('.priceOfGoods').text(price)
     })
     $('.table-selfDefine').on('input', '.numberOfGoods', function () {
         var number = $(this).val()
         var unitPrice = $(this).parent().parent().find('.unitPriceOfGoods').val()
         var price = unitPrice * number
+        price = price.toFixed(2)
         $(this).parent().parent().find('.priceOfGoods').text(price)
     })
     /*
@@ -69,8 +71,9 @@ $(document).ready(function () {
         var tr = $('.table-selfDefine .table-tr')
         var sumPrice = 0
         for(var i = 0; i < tr.length; i++){
-            sumPrice = parseInt(sumPrice) + parseInt(tr.eq(i).find('.priceOfGoods').text())
+            sumPrice = parseFloat(sumPrice) + parseFloat(tr.eq(i).find('.priceOfGoods').text())
         }
+        sumPrice = sumPrice.toFixed(2)
         $('#allGoodsPrice').text(sumPrice)
     })
     /*
@@ -81,8 +84,112 @@ $(document).ready(function () {
         $('#applyProcess').text($(this).text())
         $('#applyProcess').attr('value', $(this).attr('value'))
     })
-})
 
+    getAllPurchaseApply()
+})
+/*
+获取所有申请/
+ */
+function getAllPurchaseApply() {
+    $.ajax({
+        url: ipPort + '/purchaseHeader/getAllByPage',
+        success:function (obj) {
+            if(obj.code == 0){
+                setPurchaseApplyTable(obj)
+            }else {
+                alert(obj.message)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+设置申请表/
+ */
+function setPurchaseApplyTable(obj) {
+    var id = $('.purchaseApply-id')
+    var name = $('.purchaseApply-staffName')
+    var time = $('.purchaseApply-applyTime')
+    var price = $('.purchaseApply-price')
+    var status = $('.purchaseApply-status')
+    var tr = $('.table-tr')
+    var length = obj.data.numberOfElements
+    for(var i = 0; i < length; i++){
+        tr.eq(i).removeClass('hidden')
+        id.eq(i).text('')
+        name.eq(i).attr('value', '')
+        name.eq(i).text('')
+        time.eq(i).text('')
+        price.eq(i).text('')
+        status.eq(i).attr('value', '')
+        status.eq(i).text('')
+        id.eq(i).text(obj.data.content[i].id)
+        name.eq(i).attr('value', obj.data.content[i].applyUser.id)
+        name.eq(i).text(obj.data.content[i].applyUser.name)
+        time.eq(i).text((new Date(obj.data.content[i].applyTime).toLocaleString()))
+        price.eq(i).text(obj.data.content[i].price)
+        status.eq(i).attr('value', obj.data.content[i].status)
+        if(obj.data.content[i].status == 0){
+            status.eq(i).text('未审核')
+        } else if(obj.data.content[i].status == 1){
+            status.eq(i).text('通过')
+        }else if(obj.data.content[i].status == 2){
+            status.eq(i).text('未通过')
+        }
+
+    }
+    for(var i = length; i < 10; i++){
+        tr.eq(i).addClass('hidden')
+    }
+}
+/*
+设置审核记录modal/
+ */
+function setPurchaseApplyRecordModal(thisObj) {
+    $('#purchaseApplyDetails-department').text('')
+    $('#purchaseApplyDetails-applyUserName').text('')
+    $('#purchaseApplyDetails-process').text('')
+    $('#purchaseApplyDetails-applyTime').text('')
+    $('#purchaseApplyDetails-reason').text('')
+    $('#purchaseApplyDetails-sumPrice').text('')
+    $('#purchaseApplyDetails-status').text('')
+    $('.purchaseApplyDetails-table-selfDefine').find('.table-tr').remove()
+    var id = $(thisObj).parent().parent().find('td').eq(0).text()
+    $.ajax({
+        url: ipPort + '/purchaseHeader/getById?id=' + id,
+        success: function (obj) {
+            if(obj.code == 0){
+                $('#purchaseApplyDetails-department').text(obj.data.department.name)
+                $('#purchaseApplyDetails-applyUserName').text(obj.data.applyUser.name)
+                $('#purchaseApplyDetails-process').text(obj.data.purchaseAuditProcess.name)
+                $('#purchaseApplyDetails-applyTime').text((new Date(obj.data.applyTime)).toLocaleString())
+                $('#purchaseApplyDetails-reason').text(obj.data.reason)
+                if(obj.data.status == 0){
+                    $('#purchaseApplyDetails-status').text('未审核')
+                }else if(obj.data.status == 1){
+                    $('#purchaseApplyDetails-status').text('通过')
+                }else if(obj.data.status == 2){
+                    $('#purchaseApplyDetails-status').text('未通过')
+                }
+                $('#purchaseApplyDetails-sumPrice').text(obj.data.price)
+                var tbody = $('.purchaseApplyDetails-table-selfDefine tbody')
+                for(var i = 0; i < obj.data.purchases.length; i++){
+                    var appendStr ="<tr class='table-tr'><td>" + (i+1) +"</td><td>" + obj.data.purchases[i].material.name +"</td>" +
+                        "<td>" + obj.data.purchases[i].material.unit + "</td><td>" + obj.data.purchases[i].unitPrice +"</td>" +
+                        "<td>" + obj.data.purchases[i].number + "</td><td style='border-right: none'>" + obj.data.purchases[i].price + "</td></tr>"
+                    tbody.append(appendStr)
+                }
+            }else{
+                alert(obj.message)
+            }
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+}
 /*
 增加申请表内容/
  */
@@ -113,14 +220,83 @@ function cleanRowApplyContent(thisObj) {
  */
 function submitPurchaseApplyTable() {
     var department = $('#applyDepartment').attr('value')
+    if(!department){
+        alert('申请部门不能为空！')
+        return
+    }
     var applayUser = $('#applyStaff').attr('value')
+    if(!applayUser){
+        alert('申请人不能为空！')
+        return
+    }
     var reason = $('#applyReason').val()
     var process = $('#applyProcess').attr('value')
-    var price = $('#allGoodsPrice').text()
-    var tr = $('.table-selfDefine .table-tr')
-    for(var i = 0; i < tr.length; i++){
-
+    if(!process){
+        alert('审核流程不能为空！')
+        return
     }
+    var price = $('#allGoodsPrice').text()
+    if(!price){
+        alert('总计金额不能为空！')
+        return
+    }
+    var tr = $('.table-selfDefine .table-tr')
+    if(tr.length == 0){
+        alert('请选择采购物品！')
+        return
+    }
+    var jsonArr = []
+    for(var i = 0; i < tr.length; i++){
+        var id = tr.eq(i).find('td').eq(1).find('.applyTable-goodsName').attr('value')
+        if(!id){
+            alert('物品名称不能为空！')
+            return
+        }
+        var json_ = {}
+        json_['material'] = {
+            "id": id
+        }
+        var unitPrice = tr.eq(i).find('td').eq(3).find('input').val()
+        json_['unitPrice'] = parseFloat(unitPrice).toFixed(2)
+        var number = tr.eq(i).find('td').eq(4).find('input').val()
+        json_['number'] = parseInt(number)
+        var price_ = tr.eq(i).find('td').eq(5).text()
+        json_['price'] = parseFloat(price_).toFixed(2)
+        jsonArr.push(json_)
+    }
+    var json = {
+        "applyUser":{
+            "id": applayUser
+        },
+        "department": {
+            "id": department
+        },
+        "purchaseAuditProcess":{
+            "id":  process
+        },
+        "reason": reason,
+        "price": parseFloat(price).toFixed(2),
+        "purchases": jsonArr
+    }
+    let myjson = JSON.stringify(json)
+    $.ajax({
+        url: ipPort + '/purchaseHeader/add',
+        contentType: 'application/json',
+        data: myjson,
+        dataType: 'json',
+        type: 'post',
+        success: function (obj) {
+            if(obj.code == 0){
+                alert('提交成功！')
+            }else {
+                alert(obj.message)
+            }
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+
 }
 /*
 获取所有部门/

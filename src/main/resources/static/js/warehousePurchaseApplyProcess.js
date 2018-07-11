@@ -245,6 +245,7 @@ function deleteInBatch() {
         }
     }
     let myjson = JSON.stringify(jsonArr)
+    return
     var urlStr = ipPort + '/purchaseAuditProcess/deleteByIdBatch'
     $.ajax({
         url:urlStr,

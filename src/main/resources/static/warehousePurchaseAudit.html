@@ -73,12 +73,12 @@
                             流程设置
                         </a>
                     </li>
-                    <li class="sub-menu-li sub-li-active">
+                    <li class="sub-menu-li">
                         <a href="warehousePurchaseApply.html" class="sub-menu-link">
                             采购申请
                         </a>
                     </li>
-                    <li class="sub-menu-li">
+                    <li class="sub-menu-li sub-li-active">
                         <a href="warehousePurchaseAudit.html" class="sub-menu-link">
                             采购审核
                         </a>
@@ -105,14 +105,14 @@
             </li>
         </ul>
     </div>
-    <!--------------------------------------------------------申请记录panel-------------------------------------------------------------->
+    <!--------------------------------------------------------采购审核panel-------------------------------------------------------------->
     <!---------------------------------------------------------------------------------------------------------------------->
-    <div id="applyRecordsPanel" class="right-panel ">
+    <div class="right-panel ">
 
         <div class="nav-path">
             <div class="path-title">
                 <ul class="path-ul">
-                    <li>采购申请</li>
+                    <li>采购审核</li>
                 </ul>
             </div>
         </div>
@@ -122,16 +122,16 @@
             <div class="top-body" style="margin-top: 30px">
                 <div class="search-content" style="height: 34px;">
                     <div class="search-left">
-                        <!--<div class="input-group col-xs-4">-->
-                            <!--<input type="text" class="form-control" placeholder="申请人名称">-->
-                            <!--<span class="input-group-btn">-->
-                                <!--<button class="btn btn-default" type="button" onclick="searchByName()">搜索</button>-->
-                                <!--<button class="btn btn-default" type="button" onclick="getAllGroupInformation()">搜索全部</button>-->
-                            <!--</span>-->
-                        <!--</div>-->
+                        <div class="input-group col-xs-4">
+                            <input type="text" class="form-control" placeholder="审核人姓名">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" onclick="searchByName()">搜索</button>
+                                <button class="btn btn-default" type="button" onclick="getAllGroupInformation()">搜索全部</button>
+                            </span>
+                        </div>
                     </div>
                     <div class="search-right">
-                        <button id="addApplyButton" class="btn btn-default" href="#purchaseApplyPanel">新增申请</button>
+
                     </div>
                 </div>
             </div>
@@ -145,7 +145,7 @@
                         <th>申请时间</th>
                         <th>总金额</th>
                         <th>审核状态</th>
-                        <th style="width: 50px">详情</th>
+                        <th style="width: 50px">审核</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -156,7 +156,7 @@
                         <td class="purchaseApply-price"></td>
                         <td class="purchaseApply-status"></td>
                         <td class="">
-                            <a  data-toggle="modal" data-target="#myModal-PurchaseApplyDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a>
+                            <a  data-toggle="modal" data-target="#myModal-PurchaseApplyDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon glyphicon-check" aria-hidden="true"></span></a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
@@ -166,7 +166,7 @@
                         <td class="purchaseApply-price"></td>
                         <td class="purchaseApply-status"></td>
                         <td class="">
-                            <a  data-toggle="modal" data-target="#myModal-PurchaseApplyDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a>
+                            <a  data-toggle="modal" data-target="#myModal-PurchaseApplyDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon-check" aria-hidden="true"></span></a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
@@ -176,7 +176,7 @@
                         <td class="purchaseApply-price"></td>
                         <td class="purchaseApply-status"></td>
                         <td class="">
-                            <a  data-toggle="modal" data-target="#myModal-PurchaseApplyDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a>
+                            <a  data-toggle="modal" data-target="#myModal-PurchaseApplyDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon-check" aria-hidden="true"></span></a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
@@ -186,7 +186,7 @@
                         <td class="purchaseApply-price"></td>
                         <td class="purchaseApply-status"></td>
                         <td class="">
-                            <a  data-toggle="modal" data-target="#myModal-PurchaseApplyDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a>
+                            <a  data-toggle="modal" data-target="#myModal-PurchaseApplyDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon-check" aria-hidden="true"></span></a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
@@ -196,7 +196,7 @@
                         <td class="purchaseApply-price"></td>
                         <td class="purchaseApply-status"></td>
                         <td class="">
-                            <a  data-toggle="modal" data-target="#myModal-PurchaseApplyDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a>
+                            <a  data-toggle="modal" data-target="#myModal-PurchaseApplyDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon-check" aria-hidden="true"></span></a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
@@ -206,7 +206,7 @@
                         <td class="purchaseApply-price"></td>
                         <td class="purchaseApply-status"></td>
                         <td class="">
-                            <a  data-toggle="modal" data-target="#myModal-PurchaseApplyDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a>
+                            <a  data-toggle="modal" data-target="#myModal-PurchaseApplyDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon-check" aria-hidden="true"></span></a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
@@ -216,7 +216,7 @@
                         <td class="purchaseApply-price"></td>
                         <td class="purchaseApply-status"></td>
                         <td class="">
-                            <a  data-toggle="modal" data-target="#myModal-PurchaseApplyDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a>
+                            <a  data-toggle="modal" data-target="#myModal-PurchaseApplyDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon-check" aria-hidden="true"></span></a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
@@ -226,7 +226,7 @@
                         <td class="purchaseApply-price"></td>
                         <td class="purchaseApply-status"></td>
                         <td class="">
-                            <a  data-toggle="modal" data-target="#myModal-PurchaseApplyDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a>
+                            <a  data-toggle="modal" data-target="#myModal-PurchaseApplyDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon-check" aria-hidden="true"></span></a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
@@ -236,7 +236,7 @@
                         <td class="purchaseApply-price"></td>
                         <td class="purchaseApply-status"></td>
                         <td class="">
-                            <a  data-toggle="modal" data-target="#myModal-PurchaseApplyDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a>
+                            <a  data-toggle="modal" data-target="#myModal-PurchaseApplyDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon-check" aria-hidden="true"></span></a>
                         </td>
                     </tr>
                     <tr class="table-tr hidden">
@@ -246,7 +246,7 @@
                         <td class="purchaseApply-price"></td>
                         <td class="purchaseApply-status"></td>
                         <td class="">
-                            <a  data-toggle="modal" data-target="#myModal-PurchaseApplyDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a>
+                            <a  data-toggle="modal" data-target="#myModal-PurchaseApplyDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon-check" aria-hidden="true"></span></a>
                         </td>
                     </tr>
                     </tbody>

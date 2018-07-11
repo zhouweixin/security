@@ -136,15 +136,15 @@
                 <div class="search-content" style="height: 34px;">
                     <div class="search-left">
                         <div class="input-group col-xs-4">
-                            <input type="text" class="form-control" placeholder="请输入班次名称">
+                            <input id="className-input" type="text" class="form-control" placeholder="请输入班次名称">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button" onclick="searchsByName()">搜索</button>
-                                 <button class="btn btn-default" type="button" onclick="getAllScheduleInformation()">搜索全部</button>
+                                <button class="btn btn-default" type="button" onclick="getAllClassInformation()">搜索全部</button>
                             </span>
                         </div>
                     </div>
                     <div class="search-right">
-                        <button class="btn btn-default" data-toggle="modal" data-target="#myModal-makeSureDeleteInBatch">批量删除</button>
+                        <!--<button class="btn btn-default" data-toggle="modal" data-target="#myModal-makeSureDeleteInBatch">批量删除</button>-->
                         <span class="btn-group">
                             <button class="btn btn-default" type="button"  data-toggle="modal" data-target="#myModal-lateType" onclick="getAllLateType()">
                             迟到类型
@@ -956,22 +956,12 @@
             <div class="modal-body" style="padding: 15px 20px;font-size: 12px">
                 <form class="form-horizontal">
                     <div class="form-group">
-                        <label for="modal-addClassTypeName" class="col-xs-2 control-label">班次类型名称</label>
+                        <label for="modal-addClassTypeName" class="col-xs-2 control-label">类型名称</label>
                         <div class="col-xs-4">
                             <input type="text" class="form-control" id="modal-addClassTypeName" >
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label">打卡时间</label>
-                        <label for="modal-addClassTypeBeforeMinute" class="col-xs-3 control-label">几分钟前开始打卡：</label>
-                        <div class="col-xs-2">
-                            <input type="text" class="form-control" id="modal-addClassTypeBeforeMinute" >
-                        </div>
-                        <label for="modal-addClassTypeAfterMinute" class="col-xs-3 control-label">几分钟后结束打卡：</label>
-                        <div class="col-xs-2">
-                            <input type="text" class="form-control" id="modal-addClassTypeAfterMinute" >
-                        </div>
-                    </div>
+
 
                     <div class="form-group">
                         <label class="col-xs-2 control-label">上下班时间</label>
@@ -998,6 +988,17 @@
                             <input type="time" class="form-control" id="modal-addClassTypeEndBreakTime" >
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">打卡时间</label>
+                        <label for="modal-addClassTypeBeforeMinute" class="col-xs-3 control-label">几分钟前开始打卡：</label>
+                        <div class="col-xs-2">
+                            <input type="text" class="form-control" id="modal-addClassTypeBeforeMinute" >
+                        </div>
+                        <label for="modal-addClassTypeAfterMinute" class="col-xs-3 control-label">几分钟后结束打卡：</label>
+                        <div class="col-xs-2">
+                            <input type="text" class="form-control" id="modal-addClassTypeAfterMinute" >
+                        </div>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -1019,31 +1020,20 @@
             <div class="modal-body" style="padding: 15px 20px;font-size: 14px">
                 <form class="form-horizontal">
                     <div class="form-group">
-                        <label for="modal-modifyClassTypeID" class="col-xs-2 control-label">班次类型ID</label>
-                        <div class="col-xs-4">
-                            <input type="text" class="form-control" id="modal-modifyClassTypeID" >
+                        <label for="modal-modifyClassTypeID" class="col-xs-3 control-label">班次类型ID</label>
+                        <div class="col-xs-5">
+                            <input type="text" class="form-control" id="modal-modifyClassTypeID" disabled="disabled">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="modal-modifyClassTypeName" class="col-xs-2 control-label">班次类型名称</label>
-                        <div class="col-xs-4">
+                        <label for="modal-modifyClassTypeName" class="col-xs-3 control-label">班次类型名称</label>
+                        <div class="col-xs-5">
                             <input type="text" class="form-control" id="modal-modifyClassTypeName" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xs-2 control-label">打卡时间</label>
-                        <label for="modal-modifyClassTypeBeforeMinute" class="col-xs-3 control-label">几分钟前开始打卡：</label>
-                        <div class="col-xs-2">
-                            <input type="text" class="form-control" id="modal-modifyClassTypeBeforeMinute" >
-                        </div>
-                        <label for="modal-modifyClassTypeAfterMinute" class="col-xs-3 control-label">几分钟后结束打卡：</label>
-                        <div class="col-xs-2">
-                            <input type="text" class="form-control" id="modal-modifyClassTypeAfterMinute" >
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-xs-2 control-label">上下班时间</label>
+                        <label class="col-xs-2 control-label" style="padding-left: 0px; padding-right: 0px">上下班时间</label>
                         <label for="modal-modifyClassTypeStartTime" class="col-xs-2 control-label">上班：</label>
                         <div class="col-xs-3">
                             <input type="time" class="form-control" id="modal-modifyClassTypeStartTime" >
@@ -1065,6 +1055,17 @@
                         <label for="modal-modifyClassTypeEndBreakTime" class="col-xs-2 control-label">休息结束：</label>
                         <div class="col-xs-3">
                             <input type="time" class="form-control" id="modal-modifyClassTypeEndBreakTime" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">打卡时间</label>
+                        <label for="modal-modifyClassTypeBeforeMinute" class="col-xs-3 control-label">几分钟前开始打卡：</label>
+                        <div class="col-xs-2">
+                            <input type="text" class="form-control" id="modal-modifyClassTypeBeforeMinute" >
+                        </div>
+                        <label for="modal-modifyClassTypeAfterMinute" class="col-xs-3 control-label">几分钟后结束打卡：</label>
+                        <div class="col-xs-2">
+                            <input type="text" class="form-control" id="modal-modifyClassTypeAfterMinute" >
                         </div>
                     </div>
                 </form>
