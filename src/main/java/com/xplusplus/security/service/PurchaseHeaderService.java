@@ -13,9 +13,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Author: zhouweixin
@@ -123,11 +121,15 @@ public class PurchaseHeaderService {
 	 * @param id
 	 */
 	public void delete(Long id) {
-
 		// 验证是否存在
-		if (purchaseHeaderRepository.findOne(id) == null) {
+        PurchaseHeader purchaseHeader = null;
+		if ((purchaseHeader = purchaseHeaderRepository.findOne(id)) == null) {
 			throw new SecurityExceptions(EnumExceptions.DELETE_FAILED_NOT_EXIST);
 		}
+
+		if(purchaseHeader.getStatus() != 0){
+            throw new SecurityExceptions(EnumExceptions.DELETE_FAILED_AUDITED);
+        }
 		purchaseHeaderRepository.delete(id);
 	}
 
@@ -137,7 +139,11 @@ public class PurchaseHeaderService {
 	 * @param purchaseHeaders
 	 */
 	public void deleteInBatch(Collection<PurchaseHeader> purchaseHeaders) {
-		purchaseHeaderRepository.deleteInBatch(purchaseHeaders);
+	    Set<Long> set = new HashSet<Long>();
+        purchaseHeaders.forEach((purchaseHeader)->{
+            set.add(purchaseHeader.getId());
+        });
+		purchaseHeaderRepository.deleteByIdInAndStatus(set, 0);
 	}
 
 	/**
@@ -217,6 +223,96 @@ public class PurchaseHeaderService {
 
         Pageable pageable = new PageRequest(page, size, sort);
         return purchaseHeaderRepository.findByCurAuditor(curAuditor, pageable);
+    }
+
+    /**
+     * 通过申请人查询-分页
+     *
+     * @param page
+     * @param size
+     * @param sortFieldName
+     * @param asc
+     * @return
+     */
+    public Page<PurchaseHeader> findByApplyUserByPage(User applyUser, Integer page, Integer size, String sortFieldName, Integer asc) {
+
+        // 判断排序字段名是否存在
+        try {
+            PurchaseHeader.class.getDeclaredField(sortFieldName);
+        } catch (Exception e) {
+            // 如果不存在就设置为id
+            sortFieldName = "id";
+        }
+
+        Sort sort = null;
+        if (asc == 0) {
+            sort = new Sort(Direction.DESC, sortFieldName);
+        } else {
+            sort = new Sort(Direction.ASC, sortFieldName);
+        }
+
+        Pageable pageable = new PageRequest(page, size, sort);
+        return purchaseHeaderRepository.findByApplyUser(applyUser, pageable);
+    }
+
+    /**
+     * 通过状态查询-分页
+     *
+     * @param page
+     * @param size
+     * @param sortFieldName
+     * @param asc
+     * @return
+     */
+    public Page<PurchaseHeader> findByStatueByPage(int status, Integer page, Integer size, String sortFieldName, Integer asc) {
+
+        // 判断排序字段名是否存在
+        try {
+            PurchaseHeader.class.getDeclaredField(sortFieldName);
+        } catch (Exception e) {
+            // 如果不存在就设置为id
+            sortFieldName = "id";
+        }
+
+        Sort sort = null;
+        if (asc == 0) {
+            sort = new Sort(Direction.DESC, sortFieldName);
+        } else {
+            sort = new Sort(Direction.ASC, sortFieldName);
+        }
+
+        Pageable pageable = new PageRequest(page, size, sort);
+        return purchaseHeaderRepository.findByStatus(status, pageable);
+    }
+
+    /**
+     * 通过申请人和状态查询-分页
+     *
+     * @param page
+     * @param size
+     * @param sortFieldName
+     * @param asc
+     * @return
+     */
+    public Page<PurchaseHeader> findByApplyUserAndStatusByPage(User user, int status, Integer page, Integer size, String sortFieldName, Integer asc) {
+
+        // 判断排序字段名是否存在
+        try {
+            PurchaseHeader.class.getDeclaredField(sortFieldName);
+        } catch (Exception e) {
+            // 如果不存在就设置为id
+            sortFieldName = "id";
+        }
+
+        Sort sort = null;
+        if (asc == 0) {
+            sort = new Sort(Direction.DESC, sortFieldName);
+        } else {
+            sort = new Sort(Direction.ASC, sortFieldName);
+        }
+
+        Pageable pageable = new PageRequest(page, size, sort);
+        return purchaseHeaderRepository.findByApplyUserAndStatus(user, status, pageable);
     }
 
     /**

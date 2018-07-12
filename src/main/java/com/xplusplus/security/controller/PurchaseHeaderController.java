@@ -135,6 +135,64 @@ public class PurchaseHeaderController {
     }
 
     /**
+     * 通过申请人查询-分页
+     *
+     * @param page
+     * @param size
+     * @param sortFieldName
+     * @param asc
+     * @return
+     */
+    @RequestMapping(value = "/getByApplyUserByPage")
+    public Result<Page<PurchaseHeader>> getByApplyUserByPage(User applyUser,
+                                                              @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                              @RequestParam(value = "size", defaultValue = "10") Integer size,
+                                                              @RequestParam(value = "sortFieldName", defaultValue = "applyTime") String sortFieldName,
+                                                              @RequestParam(value = "asc", defaultValue = "0") Integer asc) {
+
+        return ResultUtil.success(purchaseHeaderService.findByApplyUserByPage(applyUser, page, size, sortFieldName, asc));
+    }
+
+    /**
+     * 通过状态查询-分页
+     *
+     * @param page
+     * @param size
+     * @param sortFieldName
+     * @param asc
+     * @return
+     */
+    @RequestMapping(value = "/getByStatueByPage")
+    public Result<Page<PurchaseHeader>> getByStatueByPage(@RequestParam(value = "status", defaultValue="0") int status,
+                                                             @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                             @RequestParam(value = "size", defaultValue = "10") Integer size,
+                                                             @RequestParam(value = "sortFieldName", defaultValue = "applyTime") String sortFieldName,
+                                                             @RequestParam(value = "asc", defaultValue = "0") Integer asc) {
+
+        return ResultUtil.success(purchaseHeaderService.findByStatueByPage(status, page, size, sortFieldName, asc));
+    }
+
+    /**
+     * 通过申请人和状态查询-分页
+     *
+     * @param page
+     * @param size
+     * @param sortFieldName
+     * @param asc
+     * @return
+     */
+    @RequestMapping(value = "/getByApplyUserAndStatusByPage")
+    public Result<Page<PurchaseHeader>> getByApplyUserAndStatusByPage(User applyUser,
+                                                          @RequestParam(value = "status", defaultValue="0") int status,
+                                                          @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                          @RequestParam(value = "size", defaultValue = "10") Integer size,
+                                                          @RequestParam(value = "sortFieldName", defaultValue = "applyTime") String sortFieldName,
+                                                          @RequestParam(value = "asc", defaultValue = "0") Integer asc) {
+
+        return ResultUtil.success(purchaseHeaderService.findByApplyUserAndStatusByPage(applyUser, status, page, size, sortFieldName, asc));
+    }
+
+    /**
      * 审核
      *
      * @param curAuditorId

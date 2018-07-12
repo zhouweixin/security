@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
+
 /**
  * @Author: zhouweixin
  * @Description:
@@ -46,4 +48,40 @@ public interface PurchaseHeaderRepository extends JpaRepository<PurchaseHeader, 
     @Modifying
     @Query(value = "update PurchaseHeader p set p.curAuditor=?1 where p.id=?2")
     public void updateCurAuditorById(User curAuditor, long id);
+
+    /**
+     * 通过申请人查询-分页
+     *
+     * @param user
+     * @param pageable
+     * @return
+     */
+    public Page<PurchaseHeader> findByApplyUser(User user, Pageable pageable);
+
+    /**
+     * 通过状态查询-分页
+     *
+     * @param status
+     * @param pageable
+     * @return
+     */
+    public Page<PurchaseHeader> findByStatus(int status, Pageable pageable);
+
+    /**
+     * 通过申请人和状态查询
+     *
+     * @param user
+     * @param status
+     * @param pageable
+     * @return
+     */
+    public Page<PurchaseHeader> findByApplyUserAndStatus(User user, int status, Pageable pageable);
+
+    /**
+     * 通过编码和状态删除
+     *
+     * @param ids
+     * @param status
+     */
+    public void deleteByIdInAndStatus(Collection<Long> ids, int status);
 }

@@ -64,6 +64,8 @@ public class GodownHeaderService {
         if(godownHeader.getPurchaseHeader() == null || (purchaseHeader = purchaseHeaderRepository.findOne(godownHeader.getPurchaseHeader().getId())) == null){
             throw new SecurityExceptions(EnumExceptions.ADD_FAILED_PURCHASE_NOT_EXISE);
         }
+        // 状态修改为已入库
+        purchaseHeaderRepository.updateStatusById(3, purchaseHeader.getId());
 
         if(purchaseHeader.getStatus() != 1){
             throw new SecurityExceptions(EnumExceptions.ADD_FAILED_PURCHASE_NOT_AUDIT_OR_NOT);

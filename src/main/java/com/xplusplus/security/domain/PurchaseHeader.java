@@ -53,7 +53,7 @@ public class PurchaseHeader {
     @Column(precision = 2)
     private Double price = 0.00;
 
-    // 审核状态：0未审核；1通过；2未通过
+    // 审核状态：0未审核；1通过未入库；2未通过；3已入库
     private Integer status = 0;
 
     // 当前审核人：外键
