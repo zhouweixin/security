@@ -22,4 +22,23 @@ $(document).ready(function () {
         $('#reportSpoiledPanel').addClass('hidden')
         $('#reportSpoiledTablePanel').removeClass('hidden')
     })
+    getAllStock()
 })
+/*
+获取所有库存/
+ */
+function getAllStock() {
+    $.ajax({
+        url: ipPort + '/stock/getAllByPage',
+        success: function (obj) {
+            if(obj.code == 0){
+                console.log(obj)
+            }else{
+                alert(obj.message)
+            }
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+}

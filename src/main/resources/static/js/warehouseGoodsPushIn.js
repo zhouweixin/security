@@ -122,6 +122,7 @@ function setPurchaseApplyTable(obj) {
  */
 function setPushInDetaisModal(thisObj) {
     $('#pushInDetails-department').text('')
+    $('#pushInDetails-applyUserName').attr('value', '')
     $('#pushInDetails-applyUserName').text('')
     $('#pushInDetails-applyHeaderId').text('')
     $('#pushInDetails-applyTime').text('')
@@ -141,6 +142,7 @@ function setPushInDetaisModal(thisObj) {
         success: function (obj) {
             if(obj.code == 0){
                 $('#pushInDetails-department').text(obj.data.department.name)
+                $('#pushInDetails-applyUserName').attr('value', obj.data.applyUser.id)
                 $('#pushInDetails-applyUserName').text(obj.data.applyUser.name)
                 $('#pushInDetails-applyHeaderId').text(obj.data.id)
                 $('#pushInDetails-applyTime').text((new Date(obj.data.applyTime)).toLocaleString())
@@ -193,5 +195,20 @@ function setPushInDetaisModal(thisObj) {
 物品入库/
  */
 function pushInGoods() {
-    
+    var purchaseId = $('#pushInDetails-applyHeaderId').text()
+    var applyUserId = $('#pushInDetails-applyUserName').attr('value')
+    var operatorId = 'zy00001'
+    $.ajax({
+        url: ipPort + '/godownHeader/add?purchaseHeader.id=' + purchaseId + '&applyUser.id=' + applyUserId + '&operator.id=' + operatorId,
+        success: function (obj) {
+            if(obj.code == 0){
+                alert('入库成功！')
+            }else{
+                alert(obj.message)
+            }
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
 }
