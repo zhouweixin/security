@@ -14,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.*;
 
 /**
@@ -29,6 +30,9 @@ public class GooutMaterialUserService {
 	@Autowired
     private UserRepository userRepository;
 
+	@Autowired
+    private StockService stockService;
+
     /**
      * 归还物品
      *
@@ -36,6 +40,7 @@ public class GooutMaterialUserService {
      * @param userIds
      * @return
      */
+    @Transactional
     public void returnMaterials(Long[] gooutMaterialUserIds, String[] userIds, String operatorId) {
         if(gooutMaterialUserIds == null){
             throw new SecurityExceptions(EnumExceptions.RETURN_FAILED_NOT_MATERIAL);
@@ -70,6 +75,9 @@ public class GooutMaterialUserService {
             gooutMaterialUser.setReturnOperator(operator);
             gooutMaterialUser.setStatus(1);
         }
+
+        // 更新库存
+        stockService.update(gooutMaterialUsers, 1);
 
         gooutMaterialUserRepository.save(gooutMaterialUsers);
     }

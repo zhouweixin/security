@@ -26,4 +26,12 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
      * @return
      */
     public Page<Stock> findByMaterialIn(Collection<Material> materials, Pageable pageable);
+
+    /**
+     * 通过物品查询
+     *
+     * @param material
+     * @return
+     */
+    public Stock findFirstByMaterial(Material material);
 }

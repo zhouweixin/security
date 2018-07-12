@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.*;
 
 /**
@@ -34,7 +35,7 @@ public class GodownHeaderService {
     private PurchaseHeaderRepository purchaseHeaderRepository;
 
 	@Autowired
-    private PurchaseAuditProcessRepository purchaseAuditProcessRepository;
+    private StockService stockService;
 
 	/**
 	 * 新增
@@ -42,6 +43,7 @@ public class GodownHeaderService {
 	 * @param godownHeader
 	 * @return
 	 */
+	@Transactional
 	public GodownHeader save(GodownHeader godownHeader) {
 
 		// 验证是否存在
@@ -85,6 +87,9 @@ public class GodownHeaderService {
 
         // 设置入库时间
         godownHeader.setGodownTime(new Date());
+
+        // 修改库存
+        stockService.update(godownHeader, 1);
 
 		return godownHeaderRepository.save(godownHeader);
 	}
