@@ -76,26 +76,27 @@ $(document).ready(function () {
         sumPrice = sumPrice.toFixed(2)
         $('#allGoodsPrice').text(sumPrice)
     })
-    /*
-    审核流程/
-     */
-    getAllProcessName()
-    $('.applyProcess-menu-ul').on('click', ' li a', function () {
-        $('#applyProcess').text($(this).text())
-        $('#applyProcess').attr('value', $(this).attr('value'))
-    })
+    // /*
+    // 审核流程/
+    //  */
+    // getAllProcessName()
+    // $('.applyProcess-menu-ul').on('click', ' li a', function () {
+    //     $('#applyProcess').text($(this).text())
+    //     $('#applyProcess').attr('value', $(this).attr('value'))
+    // })
 
-    getAllPurchaseApply()
+    getPurchaseApplyByAuditId()
 })
 /*
-获取所有申请/
+通过审核人编码查询/
  */
-function getAllPurchaseApply() {
+function getPurchaseApplyByAuditId() {
+    var id = 'zy00001'
     $.ajax({
-        url: ipPort + '/purchaseHeader/getAllByPage',
+        url: ipPort + '/purchaseHeader/getByCurAuditorByPage?id=' + id,
         success:function (obj) {
             if(obj.code == 0){
-                setPurchaseApplyTable(obj)
+                setMainTable(obj)
             }else {
                 alert(obj.message)
             }
@@ -108,7 +109,7 @@ function getAllPurchaseApply() {
 /*
 设置申请表/
  */
-function setPurchaseApplyTable(obj) {
+function setMainTable(obj) {
     var id = $('.purchaseApply-id')
     var name = $('.purchaseApply-staffName')
     var time = $('.purchaseApply-applyTime')
@@ -156,11 +157,13 @@ function setPurchaseApplyRecordModal(thisObj) {
     $('#purchaseApplyDetails-sumPrice').text('')
     $('#purchaseApplyDetails-status').text('')
     $('.purchaseApplyDetails-table-selfDefine').find('.table-tr').remove()
+    $('#myModal-PurchaseAuditDetails').attr('value', '')
     var id = $(thisObj).parent().parent().find('td').eq(0).text()
     $.ajax({
         url: ipPort + '/purchaseHeader/getById?id=' + id,
         success: function (obj) {
             if(obj.code == 0){
+                $('#myModal-PurchaseAuditDetails').attr('value', id)
                 $('#purchaseApplyDetails-department').text(obj.data.department.name)
                 $('#purchaseApplyDetails-applyUserName').text(obj.data.applyUser.name)
                 $('#purchaseApplyDetails-process').text(obj.data.purchaseAuditProcess.name)
@@ -194,5 +197,21 @@ function setPurchaseApplyRecordModal(thisObj) {
 提交审核/
  */
 function submitPurchaseAudit(thisObj) {
-
+    var applyId = $('#myModal-PurchaseAuditDetails').attr('value')
+    var auditor = $('#purchaseApplyDetails-auditor').attr('value')
+    var note = $('#purchaseApplyDetails-note').val()
+    $.ajax({
+        url: ipPort + '/purchaseHeader/audit?curAuditorId=' + auditor + '&purchaseHeaderId=' + applyId + '&status=' + thisObj + '&note=' + note,
+        success: function (obj) {
+            if(obj.code == 0){
+                alert('审核成功！')
+                getPurchaseApplyByAuditId()
+            }else{
+                alert(obj.message)
+            }
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
 }

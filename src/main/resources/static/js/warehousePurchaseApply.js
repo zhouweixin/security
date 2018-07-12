@@ -156,6 +156,12 @@ function setPurchaseApplyRecordModal(thisObj) {
     $('#purchaseApplyDetails-sumPrice').text('')
     $('#purchaseApplyDetails-status').text('')
     $('.purchaseApplyDetails-table-selfDefine').find('.table-tr').remove()
+    $('#purchaseApplyDetails-note1').text('')
+    $('#purchaseApplyDetails-auditor1').text('')
+    $('#purchaseApplyDetails-auditTime1').text('')
+    $('#purchaseApplyDetails-note2').text('')
+    $('#purchaseApplyDetails-auditor2').text('')
+    $('#purchaseApplyDetails-auditTime2').text('')
     var id = $(thisObj).parent().parent().find('td').eq(0).text()
     $.ajax({
         url: ipPort + '/purchaseHeader/getById?id=' + id,
@@ -181,6 +187,26 @@ function setPurchaseApplyRecordModal(thisObj) {
                         "<td>" + obj.data.purchases[i].number + "</td><td style='border-right: none'>" + obj.data.purchases[i].price + "</td></tr>"
                     tbody.append(appendStr)
                 }
+                $.ajax({
+                    url: ipPort + '/purchaseAuditRecord/getByPurchaseHeader?id=' + id,
+                    success: function (obj_) {
+                        if(obj_.code == 0){
+                            if(obj_.data.length > 0){
+                                $('#purchaseApplyDetails-note1').text(obj_.data[0].note)
+                                $('#purchaseApplyDetails-auditor1').text(obj_.data[0].auditor.name)
+                                $('#purchaseApplyDetails-auditTime1').text((new Date(obj_.data[0].auditTime)).toLocaleDateString())
+                                $('#purchaseApplyDetails-note2').text(obj_.data[1].note)
+                                $('#purchaseApplyDetails-auditor2').text(obj_.data[1].auditor.name)
+                                $('#purchaseApplyDetails-auditTime2').text((new Date(obj_.data[1].auditTime)).toLocaleDateString())
+                            }
+                        }else{
+                            alert(obj_.message)
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error)
+                    }
+                })
             }else{
                 alert(obj.message)
             }
