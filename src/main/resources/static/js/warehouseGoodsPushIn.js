@@ -25,44 +25,32 @@ $(document).ready(function () {
             $(this).parent().find('.departmentName-img').attr('src', 'imgs/offline.png')
         }
     })
+    /*
+  新增按钮/
+   */
+    $('#addPushInButton').on('click', function () {
+        $('#pushInRecordsPanel').addClass('hidden')
+        $('#pushInPanel').removeClass('hidden')
+    })
+    /*
+    左箭头/
+     */
+    $('.path-arrow-left').on('click', function () {
+        $('#pushInPanel').addClass('hidden')
+        $('#pushInRecordsPanel').removeClass('hidden')
+    })
+    getAllPurchaseApply()
 })
-
 /*
-增加申请表内容/
+获取所有申请/
  */
-function addApplyContent() {
-    index++
-    var tbody = $('.table-selfDefine tbody')
-    var appendStr = "<tr class='table-tr'><td>" + index + "</td><td><input></td><td><input></td><td><input></td><td><input></td>" +
-        "<td style='border-right: none'><a onclick='cleanRowApplyContent(this)'><img src='imgs/minus-r.png'></a></td></tr>"
-    tbody.append(appendStr)
-}
-/*
-清除申请表内容一行/
- */
-function cleanRowApplyContent(thisObj) {
-    $(thisObj).parent().parent().remove()
-    index--
-    var tr = $('.table-selfDefine').find('.table-tr')
-    for(var i = 1; i <= tr.length; i++){
-        tr.eq(i-1).find('td').eq(0).text(i)
-    }
-}
-/*
-获取所有部门/
- */
-function getAllDepartment() {
-    $('.selectDepartment-ul li').remove()
+function getAllPurchaseApply() {
     $.ajax({
-        url: ipPort + '/department/getAll',
+        url: ipPort + '/purchaseHeader/getAllByPage',
         success:function (obj) {
             if(obj.code == 0){
-                for(var j = 0; j < obj.data.length; j++){
-                    var ul = $('.selectDepartment-ul')
-                    var appendStr = '<li data-dismiss="modal" onclick="selectedOneDepartment(this)"><img src="imgs/tips_department_up.png" height="20px" style="margin-top: -2px;margin-right: 5px"><span ' + 'value="' + obj.data[j].id + '">' + obj.data[j].name + '</span></li>'
-                    ul.append(appendStr)
-                }
-            }else{
+                setPurchaseApplyTable(obj)
+            }else {
                 alert(obj.message)
             }
         },
@@ -72,58 +60,155 @@ function getAllDepartment() {
     })
 }
 /*
-选定部门/
+设置入库表/
  */
-function selectedOneDepartment(thisObj) {
-    $('#applyDepartment').val( $(thisObj).find("span").text())
-    $('#applyDepartment').attr('value', $(thisObj).find("span").attr("value"))
+function setPurchaseApplyTable(obj) {
+    var id = $('.purchaseApply-id')
+    var name = $('.purchaseApply-staffName')
+    var department = $('.purchaseApply-department')
+    var time = $('.purchaseApply-applyTime')
+    var price = $('.purchaseApply-price')
+    var status = $('.purchaseApply-status')
+    var pushIn =  $('.purchaseApply-pushIn').find('a')
+    var tr = $('.table-tr')
+    var length = obj.data.numberOfElements
+    for(var i = 0; i < length; i++){
+        tr.eq(i).removeClass('hidden')
+        id.eq(i).text('')
+        name.eq(i).attr('value', '')
+        name.eq(i).text('')
+        department.text('')
+        time.eq(i).text('')
+        price.eq(i).text('')
+        status.eq(i).attr('value', '')
+        status.eq(i).text('')
+        pushIn.eq(i).attr('onclick', 'setPushInDetaisModal(this)')
+        pushIn.eq(i).attr('data-toggle', 'modal')
+        pushIn.eq(i).attr('data-target', '#myModal-pushInDetails')
+        pushIn.eq(i).css('color', '#337ab7')
+        pushIn.eq(i).css('cursor', 'pointer')
+        id.eq(i).text(obj.data.content[i].id)
+        name.eq(i).attr('value', obj.data.content[i].applyUser.id)
+        name.eq(i).text(obj.data.content[i].applyUser.name)
+        department.text(obj.data.content[i].department.name)
+        time.eq(i).text((new Date(obj.data.content[i].applyTime).toLocaleString()))
+        price.eq(i).text(obj.data.content[i].price)
+        status.eq(i).attr('value', obj.data.content[i].status)
+        if(obj.data.content[i].status == 0){
+            status.eq(i).text('未审核')
+            pushIn.eq(i).removeAttr('onclick')
+            pushIn.eq(i).removeAttr('data-toggle')
+            pushIn.eq(i).removeAttr('data-target')
+            pushIn.eq(i).css('color', '#5A5A5A')
+            pushIn.eq(i).css('cursor', 'default')
+        } else if(obj.data.content[i].status == 1){
+            status.eq(i).text('通过')
+        }else if(obj.data.content[i].status == 2){
+            status.eq(i).text('未通过')
+            pushIn.eq(i).removeAttr('onclick')
+            pushIn.eq(i).removeAttr('data-toggle')
+            pushIn.eq(i).removeAttr('data-target')
+            pushIn.eq(i).css('color', '#5A5A5A')
+            pushIn.eq(i).css('cursor', 'default')
+        }
+
+    }
+    for(var i = length; i < 10; i++){
+        tr.eq(i).addClass('hidden')
+    }
 }
 /*
-获取所有员工/
+设置入库详情modal/
  */
-function getAllStaff() {
-    var staffInformationDepartmentA = $('.selectOneStaff-department-ul .selectOneStaff-department-li .departmentName-span')
+function setPushInDetaisModal(thisObj) {
+    $('#pushInDetails-department').text('')
+    $('#pushInDetails-applyUserName').attr('value', '')
+    $('#pushInDetails-applyUserName').text('')
+    $('#pushInDetails-applyHeaderId').text('')
+    $('#pushInDetails-applyTime').text('')
+    $('#pushInDetails-reason').text('')
+    $('#pushInDetails-sumPrice').text('')
+    $('#pushInDetails-status').text('')
+    $('.pushInDetails-table-selfDefine').find('.table-tr').remove()
+    $('#pushInDetails-note1').text('')
+    $('#pushInDetails-auditor1').text('')
+    $('#pushInDetails-auditTime1').text('')
+    $('#pushInDetails-note2').text('')
+    $('#pushInDetails-auditor2').text('')
+    $('#pushInDetails-auditTime2').text('')
+    var id = $(thisObj).parent().parent().find('td').eq(0).text()
     $.ajax({
-        url:ipPort + '/department/getAll',
-        dataType:'json',
-        success:function (obj) {
-            for(var i = 0; i < obj.data.length; i++){
-                staffInformationDepartmentA.eq(i).parent().removeClass('hidden')
-                staffInformationDepartmentA.eq(i).text(obj.data[i].name)
-                staffInformationDepartmentA.eq(i).attr('value', obj.data[i].id)
-                staffInformationDepartmentA.eq(i).parent().find('li').remove()
-            }
-            $.ajax({
-                url:ipPort + '/user/getAll',
-                dataType:'json',
-                success:function (obj_) {
-                    if(obj_.data.length != 0){
-                        for(var j = 0; j < obj_.data.length; j++){
-                            for(var m = 0; m < obj.data.length; m++){
-                                if(obj_.data[j].department.id == obj.data[m].id){
-                                    var staffUl = staffInformationDepartmentA.eq(m).parent().find('.selectOneStaff-staff-ul')
-                                    var appendStr = '<li data-dismiss="modal" onclick="selectedOneStaff(this)"><img src="imgs/mine.png" height="20px" style="margin-top: -2px"><span ' + 'value="' + obj_.data[j].id + '">' + obj_.data[j].name + '</span></li>'
-                                    staffUl.append(appendStr)
-                                    break
-                                }
-                            }
-                        }
-                    }
-                },
-                error:function (error) {
-                    console.log(error)
+        url: ipPort + '/purchaseHeader/getById?id=' + id,
+        success: function (obj) {
+            if(obj.code == 0){
+                $('#pushInDetails-department').text(obj.data.department.name)
+                $('#pushInDetails-applyUserName').attr('value', obj.data.applyUser.id)
+                $('#pushInDetails-applyUserName').text(obj.data.applyUser.name)
+                $('#pushInDetails-applyHeaderId').text(obj.data.id)
+                $('#pushInDetails-applyTime').text((new Date(obj.data.applyTime)).toLocaleString())
+                $('#pushInDetails-reason').text(obj.data.reason)
+                if(obj.data.status == 0){
+                    $('#pushInDetails-status').text('未审核')
+                }else if(obj.data.status == 1){
+                    $('#pushInDetails-status').text('通过')
+                }else if(obj.data.status == 2){
+                    $('#pushInDetails-status').text('未通过')
                 }
-            })
+                $('#pushInDetails-sumPrice').text(obj.data.price)
+                var tbody = $('.pushInDetails-table-selfDefine tbody')
+                for(var i = 0; i < obj.data.purchases.length; i++){
+                    var appendStr ="<tr class='table-tr'><td>" + (i+1) +"</td><td>" + obj.data.purchases[i].material.name +"</td>" +
+                        "<td>" + obj.data.purchases[i].material.unit + "</td><td>" + obj.data.purchases[i].unitPrice +"</td>" +
+                        "<td>" + obj.data.purchases[i].number + "</td><td style='border-right: none'>" + obj.data.purchases[i].price + "</td></tr>"
+                    tbody.append(appendStr)
+                }
+                $.ajax({
+                    url: ipPort + '/purchaseAuditRecord/getByPurchaseHeader?id=' + id,
+                    success: function (obj_) {
+                        if(obj_.code == 0){
+                            if(obj_.data.length > 0){
+                                $('#pushInDetails-note1').text(obj_.data[0].note)
+                                $('#pushInDetails-auditor1').text(obj_.data[0].auditor.name)
+                                $('#pushInDetails-auditTime1').text((new Date(obj_.data[0].auditTime)).toLocaleDateString())
+                                $('#pushInDetails-note2').text(obj_.data[1].note)
+                                $('#pushInDetails-auditor2').text(obj_.data[1].auditor.name)
+                                $('#pushInDetails-auditTime2').text((new Date(obj_.data[1].auditTime)).toLocaleDateString())
+                            }
+                        }else{
+                            alert(obj_.message)
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error)
+                    }
+                })
+            }else{
+                alert(obj.message)
+            }
         },
-        error:function (error) {
+        error: function (error) {
             console.log(error)
         }
     })
 }
 /*
-选定人员/
+物品入库/
  */
-function selectedOneStaff(thisObj) {
-    $('#applyStaff').val( $(thisObj).find("span").text())
-    $('#applyStaff').attr('value', $(thisObj).find("span").attr("value"))
+function pushInGoods() {
+    var purchaseId = $('#pushInDetails-applyHeaderId').text()
+    var applyUserId = $('#pushInDetails-applyUserName').attr('value')
+    var operatorId = 'zy00001'
+    $.ajax({
+        url: ipPort + '/godownHeader/add?purchaseHeader.id=' + purchaseId + '&applyUser.id=' + applyUserId + '&operator.id=' + operatorId,
+        success: function (obj) {
+            if(obj.code == 0){
+                alert('入库成功！')
+            }else{
+                alert(obj.message)
+            }
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
 }
