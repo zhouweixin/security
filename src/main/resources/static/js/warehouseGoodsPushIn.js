@@ -26,18 +26,11 @@ $(document).ready(function () {
         }
     })
     /*
-  新增按钮/
-   */
-    $('#addPushInButton').on('click', function () {
-        $('#pushInRecordsPanel').addClass('hidden')
-        $('#pushInPanel').removeClass('hidden')
-    })
-    /*
-    左箭头/
+    选择状态下拉框/
      */
-    $('.path-arrow-left').on('click', function () {
-        $('#pushInPanel').addClass('hidden')
-        $('#pushInRecordsPanel').removeClass('hidden')
+    $('.selectStatus-dropdownMenu-ul li a').on('click', function () {
+        $('#selectStatus-dropdownMenu').attr('value', $(this).attr('value'))
+        $('#selectStatus-dropdownMenu').html($(this).text() + '<span style="margin-left:4px" class="caret"></span>')
     })
     getAllPurchaseApply()
 })
@@ -102,9 +95,16 @@ function setPurchaseApplyTable(obj) {
             pushIn.eq(i).css('color', '#5A5A5A')
             pushIn.eq(i).css('cursor', 'default')
         } else if(obj.data.content[i].status == 1){
-            status.eq(i).text('通过')
+            status.eq(i).text('通过（未入库）')
         }else if(obj.data.content[i].status == 2){
             status.eq(i).text('未通过')
+            pushIn.eq(i).removeAttr('onclick')
+            pushIn.eq(i).removeAttr('data-toggle')
+            pushIn.eq(i).removeAttr('data-target')
+            pushIn.eq(i).css('color', '#5A5A5A')
+            pushIn.eq(i).css('cursor', 'default')
+        }else if(obj.data.content[i].status == 3){
+            status.eq(i).text('通过（已入库）')
             pushIn.eq(i).removeAttr('onclick')
             pushIn.eq(i).removeAttr('data-toggle')
             pushIn.eq(i).removeAttr('data-target')
@@ -150,9 +150,11 @@ function setPushInDetaisModal(thisObj) {
                 if(obj.data.status == 0){
                     $('#pushInDetails-status').text('未审核')
                 }else if(obj.data.status == 1){
-                    $('#pushInDetails-status').text('通过')
+                    $('#pushInDetails-status').text('通过（未入库）')
                 }else if(obj.data.status == 2){
                     $('#pushInDetails-status').text('未通过')
+                }else if(obj.data.status == 3){
+                    $('#pushInDetails-status').text('通过（已入库）')
                 }
                 $('#pushInDetails-sumPrice').text(obj.data.price)
                 var tbody = $('.pushInDetails-table-selfDefine tbody')
@@ -211,4 +213,70 @@ function pushInGoods() {
             console.log(error)
         }
     })
+}
+/*
+通过参数搜索/
+ */
+function searchByParas() {
+    var status = $('#selectStatus-dropdownMenu').attr('value')
+    var staffId = $('#applyStaffId-input').val()
+    if(status == '' && staffId != ''){
+        $.ajax({
+            url: ipPort + '/purchaseHeader/getByApplyUserByPage?id=' + staffId,
+            success:function (obj) {
+                if(obj.code == 0){
+                    if(obj.data.content.numberOfElements == 0){
+                        alert('无相关信息！')
+                        setPurchaseApplyTable(obj)
+                    }else{
+                        setPurchaseApplyTable(obj)
+                    }
+                }else{
+                    alert(obj.message)
+                }
+            },
+            error:function (error) {
+                console.log(error)
+            }
+        })
+    }else if(status != '' && staffId == ''){
+        $.ajax({
+            url: ipPort + '/purchaseHeader/getByStatueByPage?status=' + status,
+            success:function (obj) {
+                if(obj.code == 0){
+                    if(obj.data.content.numberOfElements == 0){
+                        alert('无相关信息！')
+                        setPurchaseApplyTable(obj)
+                    }else{
+                        setPurchaseApplyTable(obj)
+                    }
+                }else{
+                    alert(obj.message)
+                }
+            },
+            error:function (error) {
+                console.log(error)
+            }
+        })
+    }else if(status != '' && staffId != ''){
+        $.ajax({
+            url: ipPort + '/purchaseHeader/getByApplyUserAndStatusByPage?id=' + staffId + '&status=' + status,
+            success:function (obj) {
+                if(obj.code == 0){
+                    if(obj.data.content.numberOfElements == 0){
+                        alert('无相关信息！')
+                        setPurchaseApplyTable(obj)
+                    }else{
+                        setPurchaseApplyTable(obj)
+                    }
+                }else{
+                    alert(obj.message)
+                }
+            },
+            error:function (error) {
+                console.log(error)
+            }
+        })
+    }
+
 }

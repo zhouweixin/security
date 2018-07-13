@@ -122,13 +122,13 @@
             <div class="top-body" style="margin-top: 30px">
                 <div class="search-content" style="height: 34px;">
                     <div class="search-left">
-                        <!--<div class="input-group col-xs-4">-->
-                            <!--<input type="text" class="form-control" placeholder="申请人名称">-->
-                            <!--<span class="input-group-btn">-->
-                                <!--<button class="btn btn-default" type="button" onclick="searchByName()">搜索</button>-->
-                                <!--<button class="btn btn-default" type="button" onclick="getAllGroupInformation()">搜索全部</button>-->
-                            <!--</span>-->
-                        <!--</div>-->
+                        <div class="input-group col-xs-4">
+                            <input id="applyUserId-input" type="text" class="form-control" placeholder="申请人编号">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" onclick="searchByStaffId()">搜索</button>
+                                <button class="btn btn-default" type="button" onclick="getAllPurchaseApply()">搜索全部</button>
+                            </span>
+                        </div>
                     </div>
                     <div class="search-right">
                         <button id="addApplyButton" class="btn btn-default" href="#purchaseApplyPanel">新增申请</button>

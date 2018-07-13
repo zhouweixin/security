@@ -174,7 +174,7 @@ function setPurchaseApplyRecordModal(thisObj) {
                 $('#purchaseApplyDetails-reason').text(obj.data.reason)
                 if(obj.data.status == 0){
                     $('#purchaseApplyDetails-status').text('未审核')
-                }else if(obj.data.status == 1){
+                }else if(obj.data.status == 1 || obj.data.status == 3){
                     $('#purchaseApplyDetails-status').text('通过')
                 }else if(obj.data.status == 2){
                     $('#purchaseApplyDetails-status').text('未通过')
@@ -192,12 +192,14 @@ function setPurchaseApplyRecordModal(thisObj) {
                     success: function (obj_) {
                         if(obj_.code == 0){
                             if(obj_.data.length > 0){
-                                $('#purchaseApplyDetails-note1').text(obj_.data[0].note)
-                                $('#purchaseApplyDetails-auditor1').text(obj_.data[0].auditor.name)
-                                $('#purchaseApplyDetails-auditTime1').text((new Date(obj_.data[0].auditTime)).toLocaleDateString())
-                                $('#purchaseApplyDetails-note2').text(obj_.data[1].note)
-                                $('#purchaseApplyDetails-auditor2').text(obj_.data[1].auditor.name)
-                                $('#purchaseApplyDetails-auditTime2').text((new Date(obj_.data[1].auditTime)).toLocaleDateString())
+                                for(var i = 0; i < obj_.data.length; i++){
+                                    var note = '#purchaseApplyDetails-note' + (i+1)
+                                    var auditor = '#purchaseApplyDetails-auditor' + (i+1)
+                                    var time = '#purchaseApplyDetails-auditTime' + (i+1)
+                                    $(note).text(obj_.data[i].note)
+                                    $(auditor).text(obj_.data[i].auditor.name)
+                                    $(time).text((new Date(obj_.data[i].auditTime)).toLocaleDateString())
+                                }
                             }
                         }else{
                             alert(obj_.message)
@@ -457,4 +459,28 @@ function setApplyTableProcessNameUl(obj) {
         appendStr = "<li><a value='" + obj.data[i].id + "'>" + obj.data[i].name + "</a></li>"
         ul.append(appendStr)
     }
+}
+/*
+通过申请人编号搜索/
+ */
+function searchByStaffId() {
+    var id = $('#applyUserId-input').val()
+    $.ajax({
+        url:ipPort + '/purchaseHeader/getByApplyUserByPage?id=' + id,
+        success:function (obj) {
+            if(obj.code == 0){
+                if(obj.data.numberOfElements == 0){
+                    alert('无相关信息！')
+                    setPurchaseApplyTable(obj)
+                }else {
+                    setPurchaseApplyTable(obj)
+                }
+            }else{
+                alert(obj.message)
+            }
+        },
+        error:function (error) {
+            consle.log(error)
+        }
+    })
 }
