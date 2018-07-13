@@ -33,6 +33,9 @@ public class GooutHeaderService {
     @Autowired
     private GooutMaterialUserRepository gooutMaterialUserRepository;
 
+    @Autowired
+    private StockService stockService;
+
     /**
      * 新增
      *
@@ -95,6 +98,9 @@ public class GooutHeaderService {
                 gooutMaterialUserRepository.save(gooutMaterialUser);
             }
         }
+
+        // 更新库存
+        stockService.update(gooutHeader, -1);
 
         return save;
     }
