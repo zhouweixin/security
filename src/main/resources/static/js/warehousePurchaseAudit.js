@@ -85,18 +85,43 @@ $(document).ready(function () {
     //     $('#applyProcess').attr('value', $(this).attr('value'))
     // })
 
-    getPurchaseApplyByAuditId()
+    getPurchaseApplyinit()
 })
 /*
-通过审核人编码查询/
+初始化/
  */
-function getPurchaseApplyByAuditId() {
-    var id = 'zy00001'
+function getPurchaseApplyinit() {
+    var id = 'zy00002'
     $.ajax({
         url: ipPort + '/purchaseHeader/getByCurAuditorByPage?id=' + id,
         success:function (obj) {
             if(obj.code == 0){
-                setMainTable(obj)
+                setMainTable(obj, id)
+            }else {
+                alert(obj.message)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+通过审核人编码查询/
+ */
+function getPurchaseApplyByAuditId() {
+    var id = $('#auditorId-input').val()
+    $.ajax({
+        url: ipPort + '/purchaseHeader/getByCurAuditorByPage?id=' + id,
+        success:function (obj) {
+            if(obj.code == 0){
+                if(obj.data.numberOfElements == 0){
+                    alert('无相关信息！')
+                    setMainTable(obj, id)
+                }else{
+                    setMainTable(obj, id)
+                    console.log(obj)
+                }
             }else {
                 alert(obj.message)
             }
@@ -109,11 +134,12 @@ function getPurchaseApplyByAuditId() {
 /*
 设置申请表/
  */
-function setMainTable(obj) {
+function setMainTable(obj, auditId) {
     var id = $('.purchaseApply-id')
     var name = $('.purchaseApply-staffName')
     var time = $('.purchaseApply-applyTime')
     var price = $('.purchaseApply-price')
+    var auditor = $('.purchaseApply-auditor')
     var status = $('.purchaseApply-status')
     var tr = $('.table-tr')
     var length = obj.data.numberOfElements
@@ -124,6 +150,7 @@ function setMainTable(obj) {
         name.eq(i).text('')
         time.eq(i).text('')
         price.eq(i).text('')
+        auditor.eq(i).text('')
         status.eq(i).attr('value', '')
         status.eq(i).text('')
         id.eq(i).text(obj.data.content[i].id)
@@ -131,10 +158,11 @@ function setMainTable(obj) {
         name.eq(i).text(obj.data.content[i].applyUser.name)
         time.eq(i).text((new Date(obj.data.content[i].applyTime).toLocaleString()))
         price.eq(i).text(obj.data.content[i].price)
+        auditor.eq(i).text(auditId)
         status.eq(i).attr('value', obj.data.content[i].status)
         if(obj.data.content[i].status == 0){
             status.eq(i).text('未审核')
-        } else if(obj.data.content[i].status == 1){
+        } else if(obj.data.content[i].status == 1 || obj.data.content[i].status == 3){
             status.eq(i).text('通过')
         }else if(obj.data.content[i].status == 2){
             status.eq(i).text('未通过')
@@ -156,9 +184,11 @@ function setPurchaseApplyRecordModal(thisObj) {
     $('#purchaseApplyDetails-reason').text('')
     $('#purchaseApplyDetails-sumPrice').text('')
     $('#purchaseApplyDetails-status').text('')
+    $('#purchaseApplyDetails-auditor').text('')
     $('.purchaseApplyDetails-table-selfDefine').find('.table-tr').remove()
     $('#myModal-PurchaseAuditDetails').attr('value', '')
     var id = $(thisObj).parent().parent().find('td').eq(0).text()
+    var auditorId = $(thisObj).parent().parent().find('td').eq(4).text()
     $.ajax({
         url: ipPort + '/purchaseHeader/getById?id=' + id,
         success: function (obj) {
@@ -169,9 +199,10 @@ function setPurchaseApplyRecordModal(thisObj) {
                 $('#purchaseApplyDetails-process').text(obj.data.purchaseAuditProcess.name)
                 $('#purchaseApplyDetails-applyTime').text((new Date(obj.data.applyTime)).toLocaleString())
                 $('#purchaseApplyDetails-reason').text(obj.data.reason)
+                $('#purchaseApplyDetails-auditor').text(auditorId)
                 if(obj.data.status == 0){
                     $('#purchaseApplyDetails-status').text('未审核')
-                }else if(obj.data.status == 1){
+                }else if(obj.data.status == 1 || obj.data.status == 3){
                     $('#purchaseApplyDetails-status').text('通过')
                 }else if(obj.data.status == 2){
                     $('#purchaseApplyDetails-status').text('未通过')
@@ -198,14 +229,14 @@ function setPurchaseApplyRecordModal(thisObj) {
  */
 function submitPurchaseAudit(thisObj) {
     var applyId = $('#myModal-PurchaseAuditDetails').attr('value')
-    var auditor = $('#purchaseApplyDetails-auditor').attr('value')
+    var auditor = $('#purchaseApplyDetails-auditor').text('value')
     var note = $('#purchaseApplyDetails-note').val()
     $.ajax({
         url: ipPort + '/purchaseHeader/audit?curAuditorId=' + auditor + '&purchaseHeaderId=' + applyId + '&status=' + thisObj + '&note=' + note,
         success: function (obj) {
             if(obj.code == 0){
                 alert('审核成功！')
-                getPurchaseApplyByAuditId()
+                getPurchaseApplyinit()
             }else{
                 alert(obj.message)
             }

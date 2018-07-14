@@ -123,10 +123,10 @@
                 <div class="search-content" style="height: 34px;">
                     <div class="search-left">
                         <div class="input-group col-xs-4">
-                            <input type="text" class="form-control" placeholder="审核人编号">
+                            <input id="auditorId-input" type="text" class="form-control" placeholder="审核人编号">
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" onclick="searchByName()">搜索</button>
-                                <button class="btn btn-default" type="button" onclick="getAllGroupInformation()">搜索全部</button>
+                                <button class="btn btn-default" type="button" onclick="getPurchaseApplyByAuditId()">搜索</button>
+                                <button class="btn btn-default" type="button" onclick="getPurchaseApplyinit()">搜索全部</button>
                             </span>
                         </div>
                     </div>
@@ -144,7 +144,7 @@
                         <th>申请人</th>
                         <th>申请时间</th>
                         <th>总金额</th>
-                        <th>审核人</th>
+                        <th>当前审核人</th>
                         <th>审核状态</th>
                         <th style="width: 50px">审核</th>
                     </tr>
@@ -155,7 +155,7 @@
                         <td class="purchaseApply-staffName"></td>
                         <td class="purchaseApply-applyTime"></td>
                         <td class="purchaseApply-price"></td>
-                        <td>王五</td>
+                        <td class="purchaseApply-auditor"></td>
                         <td class="purchaseApply-status"></td>
                         <td class="">
                             <a  data-toggle="modal" data-target="#myModal-PurchaseAuditDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon glyphicon-check" aria-hidden="true"></span></a>
@@ -166,7 +166,7 @@
                         <td class="purchaseApply-staffName"></td>
                         <td class="purchaseApply-applyTime"></td>
                         <td class="purchaseApply-price"></td>
-                        <td>王五</td>
+                        <td class="purchaseApply-auditor"></td>
                         <td class="purchaseApply-status"></td>
                         <td class="">
                             <a  data-toggle="modal" data-target="#myModal-PurchaseAuditDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon glyphicon-check" aria-hidden="true"></span></a>
@@ -177,7 +177,7 @@
                         <td class="purchaseApply-staffName"></td>
                         <td class="purchaseApply-applyTime"></td>
                         <td class="purchaseApply-price"></td>
-                        <td>王五</td>
+                        <td class="purchaseApply-auditor"></td>
                         <td class="purchaseApply-status"></td>
                         <td class="">
                             <a  data-toggle="modal" data-target="#myModal-PurchaseAuditDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon glyphicon-check" aria-hidden="true"></span></a>
@@ -188,7 +188,7 @@
                         <td class="purchaseApply-staffName"></td>
                         <td class="purchaseApply-applyTime"></td>
                         <td class="purchaseApply-price"></td>
-                        <td>王五</td>
+                        <td class="purchaseApply-auditor"></td>
                         <td class="purchaseApply-status"></td>
                         <td class="">
                             <a  data-toggle="modal" data-target="#myModal-PurchaseAuditDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon glyphicon-check" aria-hidden="true"></span></a>
@@ -199,7 +199,7 @@
                         <td class="purchaseApply-staffName"></td>
                         <td class="purchaseApply-applyTime"></td>
                         <td class="purchaseApply-price"></td>
-                        <td>王五</td>
+                        <td class="purchaseApply-auditor"></td>
                         <td class="purchaseApply-status"></td>
                         <td class="">
                             <a  data-toggle="modal" data-target="#myModal-PurchaseAuditDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon glyphicon-check" aria-hidden="true"></span></a>
@@ -210,7 +210,7 @@
                         <td class="purchaseApply-staffName"></td>
                         <td class="purchaseApply-applyTime"></td>
                         <td class="purchaseApply-price"></td>
-                        <td>王五</td>
+                        <td class="purchaseApply-auditor"></td>
                         <td class="purchaseApply-status"></td>
                         <td class="">
                             <a  data-toggle="modal" data-target="#myModal-PurchaseAuditDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon glyphicon-check" aria-hidden="true"></span></a>
@@ -221,7 +221,7 @@
                         <td class="purchaseApply-staffName"></td>
                         <td class="purchaseApply-applyTime"></td>
                         <td class="purchaseApply-price"></td>
-                        <td>王五</td>
+                        <td class="purchaseApply-auditor"></td>
                         <td class="purchaseApply-status"></td>
                         <td class="">
                             <a  data-toggle="modal" data-target="#myModal-PurchaseAuditDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon glyphicon-check" aria-hidden="true"></span></a>
@@ -232,7 +232,7 @@
                         <td class="purchaseApply-staffName"></td>
                         <td class="purchaseApply-applyTime"></td>
                         <td class="purchaseApply-price"></td>
-                        <td>王五</td>
+                        <td class="purchaseApply-auditor"></td>
                         <td class="purchaseApply-status"></td>
                         <td class="">
                             <a  data-toggle="modal" data-target="#myModal-PurchaseAuditDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon glyphicon-check" aria-hidden="true"></span></a>
@@ -243,7 +243,7 @@
                         <td class="purchaseApply-staffName"></td>
                         <td class="purchaseApply-applyTime"></td>
                         <td class="purchaseApply-price"></td>
-                        <td>王五</td>
+                        <td class="purchaseApply-auditor"></td>
                         <td class="purchaseApply-status"></td>
                         <td class="">
                             <a  data-toggle="modal" data-target="#myModal-PurchaseAuditDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon glyphicon-check" aria-hidden="true"></span></a>
@@ -254,13 +254,12 @@
                         <td class="purchaseApply-staffName"></td>
                         <td class="purchaseApply-applyTime"></td>
                         <td class="purchaseApply-price"></td>
-                        <td>王五</td>
+                        <td class="purchaseApply-auditor"></td>
                         <td class="purchaseApply-status"></td>
                         <td class="">
                             <a  data-toggle="modal" data-target="#myModal-PurchaseAuditDetails" onclick="setPurchaseApplyRecordModal(this)"><span class="glyphicon glyphicon glyphicon-check" aria-hidden="true"></span></a>
                         </td>
                     </tr>
-
                     </tbody>
                 </table>
             </div>
@@ -354,7 +353,7 @@
                             </div>
                             <div style="height: 31px; border-bottom: 1px solid #000000">
                                 <div class="col-xs-3" style="text-align: center;border-right: 1px solid #000000"><label style="height: 100%; margin-bottom: 0px; line-height: 30px">审核人</label></div>
-                                <div id="purchaseApplyDetails-auditor" class="col-xs-9" style="border:none;height: 30px;line-height: 30px;text-align: center" value="zy00001">李四</div>
+                                <div id="purchaseApplyDetails-auditor" class="col-xs-9" style="border:none;height: 30px;line-height: 30px;text-align: center" value=""></div>
                             </div>
                         </div>
                     </div>
