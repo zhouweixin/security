@@ -26,97 +26,79 @@ import java.util.List;
 @RequestMapping(value = "/purchaseHeader")
 public class PurchaseHeaderController {
 
-	@Autowired
-	private PurchaseHeaderService purchaseHeaderService;
-
-	/**
-	 * 新增
-	 * 
-	 * @param purchaseHeader
-	 * @return
-	 */
-	@RequestMapping(value = "/add")
-	public Result<PurchaseHeader> add(@RequestBody PurchaseHeader purchaseHeader) {
-		return ResultUtil.success(purchaseHeaderService.save(purchaseHeader));
-	}
-
-	/**
-	 * 更新
-	 * 
-	 * @param purchaseHeader
-	 * @return
-	 */
-	@RequestMapping(value = "/update")
-	public Result<PurchaseHeader> update(@RequestBody PurchaseHeader purchaseHeader) {
-		return ResultUtil.success(purchaseHeaderService.update(purchaseHeader));
-	}
-
-	/**
-	 * 通过id删除
-	 * 
-	 * @param id
-	 * @return
-	 */
-	@RequestMapping(value = "/deleteById")
-	public Result<Object> deleteById(Long id) {
-		purchaseHeaderService.delete(id);
-		return ResultUtil.success();
-	}
-
-	/**
-	 * 批量删除
-	 * 
-	 * @param purchaseHeaders
-	 * @return
-	 */
-	@RequestMapping(value = "/deleteByIdBatch")
-	public Result<Object> deleteByIdBatch(@RequestBody Collection<PurchaseHeader> purchaseHeaders) {
-		purchaseHeaderService.deleteInBatch(purchaseHeaders);
-		return ResultUtil.success();
-	}
-
-	/**
-	 * 通过id查询
-	 * 
-	 * @param id
-	 * @return
-	 */
-	@RequestMapping(value = "/getById")
-	public Result<PurchaseHeader> getById(Long id) {
-		return ResultUtil.success(purchaseHeaderService.findOne(id));
-	}
-
-	/**
-	 * 查询所有
-	 * 
-	 * @return
-	 */
-	@RequestMapping(value = "/getAll")
-	public Result<List<PurchaseHeader>> getAll() {
-		return ResultUtil.success(purchaseHeaderService.findAll());
-
-	}
-
-	/**
-	 * 查询所有-分页
-	 * 
-	 * @param page
-	 * @param size
-	 * @param sortFieldName
-	 * @param asc
-	 * @return
-	 */
-	@RequestMapping(value = "/getAllByPage")
-	public Result<Page<PurchaseHeader>> getAllByPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
-			@RequestParam(value = "size", defaultValue = "10") Integer size,
-			@RequestParam(value = "sortFieldName", defaultValue = "id") String sortFieldName,
-			@RequestParam(value = "asc", defaultValue = "1") Integer asc) {
-
-		return ResultUtil.success(purchaseHeaderService.findAllByPage(page, size, sortFieldName, asc));
-	}
+    @Autowired
+    private PurchaseHeaderService purchaseHeaderService;
 
     /**
-     * 通过当前审核人查询-分页
+     * 新增
+     *
+     * @param purchaseHeader
+     * @return
+     */
+    @RequestMapping(value = "/add")
+    public Result<PurchaseHeader> add(@RequestBody PurchaseHeader purchaseHeader) {
+        return ResultUtil.success(purchaseHeaderService.save(purchaseHeader));
+    }
+
+    /**
+     * 更新
+     *
+     * @param purchaseHeader
+     * @return
+     */
+    @RequestMapping(value = "/update")
+    public Result<PurchaseHeader> update(@RequestBody PurchaseHeader purchaseHeader) {
+        return ResultUtil.success(purchaseHeaderService.update(purchaseHeader));
+    }
+
+    /**
+     * 通过id删除
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/deleteById")
+    public Result<Object> deleteById(Long id) {
+        purchaseHeaderService.delete(id);
+        return ResultUtil.success();
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param purchaseHeaders
+     * @return
+     */
+    @RequestMapping(value = "/deleteByIdBatch")
+    public Result<Object> deleteByIdBatch(@RequestBody Collection<PurchaseHeader> purchaseHeaders) {
+        purchaseHeaderService.deleteInBatch(purchaseHeaders);
+        return ResultUtil.success();
+    }
+
+    /**
+     * 通过id查询
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/getById")
+    public Result<PurchaseHeader> getById(Long id) {
+        return ResultUtil.success(purchaseHeaderService.findOne(id));
+    }
+
+    /**
+     * 查询所有
+     *
+     * @return
+     */
+    @RequestMapping(value = "/getAll")
+    public Result<List<PurchaseHeader>> getAll() {
+        return ResultUtil.success(purchaseHeaderService.findAll());
+
+    }
+
+    /**
+     * 查询所有-分页
      *
      * @param page
      * @param size
@@ -124,14 +106,33 @@ public class PurchaseHeaderController {
      * @param asc
      * @return
      */
-    @RequestMapping(value = "/getByCurAuditorByPage")
-    public Result<Page<PurchaseHeader>> getByCurAuditorByPage(User curAuditor,
-                                                     @RequestParam(value = "page", defaultValue = "0") Integer page,
+    @RequestMapping(value = "/getAllByPage")
+    public Result<Page<PurchaseHeader>> getAllByPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
                                                      @RequestParam(value = "size", defaultValue = "10") Integer size,
                                                      @RequestParam(value = "sortFieldName", defaultValue = "id") String sortFieldName,
                                                      @RequestParam(value = "asc", defaultValue = "1") Integer asc) {
 
-        return ResultUtil.success(purchaseHeaderService.findByCurAuditorByPage(curAuditor, page, size, sortFieldName, asc));
+        return ResultUtil.success(purchaseHeaderService.findAllByPage(page, size, sortFieldName, asc));
+    }
+
+    /**
+     * 通过审核人查询-分页
+     *
+     * @param page
+     * @param size
+     * @param sortFieldName
+     * @param asc
+     * @return
+     */
+    @RequestMapping(value = "/getByAuditorByPage")
+    public Result<Page<PurchaseHeader>> getByCurAuditorByPage(User auditor,
+                                                              @RequestParam(value = "status", defaultValue = "0") Integer status,
+                                                              @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                              @RequestParam(value = "size", defaultValue = "10") Integer size,
+                                                              @RequestParam(value = "sortFieldName", defaultValue = "id") String sortFieldName,
+                                                              @RequestParam(value = "asc", defaultValue = "1") Integer asc) {
+
+        return ResultUtil.success(purchaseHeaderService.findByCurAuditorAndStatus(auditor, status, page, size, sortFieldName, asc));
     }
 
     /**
@@ -145,10 +146,10 @@ public class PurchaseHeaderController {
      */
     @RequestMapping(value = "/getByApplyUserByPage")
     public Result<Page<PurchaseHeader>> getByApplyUserByPage(User applyUser,
-                                                              @RequestParam(value = "page", defaultValue = "0") Integer page,
-                                                              @RequestParam(value = "size", defaultValue = "10") Integer size,
-                                                              @RequestParam(value = "sortFieldName", defaultValue = "applyTime") String sortFieldName,
-                                                              @RequestParam(value = "asc", defaultValue = "0") Integer asc) {
+                                                             @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                             @RequestParam(value = "size", defaultValue = "10") Integer size,
+                                                             @RequestParam(value = "sortFieldName", defaultValue = "applyTime") String sortFieldName,
+                                                             @RequestParam(value = "asc", defaultValue = "0") Integer asc) {
 
         return ResultUtil.success(purchaseHeaderService.findByApplyUserByPage(applyUser, page, size, sortFieldName, asc));
     }
@@ -163,11 +164,11 @@ public class PurchaseHeaderController {
      * @return
      */
     @RequestMapping(value = "/getByStatueByPage")
-    public Result<Page<PurchaseHeader>> getByStatueByPage(@RequestParam(value = "status", defaultValue="0") int status,
-                                                             @RequestParam(value = "page", defaultValue = "0") Integer page,
-                                                             @RequestParam(value = "size", defaultValue = "10") Integer size,
-                                                             @RequestParam(value = "sortFieldName", defaultValue = "applyTime") String sortFieldName,
-                                                             @RequestParam(value = "asc", defaultValue = "0") Integer asc) {
+    public Result<Page<PurchaseHeader>> getByStatueByPage(@RequestParam(value = "status", defaultValue = "0") int status,
+                                                          @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                          @RequestParam(value = "size", defaultValue = "10") Integer size,
+                                                          @RequestParam(value = "sortFieldName", defaultValue = "applyTime") String sortFieldName,
+                                                          @RequestParam(value = "asc", defaultValue = "0") Integer asc) {
 
         return ResultUtil.success(purchaseHeaderService.findByStatueByPage(status, page, size, sortFieldName, asc));
     }
@@ -183,11 +184,11 @@ public class PurchaseHeaderController {
      */
     @RequestMapping(value = "/getByApplyUserAndStatusByPage")
     public Result<Page<PurchaseHeader>> getByApplyUserAndStatusByPage(User applyUser,
-                                                          @RequestParam(value = "status", defaultValue="0") int status,
-                                                          @RequestParam(value = "page", defaultValue = "0") Integer page,
-                                                          @RequestParam(value = "size", defaultValue = "10") Integer size,
-                                                          @RequestParam(value = "sortFieldName", defaultValue = "applyTime") String sortFieldName,
-                                                          @RequestParam(value = "asc", defaultValue = "0") Integer asc) {
+                                                                      @RequestParam(value = "status", defaultValue = "0") int status,
+                                                                      @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                                      @RequestParam(value = "size", defaultValue = "10") Integer size,
+                                                                      @RequestParam(value = "sortFieldName", defaultValue = "applyTime") String sortFieldName,
+                                                                      @RequestParam(value = "asc", defaultValue = "0") Integer asc) {
 
         return ResultUtil.success(purchaseHeaderService.findByApplyUserAndStatusByPage(applyUser, status, page, size, sortFieldName, asc));
     }
@@ -202,7 +203,7 @@ public class PurchaseHeaderController {
      * @return
      */
     @RequestMapping(value = "/audit")
-    public Result<Object> audit(String curAuditorId, Long purchaseHeaderId, int status, String note){
+    public Result<Object> audit(String curAuditorId, Long purchaseHeaderId, int status, String note) {
         purchaseHeaderService.audit(curAuditorId, purchaseHeaderId, status, note);
         return ResultUtil.success();
     }
