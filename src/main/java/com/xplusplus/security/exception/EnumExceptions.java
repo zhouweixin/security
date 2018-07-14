@@ -63,7 +63,7 @@ public enum EnumExceptions {
     AUDIT_FAILED_USER_NOT_EXIST(52, "审核失败, 审核人不存在"),
     AUDIT_FAILED_NOT_CUR_AUDITOR(53, "审核失败, 不是当前审核人"),
     ADD_FAILED_PURCHASE_NOT_EXISE(54, "添加失败, 采购单不存在"),
-    ADD_FAILED_PURCHASE_NOT_AUDIT_OR_NOT(55, "添加失败, 采购单未审核或审核不通过"),
+    GOWODN_FAILED_STATUS_NOT_LAWER(55, "入库失败, 采购单状态不合法"),
     ADD_FAILED_GOOUT_CONTENT_NULL(56, "添加失败, 出库内容不可为空"),
     ADD_FAILED_GOOUT_USER_NULL(57, "添加失败, 出库人不可为空"),
     ADD_FAILED_GOOUT_USER_NOT_EXIST(58, "添加失败, 出库人不存在"),
@@ -76,6 +76,9 @@ public enum EnumExceptions {
     ADD_FAILED_MATERIAL_NOT_EXIST(65, "新增失败, 物品不存在"),
     ADD_FAILED_LOSS_NUMBER_GREATER_STOCK(66, "新增失败, 报损量超过库存量"),
     DELETE_FAILED_AUDITED(67, "删除失败, 已审核"),
+    GODOWN_FAILED_NOT_AUDIT(68, "入库失败, 采购单未审核"),
+    GODOWN_FAILED_AUDIT_NOT_APPROVAL(69, "入库失败, 采购单审核未通过"),
+    GODOWN_FAILED_GODOWNED(70, "入库失败, 已入库"),
 
 	;
 

@@ -76,8 +76,7 @@ public class StockService {
 
         Stock stock = stockRepository.findFirstByMaterial(material);
         if (stock == null) {
-            stock.setMaterial(material);
-            stock.setNumber(number);
+            stock = new Stock(material, number);
         } else {
             stock.setNumber(stock.getNumber() + number);
         }
