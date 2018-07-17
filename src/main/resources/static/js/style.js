@@ -99,6 +99,19 @@ $(document).ready(function () {
     //         subMenuActiveRow.addClass('sub-li-active')
     //     }
     // })
+
+
+    /*
+    选择下拉框/
+     */
+    $('.dropdown-menu li a').on('click', function () {
+        var parent = $(this).parent().parent().parent()
+        parent.find('button').attr('value', $(this).attr('value'))
+        parent.find('button').html($(this).text() + "<span class='caret'></span>")
+    })
+    //部门
+    var department = $('.dropdown-menu-department li a')
+    getAllDepartmentsName(department)
 })
 function selectAllCheckButton(thisObj) {
     if(thisObj.checked == true){

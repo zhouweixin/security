@@ -205,6 +205,7 @@ function pushInGoods() {
         success: function (obj) {
             if(obj.code == 0){
                 alert('入库成功！')
+                getAllPurchaseApply()
             }else{
                 alert(obj.message)
             }

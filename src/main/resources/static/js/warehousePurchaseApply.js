@@ -114,6 +114,7 @@ function setPurchaseApplyTable(obj) {
     var time = $('.purchaseApply-applyTime')
     var price = $('.purchaseApply-price')
     var status = $('.purchaseApply-status')
+    var process = $('.purchaseApply-process')
     var tr = $('.table-tr')
     var length = obj.data.numberOfElements
     for(var i = 0; i < length; i++){
@@ -125,6 +126,8 @@ function setPurchaseApplyTable(obj) {
         price.eq(i).text('')
         status.eq(i).attr('value', '')
         status.eq(i).text('')
+        process.eq(i).attr('value', '')
+        process.eq(i).text('')
         id.eq(i).text(obj.data.content[i].id)
         name.eq(i).attr('value', obj.data.content[i].applyUser.id)
         name.eq(i).text(obj.data.content[i].applyUser.name)
@@ -133,12 +136,13 @@ function setPurchaseApplyTable(obj) {
         status.eq(i).attr('value', obj.data.content[i].status)
         if(obj.data.content[i].status == 0){
             status.eq(i).text('未审核')
-        } else if(obj.data.content[i].status == 1){
+        } else if(obj.data.content[i].status == 1 || obj.data.content[i].status == 3){
             status.eq(i).text('通过')
         }else if(obj.data.content[i].status == 2){
             status.eq(i).text('未通过')
         }
-
+        process.eq(i).attr('value', obj.data.content[i].purchaseAuditProcess.id)
+        process.eq(i).text( obj.data.content[i].purchaseAuditProcess.name)
     }
     for(var i = length; i < 10; i++){
         tr.eq(i).addClass('hidden')

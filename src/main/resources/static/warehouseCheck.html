@@ -123,10 +123,10 @@
                 <div class="search-content" style="height: 34px;">
                     <div class="search-left">
                         <div class="input-group col-xs-4">
-                            <input type="text" id ="search-groupName" class="form-control" placeholder="物品名称">
+                            <input type="text" id ="allWarehouseGoodsInformation-goodsName-input" class="form-control" placeholder="物品名称">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button" onclick="searchByName()">搜索</button>
-                                <button class="btn btn-default" type="button" onclick="getAllGroupInformation()">搜索全部</button>
+                                <button class="btn btn-default" type="button" onclick="getAllStock()">搜索全部</button>
                             </span>
                         </div>
                     </div>
@@ -142,17 +142,100 @@
                     <tr>
                         <th style="width: 100px">物品编号</th>
                         <th>物品名称</th>
+                        <th>单位</th>
                         <th>物品数量</th>
                         <th style="width: 100px">申请报损</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="table-tr">
-                        <td class="group-id"></td>
-                        <td class="group-name"></td>
-                        <td class="enable"></td>
+                    <tr class="table-tr hidden">
+                        <td class="allWarehouseGoodsInformation-goodsId"></td>
+                        <td class="allWarehouseGoodsInformation-goodsName"></td>
+                        <td class="allWarehouseGoodsInformation-unit"></td>
+                        <td class="allWarehouseGoodsInformation-goodsNumber"></td>
                         <td class="">
-                            <a class="applyReportSpoiledButton" href="#reportSpoiledPanel" onclick=""><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                            <a class="applyReportSpoiledButton" href="#reportSpoiledPanel" onclick="setReportSpoiledPanel(this)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="allWarehouseGoodsInformation-goodsId"></td>
+                        <td class="allWarehouseGoodsInformation-goodsName"></td>
+                        <td class="allWarehouseGoodsInformation-unit"></td>
+                        <td class="allWarehouseGoodsInformation-goodsNumber"></td>
+                        <td class="">
+                            <a class="applyReportSpoiledButton" href="#reportSpoiledPanel" onclick="setReportSpoiledPanel(this)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="allWarehouseGoodsInformation-goodsId"></td>
+                        <td class="allWarehouseGoodsInformation-goodsName"></td>
+                        <td class="allWarehouseGoodsInformation-unit"></td>
+                        <td class="allWarehouseGoodsInformation-goodsNumber"></td>
+                        <td class="">
+                            <a class="applyReportSpoiledButton" href="#reportSpoiledPanel" onclick="setReportSpoiledPanel(this)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="allWarehouseGoodsInformation-goodsId"></td>
+                        <td class="allWarehouseGoodsInformation-goodsName"></td>
+                        <td class="allWarehouseGoodsInformation-unit"></td>
+                        <td class="allWarehouseGoodsInformation-goodsNumber"></td>
+                        <td class="">
+                            <a class="applyReportSpoiledButton" href="#reportSpoiledPanel" onclick="setReportSpoiledPanel(this)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="allWarehouseGoodsInformation-goodsId"></td>
+                        <td class="allWarehouseGoodsInformation-goodsName"></td>
+                        <td class="allWarehouseGoodsInformation-unit"></td>
+                        <td class="allWarehouseGoodsInformation-goodsNumber"></td>
+                        <td class="">
+                            <a class="applyReportSpoiledButton" href="#reportSpoiledPanel" onclick="setReportSpoiledPanel(this)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="allWarehouseGoodsInformation-goodsId"></td>
+                        <td class="allWarehouseGoodsInformation-goodsName"></td>
+                        <td class="allWarehouseGoodsInformation-unit"></td>
+                        <td class="allWarehouseGoodsInformation-goodsNumber"></td>
+                        <td class="">
+                            <a class="applyReportSpoiledButton" href="#reportSpoiledPanel" onclick="setReportSpoiledPanel(this)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="allWarehouseGoodsInformation-goodsId"></td>
+                        <td class="allWarehouseGoodsInformation-goodsName"></td>
+                        <td class="allWarehouseGoodsInformation-unit"></td>
+                        <td class="allWarehouseGoodsInformation-goodsNumber"></td>
+                        <td class="">
+                            <a class="applyReportSpoiledButton" href="#reportSpoiledPanel" onclick="setReportSpoiledPanel(this)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="allWarehouseGoodsInformation-goodsId"></td>
+                        <td class="allWarehouseGoodsInformation-goodsName"></td>
+                        <td class="allWarehouseGoodsInformation-unit"></td>
+                        <td class="allWarehouseGoodsInformation-goodsNumber"></td>
+                        <td class="">
+                            <a class="applyReportSpoiledButton" href="#reportSpoiledPanel" onclick="setReportSpoiledPanel(this)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="allWarehouseGoodsInformation-goodsId"></td>
+                        <td class="allWarehouseGoodsInformation-goodsName"></td>
+                        <td class="allWarehouseGoodsInformation-unit"></td>
+                        <td class="allWarehouseGoodsInformation-goodsNumber"></td>
+                        <td class="">
+                            <a class="applyReportSpoiledButton" href="#reportSpoiledPanel" onclick="setReportSpoiledPanel(this)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="allWarehouseGoodsInformation-goodsId"></td>
+                        <td class="allWarehouseGoodsInformation-goodsName"></td>
+                        <td class="allWarehouseGoodsInformation-unit"></td>
+                        <td class="allWarehouseGoodsInformation-goodsNumber"></td>
+                        <td class="">
+                            <a class="applyReportSpoiledButton" href="#reportSpoiledPanel" onclick="setReportSpoiledPanel(this)"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
                         </td>
                     </tr>
                     </tbody>

@@ -76,15 +76,13 @@ $(document).ready(function () {
         sumPrice = sumPrice.toFixed(2)
         $('#allGoodsPrice').text(sumPrice)
     })
-    // /*
-    // 审核流程/
-    //  */
-    // getAllProcessName()
-    // $('.applyProcess-menu-ul').on('click', ' li a', function () {
-    //     $('#applyProcess').text($(this).text())
-    //     $('#applyProcess').attr('value', $(this).attr('value'))
-    // })
-
+    /*
+   选择状态下拉框/
+    */
+    $('.selectStatus-dropdownMenu-ul li a').on('click', function () {
+        $('#selectStatus-dropdownMenu').attr('value', $(this).attr('value'))
+        $('#selectStatus-dropdownMenu').html($(this).text() + '<span style="margin-left:4px" class="caret"></span>')
+    })
     getPurchaseApplyinit()
 })
 /*
@@ -93,7 +91,7 @@ $(document).ready(function () {
 function getPurchaseApplyinit() {
     var id = 'zy00002'
     $.ajax({
-        url: ipPort + '/purchaseHeader/getByCurAuditorByPage?id=' + id,
+        url: ipPort + '/purchaseHeader/getByAuditorByPage?id=' + id,
         success:function (obj) {
             if(obj.code == 0){
                 setMainTable(obj, id)
@@ -111,16 +109,18 @@ function getPurchaseApplyinit() {
  */
 function getPurchaseApplyByAuditId() {
     var id = $('#auditorId-input').val()
+    var status = $('#selectStatus-dropdownMenu').attr('value')
+    console.log(ipPort + '/purchaseHeader/getByAuditorByPage?id=' + id + '&status=' + status)
     $.ajax({
-        url: ipPort + '/purchaseHeader/getByCurAuditorByPage?id=' + id,
+        url: ipPort + '/purchaseHeader/getByAuditorByPage?id=' + id + '&status=' + status,
         success:function (obj) {
+            console.log(obj)
             if(obj.code == 0){
                 if(obj.data.numberOfElements == 0){
                     alert('无相关信息！')
                     setMainTable(obj, id)
                 }else{
                     setMainTable(obj, id)
-                    console.log(obj)
                 }
             }else {
                 alert(obj.message)

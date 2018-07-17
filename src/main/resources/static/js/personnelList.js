@@ -56,22 +56,6 @@ $(document).ready(function () {
     /*
     添加员工modal/
      */
-    $('.addStaffSex-menu-ul li a').on('click', function () {
-        $('#modal-addStaffSex').val($(this).text())
-        $('#modal-addStaffSex').attr('value', $(this).attr('value'))
-    })
-    $('#modal-addStaffSex').val($('.addStaffSex-menu-ul li a').eq(0).text())
-    $('#modal-addStaffSex').attr('value', 0)
-
-    var addStaffDepartmentA = $('.addStaffDepartment-menu-ul li a')
-    getAllDepartmentsName(addStaffDepartmentA)
-    $('#modal-addStaffDepartment').val($('.addStaffDepartment-menu-ul li a').eq(0).text())
-    $('#modal-addStaffDepartment').attr('value', '')
-    $('.addStaffDepartment-menu-ul li a').on('click', function () {
-        $('#modal-addStaffDepartment').val($(this).text())
-        $('#modal-addStaffDepartment').attr('value', $(this).attr('value'))
-    })
-
     var addStaffJobNatureA = $('.addStaffJobNature-menu-ul li a')
     getAllJobNaturesName(addStaffJobNatureA)
     $('#modal-addStaffJobNature').val($('.addStaffJobNature-menu-ul li a').eq(0).text())

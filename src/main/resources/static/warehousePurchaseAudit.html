@@ -122,6 +122,19 @@
             <div class="top-body" style="margin-top: 30px">
                 <div class="search-content" style="height: 34px;">
                     <div class="search-left">
+                        <div class="dropdown col-xs-2 select-department" style="padding: 0">
+                            <button class="btn btn-default dropdown-toggle" type="button" value='' id="selectStatus-dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                选择状态
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu selectStatus-dropdownMenu-ul" aria-labelledby="selectStatus-dropdownMenu">
+                                <li><a value="-1">全部记录</a></li>
+                                <li><a value="0">待审核</a></li>
+                                <li><a value="1">通过（未入库）</a></li>
+                                <li><a value="2">未通过</a></li>
+                                <li><a value="3">通过(已入库)</a></li>
+                            </ul>
+                        </div>
                         <div class="input-group col-xs-4">
                             <input id="auditorId-input" type="text" class="form-control" placeholder="审核人编号">
                             <span class="input-group-btn">
