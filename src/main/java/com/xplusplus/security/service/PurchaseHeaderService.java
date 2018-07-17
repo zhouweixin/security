@@ -196,7 +196,7 @@ public class PurchaseHeaderService {
 	}
 
     /**
-     * 通过当前审核人查询-分页
+     * 通过审核人查询-分页
      *
      * @param page
      * @param size
@@ -204,7 +204,7 @@ public class PurchaseHeaderService {
      * @param asc
      * @return
      */
-    public Page<PurchaseHeader> findByCurAuditorByPage(User curAuditor, Integer page, Integer size, String sortFieldName, Integer asc) {
+    public Page<PurchaseHeader> findByCurAuditorAndStatus(User auditor, Integer status, Integer page, Integer size, String sortFieldName, Integer asc) {
 
         // 判断排序字段名是否存在
         try {
@@ -222,7 +222,24 @@ public class PurchaseHeaderService {
         }
 
         Pageable pageable = new PageRequest(page, size, sort);
-        return purchaseHeaderRepository.findByCurAuditor(curAuditor, pageable);
+
+        if(status == 0) {// 未审核
+            return purchaseHeaderRepository.findByCurAuditorAndStatus(auditor, 0, pageable);
+        } else { // 已审核
+            List<PurchaseAuditRecord> purchaseAuditRecords = purchaseAuditRecordRepository.findByAuditor(auditor);
+            Set<Long> purChaseHeaderIds = new HashSet<>();
+            for (PurchaseAuditRecord purchaseAuditRecord : purchaseAuditRecords) {
+                if (purchaseAuditRecord.getPurchaseHeader() != null && purchaseAuditRecord.getPurchaseHeader().getId() != null) {
+                    purChaseHeaderIds.add(purchaseAuditRecord.getPurchaseHeader().getId());
+                }
+            }
+
+            if (status < 0) {// 全部记录
+                return purchaseHeaderRepository.findByIdIn(purChaseHeaderIds, pageable);
+            } else {//其它记录
+                return purchaseHeaderRepository.findByIdInAndStatus(purChaseHeaderIds, status, pageable);
+            }
+        }
     }
 
     /**

@@ -3,6 +3,7 @@ package com.xplusplus.security.repository;
 import com.xplusplus.security.domain.Purchase;
 import com.xplusplus.security.domain.PurchaseAuditRecord;
 import com.xplusplus.security.domain.PurchaseHeader;
+import com.xplusplus.security.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -23,4 +24,12 @@ public interface PurchaseAuditRecordRepository extends JpaRepository<PurchaseAud
      * @return
      */
     public List<PurchaseAuditRecord> findByPurchaseHeader(PurchaseHeader purchaseHeader);
+
+    /**
+     * 通过审核人查询
+     *
+     * @param auditor
+     * @return
+     */
+    public List<PurchaseAuditRecord> findByAuditor(User auditor);
 }

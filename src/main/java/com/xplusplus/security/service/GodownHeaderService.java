@@ -70,7 +70,14 @@ public class GodownHeaderService {
         purchaseHeaderRepository.updateStatusById(3, purchaseHeader.getId());
 
         if(purchaseHeader.getStatus() != 1){
-            throw new SecurityExceptions(EnumExceptions.ADD_FAILED_PURCHASE_NOT_AUDIT_OR_NOT);
+            if(purchaseHeader.getStatus() == 0){
+                throw new SecurityExceptions(EnumExceptions.GODOWN_FAILED_NOT_AUDIT);
+            } else if(purchaseHeader.getStatus() == 2){
+                throw new SecurityExceptions(EnumExceptions.GODOWN_FAILED_AUDIT_NOT_APPROVAL);
+            } else if(purchaseHeader.getStatus() == 3){
+                throw new SecurityExceptions(EnumExceptions.GODOWN_FAILED_GODOWNED);
+            }
+            throw new SecurityExceptions(EnumExceptions.GOWODN_FAILED_STATUS_NOT_LAWER);
         }
 
         // 设置入库单内容

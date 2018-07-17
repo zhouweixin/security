@@ -20,14 +20,16 @@ import java.util.Collection;
  */
 @Repository
 public interface PurchaseHeaderRepository extends JpaRepository<PurchaseHeader, Long> {
+
     /**
-     * 通过当前审核人查询-分页
+     * 通过当前审核人和状态查询-分页
      *
      * @param curAuditor
+     * @param status
      * @param pageable
      * @return
      */
-    public Page<PurchaseHeader> findByCurAuditor(User curAuditor, Pageable pageable);
+    public Page<PurchaseHeader> findByCurAuditorAndStatus(User curAuditor, int status, Pageable pageable);
 
     /**
      * 更新状态
@@ -84,4 +86,22 @@ public interface PurchaseHeaderRepository extends JpaRepository<PurchaseHeader, 
      * @param status
      */
     public void deleteByIdInAndStatus(Collection<Long> ids, int status);
+
+    /**
+     * 通过id查询-分页
+     *
+     * @param ids
+     * @param pageable
+     * @return
+     */
+    public Page<PurchaseHeader> findByIdIn(Collection<Long> ids, Pageable pageable);
+
+    /**
+     * 通过id和状态查询-分页
+     *
+     * @param ids
+     * @param pageable
+     * @return
+     */
+    public Page<PurchaseHeader> findByIdInAndStatus(Collection<Long> ids, int status, Pageable pageable);
 }

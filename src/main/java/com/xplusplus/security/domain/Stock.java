@@ -23,6 +23,14 @@ public class Stock {
     // 数量
     private Integer number;
 
+    public Stock() {
+    }
+
+    public Stock(Material material, Integer number) {
+        this.material = material;
+        this.number = number;
+    }
+
     public Long getId() {
         return id;
     }
