@@ -100,7 +100,19 @@ $(document).ready(function () {
     //     }
     // })
 
-
+    /*
+    modal选择部门全员/
+     */
+    $('.selectAllDepartmentStaffs').on('click', 'input', function () {
+        if(this.checked == true){
+            var selectedStaffUl = $('.selectedStaff-staff-ul')
+            var li = $(this).parent().parent().find('ul').find('li')
+            for(var i = 0; i < li.length; i++){
+                var appendStr = '<li><img src="imgs/mine.png" height="20px" style="margin-top: -2px"><span class="selectedStaff-span" ' + 'value="' + li.eq(i).find("span").attr("value") + '">' + li.eq(i).find("span").text() + '</span><span class="cancel-span" onclick="cancelSelectStaff(this)" aria-hidden="true" style="display: block; float: right">&times;</span></li>'
+                selectedStaffUl.append(appendStr)
+            }
+        }
+    })
     /*
     选择下拉框/
      */

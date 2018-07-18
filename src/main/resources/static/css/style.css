@@ -246,3 +246,26 @@ textarea{
     max-height: 160px;
     overflow-y: auto;
 }
+.modal-searchInput .input-group input{
+    height: 28px;
+    border-radius: 0px;
+}
+.modal-searchInput .input-group span{
+    color: #66BBE8;
+    top: 0px;
+    background-color: #ffffff;
+    cursor: pointer;
+}
+.selectAllDepartmentStaffs{
+    float: right;
+    position: relative;
+    width: 48px;
+    color: #66BBE8;
+}
+.selectAllDepartmentStaffs input{
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    right:0px;
+    bottom: 2px;
+}
