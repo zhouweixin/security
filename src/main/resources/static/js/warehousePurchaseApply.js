@@ -229,7 +229,7 @@ function addApplyContent() {
     index++
     var tbody = $('.table-selfDefine tbody')
     var appendStr = "<tr class='table-tr'><td>" + index + "</td><td><div class='dropdown' style='width: 100%; height: 100%'>" +
-        "<div id='alreadySigned' class='applyTable-goodsName dropdown-toggle' style='width: 100%; height: 26px' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true'>" +
+        "<div class='applyTable-goodsName dropdown-toggle' style='width: 100%; height: 26px' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true'>" +
         "</div><ul class='dropdown-menu applyTable-goodsName-ul' style='width: 100%' aria-labelledby='alreadySigned'></ul></div></td>" +
         "<td></td><td><input class='unitPriceOfGoods'></td><td><input class='numberOfGoods'></td><td class='priceOfGoods'></td>" +
         "<td style='border-right: none'><a onclick='cleanRowApplyContent(this)'><img src='imgs/minus-r.png'></a></td></tr>"
