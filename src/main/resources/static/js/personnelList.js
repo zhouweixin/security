@@ -1551,3 +1551,4 @@ function changeMonth(period, number) {
     period.setMonth(month + parseInt(number))
     return period
 }
+
