@@ -293,3 +293,13 @@ ul.applyProcess-menu-ul li a:hover{
     background-color: #CECECE;
     border-radius: 5px 5px;
 }
+.goOutTable-goodsName-ul{
+    min-width: 180px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+ul.goOutTable-goodsName-ul li:hover{
+    cursor: pointer;
+    background-color: #333333;
+    color: #ffffff;
+}

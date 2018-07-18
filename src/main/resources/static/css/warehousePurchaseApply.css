@@ -134,7 +134,7 @@
 .applyTable-goodsName-ul{
     min-width: 180px;
     max-height: 200px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 ul.applyTable-goodsName-ul li:hover{
     cursor: pointer;
