@@ -110,6 +110,8 @@
               </li>
           </ul>
       </div>
+      <!---------------------------------------------------人员列表panel----------------------------------------------------------->
+      <!-------------------------------------------------------------------------------------------------------------->
       <div id="page-empolyee-list" class="right-panel">
           <div class="nav-path">
               <div class="path-title">
@@ -482,6 +484,8 @@
               </div>
           </div>
       </div>
+      <!---------------------------------------------------详细信息panel----------------------------------------------------------->
+      <!-------------------------------------------------------------------------------------------------------------->
       <div id="page-staffDetailsInformation" class="right-panel hidden">
           <div class="nav-path">
               <div class="path-title-addStaff">
@@ -1243,6 +1247,8 @@
           </div>
       </div>
   </div>
+  <!---------------------------------------------------添加员工modal----------------------------------------------------------->
+  <!-------------------------------------------------------------------------------------------------------------->
   <div class="modal fade" id="myModal-addStaff" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-addStaff">
       <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -1397,57 +1403,55 @@
                               </div>
                           </div>
                       </div>
-                      <div class="form-group">
-                             <label for="modal-addStaffJoinDate" class="col-xs-3 control-label">入职日期：</label>
-                             <div class="col-xs-7">
-                                    <input type="date" class="form-control" id="modal-addStaffJoinDate" >
-                            </div>
-                      </div>
+                      <!--<div class="form-group">-->
+                             <!--<label for="modal-addStaffJoinDate" class="col-xs-3 control-label">入职日期：</label>-->
+                             <!--<div class="col-xs-7">-->
+                                    <!--<input type="date" class="form-control" id="modal-addStaffJoinDate" >-->
+                            <!--</div>-->
+                      <!--</div>-->
                      <div class="form-group">
-                              <label for="dtp_input2" class="col-xs-3 control-label">入职日期：</label>
-                              <div class="input-group date form_date col-xs-7" >
-                                  <input size="12" class="form-control"  type="text" >
-                                  <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                              <label class="col-xs-3 control-label">入职日期：</label>
+                              <div class="input-group date form_date col-xs-7" style="padding: 0 15px">
+                                  <input id="modal-addStaffJoinDate" size="16" class="form-control"  value="年/月/日" type="text" readonly>
                                   <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                               </div>
-                          <input type="hidden" id="dtp_input2" value="" />
                       </div>
-
-                                                     <div class="form-group">
-                                                         <label class="col-xs-3 control-label">实习周期：</label>
-                                                         <div class="col-xs-7">
-                                                             <div class="dropdown input-group">
-                                                                 <input id="modal-addStaffInternshipCycle" value="" type="text" class="form-control" placeholder="请选择"disabled="disabled">
-                                                                 <span class="input-group-btn">
-                                                                     <button class="btn btn-default dropdown-toggle" type="button" id="select-addStaffInternshipCycle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                                         <span class="caret"></span>
-                                                                     </button>
-                                                                     <ul class="dropdown-menu addStaffInternshipCycle-menu-ul" aria-labelledby="select-addStaffInternshipCycle">
-                                                                         <li><a value="0">无试用期</a></li>
-                                                                         <li><a value="1">1个月</a></li>
-                                                                         <li><a value="2">2个月</a></li>
-                                                                         <li><a value="3">3个月</a></li>
-                                                                         <li><a value="4">4个月</a></li>
-                                                                         <li><a value="5">5个月</a></li>
-                                                                         <li><a value="6">6个月</a></li>
-                                                                     </ul>
-                                                                 </span>
-                                                             </div>
-                                                         </div>
-                                                     </div>
-                                                 </form>
-                                             </div>
-                                             <div class="modal-footer">
-                                                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                                 <button type="button" class="btn btn-primary" onclick="addStaff()">确认</button>
-                                             </div>
-                                         </div>
-                                     </div>
-                                 </div>
-
+                      <div class="form-group">
+                          <label class="col-xs-3 control-label">实习周期：</label>
+                          <div class="col-xs-7">
+                              <div class="dropdown input-group">
+                                  <input id="modal-addStaffInternshipCycle" value="" type="text" class="form-control" placeholder="请选择"disabled="disabled">
+                                  <span class="input-group-btn">
+                                      <button class="btn btn-default dropdown-toggle" type="button" id="select-addStaffInternshipCycle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                          <span class="caret"></span>
+                                      </button>
+                                      <ul class="dropdown-menu addStaffInternshipCycle-menu-ul" aria-labelledby="select-addStaffInternshipCycle">
+                                          <li><a value="0">无试用期</a></li>
+                                          <li><a value="1">1个月</a></li>
+                                          <li><a value="2">2个月</a></li>
+                                          <li><a value="3">3个月</a></li>
+                                          <li><a value="4">4个月</a></li>
+                                          <li><a value="5">5个月</a></li>
+                                          <li><a value="6">6个月</a></li>
+                                      </ul>
+                                  </span>
+                              </div>
+                          </div>
+                      </div>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                  <button type="button" class="btn btn-primary" onclick="addStaff()">确认</button>
+              </div>
+          </div>
+      </div>
+  </div>
 
 
-                                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <!---------------------------------------------------离职modal----------------------------------------------------------->
+  <!-------------------------------------------------------------------------------------------------------------->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                      <div class="modal-dialog" role="document">
                                          <div class="modal-content">
                                              <div class="modal-header">
@@ -1520,22 +1524,7 @@
                                          </div>
                                      </div>
                                  </div>
-  <script type="text/javascript">
-
-      $('.form_date').datetimepicker({
-          format: "yyyy/mm/dd",
-          language: 'zh-CN',
-          pickerPosition: 'top-right',
-          weekStart: 1,
-          todayBtn: 1,
-          autoclose: 1,
-          todayHighlight: 1,
-          startView: 2,
-          minView: 2,
-          forceParse: 0
-      });
-  </script>
-                                 <div class="modal fade bs-example-modal-sm" id="myModal-makeSureDelete" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" value="">
+  <div class="modal fade bs-example-modal-sm" id="myModal-makeSureDelete" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" value="">
                                      <div class="modal-dialog modal-sm" role="document">
                                          <div class="modal-content">
                                              <div class="modal-header" style="padding: 5px 15px">
@@ -1552,7 +1541,7 @@
                                          </div>
                                      </div>
                                  </div>
-                                 <div class="modal fade bs-example-modal-sm" id="myModal-makeSureDeleteInBatch" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal fade bs-example-modal-sm" id="myModal-makeSureDeleteInBatch" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
                                      <div class="modal-dialog modal-sm" role="document">
                                          <div class="modal-content">
                                              <div class="modal-header" style="padding: 5px 15px">
@@ -1569,7 +1558,5 @@
                                          </div>
                                      </div>
                                  </div>
-
-
-                                 </body>
-                                 </html>
+  </body>
+</html>

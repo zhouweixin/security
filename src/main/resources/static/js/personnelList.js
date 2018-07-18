@@ -1,8 +1,8 @@
 var jobNaturesName = []
 var jobNatureID = []
-var departmentsName = []
-var departmentsID = []
 $(document).ready(function () {
+
+
     var activeDetailsBranch
     $('.details-branch').on('click', function (e) {
         if(!activeDetailsBranch){
@@ -74,8 +74,8 @@ $(document).ready(function () {
         $('#modal-addStaffPosition').attr('value', $(this).attr('value'))
     })
 
-    document.getElementById("modal-addStaffJoinDate").valueAsDate = new Date()
-
+    // document.getElementById("modal-addStaffJoinDate").valueAsDate = new Date()
+    $('#modal-addStaffJoinDate').val(new Date().toLocaleDateString())
     $('.addStaffInternshipCycle-menu-ul li a').on('click', function () {
         $('#modal-addStaffInternshipCycle').val($(this).text())
     })

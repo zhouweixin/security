@@ -145,11 +145,22 @@ function getInformationByParameters() {
     var jobNatureID = $('#alreadySigned-jobNature').attr('value')
     var contractTypeID = $('#alreadySigned-contractType').attr('value')
     var startDate = $('#alreadySigned-startDate').val()
+    if(startDate == '年/月/日'){
+        startDate = ''
+    }else{
+        startDate = startDate.replace(/\//g, '-')
+    }
     var endDate = $('#alreadySigned-endDate').val()
+    if(endDate == '年/月/日'){
+        endDate = ''
+    }else{
+        endDate = endDate.replace(/\//g, '-')
+    }
     var userName = $('#alreadySigned-userName').val()
     var urlStr = ipPort + '/contract/getByParametersByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
     + '&departmentId=' + departmentID + '&jobNatureId=' + jobNatureID + '&contractTypeId=' + contractTypeID + '&date1=' + startDate
         + '&date2=' + endDate + '&userName=' + userName
+    console.log(urlStr)
     $.ajax({
         url:urlStr,
         dataType:'json',

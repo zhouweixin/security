@@ -187,54 +187,19 @@
                                     <label for="alreadySigned-endDate" style="font-weight: normal">至</label>
                                     <input id="alreadySigned-endDate" class="select-date" type="date">
                                 </div>-->
-                                <div style="display: inline-block;float: left;margin-left: 3px">
-                                    <label for="dtp_input2" ></label>
-                                    <div  class="input-group date form_date " >
-                                        <input size="12" class="form-control" value="年/月/日" type="text" >
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                    </div>
-                                    <input type="hidden" id="dtp_input2" value="" />
-                                </div><!-- -->
-                                <script type="text/javascript">
-                                    $('.form_date').datetimepicker({
-                                        format: "yyyy/mm/dd",
-                                        language: 'zh-CN',
-                                        pickerPosition: 'bottom',
-                                        weekStart: 1,
-                                        todayBtn: 1,
-                                        autoclose: 1,
-                                        todayHighlight: 1,
-                                        startView: 2,
-                                        minView: 2,
-                                        forceParse: 0
-                                    });
-                                </script>
-
-                                <div style="display: inline-block;float: left;margin-left: 3px">
-                                    <label for="dtp_input3">到</label>
+                                <div  style="display: inline-block;float: left;width:150px;margin-left: 3px">
                                     <div  class="input-group date to_date" >
-                                        <input size="12" class="form-control" value="年/月/日" type="text" >
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                        <input id="alreadySigned-startDate" size="12" class="form-control" value="年/月/日" type="text" readonly>
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>
-                                    <input type="hidden" id="dtp_input3" value="" />
-                                </div> <!-- -->
-                                <script type="text/javascript">
-                                    $('.to_date').datetimepicker({
-                                        format: "yyyy/mm/dd",
-                                        language: 'zh-CN',
-                                        pickerPosition: 'bottom',
-                                        weekStart: 1,
-                                        todayBtn: 1,
-                                        autoclose: 1,
-                                        todayHighlight: 1,
-                                        startView: 2,
-                                        minView: 2,
-                                        forceParse: 0
-                                    });
-                                </script>
-
+                                </div>
+                                <div style="width:auto;height:34px;line-height:34px;float:left"><sapn>至</sapn></div>
+                                <div style="display: inline-block;float: left;width:150px;margin-left: 3px;margin-right: 3px">
+                                    <div  class="input-group date to_date" >
+                                        <input id="alreadySigned-endDate" size="12" class="form-control" value="年/月/日" type="text" readonly>
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>
+                                </div>
 
                                 <div class="input-group">
                                     <input type="text" id="alreadySigned-userName" class="form-control" placeholder="按姓名搜索">
@@ -679,6 +644,9 @@
         </div>
     </div>
 </div>
+
+<!---------------------------------------------------修改合同modal----------------------------------------------------------->
+<!-------------------------------------------------------------------------------------------------------------->
 <div class="modal fade" id="myModal-updateContract" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-signContract">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
