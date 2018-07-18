@@ -7,10 +7,15 @@
     <title>徐州精诚特卫保安服务有限公司</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/personnelContract.css" rel="stylesheet">
+
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-datetimepicker.js" ></script>
+    <script src="js/bootstrap-datetimepicker.fr.js"></script>
+    <script src="js/bootstrap-datetimepicker.zh-CN.js" ></script>
     <script src="js/style.js"></script>
     <script src="js/personnelContract.js"></script>
     <script src="js/global.js"></script>
@@ -175,13 +180,62 @@
                                         <li class="hidden"><a></a></li>
                                     </ul>
                                 </div>
-                                <div style="display: inline-block;float: left;margin-left: 3px" class="input-group">
+                         <!--       <div style="display: inline-block;float: left;margin-left: 3px" class="input-group">
                                     <input id="alreadySigned-startDate" class="select-date" type="date">
                                 </div>
                                 <div style="display: inline-block;float: left;margin-right: 3px"class="input-group">
                                     <label for="alreadySigned-endDate" style="font-weight: normal">至</label>
                                     <input id="alreadySigned-endDate" class="select-date" type="date">
-                                </div>
+                                </div>-->
+                                <div style="display: inline-block;float: left;margin-left: 3px">
+                                    <label for="dtp_input2" ></label>
+                                    <div  class="input-group date form_date " >
+                                        <input size="12" class="form-control" value="年/月/日" type="text" >
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>
+                                    <input type="hidden" id="dtp_input2" value="" />
+                                </div><!-- -->
+                                <script type="text/javascript">
+                                    $('.form_date').datetimepicker({
+                                        format: "yyyy/mm/dd",
+                                        language: 'zh-CN',
+                                        pickerPosition: 'bottom',
+                                        weekStart: 1,
+                                        todayBtn: 1,
+                                        autoclose: 1,
+                                        todayHighlight: 1,
+                                        startView: 2,
+                                        minView: 2,
+                                        forceParse: 0
+                                    });
+                                </script>
+
+                                <div style="display: inline-block;float: left;margin-left: 3px">
+                                    <label for="dtp_input3">到</label>
+                                    <div  class="input-group date to_date" >
+                                        <input size="12" class="form-control" value="年/月/日" type="text" >
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>
+                                    <input type="hidden" id="dtp_input3" value="" />
+                                </div> <!-- -->
+                                <script type="text/javascript">
+                                    $('.to_date').datetimepicker({
+                                        format: "yyyy/mm/dd",
+                                        language: 'zh-CN',
+                                        pickerPosition: 'bottom',
+                                        weekStart: 1,
+                                        todayBtn: 1,
+                                        autoclose: 1,
+                                        todayHighlight: 1,
+                                        startView: 2,
+                                        minView: 2,
+                                        forceParse: 0
+                                    });
+                                </script>
+
+
                                 <div class="input-group">
                                     <input type="text" id="alreadySigned-userName" class="form-control" placeholder="按姓名搜索">
                                     <span class="input-group-btn">
