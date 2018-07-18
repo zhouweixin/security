@@ -7,13 +7,19 @@
     <title>徐州精诚特卫保安服务有限公司</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/attendanceMonthSummary.css" rel="stylesheet">
+
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-datetimepicker.js" ></script>
+    <script src="js/bootstrap-datetimepicker.fr.js"></script>
+    <script src="js/bootstrap-datetimepicker.zh-CN.js" ></script>
     <script src="js/style.js"></script>
     <script src="js/attendanceMonthSummary.js"></script>
     <script src="js/global.js"></script>
+    <script src="js/timeInput.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
@@ -147,10 +153,19 @@
                                     <li class="hidden"><a></a></li>
                                 </ul>
                             </div>
-                                <div style="display: inline-block;float: left;margin-right: 5px; margin-left: 5px"class="input-group">
+                                <!--<div style="display: inline-block;float: left;margin-right: 5px; margin-left: 5px"class="input-group">
                                     <label for="staffMonthSummary-date" style="font-weight: normal">选择日期：</label>
                                     <input id="staffMonthSummary-date" class="select-date" type="date">
+                                </div>-->
+                                <!--<label for="staffMonthSummary-date" >选择日期：</label>-->
+                                <div style="width:auto;height:34px;line-height:34px;float:left"><sapn>选择日期：</sapn></div>
+                                <div style="display: inline-block;width:200px;float: left;margin-right: 5px; margin-left: 5px">
+                                    <div class="input-group date from_date">
+                                        <input id="staffMonthSummary-date" class="form-control" type="text" value="年/月/日">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>
                                 </div>
+
                                 <div class="input-group" style="width: 350px">
                                     <input type="text" id="staffMonthSummary-userName" class="form-control" placeholder="按姓名搜索">
                                     <span class="input-group-btn">
@@ -243,10 +258,18 @@
                     <div class="top-body" style="margin-top: 10px">
                         <div class="search-content" style="height: 34px;">
                             <div class="search-left">
-                                <div style="display: inline-block;float: left;margin-right: 5px; margin-left: 5px"class="input-group">
+                                <!--<div style="display: inline-block;float: left;margin-right: 5px; margin-left: 5px"class="input-group">
                                     <label for="projectMonthSummary-date" style="font-weight: normal">选择日期：</label>
                                     <input id="projectMonthSummary-date" class="select-date" type="date">
+                                </div>-->
+                                <div style="width:auto;height:34px;line-height:34px;float:left"><sapn>选择日期：</sapn></div>
+                                <div style="display: inline-block;width:200px;float: left;margin-right: 5px; margin-left: 5px">
+                                    <div class="input-group date from_date">
+                                        <input id="projectMonthSummary-date" class="form-control" type="text" value="年/月/日">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    </div>
                                 </div>
+
                                 <div class="input-group" style="width: 350px">
                                     <input type="text" id="projectMonthSummary-userName" class="form-control" placeholder="按项目名称搜索">
                                     <span class="input-group-btn">
