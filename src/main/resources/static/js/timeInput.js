@@ -2,12 +2,12 @@ $(document).ready(function () {
     /*
       时间控件/
     */
-    $('.form_date').datetimepicker({
+    $('.from_date').datetimepicker({
         format: "yyyy/mm/dd",
         language: 'zh-CN',
         pickerPosition: 'top-left',
         weekStart: 1,
-        todayBtn: 0,
+        todayBtn: 1,
         todayHighlight: 1,
         startView: 2,
         minView: 2,
@@ -24,6 +24,19 @@ $(document).ready(function () {
         todayHighlight: 1,
         startView: 2,
         minView: 2,
+        forceParse: 0
+    });
+    $('.form_time').datetimepicker({
+        format:"hh:ii",
+        language:  'zh-CN',
+        pickerPosition: 'bottom-left',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 1,
+        minView: 0,
+        maxView: 1,
         forceParse: 0
     });
 })

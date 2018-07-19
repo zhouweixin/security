@@ -35,7 +35,7 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="personnelAnalysis.html">人事</a></li>
+                <li class="active"><a href="personnelList.html">人事</a></li>
                 <li><a href="attendanceHomePage.html">考勤</a></li>
                 <li><a href="salaryManagement.html">薪酬</a></li>
                 <li><a href="processManagement.html">流程</a></li>
@@ -659,20 +659,11 @@
                             <input type="text" class="form-control" id="modal-updateProjectCustomerName" >
                         </div>
                     </div>
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <label for="modal-updateProjectStartDate" class="col-xs-3 control-label">合同开始日期</label>
                         <div class="col-xs-7">
                             <input type="date" class="form-control" id="modal-updateProjectStartDate" >
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="dtp_input1" class="col-xs-3 control-label">合同开始日期</label>
-                        <div class="input-group date start_date col-xs-7" >
-                            <input size="12" class="form-control"  type="text" >
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                        </div>
-                        <input type="hidden" id="dtp_input1" value="" />
                     </div>
                     <div class="form-group">
                         <label for="modal-updateProjectEndDate" class="col-xs-3 control-label">合同结束日期</label>
@@ -680,15 +671,22 @@
                             <input type="date" class="form-control" id="modal-updateProjectEndDate" >
                         </div>
                     </div>
+                    -->
                     <div class="form-group">
-                        <label for="dtp_input2" class="col-xs-3 control-label">合同结束日期</label>
-                        <div class="input-group date end_date col-xs-7" >
-                            <input size="12" class="form-control"  type="text" >
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                        <label for="modal-updateProjectStartDate" class="col-xs-3 control-label">合同开始日期</label>
+                        <div class="input-group date to_date col-xs-7" style="padding:0 15px">
+                            <input type="text" class="form-control" value="年/月/日" id="modal-updateProjectStartDate" >
                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
-                        <input type="hidden" id="dtp_input2" value="" />
                     </div>
+                    <div class="form-group">
+                        <label for="modal-updateProjectEndDate" class="col-xs-3 control-label">合同结束日期</label>
+                        <div class="input-group date from_date col-xs-7" style="padding:0 15px">
+                            <input type="text" class="form-control" value="年/月/日" id="modal-updateProjectEndDate" >
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label for="modal-projectStatus" class="col-xs-3 control-label">项目状态</label>
                         <div class="col-xs-7">
@@ -760,7 +758,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="modal fade" id="myModal-projectReceipt" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-projectReceipt">
     <div class="modal-dialog" role="document">
