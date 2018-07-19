@@ -51,7 +51,8 @@ $(document).ready(function () {
         $('#modal-leaveType').val($(this).text())
     })
 
-    document.getElementById("modal-leaveDate").valueAsDate = new Date()
+    //document.getElementById("modal-leaveDate").valueAsDate = new Date()
+    $('#modal-leaveDate').val(new Date().toLocaleDateString())
 
     /*
     添加员工modal/
@@ -76,6 +77,7 @@ $(document).ready(function () {
 
     // document.getElementById("modal-addStaffJoinDate").valueAsDate = new Date()
     $('#modal-addStaffJoinDate').val(new Date().toLocaleDateString())
+
     $('.addStaffInternshipCycle-menu-ul li a').on('click', function () {
         $('#modal-addStaffInternshipCycle').val($(this).text())
     })

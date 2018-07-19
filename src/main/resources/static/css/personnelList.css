@@ -206,4 +206,9 @@ a.page-button{
     font-size: 26px;
 }
 
-
+.form_date span{
+    color:#555;
+}
+.to_date span{
+    color:#555;
+}

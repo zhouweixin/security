@@ -269,3 +269,9 @@ textarea{
     right:0px;
     bottom: 2px;
 }
+.form_date span{
+    color:#555;
+}
+.to_date span{
+     color:#555;
+ }

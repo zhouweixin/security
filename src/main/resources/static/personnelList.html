@@ -627,10 +627,17 @@
                                   </div>
                               </div>
                           </div>
+                          <!--<div class="form-group col-xs-6">-->
+                              <!--<label for="staffInformation-joinDate" class="col-xs-3 control-label">入职日期：</label>-->
+                              <!--<div class="col-xs-7">-->
+                                  <!--<input type="date" class="form-control" id="staffInformation-joinDate" disabled="disabled">-->
+                              <!--</div>-->
+                          <!--</div>-->
                           <div class="form-group col-xs-6">
                               <label for="staffInformation-joinDate" class="col-xs-3 control-label">入职日期：</label>
-                              <div class="col-xs-7">
-                                  <input type="date" class="form-control" id="staffInformation-joinDate" disabled="disabled">
+                              <div class="input-group date form_date col-xs-7" style="padding: 0 15px">
+                                  <input id="staffInformation-joinDate" size="16" class="form-control"  value="年/月/日" type="text" readonly disabled="disabled">
+                                  <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                               </div>
                           </div>
                           <div class="form-group col-xs-6">
@@ -709,10 +716,17 @@
                                   </div>
                               </div>
                           </div>
+                          <!--<div class="form-group col-xs-6">-->
+                              <!--<label for="staffInformation-resignDate" class="col-xs-3 control-label">离职日期：</label>-->
+                              <!--<div class="col-xs-7">-->
+                                  <!--<input type="date" class="form-control" id="staffInformation-resignDate" disabled="disabled">-->
+                              <!--</div>-->
+                          <!--</div>-->
                           <div class="form-group col-xs-6">
                               <label for="staffInformation-resignDate" class="col-xs-3 control-label">离职日期：</label>
-                              <div class="col-xs-7">
-                                  <input type="date" class="form-control" id="staffInformation-resignDate" disabled="disabled">
+                              <div class="input-group date form_date col-xs-7" style="padding: 0 15px">
+                                  <input id="staffInformation-resignDate" size="16" class="form-control"  value="年/月/日" type="text" readonly disabled="disabled">
+                                  <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                               </div>
                           </div>
                       </form>
@@ -1453,51 +1467,51 @@
   <!---------------------------------------------------离职modal----------------------------------------------------------->
   <!-------------------------------------------------------------------------------------------------------------->
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                     <div class="modal-dialog" role="document">
-                                         <div class="modal-content">
-                                             <div class="modal-header">
-                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                 <h4 class="modal-title" id="myModalLabel">离职</h4>
-                                             </div>
-                                             <div class="modal-body" style="padding: 15px 20px">
-                                                 <form class="form-horizontal">
-                                                     <div class="form-group">
-                                                         <label for="modal-staffID" class="col-xs-2 control-label" >员工编号</label>
-                                                         <div class="col-xs-9">
-                                                             <input type="text" class="form-control" id="modal-staffID" disabled="disabled">
-                                                         </div>
-                                                     </div>
-                                                     <div class="form-group">
-                                                         <label for="modal-staffName" class="col-xs-2 control-label">姓名</label>
-                                                         <div class="col-xs-9">
-                                                             <input type="text" class="form-control" id="modal-staffName"  disabled="disabled">
-                                                         </div>
-                                                     </div>
-                                                     <div class="form-group">
-                                                         <label for="modal-department" class="col-xs-2 control-label">部门</label>
-                                                         <div class="col-xs-9">
-                                                             <input type="text" class="form-control" id="modal-department" disabled="disabled" >
-                                                         </div>
-                                                     </div>
-                                                     <!--    <div class="form-group">
-                                                         <label  for="modal-leaveDate" class="col-xs-2 control-label">离职日期</label>
-                                                         <div class="col-xs-9" >
-                                                             <input  type="date" class="form-control" id="modal-leaveDate" value="年/月/日" >
-                                                         </div>
-                                                     </div> -->
-                                                     <div class="form-group">
-                                                         <label  class="col-xs-2 control-label">离职日期</label>
-                                                         <div class="input-group date leave col-xs-9" style="padding: 0 15px">
-                                                             <input  type="text" class="form-control" id="modal-leaveDate" value="年/月/日" >
-                                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                                         </div>
-                                                     </div>
-                                                     <div class="form-group">
-                                                         <label for="modal-leaveType" class="col-xs-2 control-label">离职类型</label>
-                                                         <div class="col-xs-9">
-                                                             <div class="dropdown input-group">
-                                                                 <input id="modal-leaveType" type="text" value="" class="form-control" placeholder="请选择离职类型">
-                                                                 <span class="input-group-btn">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">离职</h4>
+              </div>
+              <div class="modal-body" style="padding: 15px 20px">
+                  <form class="form-horizontal">
+                      <div class="form-group">
+                          <label for="modal-staffID" class="col-xs-2 control-label" >员工编号</label>
+                          <div class="col-xs-9">
+                              <input type="text" class="form-control" id="modal-staffID" disabled="disabled">
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label for="modal-staffName" class="col-xs-2 control-label">姓名</label>
+                          <div class="col-xs-9">
+                              <input type="text" class="form-control" id="modal-staffName"  disabled="disabled">
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label for="modal-department" class="col-xs-2 control-label">部门</label>
+                          <div class="col-xs-9">
+                              <input type="text" class="form-control" id="modal-department" disabled="disabled" >
+                          </div>
+                      </div>
+                      <!--    <div class="form-group">
+                          <label  for="modal-leaveDate" class="col-xs-2 control-label">离职日期</label>
+                          <div class="col-xs-9" >
+                              <input  type="date" class="form-control" id="modal-leaveDate" value="年/月/日" >
+                          </div>
+                      </div> -->
+                      <div class="form-group">
+                          <label  class="col-xs-2 control-label">离职日期</label>
+                          <div class="input-group date to_date col-xs-9" style="padding: 0 15px">
+                              <input  type="text" class="form-control" id="modal-leaveDate" value="年/月/日" >
+                              <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label for="modal-leaveType" class="col-xs-2 control-label">离职类型</label>
+                          <div class="col-xs-9">
+                              <div class="dropdown input-group">
+                                  <input id="modal-leaveType" type="text" value="" class="form-control" placeholder="请选择离职类型">
+                                  <span class="input-group-btn">
                                                                      <button class="btn btn-default dropdown-toggle" type="button" id="select-leaveType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                                                          <span class="caret"></span>
                                                                      </button>
@@ -1511,18 +1525,18 @@
                                                                          <li class="hidden"><a></a></li>
                                                                      </ul>
                                                                  </span>
-                                                             </div>
-                                                         </div>
-                                                     </div>
-                                                 </form>
-                                             </div>
-                                             <div class="modal-footer">
-                                                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                                                 <button type="button" class="btn btn-primary" onclick="leaveJob()" data-dismiss="modal">确认</button>
-                                             </div>
-                                         </div>
-                                     </div>
-                                 </div>
+                              </div>
+                          </div>
+                      </div>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                  <button type="button" class="btn btn-primary" onclick="leaveJob()" data-dismiss="modal">确认</button>
+              </div>
+          </div>
+      </div>
+  </div>
   <div class="modal fade bs-example-modal-sm" id="myModal-makeSureDelete" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" value="">
                                      <div class="modal-dialog modal-sm" role="document">
                                          <div class="modal-content">

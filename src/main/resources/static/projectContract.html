@@ -35,7 +35,7 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="personnelList.html">人事</a></li>
+                <li class="active"><a href="personnelAnalysis.html">人事</a></li>
                 <li><a href="attendanceHomePage.html">考勤</a></li>
                 <li><a href="salaryManagement.html">薪酬</a></li>
                 <li><a href="processManagement.html">流程</a></li>
@@ -555,14 +555,14 @@
                     </div>-->
                     <div class="form-group">
                         <label for="modal-contractStartDate" class="col-xs-3 control-label">合同开始日期</label>
-                        <div class="input-group date start col-xs-7" style="padding:0 15px">
+                        <div class="input-group date to_date col-xs-7" style="padding:0 15px">
                             <input type="text" class="form-control" id="modal-contractStartDate" >
                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="modal-contractEndDate" class="col-xs-3 control-label">合同结束日期</label>
-                        <div class="input-group date end col-xs-7" style="padding:0 15px">
+                        <div class="input-group date to_date col-xs-7" style="padding:0 15px">
                             <input type="text" class="form-control" id="modal-contractEndDate" >
                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                         </div>
@@ -761,33 +761,6 @@
     </div>
 </div>
 
-<script type="text/javascript">
-
-    $('.start_date').datetimepicker({
-        format: "yyyy/mm/dd",
-        language: 'zh-CN',
-        pickerPosition: 'top-right',
-        weekStart: 1,
-        todayBtn: 1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        minView: 2,
-        forceParse: 0
-    });
-    $('.end_date').datetimepicker({
-        format: "yyyy/mm/dd",
-        language: 'zh-CN',
-        pickerPosition: 'top-right',
-        weekStart: 1,
-        todayBtn: 1,
-        autoclose: 1,
-        todayHighlight: 1,
-        startView: 2,
-        minView: 2,
-        forceParse: 0
-    });
-</script>
 
 <div class="modal fade" id="myModal-projectReceipt" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-projectReceipt">
     <div class="modal-dialog" role="document">
