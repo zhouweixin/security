@@ -189,7 +189,7 @@
                                     <input id="alreadySigned-endDate" class="select-date" type="date">
                                 </div>-->
                                 <div  style="display: inline-block;float: left;width:150px;margin-left: 3px">
-                                    <div  class="input-group date from_date" >
+                                    <div  class="input-group date to_date" >
                                         <input id="alreadySigned-startDate" size="12" class="form-control" value="年/月/日" type="text" readonly>
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>
@@ -681,7 +681,7 @@
                             <input id="modal-contractType" type="text" class="form-control" placeholder="" disabled="disabled">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <label for="modal-contractStartDate" class="col-xs-3 control-label">合同开始日期：</label>
                         <div class="col-xs-7">
                             <input type="date" class="form-control" id="modal-contractStartDate" >
@@ -692,7 +692,22 @@
                         <div class="col-xs-7">
                             <input type="date" class="form-control" id="modal-contractEndDate" >
                         </div>
+                    </div>-->
+                    <div class="form-group">
+                        <label for="modal-contractStartDate" class="col-xs-3 control-label">合同开始日期：</label>
+                        <div class="input-group date to_date col-xs-7" style="padding:0 15px">
+                            <input type="text" class="form-control" value="年/月/日" id="modal-contractStartDate" >
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                        </div>
                     </div>
+                    <div class="form-group">
+                        <label for="modal-contractEndDate" class="col-xs-3 control-label">合同结束日期：</label>
+                        <div class="input-group date from_date col-xs-7" style="padding:0 15px">
+                            <input type="text" class="form-control" value="年/月/日" id="modal-contractEndDate" >
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                        </div>
+                    </div>
+
                     <div class="form-group ">
                         <label class="col-xs-3 control-label">合同周期：</label>
                         <div class="col-xs-7">
