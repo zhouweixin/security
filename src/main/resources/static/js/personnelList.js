@@ -493,7 +493,8 @@ function setDetailsStaffInformationColumn(obj) {
     if(joinDateSplit){
         var joinDate = new Date()
         joinDate.setFullYear(joinDateSplit.split('-')[0], joinDateSplit.split('-')[1] - 1, joinDateSplit.split('-')[2])
-        document.getElementById("staffInformation-joinDate").valueAsDate = joinDate
+        $('#staffInformation-joinDate').val(joinDate.toLocaleDateString())
+        // document.getElementById("staffInformation-joinDate").valueAsDate = joinDate
     }else{
         $('#staffInformation-resignDate').val('')
     }
@@ -520,7 +521,8 @@ function setDetailsStaffInformationColumn(obj) {
     if(resignDateSplit){
         var resignDate = new Date()
         resignDate.setFullYear(resignDateSplit.split('-')[0], resignDateSplit.split('-')[1] - 1, resignDateSplit.split('-')[2])
-        document.getElementById("staffInformation-resignDate").valueAsDate = resignDate
+        $('#staffInformation-resignDate').val(resignDate.toLocaleDateString())
+        //document.getElementById("staffInformation-resignDate").valueAsDate = resignDate
     }else{
         $('#staffInformation-resignDate').val('')
     }
@@ -892,7 +894,8 @@ function setDetailsContractInformationColumn(obj) {
             if(startDateSplit){
                 var startDate = new Date()
                 startDate.setFullYear(startDateSplit.split('-')[0], startDateSplit.split('-')[1] - 1, startDateSplit.split('-')[2])
-                document.getElementById("formalContractStartDate").valueAsDate = startDate
+                $('#formalContractStartDate').val(startDate.toLocaleDateString())
+                //document.getElementById("formalContractStartDate").valueAsDate = startDate
             }else {
                 $('#formalContractStartDate').val('')
             }
@@ -901,7 +904,8 @@ function setDetailsContractInformationColumn(obj) {
             if(endDateSplit){
                 var endDate = new Date()
                 startDate.setFullYear(endDateSplit.split('-')[0], endDateSplit.split('-')[1] - 1, endDateSplit.split('-')[2])
-                document.getElementById("formalContractEndDate").valueAsDate = endDate
+                $('#formalContractEndDate').val(endDate.toLocaleDateString())
+              //  document.getElementById("formalContractEndDate").valueAsDate = endDate
             }else {
                 $('#formalContractEndDate').val('')
             }
@@ -923,7 +927,8 @@ function setDetailsContractInformationColumn(obj) {
             if(startDateSplit){
                 var startDate = new Date()
                 startDate.setFullYear(startDateSplit.split('-')[0], startDateSplit.split('-')[1] - 1, startDateSplit.split('-')[2])
-                document.getElementById("temporaryContractStartDate").valueAsDate = startDate
+                $('#temporaryContractStartDate').val(startDate.toLocaleDateString())
+                //document.getElementById("temporaryContractStartDate").valueAsDate = startDate
             }else {
                 $('#temporaryContractStartDate').val('')
             }
@@ -932,7 +937,8 @@ function setDetailsContractInformationColumn(obj) {
             if(endDateSplit){
                 var endDate = new Date()
                 startDate.setFullYear(endDateSplit.split('-')[0], endDateSplit.split('-')[1] - 1, endDateSplit.split('-')[2])
-                document.getElementById("temporaryContractEndDate").valueAsDate = endDate
+                $('#temporaryContractEndDate').val(endDate.toLocaleDateString())
+               // document.getElementById("temporaryContractEndDate").valueAsDate = endDate
             }else {
                 $('#temporaryContractEndDate').val('')
             }
@@ -954,7 +960,8 @@ function setDetailsContractInformationColumn(obj) {
             if(startDateSplit){
                 var startDate = new Date()
                 startDate.setFullYear(startDateSplit.split('-')[0], startDateSplit.split('-')[1] - 1, startDateSplit.split('-')[2])
-                document.getElementById("internshipAgreementStartDate").valueAsDate = startDate
+                $('#internshipAgreementStartDate').val(startDate.toLocaleDateString())
+            //    document.getElementById("internshipAgreementStartDate").valueAsDate = startDate
             }else {
                 $('#internshipAgreementStartDate').val('')
             }
@@ -963,7 +970,8 @@ function setDetailsContractInformationColumn(obj) {
             if(endDateSplit){
                 var endDate = new Date()
                 startDate.setFullYear(endDateSplit.split('-')[0], endDateSplit.split('-')[1] - 1, endDateSplit.split('-')[2])
-                document.getElementById("internshipAgreementEndDate").valueAsDate = endDate
+                $('#internshipAgreementEndDate').val(endDate.toLocaleDateString())
+             //   document.getElementById("internshipAgreementEndDate").valueAsDate = endDate
             }else {
                 $('#internshipAgreementEndDate').val('')
             }
@@ -1189,7 +1197,8 @@ function setDetailsArchiveInformationColumn(obj) {
     if(firstWorkDateSplit){
         var firstWorkDate = new Date()
         firstWorkDate.setFullYear(firstWorkDateSplit.split('-')[0], firstWorkDateSplit.split('-')[1] - 1, firstWorkDateSplit.split('-')[2])
-        document.getElementById("archiveInformation-firstWorkDate").valueAsDate = firstWorkDate
+        $('#archiveInformation-firstWorkDate').val(firstWorkDate.toLocaleDateString())
+        //document.getElementById("archiveInformation-firstWorkDate").valueAsDate = firstWorkDate
     }else {
         $('#archiveInformation-firstWorkDate').val('')
     }
