@@ -1,3 +1,4 @@
+var currentPage = 0
 $(document).ready(function () {
     $('.select-department-ul li a').on('click', function () {
         $('#all-dropdownMenu1').val($(this).text())
@@ -44,7 +45,8 @@ $(document).ready(function () {
 获取全部员工信息/
  */
 function getAllStaffInformationByPage() {
-    var page = 0
+    currentPage = 0
+    var page = currentPage
     var size = 10
     var sortFieldName = 'id'
     var asc = 1
@@ -500,4 +502,103 @@ function leftToProveButton(thisObj) {
     $('.now-year-inp').val(date.getFullYear())
     $('.now-month-inp').val(date.getMonth() + 1)
     $('.now-day-inp').val(date.getDate())
+}
+/*
+上一页/
+ */
+function previousPage() {
+    var currentPage_ = $('.currentPage').text()
+    if(currentPage_ == 1){
+        alert("已经是第一页！")
+        return
+    }
+    currentPage--
+    if(currentPage < 0){
+        currentPage = 0
+    }
+    var page = currentPage
+    var size = 10
+    var sortFieldName = 'id'
+    var asc = 1
+    var urlStr = ipPort + '/user/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                setStaffTableInformation(obj)
+            }else{
+                console.log(obj)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+下一页/
+ */
+function nextPage() {
+    var currentPage_ = $('.currentPage').text()
+    var totalPage_ = $('.totalPage').text()
+    if(currentPage_ == totalPage_){
+        alert("已经是最后一页！")
+        return
+    }
+    currentPage++
+    var page = currentPage
+    var size = 10
+    var sortFieldName = 'id'
+    var asc = 1
+    var urlStr = ipPort + '/user/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                setStaffTableInformation(obj)
+            }else{
+                console.log(obj)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+跳转页/
+ */
+function skipPage() {
+    var skipPage_ = parseInt($('.skipPage').val())
+    var totalPage_ = parseInt($('.totalPage').text())
+    if(skipPage_ - totalPage_ > 0){
+        alert("没有此页！")
+        return
+    }
+    if(skipPage_ < 1){
+        alert("没有此页！")
+        return
+    }
+    currentPage = skipPage_ - 1
+    var page = currentPage
+    var size = 10
+    var sortFieldName = 'id'
+    var asc = 1
+    var urlStr = ipPort + '/user/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                setStaffTableInformation(obj)
+            }else{
+                console.log(obj)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
 }

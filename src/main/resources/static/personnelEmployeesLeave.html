@@ -120,6 +120,8 @@
                 <li role="presentation"><a href="#employeesLeftAndBan-panel" aria-controls="employeesLeftAndBan-panel" role="tab" data-toggle="tab">已离职禁用</a></li>
             </ul>
             <div class="tab-content">
+                <!-------------------------------所有panel--------------------------------->
+                <!---------------------------------------------------------------->
                 <div role="tabpanel" class="tab-pane active" id="all-panel">
                     <div class="top-body">
                         <div class="search-content" style="height: 34px;">
@@ -420,16 +422,18 @@
                                 <div class="input-group" style="width: 110px">
                                     <input type="text" class="form-control" placeholder="">
                                     <span class="input-group-btn">
-                                <button id="jump-button" class="btn btn-default" type="button">跳转</button>
+                                <button  class="btn btn-default" type="button" onclick="skipPage()">跳转</button>
                              </span>
                                 </div>
                             </li>
-                            <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-left"></span></a></li>
-                            <li class="page-ul-li" style="margin-top: 8px"><span>1/255</span></li>
-                            <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-right"></span></a></li>
+                            <li class="page-ul-li"><a class="btn btn-default page-button" onclick="nextPage()"><span class="caret caret-left"></span></a></li>
+                            <li class="page-ul-li" style="margin-top: 8px"><span class="currentPage"></span>/<span class="totalPage"></span></li>
+                            <li class="page-ul-li"><a class="btn btn-default page-button" onclick="previousPage()"><span class="caret caret-right"></span></a></li>
                         </ul>
                     </div>
                 </div>
+                <!-------------------------------已离职panel--------------------------------->
+                <!---------------------------------------------------------------->
                 <div role="tabpanel" class="tab-pane" id="employeesLeft-panel">
                     <div class="top-body">
                         <div class="search-content" style="height: 34px;">
@@ -740,6 +744,8 @@
                         </ul>
                     </div>
                 </div>
+                <!-------------------------------待离职panel--------------------------------->
+                <!---------------------------------------------------------------->
                 <div role="tabpanel" class="tab-pane" id="employeesLeaving-panel">
                     <div class="top-body">
                         <div class="search-content" style="height: 34px;">
@@ -1050,6 +1056,8 @@
                         </ul>
                     </div>
                 </div>
+                <!-------------------------------离职禁用panel--------------------------------->
+                <!---------------------------------------------------------------->
                 <div role="tabpanel" class="tab-pane" id="employeesLeftAndBan-panel">
                     <div class="top-body">
                         <div class="search-content" style="height: 34px;">

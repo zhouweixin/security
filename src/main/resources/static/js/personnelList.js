@@ -399,7 +399,6 @@ function getAllStaffInformationByPage() {
         url:urlStr,
         dataType:'json',
         success:function (obj) {
-            console.log(obj)
             if(obj.code == 0){
                 setStaffTableInformation(obj)
             }else{
@@ -607,10 +606,10 @@ function deleteStaffInBatch() {
 通过部门和姓名搜索信息/
  */
 function searchByDepartmentAndStaffName() {
+    currentPage = 0
     var departmentId = $('#selectDepartment-dropdownMenu').attr('value')
     var staffName = $('#staffName-searchInput').val()
-    var urlStr = ipPort + "/user/getByDepartmentAndNameLikeByPage?id=" + departmentId + "&name=" + staffName
-    console.log(urlStr)
+    var urlStr = ipPort + "/user/getByDepartmentAndNameLikeByPage?id=" + departmentId + "&name=" + staffName + "&page=" + currentPage
     $.ajax({
         url:urlStr,
         dataType:'json',
@@ -635,7 +634,8 @@ function searchByDepartmentAndStaffName() {
  */
 function searchByJobNature(thisObj) {
     var searchJobNatureID = $(thisObj).attr('value')
-    var page = 0
+    currentPage = 0
+    var page = currentPage
     var size = 10
     var sortFieldName = 'id'
     var asc = 1
@@ -1634,9 +1634,9 @@ function nextPage() {
 跳转页/
  */
 function skipPage() {
-    var skipPage_ = $('.skipPage').val()
-    var totalPage_ = $('.totalPage').text()
-    if(skipPage_ > totalPage_){
+    var skipPage_ = parseInt($('.skipPage').val())
+    var totalPage_ = parseInt($('.totalPage').text())
+    if(skipPage_ - totalPage_ > 0){
         alert("没有此页！")
         return
     }

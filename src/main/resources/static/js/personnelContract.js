@@ -1,3 +1,4 @@
+var currentPage = 0
 $(document).ready(function () {
     $('.select-department-ul li a').on('click', function () {
         $('#alreadySigned-dropdownMenu1').val($(this).text())
@@ -31,7 +32,7 @@ $(document).ready(function () {
     获取全部合同信息/
      */
     getAllContractInformation()
-    getAllDueDateContractInformation()
+    //getAllDueDateContractInformation()
     /*
     搜索栏/
      */
@@ -69,7 +70,8 @@ $(document).ready(function () {
 搜索全部合同信息/
  */
 function getAllContractInformation() {
-    var page = 0
+    currentPage = 0
+    var page = currentPage
     var size = 10
     var sortFieldName = 'id'
     var asc = 1
@@ -89,6 +91,8 @@ function getAllContractInformation() {
 设置合同已签订table/
  */
 function setContractTableInformation(obj) {
+    $('#alreadySigned-panel .currentPage').text(currentPage + 1)
+    $('#alreadySigned-panel .totalPage').text(obj.data.totalPages)
     if(obj.data.numberOfElements != 0){
         var table_tr = $('.table-tr')
         var alreadySignedStaff_chexBox = $('.alreadySignedStaff-checkBox')
@@ -137,7 +141,8 @@ function setContractTableInformation(obj) {
 通过各种参数搜索合同信息/
  */
 function getInformationByParameters() {
-    var page = 0
+    currentPage = 0
+    var page = currentPage
     var size = 10
     var sortFieldName = 'id'
     var asc = 1
@@ -165,7 +170,6 @@ function getInformationByParameters() {
         url:urlStr,
         dataType:'json',
         success:function (obj) {
-            console.log(obj)
             if(obj.code == 0){
                 setContractTableInformation(obj)
             }
@@ -322,7 +326,8 @@ function deleteContractInBatch() {
 搜索全部即将到期合同信息/
  */
 function getAllDueDateContractInformation() {
-    var page = 0
+    currentPage = 0
+    var page = currentPage
     var size = 10
     var sortFieldName = 'id'
     var asc = 1
@@ -343,6 +348,8 @@ function getAllDueDateContractInformation() {
 设置合同即将到期table/
  */
 function setDueDateContractTableInformation(obj) {
+    $('#dueDate-panel .currentPage').text(currentPage + 1)
+    $('#dueDate-panel .totalPage').text(obj.data.totalPages)
     if(obj.data.numberOfElements != 0){
         var table_trr = $('.table-trr')
         var dueDate_chexbox = $('.dueDate-checkBox')
@@ -383,4 +390,103 @@ function setDueDateContractTableInformation(obj) {
             table_trr.eq(i).addClass('hidden')
         }
     }
+}
+/*
+上一页/
+ */
+function previousPage(str) {
+    var currentPage_ = $(str).find('.currentPage').text()
+    if(currentPage_ == 1){
+        alert("已经是第一页！")
+        return
+    }
+    currentPage--
+    if(currentPage < 0){
+        currentPage = 0
+    }
+    var page = currentPage
+    var size = 10
+    var sortFieldName = 'id'
+    var asc = 1
+    var urlStr = ipPort + '/contract/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                setContractTableInformation(obj)
+            }else{
+                console.log(obj)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+下一页/
+ */
+function nextPage(str) {
+    var currentPage_ = $(str).find('.currentPage').text()
+    var totalPage_ = $(str).find('.totalPage').text()
+    if(currentPage_ == totalPage_){
+        alert("已经是最后一页！")
+        return
+    }
+    currentPage++
+    var page = currentPage
+    var size = 10
+    var sortFieldName = 'id'
+    var asc = 1
+    var urlStr = ipPort + '/contract/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                setContractTableInformation(obj)
+            }else{
+                console.log(obj)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+跳转页/
+ */
+function skipPage(str) {
+    var skipPage_ = parseInt( $(str).find('.skipPage').val())
+    var totalPage_ = parseInt( $(str).find('.totalPage').text())
+    if(skipPage_ - totalPage_ > 0){
+        alert("没有此页！")
+        return
+    }
+    if(skipPage_ < 1){
+        alert("没有此页！")
+        return
+    }
+    currentPage = skipPage_ - 1
+    var page = currentPage
+    var size = 10
+    var sortFieldName = 'id'
+    var asc = 1
+    var urlStr = ipPort + '/contract/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                setContractTableInformation(obj)
+            }else{
+                console.log(obj)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
 }

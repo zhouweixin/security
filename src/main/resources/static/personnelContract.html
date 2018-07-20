@@ -120,8 +120,8 @@
         </div>
         <div class="main-body-content">
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#alreadySigned-panel" aria-controls="alreadySigned-panel" role="tab" data-toggle="tab">已签订</a></li>
-                <li role="presentation"><a href="#dueDate-panel" aria-controls="dueDate-panel" role="tab" data-toggle="tab">即将到期</a></li>
+                <li role="presentation" class="active"><a onclick="getAllContractInformation()" href="#alreadySigned-panel" aria-controls="alreadySigned-panel" role="tab" data-toggle="tab">已签订</a></li>
+                <li role="presentation"><a onclick="getAllDueDateContractInformation()" href="#dueDate-panel" aria-controls="dueDate-panel" role="tab" data-toggle="tab">即将到期</a></li>
             </ul>
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="alreadySigned-panel">
@@ -411,15 +411,15 @@
                         <ul class="page-ul">
                             <li class="page-ul-li">
                                 <div class="input-group" style="width: 110px">
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="text" class="form-control skipPage" placeholder="">
                                     <span class="input-group-btn">
-                                <button id="jump-button" class="btn btn-default" type="button">跳转</button>
+                                <button class="btn btn-default" onclick="skipPage('#alreadySigned-panel')" type="button">跳转</button>
                              </span>
                                 </div>
                             </li>
-                            <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-left"></span></a></li>
-                            <li class="page-ul-li" style="margin-top: 8px"><span>1/255</span></li>
-                            <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-right"></span></a></li>
+                            <li class="page-ul-li"><a class="btn btn-default page-button" onclick="nextPage('#alreadySigned-panel')"><span class="caret caret-left"></span></a></li>
+                            <li class="page-ul-li" style="margin-top: 8px"><span class="currentPage"></span>/<span class="totalPage"></span></li>
+                            <li class="page-ul-li"><a class="btn btn-default page-button" onclick="previousPage('#alreadySigned-panel')"><span class="caret caret-right"></span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -629,15 +629,15 @@
                         <ul class="page-ul">
                             <li class="page-ul-li">
                                 <div class="input-group" style="width: 110px">
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="text" class="form-control skipPage" placeholder="">
                                     <span class="input-group-btn">
-                                <button id="jump-button" class="btn btn-default" type="button">跳转</button>
+                                <button class="btn btn-default" onclick="skipPage('#dueDate-panel')" type="button">跳转</button>
                              </span>
                                 </div>
                             </li>
-                            <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-left"></span></a></li>
-                            <li class="page-ul-li" style="margin-top: 8px"><span>1/255</span></li>
-                            <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-right"></span></a></li>
+                            <li class="page-ul-li"><a class="btn btn-default page-button" onclick="nextPage('#dueDate-panel')"><span class="caret caret-left"></span></a></li>
+                            <li class="page-ul-li" style="margin-top: 8px"><span class="currentPage"></span>/<span class="totalPage"></span></li>
+                            <li class="page-ul-li"><a class="btn btn-default page-button" onclick="previousPage('#dueDate-panel')"><span class="caret caret-right"></span></a></li>
                         </ul>
                     </div>
                 </div>
