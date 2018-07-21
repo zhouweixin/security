@@ -2,6 +2,7 @@
 全局变量/
  */
 var index = 0
+var currentPage = 0
 $(document).ready(function () {
     index = 0
     /*
@@ -86,11 +87,13 @@ $(document).ready(function () {
 
 //*************************************************************出库记录****************************************************************
 /*
-获取所有申请/
+获取出库记录/
  */
 function getAllGoOutRecords() {
+    currentPage = 0
+    var page = currentPage
     $.ajax({
-        url: ipPort + '/gooutHeader/getAllByPage',
+        url: ipPort + '/gooutHeader/getAllByPage' + '?page=' + page,
         success:function (obj) {
             if(obj.code == 0){
                 setGoOutRecordsTable(obj)
@@ -104,9 +107,11 @@ function getAllGoOutRecords() {
     })
 }
 /*
-设置申请表/
+设置出库记录表/
  */
 function setGoOutRecordsTable(obj) {
+    $('.currentPage').text(currentPage + 1)
+    $('.totalPage').text(obj.data.totalPages)
     var id = $('.goOutRecords-id')
     var applyName = $('.goOutRecords-applyStaffName')
     var time = $('.goOutRecords-applyTime')
@@ -134,6 +139,43 @@ function setGoOutRecordsTable(obj) {
     for(var i = length; i < 10; i++){
         tr.eq(i).addClass('hidden')
     }
+}
+/*
+设置出库记录详情modal/
+ */
+function setGoOutRecordsModal(thisObj) {
+    $('#GoOutRecordsDetails-applyUser').text('')
+    $('#GoOutRecordsDetails-operator').text('')
+    $('#GoOutRecordsDetails-applyTime').text('')
+    $('#GoOutRecordsDetails-numberPeople').text('')
+    $('.GoOutRecordsDetails-table-selfDefine').find('.table-tr').remove()
+    var id = $(thisObj).parent().parent().find('td').eq(0).text()
+    $.ajax({
+        url: ipPort + '/gooutHeader/getById?id=' + id,
+        success: function (obj) {
+            if(obj.code == 0) {
+                $('#GoOutRecordsDetails-applyUser').text(obj.data.applyUser.name)
+                $('#GoOutRecordsDetails-operator').text(obj.data.operator.name)
+                $('#GoOutRecordsDetails-numberPeople').text(obj.data.numPeople)
+                $('#GoOutRecordsDetails-applyTime').text((new Date(obj.data.gooutTime)).toLocaleString())
+
+                var tbody = $('.GoOutRecordsDetails-table-selfDefine tbody')
+                for (var i = 0; i < obj.data.goouts.length; i++) {
+                    var appendStr = "<tr class='table-tr'><td>" + (i + 1) + "</td><td>" + obj.data.goouts[i].material.name + "</td>" +
+                        "<td>" + obj.data.goouts[i].material.unit + "</td><td>" + obj.data.goouts[i].sum + "</td>"
+                    if (obj.data.goouts[i].needReturn == 1) {
+                        appendStr = appendStr + "<td style='border-right: none'>是</td></tr>"
+                    } else if (obj.data.goouts[i].needReturn == 0) {
+                        appendStr = appendStr + "<td style='border-right: none'>否</td></tr>"
+                    }
+                    tbody.append(appendStr)
+                }
+            }
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
 }
 //****************************************************************************************************************************************
 
@@ -426,4 +468,103 @@ function getAllStaff() {
 function selectedOneStaff(thisObj) {
     $('#goOutPanel-applyStaffName').val( $(thisObj).find("span").text())
     $('#goOutPanel-applyStaffName').attr('value', $(thisObj).find("span").attr("value"))
+}
+/*
+上一页/
+ */
+function previousPage() {
+    var currentPage_ = $('.currentPage').text()
+    if(currentPage_ == 1){
+        alert("已经是第一页！")
+        return
+    }
+    currentPage--
+    if(currentPage < 0){
+        currentPage = 0
+    }
+    var page = currentPage
+    var size = 10
+    var sortFieldName = 'id'
+    var asc = 1
+    var urlStr = ipPort + '/gooutHeader/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                setStaffTableInformation(obj)
+            }else{
+                console.log(obj)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+下一页/
+ */
+function nextPage() {
+    var currentPage_ = $('.currentPage').text()
+    var totalPage_ = $('.totalPage').text()
+    if(currentPage_ == totalPage_){
+        alert("已经是最后一页！")
+        return
+    }
+    currentPage++
+    var page = currentPage
+    var size = 10
+    var sortFieldName = 'id'
+    var asc = 1
+    var urlStr = ipPort + '/gooutHeader/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                setStaffTableInformation(obj)
+            }else{
+                console.log(obj)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+跳转页/
+ */
+function skipPage() {
+    var skipPage_ = parseInt($('.skipPage').val())
+    var totalPage_ = parseInt($('.totalPage').text())
+    if(skipPage_ - totalPage_ > 0){
+        alert("没有此页！")
+        return
+    }
+    if(skipPage_ < 1){
+        alert("没有此页！")
+        return
+    }
+    currentPage = skipPage_ - 1
+    var page = currentPage
+    var size = 10
+    var sortFieldName = 'id'
+    var asc = 1
+    var urlStr = ipPort + '/gooutHeader/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                setStaffTableInformation(obj)
+            }else{
+                console.log(obj)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
 }

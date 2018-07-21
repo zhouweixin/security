@@ -303,3 +303,53 @@ ul.goOutTable-goodsName-ul li:hover{
     background-color: #333333;
     color: #ffffff;
 }
+#myModal-GoOutRecordsDetails label,#myModal-GoOutRecordsDetails th,#myModal-GoOutRecordsDetails span{
+    color: #000000;
+    font-weight: bold;
+}
+.GoOutRecordsDetails-table-selfDefine{
+    text-align: center;
+    margin-bottom: 0px;
+}
+.GoOutRecordsDetails-table-selfDefine thead tr th{
+    text-align: center;
+    border: none;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+.GoOutRecordsDetails-table-selfDefine tbody tr td{
+    text-align: center;
+    border: none;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    padding: 0;
+}
+.table-selfDefine{
+    text-align: center;
+    margin-bottom: 0px;
+}
+.table-selfDefine thead tr th{
+    text-align: center;
+    border: none;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+.table-selfDefine tbody tr td{
+    text-align: center;
+    border: none;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    padding: 0;
+}
+.table-selfDefine tbody tr td input{
+    width: 100%;
+    text-align: center;
+    border: none;
+}
+.table-selfDefine tbody tr td img{
+    width: 25px;
+}
+.table-selfDefine tbody tr td img:hover{
+    cursor: pointer;
+    width: 30px;
+}
