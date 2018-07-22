@@ -57,12 +57,19 @@ $(document).ready(function () {
     $('#addGoOutButton').on('click', function () {
         $('#goOutRecordsPanel').addClass('hidden')
         $('#goOutPanel').removeClass('hidden')
+        $('#goOutPanel-applyStaffName').attr('value', '')
+        $('#goOutPanel-applyStaffName').val('')
+        $('#goOutPanel-staffNames').attr('value', '')
+        $('#goOutPanel-staffNames').val('')
+        $('#goOutPanel-staffNumbers').val('')
+        $('#goOutPanel .table-selfDefine tbody').find('tr').remove()
     })
     /*
    左箭头/
     */
     $('.path-arrow-left').on('click', function () {
         $('#goOutPanel').addClass('hidden')
+        getAllGoOutRecords()
         $('#goOutRecordsPanel').removeClass('hidden')
     })
     /*
@@ -225,8 +232,12 @@ function submitGoOutTable() {
         json_['numPerPeople'] = numPerStaff
         var sum = staffNumbers * numPerStaff
         json_['sum'] = sum
-        var needReturn = tr.eq(i).find('td').eq(5).text()
-        json_['needReturn'] = 1
+        var needReturn = tr.eq(i).find('td').eq(4).find('.bootstrap-switch-on')
+        if(needReturn.length == 1){
+            json_['needReturn'] = 1
+        }else {
+            json_['needReturn'] = 0
+        }
         jsonArr.push(json_)
     }
     var userId_jsonArr = []

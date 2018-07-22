@@ -125,6 +125,15 @@ $(document).ready(function () {
     //部门
     var department = $('.dropdown-menu-department li a')
     getAllDepartmentsName(department)
+    //职位
+    var position = $('.dropdown-menu-position li a')
+    getAllPositionName(position)
+    //工作性质
+    var jobNature = $('.dropdown-menu-jobNature li a')
+    getAllJobNaturesName(jobNature)
+    //工作性质
+    var leaveType = $('.dropdown-menu-leaveType li a')
+    getAllResignTypeName(leaveType)
 })
 function selectAllCheckButton(thisObj) {
     if(thisObj.checked == true){
