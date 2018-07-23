@@ -414,6 +414,8 @@ function getAllStaffInformationByPage() {
 设置员工table/
  */
 function setStaffTableInformation(obj) {
+    $('.currentPage').text(currentPage + 1)
+    $('.totalPage').text(obj.data.totalPages)
     var table_tr = $('.table-tr')
     if(obj.data.numberOfElements != 0){
         var staff_box = $('.staff-checkBox')
