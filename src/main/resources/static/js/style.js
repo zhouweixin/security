@@ -123,17 +123,47 @@ $(document).ready(function () {
         parent.find('button').html($(this).text() + "<span class='caret'></span>")
     })
     //部门
-    var department = $('.dropdown-menu-department li a')
+    var department = $('.dropdown-menu-department')
     getAllDepartmentsName(department)
     //职位
-    var position = $('.dropdown-menu-position li a')
+    var position = $('.dropdown-menu-position')
     getAllPositionName(position)
     //工作性质
-    var jobNature = $('.dropdown-menu-jobNature li a')
+    var jobNature = $('.dropdown-menu-jobNature')
     getAllJobNaturesName(jobNature)
-    //工作性质
-    var leaveType = $('.dropdown-menu-leaveType li a')
+    //离职类型
+    var leaveType = $('.dropdown-menu-leaveType ')
     getAllResignTypeName(leaveType)
+    //民族
+    var nation = $('.dropdown-menu-nation ')
+    getAllNationName(nation)
+    //婚姻状况
+    var maritalStatus = $('.dropdown-menu-maritalStatus ')
+    getAllMaritalStatusName(maritalStatus)
+    //兵役状况
+    var militaryStatus = $('.dropdown-menu-militaryStatus ')
+    getAllMilitaryStatusName(militaryStatus)
+    //政治面貌
+    var politicalStatus = $('.dropdown-menu-politicalStatus ')
+    getAllPoliticalStatusName(politicalStatus)
+    //学历
+    var education = $('.dropdown-menu-education ')
+    getAllEducationName(education)
+    //健康状况
+    var healthStatus = $('.dropdown-menu-healthStatus ')
+    getAllHealthStatusName(healthStatus)
+    //合同类型
+    var personnelContractType = $('.dropdown-menu-personnelContractType ')
+    getAllPersonnelContractTypeName(personnelContractType)
+    //迟到类型
+    var lateType = $('.dropdown-menu-lateType ')
+    getAllLateTypeName(lateType)
+    //合同状态
+    var contractStatus = $('.dropdown-menu-contractStatus ')
+    getAllContractStatusName(contractStatus)
+    //项目状态
+    var projectStatus = $('.dropdown-menu-projectStatus ')
+    getAllProjectStatusName(projectStatus)
 })
 function selectAllCheckButton(thisObj) {
     if(thisObj.checked == true){

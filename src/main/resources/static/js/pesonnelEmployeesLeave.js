@@ -11,28 +11,28 @@ $(document).ready(function () {
         $('#employeesLeftAndBan-dropdownMenu1').html($(this).text() + '<span style="margin-left:4px" class="caret"></span>')
     })
 
-    var leavingTabSelectDepartmentA = $('.leavingTab-selectDepartment-ul li a')
+    var leavingTabSelectDepartmentA = $('.leavingTab-selectDepartment-ul')
     getAllDepartmentsName(leavingTabSelectDepartmentA)
     $('.leavingTab-selectDepartment-ul li a').on('click', function () {
         $('#leavingTab-selectDepartment').html($(this).text() + '<span style="margin-left:4px" class="caret"></span>')
         $('#leavingTab-selectDepartment').attr('value', $(this).attr('value'))
     })
 
-    var leftTabSelectDepartmentA = $('.leftTab-selectDepartment-ul li a')
+    var leftTabSelectDepartmentA = $('.leftTab-selectDepartment-ul')
     getAllDepartmentsName(leftTabSelectDepartmentA)
     $('.leftTab-selectDepartment-ul li a').on('click', function () {
         $('#leftTab-selectDepartment').html($(this).text() + '<span style="margin-left:4px" class="caret"></span>')
         $('#leftTab-selectDepartment').attr('value', $(this).attr('value'))
     })
 
-    var allTabSelectDepartmentA = $('.allTab-selectDepartment-ul li a')
+    var allTabSelectDepartmentA = $('.allTab-selectDepartment-ul')
     getAllDepartmentsName(allTabSelectDepartmentA)
     $('.allTab-selectDepartment-ul li a').on('click', function () {
         $('#allTab-selectDepartment').html($(this).text() + '<span style="margin-left:4px" class="caret"></span>')
         $('#allTab-selectDepartment').attr('value', $(this).attr('value'))
     })
 
-    var leftAndBanTabSelectDepartmentA = $('.leftAndBanTab-selectDepartment-ul li a')
+    var leftAndBanTabSelectDepartmentA = $('.leftAndBanTab-selectDepartment-ul')
     getAllDepartmentsName(leftAndBanTabSelectDepartmentA)
     $('.leftAndBanTab-selectDepartment-ul li a').on('click', function () {
         $('#leftAndBanTab-selectDepartment').html($(this).text() + '<span style="margin-left:4px" class="caret"></span>')

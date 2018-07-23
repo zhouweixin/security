@@ -36,21 +36,21 @@ $(document).ready(function () {
     /*
     搜索栏/
      */
-    var alreadySignedDepartmentA = $('.alreadySigned-department-ul li a')
+    var alreadySignedDepartmentA = $('.alreadySigned-department-ul')
     getAllDepartmentsName(alreadySignedDepartmentA)
     $('.alreadySigned-department-ul li a').on('click', function () {
         $('#alreadySigned-department').html($(this).text() + '<span style="margin-left:4px" class="caret"></span>')
         $('#alreadySigned-department').attr('value', $(this).attr('value'))
     })
 
-    var alreadySignedJobNatureA = $('.alreadySigned-jobNature-ul li a')
+    var alreadySignedJobNatureA = $('.alreadySigned-jobNature-ul')
     getAllJobNaturesName(alreadySignedJobNatureA)
     $('.alreadySigned-jobNature-ul li a').on('click', function () {
         $('#alreadySigned-jobNature').html($(this).text() + '<span style="margin-left:4px" class="caret"></span>')
         $('#alreadySigned-jobNature').attr('value', $(this).attr('value'))
     })
 
-    var alreadySignedContractTypeA = $('.alreadySigned-contractType-ul li a')
+    var alreadySignedContractTypeA = $('.alreadySigned-contractType-ul')
     getAllPersonnelContractTypeName(alreadySignedContractTypeA)
     $('.alreadySigned-contractType-ul li a').on('click', function () {
         $('#alreadySigned-contractType').html($(this).text() + '<span style="margin-left:4px" class="caret"></span>')

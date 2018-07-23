@@ -42,10 +42,13 @@ function getAllDepartmentsName(department){
         url:ipPort + '/department/getAll',
         dataType:'json',
         success:function (obj) {
-            for(var i = 1; i < obj.data.length + 1; i ++ ){
-                department.eq(i).parent().removeClass('hidden')
-                department.eq(i).text(obj.data[i - 1].name)
-                department.eq(i).attr('value', obj.data[i - 1].id)
+            for(var j = 0; j < department.length; j++){
+                var a = department.eq(j).find('li a')
+                for(var i = 1; i < obj.data.length + 1; i ++ ){
+                    a.eq(i).parent().removeClass('hidden')
+                    a.eq(i).text(obj.data[i - 1].name)
+                    a.eq(i).attr('value', obj.data[i - 1].id)
+                }
             }
 
         },
@@ -62,10 +65,13 @@ function getAllJobNaturesName(jobNature){
         url:ipPort + '/jobNature/getAll',
         dataType:'json',
         success:function (obj) {
-            for(var i = 1; i < obj.data.length + 1; i ++ ){
-                jobNature.eq(i).parent().removeClass('hidden')
-                jobNature.eq(i).text(obj.data[i - 1].name)
-                jobNature.eq(i).attr('value', obj.data[i - 1].id)
+            for(var j = 0; j < jobNature.length; j++){
+                var a = jobNature.eq(j).find('li a')
+                for(var i = 1; i < obj.data.length + 1; i ++ ){
+                    a.eq(i).parent().removeClass('hidden')
+                    a.eq(i).text(obj.data[i - 1].name)
+                    a.eq(i).attr('value', obj.data[i - 1].id)
+                }
             }
         },
         error:function (error) {
@@ -81,10 +87,13 @@ function getAllPositionName(role){
         url:ipPort + '/role/getAll',
         dataType:'json',
         success:function (obj) {
-            for(var i = 1; i < obj.data.length + 1; i ++ ){
-                role.eq(i).parent().removeClass('hidden')
-                role.eq(i).text(obj.data[i - 1].name)
-                role.eq(i).attr('value', obj.data[i - 1].id)
+            for(var j = 0; j < role.length; j++){
+                var a = role.eq(j).find('li a')
+                for(var i = 1; i < obj.data.length + 1; i ++ ){
+                    a.eq(i).parent().removeClass('hidden')
+                    a.eq(i).text(obj.data[i - 1].name)
+                    a.eq(i).attr('value', obj.data[i - 1].id)
+                }
             }
         },
         error:function (error) {
@@ -100,10 +109,13 @@ function getAllNationName(nation){
         url:ipPort + '/nation/getAll',
         dataType:'json',
         success:function (obj) {
-            for(var i = 1; i < obj.data.length + 1; i ++ ){
-                nation.eq(i).parent().removeClass('hidden')
-                nation.eq(i).text(obj.data[i - 1].name)
-                nation.eq(i).attr('value', obj.data[i - 1].id)
+            for(var j = 0; j < nation.length; j++){
+                var a = nation.eq(j).find('li a')
+                for(var i = 1; i < obj.data.length + 1; i ++ ){
+                    a.eq(i).parent().removeClass('hidden')
+                    a.eq(i).text(obj.data[i - 1].name)
+                    a.eq(i).attr('value', obj.data[i - 1].id)
+                }
             }
         },
         error:function (error) {
@@ -119,10 +131,13 @@ function getAllMaritalStatusName(maritalStatus){
         url:ipPort + '/maritalStatus/getAll',
         dataType:'json',
         success:function (obj) {
-            for(var i = 1; i < obj.data.length + 1; i ++ ){
-                maritalStatus.eq(i).parent().removeClass('hidden')
-                maritalStatus.eq(i).text(obj.data[i - 1].name)
-                maritalStatus.eq(i).attr('value', obj.data[i - 1].id)
+            for(var j = 0; j < maritalStatus.length; j++){
+                var a = maritalStatus.eq(j).find('li a')
+                for(var i = 1; i < obj.data.length + 1; i ++ ){
+                    a.eq(i).parent().removeClass('hidden')
+                    a.eq(i).text(obj.data[i - 1].name)
+                    a.eq(i).attr('value', obj.data[i - 1].id)
+                }
             }
         },
         error:function (error) {
@@ -138,10 +153,13 @@ function getAllMilitaryStatusName(militaryStatus){
         url:ipPort + '/militaryStatus/getAll',
         dataType:'json',
         success:function (obj) {
-            for(var i = 1; i < obj.data.length + 1; i ++ ){
-                militaryStatus.eq(i).parent().removeClass('hidden')
-                militaryStatus.eq(i).text(obj.data[i - 1].name)
-                militaryStatus.eq(i).attr('value', obj.data[i - 1].id)
+            for(var j = 0; j < militaryStatus.length; j++){
+                var a = militaryStatus.eq(j).find('li a')
+                for(var i = 1; i < obj.data.length + 1; i ++ ){
+                    a.eq(i).parent().removeClass('hidden')
+                    a.eq(i).text(obj.data[i - 1].name)
+                    a.eq(i).attr('value', obj.data[i - 1].id)
+                }
             }
         },
         error:function (error) {
@@ -157,10 +175,13 @@ function getAllPoliticalStatusName(politicalStatus){
         url:ipPort + '/politicalStatus/getAll',
         dataType:'json',
         success:function (obj) {
-            for(var i = 1; i < obj.data.length + 1; i ++ ){
-                politicalStatus.eq(i).parent().removeClass('hidden')
-                politicalStatus.eq(i).text(obj.data[i - 1].name)
-                politicalStatus.eq(i).attr('value', obj.data[i - 1].id)
+            for(var j = 0; j < politicalStatus.length; j++){
+                var a = politicalStatus.eq(j).find('li a')
+                for(var i = 1; i < obj.data.length + 1; i ++ ){
+                    a.eq(i).parent().removeClass('hidden')
+                    a.eq(i).text(obj.data[i - 1].name)
+                    a.eq(i).attr('value', obj.data[i - 1].id)
+                }
             }
         },
         error:function (error) {
@@ -176,10 +197,13 @@ function getAllEducationName(education){
         url:ipPort + '/education/getAll',
         dataType:'json',
         success:function (obj) {
-            for(var i = 1; i < obj.data.length + 1; i ++ ){
-                education.eq(i).parent().removeClass('hidden')
-                education.eq(i).text(obj.data[i - 1].name)
-                education.eq(i).attr('value', obj.data[i - 1].id)
+            for(var j = 0; j < education.length; j++){
+                var a = education.eq(j).find('li a')
+                for(var i = 1; i < obj.data.length + 1; i ++ ){
+                    a.eq(i).parent().removeClass('hidden')
+                    a.eq(i).text(obj.data[i - 1].name)
+                    a.eq(i).attr('value', obj.data[i - 1].id)
+                }
             }
         },
         error:function (error) {
@@ -195,10 +219,13 @@ function getAllHealthStatusName(healthStatus){
         url:ipPort + '/healthStatus/getAll',
         dataType:'json',
         success:function (obj) {
-            for(var i = 1; i < obj.data.length + 1; i ++ ){
-                healthStatus.eq(i).parent().removeClass('hidden')
-                healthStatus.eq(i).text(obj.data[i - 1].name)
-                healthStatus.eq(i).attr('value', obj.data[i - 1].id)
+            for(var j = 0; j < healthStatus.length; j++){
+                var a = healthStatus.eq(j).find('li a')
+                for(var i = 1; i < obj.data.length + 1; i ++ ){
+                    a.eq(i).parent().removeClass('hidden')
+                    a.eq(i).text(obj.data[i - 1].name)
+                    a.eq(i).attr('value', obj.data[i - 1].id)
+                }
             }
         },
         error:function (error) {
@@ -214,10 +241,13 @@ function getAllPersonnelContractTypeName(contractType){
         url:ipPort + '/contractType/getAll',
         dataType:'json',
         success:function (obj) {
-            for(var i = 1; i < obj.data.length + 1; i ++ ){
-                contractType.eq(i).parent().removeClass('hidden')
-                contractType.eq(i).text(obj.data[i - 1].name)
-                contractType.eq(i).attr('value', obj.data[i - 1].id)
+            for(var j = 0; j < contractType.length; j++){
+                var a = contractType.eq(j).find('li a')
+                for(var i = 1; i < obj.data.length + 1; i ++ ){
+                    a.eq(i).parent().removeClass('hidden')
+                    a.eq(i).text(obj.data[i - 1].name)
+                    a.eq(i).attr('value', obj.data[i - 1].id)
+                }
             }
         },
         error:function (error) {
@@ -233,10 +263,13 @@ function getAllLateTypeName(lateType){
         url:ipPort + '/lateType/getAll',
         dataType:'json',
         success:function (obj) {
-            for(var i = 1; i < obj.data.length + 1; i ++ ){
-                lateType.eq(i).parent().removeClass('hidden')
-                lateType.eq(i).text(obj.data[i - 1].name)
-                lateType.eq(i).attr('value', obj.data[i - 1].id)
+            for(var j = 0; j < lateType.length; j++){
+                var a = lateType.eq(j).find('li a')
+                for(var i = 1; i < obj.data.length + 1; i ++ ){
+                    a.eq(i).parent().removeClass('hidden')
+                    a.eq(i).text(obj.data[i - 1].name)
+                    a.eq(i).attr('value', obj.data[i - 1].id)
+                }
             }
         },
         error:function (error) {
@@ -269,10 +302,13 @@ function getAllContractStatusName(contractStatus){
         url:ipPort + '/contractStatus/getAll',
         dataType:'json',
         success:function (obj) {
-            for(var i = 1; i < obj.data.length + 1; i ++ ){
-                contractStatus.eq(i).parent().removeClass('hidden')
-                contractStatus.eq(i).text(obj.data[i - 1].name)
-                contractStatus.eq(i).attr('value', obj.data[i - 1].id)
+            for(var j = 0; j < contractStatus.length; j++){
+                var a = contractStatus.eq(j).find('li a')
+                for(var i = 1; i < obj.data.length + 1; i ++ ){
+                    a.eq(i).parent().removeClass('hidden')
+                    a.eq(i).text(obj.data[i - 1].name)
+                    a.eq(i).attr('value', obj.data[i - 1].id)
+                }
             }
         },
         error:function (error) {
@@ -288,10 +324,13 @@ function getAllContractStatusName(contractStatus){
          url:ipPort + '/projectStatus/getAll',
          dataType:'json',
          success:function (obj) {
-             for(var i = 1; i < obj.data.length + 1; i ++ ){
-                 projectStatus.eq(i).parent().removeClass('hidden')
-                 projectStatus.eq(i).text(obj.data[i - 1].name)
-                 projectStatus.eq(i).attr('value', obj.data[i - 1].id)
+             for(var j = 0; j < projectStatus.length; j++){
+                 var a = projectStatus.eq(j).find('li a')
+                 for(var i = 1; i < obj.data.length + 1; i ++ ){
+                     a.eq(i).parent().removeClass('hidden')
+                     a.eq(i).text(obj.data[i - 1].name)
+                     a.eq(i).attr('value', obj.data[i - 1].id)
+                 }
              }
          },
          error:function (error) {
@@ -306,10 +345,13 @@ function getAllContractStatusName(contractStatus){
          url:ipPort + '/resignType/getAll',
          dataType:'json',
          success:function (obj) {
-             for(var i = 1; i < obj.data.length + 1; i ++ ){
-                 resignType.eq(i).parent().removeClass('hidden')
-                 resignType.eq(i).text(obj.data[i - 1].name)
-                 resignType.eq(i).attr('value', obj.data[i - 1].id)
+             for(var j = 0; j < resignType.length; j++){
+                 var a = resignType.eq(j).find('li a')
+                 for(var i = 1; i < obj.data.length + 1; i ++ ){
+                     a.eq(i).parent().removeClass('hidden')
+                     a.eq(i).text(obj.data[i - 1].name)
+                     a.eq(i).attr('value', obj.data[i - 1].id)
+                 }
              }
          },
          error:function (error) {

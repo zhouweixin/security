@@ -129,7 +129,7 @@ $(document).ready(function () {
     /*
     员工列表页面的选择部门下拉菜单/
      */
-    var selectDepartmentA = $('.selectDepartment-dropdownMenu-ul li a')
+    var selectDepartmentA = $('.selectDepartment-dropdownMenu-ul')
     getAllDepartmentsName(selectDepartmentA)
     $('.selectDepartment-dropdownMenu-ul li a').on('click', function () {
         $('#selectDepartment-dropdownMenu').html($(this).text() + '<span style="margin-left:4px" class="caret"></span>')
