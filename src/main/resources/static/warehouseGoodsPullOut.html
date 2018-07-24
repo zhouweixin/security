@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>徐州精诚特卫保安服务有限公司</title>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/warehouseGoodsPushIn.css" rel="stylesheet">
     <link href="bootstrap-switch/css/bootstrap-switch.css" rel="stylesheet">
     <link href="bootstrap-switch/css/main.css" rel="stylesheet">
     <link href="bootstrap-switch/css/highlight.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/warehouseGoodsPullOut.css" rel="stylesheet">
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/style.js"></script>
@@ -112,9 +112,194 @@
             </li>
         </ul>
     </div>
-    <div class="right-panel">
+    <!--------------------------------------------------------出库记录panel-------------------------------------------------------------->
+    <!---------------------------------------------------------------------------------------------------------------------->
+    <div id="goOutRecordsPanel" class="right-panel">
+
         <div class="nav-path">
             <div class="path-title">
+                <ul class="path-ul">
+                    <li>出库记录</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="main-body-content">
+
+            <div class="top-body" style="margin-top: 30px">
+                <div class="search-content" style="height: 34px;">
+                    <div class="search-left">
+                        <!--<div class="dropdown col-xs-2 select-department" style="padding: 0">-->
+                            <!--<button class="btn btn-default dropdown-toggle" type="button" value='' id="selectStatus-dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">-->
+                                <!--选择状态-->
+                                <!--<span class="caret"></span>-->
+                            <!--</button>-->
+                            <!--<ul class="dropdown-menu selectStatus-dropdownMenu-ul" aria-labelledby="selectStatus-dropdownMenu">-->
+                                <!--<li><a value="">选择状态</a></li>-->
+                                <!--<li><a value="0">未审核</a></li>-->
+                                <!--<li><a value="1">通过（未入库）</a></li>-->
+                                <!--<li><a value="2">未通过</a></li>-->
+                                <!--<li><a value="3">通过(已入库)</a></li>-->
+                            <!--</ul>-->
+                        <!--</div>-->
+                        <!--<div class="input-group col-xs-4">-->
+                            <!--<input id="applyUserId-input" type="text" class="form-control" placeholder="申请人编号">-->
+                            <!--<span class="input-group-btn">-->
+                                <!--<button class="btn btn-default" type="button" onclick="searchByStaffId()">搜索</button>-->
+                                <!--<button class="btn btn-default" type="button" onclick="getAllPurchaseApply()">搜索全部</button>-->
+                            <!--</span>-->
+                        <!--</div>-->
+                    </div>
+                    <div class="search-right">
+                        <button id="addGoOutButton" class="btn btn-default" href="#goOutPanel">物品出库</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-body">
+                <table class="table table-bordered">
+                    <thead style="background-color: #F9FAFB">
+                    <tr>
+                        <th style="width: 100px">出库单编号</th>
+                        <th>申请人</th>
+                        <th>申请时间</th>
+                        <th>人数</th>
+                        <th>经办人</th>
+                        <th style="width: 50px;">详情</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="table-tr hidden">
+                        <td class="goOutRecords-id"></td>
+                        <td class="goOutRecords-applyStaffName"></td>
+                        <td class="goOutRecords-applyTime"></td>
+                        <td class="goOutRecords-staffNumbers"></td>
+                        <td class="goOutRecords-operator"></td>
+                        <td class="">
+                            <a  data-toggle="modal" data-target="#myModal-GoOutRecordsDetails" onclick="setGoOutRecordsModal(this)"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="goOutRecords-id"></td>
+                        <td class="goOutRecords-applyStaffName"></td>
+                        <td class="goOutRecords-applyTime"></td>
+                        <td class="goOutRecords-staffNumbers"></td>
+                        <td class="goOutRecords-operator"></td>
+                        <td class="">
+                            <a  data-toggle="modal" data-target="#myModal-GoOutRecordsDetails" onclick="setGoOutRecordsModal(this)"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="goOutRecords-id"></td>
+                        <td class="goOutRecords-applyStaffName"></td>
+                        <td class="goOutRecords-applyTime"></td>
+                        <td class="goOutRecords-staffNumbers"></td>
+                        <td class="goOutRecords-operator"></td>
+                        <td class="">
+                            <a  data-toggle="modal" data-target="#myModal-GoOutRecordsDetails" onclick="setGoOutRecordsModal(this)"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="goOutRecords-id"></td>
+                        <td class="goOutRecords-applyStaffName"></td>
+                        <td class="goOutRecords-applyTime"></td>
+                        <td class="goOutRecords-staffNumbers"></td>
+                        <td class="goOutRecords-operator"></td>
+                        <td class="">
+                            <a  data-toggle="modal" data-target="#myModal-GoOutRecordsDetails" onclick="setGoOutRecordsModal(this)"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="goOutRecords-id"></td>
+                        <td class="goOutRecords-applyStaffName"></td>
+                        <td class="goOutRecords-applyTime"></td>
+                        <td class="goOutRecords-staffNumbers"></td>
+                        <td class="goOutRecords-operator"></td>
+                        <td class="">
+                            <a  data-toggle="modal" data-target="#myModal-GoOutRecordsDetails" onclick="setGoOutRecordsModal(this)"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="goOutRecords-id"></td>
+                        <td class="goOutRecords-applyStaffName"></td>
+                        <td class="goOutRecords-applyTime"></td>
+                        <td class="goOutRecords-staffNumbers"></td>
+                        <td class="goOutRecords-operator"></td>
+                        <td class="">
+                            <a  data-toggle="modal" data-target="#myModal-GoOutRecordsDetails" onclick="setGoOutRecordsModal(this)"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="goOutRecords-id"></td>
+                        <td class="goOutRecords-applyStaffName"></td>
+                        <td class="goOutRecords-applyTime"></td>
+                        <td class="goOutRecords-staffNumbers"></td>
+                        <td class="goOutRecords-operator"></td>
+                        <td class="">
+                            <a  data-toggle="modal" data-target="#myModal-GoOutRecordsDetails" onclick="setGoOutRecordsModal(this)"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="goOutRecords-id"></td>
+                        <td class="goOutRecords-applyStaffName"></td>
+                        <td class="goOutRecords-applyTime"></td>
+                        <td class="goOutRecords-staffNumbers"></td>
+                        <td class="goOutRecords-operator"></td>
+                        <td class="">
+                            <a  data-toggle="modal" data-target="#myModal-GoOutRecordsDetails" onclick="setGoOutRecordsModal(this)"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="goOutRecords-id"></td>
+                        <td class="goOutRecords-applyStaffName"></td>
+                        <td class="goOutRecords-applyTime"></td>
+                        <td class="goOutRecords-staffNumbers"></td>
+                        <td class="goOutRecords-operator"></td>
+                        <td class="">
+                            <a  data-toggle="modal" data-target="#myModal-GoOutRecordsDetails" onclick="setGoOutRecordsModal(this)"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="goOutRecords-id"></td>
+                        <td class="goOutRecords-applyStaffName"></td>
+                        <td class="goOutRecords-applyTime"></td>
+                        <td class="goOutRecords-staffNumbers"></td>
+                        <td class="goOutRecords-operator"></td>
+                        <td class="">
+                            <a  data-toggle="modal" data-target="#myModal-GoOutRecordsDetails" onclick="setGoOutRecordsModal(this)"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="page-body">
+                <ul class="page-ul">
+                    <li class="page-ul-li">
+                        <div class="input-group" style="width: 110px">
+                            <input type="text" class="form-control skipPage" placeholder="">
+                            <span class="input-group-btn">
+                                <button id="jump-button"  onclick="skipPage()" class="btn btn-default" type="button">跳转</button>
+                             </span>
+                        </div>
+                    </li>
+                    <li class="page-ul-li"><a class="btn btn-default page-button" onclick="nextPage()"><span class="caret caret-left"></span></a></li>
+                    <li class="page-ul-li" style="margin-top: 8px"><span class="currentPage"></span>/<span class="totalPage"></span></li>
+                    <li class="page-ul-li"><a class="btn btn-default page-button" onclick="previousPage()"><span class="caret caret-right"></span></a></li>
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+    <!---------------------------------------------------------出库Panel----------------------------------------------------------------->
+    <!---------------------------------------------------------------------------------------------------------------------->
+    <div id="goOutPanel" class="right-panel hidden">
+        <div class="nav-path">
+            <div class="">
+                <a href="#goOutRecordsPanel" class="btn btn-default path-arrow-left">
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                </a>
                 <ul class="path-ul">
                     <li>物品出库</li>
                 </ul>
@@ -126,285 +311,31 @@
             </div>
             <div class="main-table col-xs-8 col-xs-push-2">
                 <div style="height: 41px; border-bottom: 1px solid #000000">
-                    <div class="col-xs-2" style="text-align: center;"><label style="height: 100%; margin-bottom: 0px; line-height: 40px">经办人</label></div>
-                    <input id="applyDepartment" class="col-xs-2" onclick="getAllDepartment()" data-toggle="modal" data-target="#myModal-selectDepartment" style="border:none; border-right: 1px solid #000000;border-left: 1px solid #000000;height: 40px">
-                    <div class="col-xs-2"  style="text-align: center;"><label style="height: 100%; margin-bottom: 0px; line-height: 40px">申请人</label></div>
-                    <input id="applyStaff" class="col-xs-2" onclick="getAllStaff()" data-toggle="modal" data-target="#myModal-selectOneStaff" style="border:none; border-right: 1px solid #000000;border-left: 1px solid #000000;height: 40px">
-                    <div class="col-xs-2"  style="text-align: center;"><label style="height: 100%; margin-bottom: 0px; line-height: 40px">日期</label></div>
-                    <input class="col-xs-2" type="date" style="border:none;border-left: 1px solid #000000;height: 40px">
+                    <div class="col-xs-3" style="text-align: center;"><label style="height: 100%; margin-bottom: 0px; line-height: 40px">经办人</label></div>
+                    <input id="goOutPanel-operatorName" value="zy00001" class="col-xs-3" style="border:none; border-right: 1px solid #000000;border-left: 1px solid #000000;height: 40px">
+                    <div class="col-xs-3"  style="text-align: center;"><label style="height: 100%; margin-bottom: 0px; line-height: 40px">申请人</label></div>
+                    <input id="goOutPanel-applyStaffName" class="col-xs-3" onclick="getAllStaff()" data-toggle="modal" data-target="#myModal-selectOneStaff" style="border:none; border-left: 1px solid #000000;height: 40px">
                 </div>
-                <div class="table-body">
+                <div style="height: 41px; border-bottom: 1px solid #000000">
+                    <div class="col-xs-3" style="text-align: center;"><label style="height: 100%; margin-bottom: 0px; line-height: 40px">使用人</label></div>
+                    <input id="goOutPanel-staffNames" class="col-xs-5" onclick="getAllStaff_multi()" data-toggle="modal" data-target="#myModal-selectStaff" style="border:none; border-right: 1px solid #000000;border-left: 1px solid #000000;height: 40px">
+                    <div class="col-xs-2"  style="text-align: center;"><label style="height: 100%; margin-bottom: 0px; line-height: 40px">人数</label></div>
+                    <input id="goOutPanel-staffNumbers" class="col-xs-2" style="border:none; border-left: 1px solid #000000;height: 40px">
+                </div>
+                <div style="margin-top: 0px">
                     <table class="table table-bordered table-selfDefine">
                         <thead>
                             <tr >
                                 <th style="width: 60px;">序号</th>
                                 <th>名称</th>
-                                <th>数量 / 人</th>
-                                <th>是否需要归还</th>
+                                <th style="width: 60px;">单位</th>
+                                <th style="width: 100px;">数量 / 人</th>
+                                <th style="width: 150px;">是否需要归还</th>
                                 <th style="width: 60px;border-right: none">删除</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="table-tr hidden">
-                                <td></td>
-                                <td><input></td>
-                                <td><input></td>
-                                <td>
-                                    <p style="margin: 0">
-                                        <input type="checkbox" checked data-on-text="是" data-off-text="否" data-on-color="info" data-off-color="warning" data-size="mini">
-                                    </p>
-                                </td>
-                                <td style="border-right: none">
-                                    <a onclick="cleanRowPullOutContent(this)"><img style="width: 25px" src="imgs/minus-r.png"></a>
-                                </td>
-                            </tr>
-                            <tr class="table-tr hidden">
-                                <td></td>
-                                <td><input></td>
-                                <td><input></td>
-                                <td>
-                                    <p style="margin: 0">
-                                        <input type="checkbox" checked data-on-text="是" data-off-text="否" data-on-color="info" data-off-color="warning" data-size="mini">
-                                    </p>
-                                </td>
-                                <td style="border-right: none">
-                                    <a onclick="cleanRowPullOutContent(this)"><img style="width: 25px" src="imgs/minus-r.png"></a>
-                                </td>
-                            </tr>
-                            <tr class="table-tr hidden">
-                                <td></td>
-                                <td><input></td>
-                                <td><input></td>
-                                <td>
-                                    <p style="margin: 0">
-                                        <input type="checkbox" checked data-on-text="是" data-off-text="否" data-on-color="info" data-off-color="warning" data-size="mini">
-                                    </p>
-                                </td>
-                                <td style="border-right: none">
-                                    <a onclick="cleanRowPullOutContent(this)"><img style="width: 25px" src="imgs/minus-r.png"></a>
-                                </td>
-                            </tr>
-                            <tr class="table-tr hidden">
-                                <td></td>
-                                <td><input></td>
-                                <td><input></td>
-                                <td>
-                                    <p style="margin: 0">
-                                        <input type="checkbox" checked data-on-text="是" data-off-text="否" data-on-color="info" data-off-color="warning" data-size="mini">
-                                    </p>
-                                </td>
-                                <td style="border-right: none">
-                                    <a onclick="cleanRowPullOutContent(this)"><img style="width: 25px" src="imgs/minus-r.png"></a>
-                                </td>
-                            </tr>
-                            <tr class="table-tr hidden">
-                                <td></td>
-                                <td><input></td>
-                                <td><input></td>
-                                <td>
-                                    <p style="margin: 0">
-                                        <input type="checkbox" checked data-on-text="是" data-off-text="否" data-on-color="info" data-off-color="warning" data-size="mini">
-                                    </p>
-                                </td>
-                                <td style="border-right: none">
-                                    <a onclick="cleanRowPullOutContent(this)"><img style="width: 25px" src="imgs/minus-r.png"></a>
-                                </td>
-                            </tr>
-                            <tr class="table-tr hidden">
-                                <td></td>
-                                <td><input></td>
-                                <td><input></td>
-                                <td>
-                                    <p style="margin: 0">
-                                        <input type="checkbox" checked data-on-text="是" data-off-text="否" data-on-color="info" data-off-color="warning" data-size="mini">
-                                    </p>
-                                </td>
-                                <td style="border-right: none">
-                                    <a onclick="cleanRowPullOutContent(this)"><img style="width: 25px" src="imgs/minus-r.png"></a>
-                                </td>
-                            </tr>
-                            <tr class="table-tr hidden">
-                                <td></td>
-                                <td><input></td>
-                                <td><input></td>
-                                <td>
-                                    <p style="margin: 0">
-                                        <input type="checkbox" checked data-on-text="是" data-off-text="否" data-on-color="info" data-off-color="warning" data-size="mini">
-                                    </p>
-                                </td>
-                                <td style="border-right: none">
-                                    <a onclick="cleanRowPullOutContent(this)"><img style="width: 25px" src="imgs/minus-r.png"></a>
-                                </td>
-                            </tr>
-                            <tr class="table-tr hidden">
-                                <td></td>
-                                <td><input></td>
-                                <td><input></td>
-                                <td>
-                                    <p style="margin: 0">
-                                        <input type="checkbox" checked data-on-text="是" data-off-text="否" data-on-color="info" data-off-color="warning" data-size="mini">
-                                    </p>
-                                </td>
-                                <td style="border-right: none">
-                                    <a onclick="cleanRowPullOutContent(this)"><img style="width: 25px" src="imgs/minus-r.png"></a>
-                                </td>
-                            </tr>
-                            <tr class="table-tr hidden">
-                                <td></td>
-                                <td><input></td>
-                                <td><input></td>
-                                <td>
-                                    <p style="margin: 0">
-                                        <input type="checkbox" checked data-on-text="是" data-off-text="否" data-on-color="info" data-off-color="warning" data-size="mini">
-                                    </p>
-                                </td>
-                                <td style="border-right: none">
-                                    <a onclick="cleanRowPullOutContent(this)"><img style="width: 25px" src="imgs/minus-r.png"></a>
-                                </td>
-                            </tr>
-                            <tr class="table-tr hidden">
-                                <td></td>
-                                <td><input></td>
-                                <td><input></td>
-                                <td>
-                                    <p style="margin: 0">
-                                        <input type="checkbox" checked data-on-text="是" data-off-text="否" data-on-color="info" data-off-color="warning" data-size="mini">
-                                    </p>
-                                </td>
-                                <td style="border-right: none">
-                                    <a onclick="cleanRowPullOutContent(this)"><img style="width: 25px" src="imgs/minus-r.png"></a>
-                                </td>
-                            </tr>
-                            <tr class="table-tr hidden">
-                                <td></td>
-                                <td><input></td>
-                                <td><input></td>
-                                <td>
-                                    <p style="margin: 0">
-                                        <input type="checkbox" checked data-on-text="是" data-off-text="否" data-on-color="info" data-off-color="warning" data-size="mini">
-                                    </p>
-                                </td>
-                                <td style="border-right: none">
-                                    <a onclick="cleanRowPullOutContent(this)"><img style="width: 25px" src="imgs/minus-r.png"></a>
-                                </td>
-                            </tr>
-                            <tr class="table-tr hidden">
-                                <td></td>
-                                <td><input></td>
-                                <td><input></td>
-                                <td>
-                                    <p style="margin: 0">
-                                        <input type="checkbox" checked data-on-text="是" data-off-text="否" data-on-color="info" data-off-color="warning" data-size="mini">
-                                    </p>
-                                </td>
-                                <td style="border-right: none">
-                                    <a onclick="cleanRowPullOutContent(this)"><img style="width: 25px" src="imgs/minus-r.png"></a>
-                                </td>
-                            </tr>
-                            <tr class="table-tr hidden">
-                                <td></td>
-                                <td><input></td>
-                                <td><input></td>
-                                <td>
-                                    <p style="margin: 0">
-                                        <input type="checkbox" checked data-on-text="是" data-off-text="否" data-on-color="info" data-off-color="warning" data-size="mini">
-                                    </p>
-                                </td>
-                                <td style="border-right: none">
-                                    <a onclick="cleanRowPullOutContent(this)"><img style="width: 25px" src="imgs/minus-r.png"></a>
-                                </td>
-                            </tr>
-                            <tr class="table-tr hidden">
-                                <td></td>
-                                <td><input></td>
-                                <td><input></td>
-                                <td>
-                                    <p style="margin: 0">
-                                        <input type="checkbox" checked data-on-text="是" data-off-text="否" data-on-color="info" data-off-color="warning" data-size="mini">
-                                    </p>
-                                </td>
-                                <td style="border-right: none">
-                                    <a onclick="cleanRowPullOutContent(this)"><img style="width: 25px" src="imgs/minus-r.png"></a>
-                                </td>
-                            </tr>
-                            <tr class="table-tr hidden">
-                                <td></td>
-                                <td><input></td>
-                                <td><input></td>
-                                <td>
-                                    <p style="margin: 0">
-                                        <input type="checkbox" checked data-on-text="是" data-off-text="否" data-on-color="info" data-off-color="warning" data-size="mini">
-                                    </p>
-                                </td>
-                                <td style="border-right: none">
-                                    <a onclick="cleanRowPullOutContent(this)"><img style="width: 25px" src="imgs/minus-r.png"></a>
-                                </td>
-                            </tr>
-                            <tr class="table-tr hidden">
-                                <td></td>
-                                <td><input></td>
-                                <td><input></td>
-                                <td>
-                                    <p style="margin: 0">
-                                        <input type="checkbox" checked data-on-text="是" data-off-text="否" data-on-color="info" data-off-color="warning" data-size="mini">
-                                    </p>
-                                </td>
-                                <td style="border-right: none">
-                                    <a onclick="cleanRowPullOutContent(this)"><img style="width: 25px" src="imgs/minus-r.png"></a>
-                                </td>
-                            </tr>
-                            <tr class="table-tr hidden">
-                                <td></td>
-                                <td><input></td>
-                                <td><input></td>
-                                <td>
-                                    <p style="margin: 0">
-                                        <input type="checkbox" checked data-on-text="是" data-off-text="否" data-on-color="info" data-off-color="warning" data-size="mini">
-                                    </p>
-                                </td>
-                                <td style="border-right: none">
-                                    <a onclick="cleanRowPullOutContent(this)"><img style="width: 25px" src="imgs/minus-r.png"></a>
-                                </td>
-                            </tr>
-                            <tr class="table-tr hidden">
-                                <td></td>
-                                <td><input></td>
-                                <td><input></td>
-                                <td>
-                                    <p style="margin: 0">
-                                        <input type="checkbox" checked data-on-text="是" data-off-text="否" data-on-color="info" data-off-color="warning" data-size="mini">
-                                    </p>
-                                </td>
-                                <td style="border-right: none">
-                                    <a onclick="cleanRowPullOutContent(this)"><img style="width: 25px" src="imgs/minus-r.png"></a>
-                                </td>
-                            </tr>
-                            <tr class="table-tr hidden">
-                                <td></td>
-                                <td><input></td>
-                                <td><input></td>
-                                <td>
-                                    <p style="margin: 0">
-                                        <input type="checkbox" checked data-on-text="是" data-off-text="否" data-on-color="info" data-off-color="warning" data-size="mini">
-                                    </p>
-                                </td>
-                                <td style="border-right: none">
-                                    <a onclick="cleanRowPullOutContent(this)"><img style="width: 25px" src="imgs/minus-r.png"></a>
-                                </td>
-                            </tr>
-                            <tr class="table-tr hidden">
-                                <td></td>
-                                <td><input></td>
-                                <td><input></td>
-                                <td>
-                                    <p style="margin: 0">
-                                        <input type="checkbox" checked data-on-text="是" data-off-text="否" data-on-color="info" data-off-color="warning" data-size="mini">
-                                    </p>
-                                </td>
-                                <td style="border-right: none">
-                                    <a onclick="cleanRowPullOutContent(this)"><img style="width: 25px" src="imgs/minus-r.png"></a>
-                                </td>
-                            </tr>
+
                         </tbody>
                     </table>
                 </div>
@@ -412,29 +343,206 @@
                     <a onclick="addPullOutContent()"><img src="imgs/plus-circle.png"></a>
                 </div>
             </div>
+            <div class="col-xs-12" style="text-align: center;margin-top: 20px">
+                <a class="btn btn-info" onclick="submitGoOutTable()">提交</a>
+            </div>
         </div>
     </div>
 </div>
-<!-------------------------------------------------------------选择部门（模态框）--------------------------------------------------------------------------------------->
-<!---------------------------------------------------------------------------------------------------------------------------------------------------->
-<div class="modal fade bs-example-modal-sm" id="myModal-selectDepartment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-selectDepartment">
-    <div class="modal-dialog modal-sm" role="document">
+<!--------------------------------------------------------出库记录详情modal-------------------------------------------------------------->
+<!---------------------------------------------------------------------------------------------------------------------->
+<div class="modal fade" id="myModal-GoOutRecordsDetails" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-GoOutRecordsDetails">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body" style="padding: 15px 20px">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <div class="top-body" style="margin-top: 30px">
+                            <h3 style="text-align: center"><b>出库记录</b></h3>
+                        </div>
+                        <div class="main-table col-xs-12 ">
+                            <div style="height: 31px; border-bottom: 1px solid #000000">
+                                <div class="col-xs-3" style="text-align: center;"><label style="height: 100%; margin-bottom: 0px; line-height: 30px">申请人</label></div>
+                                <div id="GoOutRecordsDetails-applyUser" class="col-xs-3" style="border:none; border-right: 1px solid #000000;border-left: 1px solid #000000;height: 30px;line-height: 30px;text-align: center"></div>
+                                <div class="col-xs-3" style="text-align: center;"><label style="height: 100%; margin-bottom: 0px; line-height: 30px">经办人</label></div>
+                                <div id="GoOutRecordsDetails-operator" class="col-xs-3" style="border:none;border-left: 1px solid #000000;height: 30px;line-height: 30px;text-align: center"></div>
+                            </div>
+                            <div style="height: 31px; border-bottom: 1px solid #000000">
+                                <div class="col-xs-3" style="text-align: center;"><label style="height: 100%; margin-bottom: 0px; line-height: 30px">申请时间</label></div>
+                                <div id="GoOutRecordsDetails-applyTime" class="col-xs-5" style="border:none; border-right: 1px solid #000000;border-left: 1px solid #000000;height: 30px;line-height: 30px;text-align: center"></div>
+                                <div class="col-xs-2"  style="text-align: center;"><label style="height: 100%; margin-bottom: 0px; line-height: 30px">使用人数</label></div>
+                                <div id="GoOutRecordsDetails-numberPeople" class="col-xs-2" style="border-left: 1px solid #000000;height:100%;text-align: center;line-height: 30px"></div>
+                            </div>
+                            <div class="checkTable-body">
+                                <table class="table table-bordered GoOutRecordsDetails-table-selfDefine">
+                                    <thead>
+                                    <tr >
+                                        <th style="width: 60px;">序号</th>
+                                        <th >名称</th>
+                                        <th style="width: 50px;">单位</th>
+                                        <th style="width: 60px;">总数</th>
+                                        <th style="width:150px;border-right: none">是否需要归还</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <!--<tr class="table-tr">-->
+                                    <!--<td>1</td>-->
+                                    <!--<td></td>-->
+                                    <!--<td></td>-->
+                                    <!--<td></td>-->
+                                    <!--<td></td>-->
+                                    <!--<td style="border-right: none"></td>-->
+                                    <!--</tr>-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!---------------------------------------------------------选择多个人modal--------------------------------------------------------->
+<!------------------------------------------------------------------------------------------------------------------>
+<div class="modal fade" id="myModal-selectStaff" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel-selectDepartment">选择部门</h4>
+                <h4 class="modal-title col-xs-6" id="myModalLabel">选择多个员工</h4>
+                <div class="col-xs-5 modal-searchInput">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="姓名">
+                        <span class="input-group-addon glyphicon glyphicon-search" onclick="searchByName_modal(this)" aria-hidden="true"></span>
+                    </div>
+                </div>
             </div>
             <div class="modal-body" style="padding: 0px 20px;font-size: 14px">
-                <form class="form-horizontal">
+                <form id="form-selectStaff1" class="form-horizontal">
                     <div class="form-group " style="margin-bottom: 0px;">
-                        <ul class="selectDepartment-ul" style="height: 200px;overflow-y: scroll">
+                        <ul class="selectStaff-department-ul col-xs-6" style="height: 200px;overflow-y: scroll">
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
                         </ul>
+                        <div class="col-xs-6" style="border-left: 1px solid #E5E5E5; height: 200px;overflow-y: scroll">
+                            <ul class="selectedStaff-staff-ul">
+                            </ul>
+                        </div>
+                    </div>
+                </form>
+                <form id="form-selectStaff2" class="form-horizontal hidden">
+                    <div class="form-group " style="margin-bottom: 0px;">
+                        <ul class="selectStaff-staff-ul col-xs-6" style="height: 200px;overflow-y: scroll">
+
+                        </ul>
+                        <div class="col-xs-6" style="border-left: 1px solid #E5E5E5; height: 200px;overflow-y: scroll">
+                            <ul class="selectedStaff-staff-ul">
+                            </ul>
+                        </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" value="" class=" btn btn-primary selectDepartment-button">确认</button>
+                <button type="button" class="btn btn-primary selectedStaffs-button" value="" onclick="selectedPeople(this)" data-dismiss="modal">确认</button>
             </div>
         </div>
     </div>

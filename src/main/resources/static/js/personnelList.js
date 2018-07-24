@@ -1,8 +1,9 @@
 var jobNaturesName = []
 var jobNatureID = []
-var departmentsName = []
-var departmentsID = []
+var currentPage = 0
 $(document).ready(function () {
+
+
     var activeDetailsBranch
     $('.details-branch').on('click', function (e) {
         if(!activeDetailsBranch){
@@ -51,27 +52,12 @@ $(document).ready(function () {
         $('#modal-leaveType').val($(this).text())
     })
 
-    document.getElementById("modal-leaveDate").valueAsDate = new Date()
+    //document.getElementById("modal-leaveDate").valueAsDate = new Date()
+    $('#modal-leaveDate').val(new Date().toLocaleDateString())
 
     /*
     添加员工modal/
      */
-    $('.addStaffSex-menu-ul li a').on('click', function () {
-        $('#modal-addStaffSex').val($(this).text())
-        $('#modal-addStaffSex').attr('value', $(this).attr('value'))
-    })
-    $('#modal-addStaffSex').val($('.addStaffSex-menu-ul li a').eq(0).text())
-    $('#modal-addStaffSex').attr('value', 0)
-
-    var addStaffDepartmentA = $('.addStaffDepartment-menu-ul li a')
-    getAllDepartmentsName(addStaffDepartmentA)
-    $('#modal-addStaffDepartment').val($('.addStaffDepartment-menu-ul li a').eq(0).text())
-    $('#modal-addStaffDepartment').attr('value', '')
-    $('.addStaffDepartment-menu-ul li a').on('click', function () {
-        $('#modal-addStaffDepartment').val($(this).text())
-        $('#modal-addStaffDepartment').attr('value', $(this).attr('value'))
-    })
-
     var addStaffJobNatureA = $('.addStaffJobNature-menu-ul li a')
     getAllJobNaturesName(addStaffJobNatureA)
     $('#modal-addStaffJobNature').val($('.addStaffJobNature-menu-ul li a').eq(0).text())
@@ -90,7 +76,8 @@ $(document).ready(function () {
         $('#modal-addStaffPosition').attr('value', $(this).attr('value'))
     })
 
-    document.getElementById("modal-addStaffJoinDate").valueAsDate = new Date()
+    // document.getElementById("modal-addStaffJoinDate").valueAsDate = new Date()
+    $('#modal-addStaffJoinDate').val(new Date().toLocaleDateString())
 
     $('.addStaffInternshipCycle-menu-ul li a').on('click', function () {
         $('#modal-addStaffInternshipCycle').val($(this).text())
@@ -142,7 +129,7 @@ $(document).ready(function () {
     /*
     员工列表页面的选择部门下拉菜单/
      */
-    var selectDepartmentA = $('.selectDepartment-dropdownMenu-ul li a')
+    var selectDepartmentA = $('.selectDepartment-dropdownMenu-ul')
     getAllDepartmentsName(selectDepartmentA)
     $('.selectDepartment-dropdownMenu-ul li a').on('click', function () {
         $('#selectDepartment-dropdownMenu').html($(this).text() + '<span style="margin-left:4px" class="caret"></span>')
@@ -403,7 +390,7 @@ function getDetailsInformation(thisObj) {
 获取全部员工信息/
  */
 function getAllStaffInformationByPage() {
-    var page = 0
+    var page = currentPage
     var size = 10
     var sortFieldName = 'id'
     var asc = 1
@@ -427,6 +414,8 @@ function getAllStaffInformationByPage() {
 设置员工table/
  */
 function setStaffTableInformation(obj) {
+    $('.currentPage').text(currentPage + 1)
+    $('.totalPage').text(obj.data.totalPages)
     var table_tr = $('.table-tr')
     if(obj.data.numberOfElements != 0){
         var staff_box = $('.staff-checkBox')
@@ -507,7 +496,8 @@ function setDetailsStaffInformationColumn(obj) {
     if(joinDateSplit){
         var joinDate = new Date()
         joinDate.setFullYear(joinDateSplit.split('-')[0], joinDateSplit.split('-')[1] - 1, joinDateSplit.split('-')[2])
-        document.getElementById("staffInformation-joinDate").valueAsDate = joinDate
+        $('#staffInformation-joinDate').val(joinDate.toLocaleDateString())
+        // document.getElementById("staffInformation-joinDate").valueAsDate = joinDate
     }else{
         $('#staffInformation-resignDate').val('')
     }
@@ -534,7 +524,8 @@ function setDetailsStaffInformationColumn(obj) {
     if(resignDateSplit){
         var resignDate = new Date()
         resignDate.setFullYear(resignDateSplit.split('-')[0], resignDateSplit.split('-')[1] - 1, resignDateSplit.split('-')[2])
-        document.getElementById("staffInformation-resignDate").valueAsDate = resignDate
+        $('#staffInformation-resignDate').val(resignDate.toLocaleDateString())
+        //document.getElementById("staffInformation-resignDate").valueAsDate = resignDate
     }else{
         $('#staffInformation-resignDate').val('')
     }
@@ -615,10 +606,10 @@ function deleteStaffInBatch() {
 通过部门和姓名搜索信息/
  */
 function searchByDepartmentAndStaffName() {
+    currentPage = 0
     var departmentId = $('#selectDepartment-dropdownMenu').attr('value')
     var staffName = $('#staffName-searchInput').val()
-    var urlStr = ipPort + "/user/getByDepartmentAndNameLikeByPage?id=" + departmentId + "&name=" + staffName
-    console.log(urlStr)
+    var urlStr = ipPort + "/user/getByDepartmentAndNameLikeByPage?id=" + departmentId + "&name=" + staffName + "&page=" + currentPage
     $.ajax({
         url:urlStr,
         dataType:'json',
@@ -643,7 +634,8 @@ function searchByDepartmentAndStaffName() {
  */
 function searchByJobNature(thisObj) {
     var searchJobNatureID = $(thisObj).attr('value')
-    var page = 0
+    currentPage = 0
+    var page = currentPage
     var size = 10
     var sortFieldName = 'id'
     var asc = 1
@@ -906,7 +898,8 @@ function setDetailsContractInformationColumn(obj) {
             if(startDateSplit){
                 var startDate = new Date()
                 startDate.setFullYear(startDateSplit.split('-')[0], startDateSplit.split('-')[1] - 1, startDateSplit.split('-')[2])
-                document.getElementById("formalContractStartDate").valueAsDate = startDate
+                $('#formalContractStartDate').val(startDate.toLocaleDateString())
+                //document.getElementById("formalContractStartDate").valueAsDate = startDate
             }else {
                 $('#formalContractStartDate').val('')
             }
@@ -915,7 +908,8 @@ function setDetailsContractInformationColumn(obj) {
             if(endDateSplit){
                 var endDate = new Date()
                 startDate.setFullYear(endDateSplit.split('-')[0], endDateSplit.split('-')[1] - 1, endDateSplit.split('-')[2])
-                document.getElementById("formalContractEndDate").valueAsDate = endDate
+                $('#formalContractEndDate').val(endDate.toLocaleDateString())
+              //  document.getElementById("formalContractEndDate").valueAsDate = endDate
             }else {
                 $('#formalContractEndDate').val('')
             }
@@ -937,7 +931,8 @@ function setDetailsContractInformationColumn(obj) {
             if(startDateSplit){
                 var startDate = new Date()
                 startDate.setFullYear(startDateSplit.split('-')[0], startDateSplit.split('-')[1] - 1, startDateSplit.split('-')[2])
-                document.getElementById("temporaryContractStartDate").valueAsDate = startDate
+                $('#temporaryContractStartDate').val(startDate.toLocaleDateString())
+                //document.getElementById("temporaryContractStartDate").valueAsDate = startDate
             }else {
                 $('#temporaryContractStartDate').val('')
             }
@@ -946,7 +941,8 @@ function setDetailsContractInformationColumn(obj) {
             if(endDateSplit){
                 var endDate = new Date()
                 startDate.setFullYear(endDateSplit.split('-')[0], endDateSplit.split('-')[1] - 1, endDateSplit.split('-')[2])
-                document.getElementById("temporaryContractEndDate").valueAsDate = endDate
+                $('#temporaryContractEndDate').val(endDate.toLocaleDateString())
+               // document.getElementById("temporaryContractEndDate").valueAsDate = endDate
             }else {
                 $('#temporaryContractEndDate').val('')
             }
@@ -968,7 +964,8 @@ function setDetailsContractInformationColumn(obj) {
             if(startDateSplit){
                 var startDate = new Date()
                 startDate.setFullYear(startDateSplit.split('-')[0], startDateSplit.split('-')[1] - 1, startDateSplit.split('-')[2])
-                document.getElementById("internshipAgreementStartDate").valueAsDate = startDate
+                $('#internshipAgreementStartDate').val(startDate.toLocaleDateString())
+            //    document.getElementById("internshipAgreementStartDate").valueAsDate = startDate
             }else {
                 $('#internshipAgreementStartDate').val('')
             }
@@ -977,7 +974,8 @@ function setDetailsContractInformationColumn(obj) {
             if(endDateSplit){
                 var endDate = new Date()
                 startDate.setFullYear(endDateSplit.split('-')[0], endDateSplit.split('-')[1] - 1, endDateSplit.split('-')[2])
-                document.getElementById("internshipAgreementEndDate").valueAsDate = endDate
+                $('#internshipAgreementEndDate').val(endDate.toLocaleDateString())
+             //   document.getElementById("internshipAgreementEndDate").valueAsDate = endDate
             }else {
                 $('#internshipAgreementEndDate').val('')
             }
@@ -1203,7 +1201,8 @@ function setDetailsArchiveInformationColumn(obj) {
     if(firstWorkDateSplit){
         var firstWorkDate = new Date()
         firstWorkDate.setFullYear(firstWorkDateSplit.split('-')[0], firstWorkDateSplit.split('-')[1] - 1, firstWorkDateSplit.split('-')[2])
-        document.getElementById("archiveInformation-firstWorkDate").valueAsDate = firstWorkDate
+        $('#archiveInformation-firstWorkDate').val(firstWorkDate.toLocaleDateString())
+        //document.getElementById("archiveInformation-firstWorkDate").valueAsDate = firstWorkDate
     }else {
         $('#archiveInformation-firstWorkDate').val('')
     }
@@ -1566,4 +1565,103 @@ function changeMonth(period, number) {
     var month = period.getMonth();
     period.setMonth(month + parseInt(number))
     return period
+}
+/*
+上一页/
+ */
+function previousPage() {
+    var currentPage_ = $('.currentPage').text()
+    if(currentPage_ == 1){
+        alert("已经是第一页！")
+        return
+    }
+    currentPage--
+    if(currentPage < 0){
+        currentPage = 0
+    }
+    var page = currentPage
+    var size = 10
+    var sortFieldName = 'id'
+    var asc = 1
+    var urlStr = ipPort + '/user/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                setStaffTableInformation(obj)
+            }else{
+                console.log(obj)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+下一页/
+ */
+function nextPage() {
+    var currentPage_ = $('.currentPage').text()
+    var totalPage_ = $('.totalPage').text()
+    if(currentPage_ == totalPage_){
+        alert("已经是最后一页！")
+        return
+    }
+    currentPage++
+    var page = currentPage
+    var size = 10
+    var sortFieldName = 'id'
+    var asc = 1
+    var urlStr = ipPort + '/user/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                setStaffTableInformation(obj)
+            }else{
+                console.log(obj)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+跳转页/
+ */
+function skipPage() {
+    var skipPage_ = parseInt($('.skipPage').val())
+    var totalPage_ = parseInt($('.totalPage').text())
+    if(skipPage_ - totalPage_ > 0){
+        alert("没有此页！")
+        return
+    }
+    if(skipPage_ < 1){
+        alert("没有此页！")
+        return
+    }
+    currentPage = skipPage_ - 1
+    var page = currentPage
+    var size = 10
+    var sortFieldName = 'id'
+    var asc = 1
+    var urlStr = ipPort + '/user/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                setStaffTableInformation(obj)
+            }else{
+                console.log(obj)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
 }

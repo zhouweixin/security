@@ -85,12 +85,7 @@ a.page-button{
 .departmentName-span{
     font-size: 16px;
 }
-.selectStaff-staff-ul li{
-    margin-left: 22px;
-    margin-top: 2px;
-    color: #4EB1E4;
-    width: 60%;
-}
+selectedStaff-staff-ul
 .selectStaff-department-li{
     margin-top: 5px;
 }

@@ -226,3 +226,52 @@ input.select-box{
 textarea{
     resize: none;
 }
+/*
+下拉菜单/
+ */
+.dropdown-div{
+    padding: 0;
+}
+.dropdown-div button{
+    width: 100%;
+    text-align: left;
+    color: #555;
+}
+.dropdown-div button span{
+    float: right;
+    margin-top: 8px;
+}
+.dropdown-div ul{
+    width: 100%;
+    max-height: 160px;
+    overflow-y: auto;
+}
+.modal-searchInput .input-group input{
+    height: 28px;
+    border-radius: 0px;
+}
+.modal-searchInput .input-group span{
+    color: #66BBE8;
+    top: 0px;
+    background-color: #ffffff;
+    cursor: pointer;
+}
+.selectAllDepartmentStaffs{
+    float: right;
+    position: relative;
+    width: 48px;
+    color: #66BBE8;
+}
+.selectAllDepartmentStaffs input{
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    right:0px;
+    bottom: 2px;
+}
+.form_date span{
+    color:#555;
+}
+.to_date span{
+     color:#555;
+ }

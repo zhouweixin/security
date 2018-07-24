@@ -205,5 +205,9 @@ a.page-button{
 .details-text:hover{
     font-size: 26px;
 }
-
-
+.from_date span{
+    color:#555;
+}
+.to_date span{
+    color:#555;
+}

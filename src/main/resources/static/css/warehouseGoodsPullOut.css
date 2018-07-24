@@ -1,0 +1,355 @@
+.nav-path{
+    font-size: 16px;
+    padding: 18px 16px 14px 16px;
+    border-bottom: 1px solid #DCDDDE;
+}
+.path-ul{
+    display: inline-block;
+    vertical-align: middle;
+}
+.path-title:before{
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    width: 3px;
+    height: 18px;
+    margin-right: 10px;
+    background-color: #222222;
+}
+*:before{
+    box-sizing: border-box;
+}
+.main-body-content{
+    padding: 16px 12px;
+}
+.main-table{
+    border:1px solid #000000;
+    margin-top: 20px;
+    font-size: 16px;
+    padding: 0;
+}
+.table-body{
+
+}
+.table-selfDefine{
+    text-align: center;
+    margin-bottom: 0px;
+}
+.table-selfDefine thead tr th{
+    text-align: center;
+    border: none;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+.table-selfDefine tbody tr td{
+    text-align: center;
+    border: none;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    padding: 0;
+}
+.table-selfDefine tbody tr td input{
+    width: 100%;
+    text-align: center;
+    border: none;
+}
+.table-selfDefine tbody tr td img{
+    width: 25px;
+}
+.table-selfDefine tbody tr td img:hover{
+    cursor: pointer;
+    width: 30px;
+}
+.addContent img{
+    width: 30px;
+}
+.addContent img:hover{
+    cursor: pointer;
+    width: 38px;
+}
+.check-div textarea{
+    width: 100%;
+    height: 70%;
+    overflow-y: hidden;
+    border: none;
+}
+.selectDepartment-ul li{
+    font-size: 16px;
+    margin-left: 22px;
+    margin-top: 2px;
+    color: #4EB1E4;
+    width: 60%;
+}
+.selectDepartment-ul li:hover{
+    cursor: pointer;
+    font-size: 18px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
+}
+.departmentName-span{
+    font-size: 16px;
+}
+.selectOneStaff-staff-ul li{
+    margin-left: 22px;
+    margin-top: 2px;
+    color: #4EB1E4;
+    width: 60%;
+}
+.selectOneStaff-department-li{
+    margin-top: 5px;
+}
+.departmentName-span:hover{
+    color: #7D7D7D;
+}
+.nav-path{
+    font-size: 16px;
+    padding: 18px 16px 14px 16px;
+    border-bottom: 1px solid #DCDDDE;
+}
+.path-ul{
+    display: inline-block;
+    vertical-align: middle;
+}
+.path-title:before{
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    width: 3px;
+    height: 18px;
+    margin-right: 10px;
+    background-color: #222222;
+}
+*:before{
+    box-sizing: border-box;
+}
+.main-body-content{
+    padding: 16px 12px;
+}
+.main-table{
+    border:1px solid #000000;
+    margin-top: 20px;
+    font-size: 16px;
+    padding: 0;
+}
+.table-body{
+
+}
+.table-selfDefine{
+    text-align: center;
+    margin-bottom: 0px;
+}
+.table-selfDefine thead tr th{
+    text-align: center;
+    border: none;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+.table-selfDefine tbody tr td{
+    text-align: center;
+    border: none;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    padding: 0;
+}
+.table-selfDefine tbody tr td input{
+    width: 100%;
+    text-align: center;
+    border: none;
+}
+.table-selfDefine tbody tr td img{
+    width: 25px;
+}
+.table-selfDefine tbody tr td img:hover{
+    cursor: pointer;
+    width: 30px;
+}
+.addContent img{
+    width: 30px;
+}
+.addContent img:hover{
+    cursor: pointer;
+    width: 38px;
+}
+.check-div textarea{
+    width: 100%;
+    height: 70%;
+    overflow-y: hidden;
+    border: none;
+}
+.check-div .note-div{
+    width: 100%;
+    height: 70%;
+    overflow-y: hidden;
+    border: none;
+}
+.selectDepartment-ul li{
+    font-size: 16px;
+    margin-left: 22px;
+    margin-top: 2px;
+    color: #4EB1E4;
+    width: 60%;
+}
+.selectDepartment-ul li:hover{
+    cursor: pointer;
+    font-size: 18px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
+}
+.departmentName-span{
+    font-size: 16px;
+}
+.selectOneStaff-staff-ul li{
+    margin-left: 22px;
+    margin-top: 2px;
+    color: #4EB1E4;
+    width: 60%;
+}
+.selectOneStaff-department-li{
+    margin-top: 5px;
+}
+.departmentName-span:hover{
+    color: #7D7D7D;
+}
+.path-arrow-left{
+    padding: 3px 8px;
+    border: none;
+}
+.top-body{
+    margin-top: 20px;
+}
+.table-body{
+    margin-top: 20px;
+}
+.table-body table th{
+    text-align: center;
+    color: #666;
+}
+.table-body table tr{
+    text-align: center;
+}
+.search-right{
+    float: right;
+}
+.search-left{
+    width: 930px;
+    float: left;
+}
+.applyTable-goodsName-ul{
+    min-width: 180px;
+    max-height: 200px;
+    overflow-y: scroll;
+}
+ul.applyTable-goodsName-ul li:hover{
+    cursor: pointer;
+    background-color: #333333;
+    color: #ffffff;
+}
+ul.applyProcess-menu-ul li a:hover{
+    font-size: 16px;
+}
+#myModal-pushInDetails label,#myModal-pushInDetails th,#myModal-pushInDetails span{
+    color: #000000;
+    font-weight: bold;
+}
+.pushInDetails-table-selfDefine{
+    text-align: center;
+    margin-bottom: 0px;
+}
+.pushInDetails-table-selfDefine thead tr th{
+    text-align: center;
+    border: none;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+.pushInDetails-table-selfDefine tbody tr td{
+    text-align: center;
+    border: none;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    padding: 0;
+}
+.selectStaff-staff-ul li{
+    margin-left: 22px;
+    margin-top: 2px;
+    color: #4EB1E4;
+    width: 60%;
+}
+.selectedStaff-staff-ul{
+    margin-top: 10px;
+    color: #4EB1E4;
+}
+.selectStaff-staff-ul li:hover{
+    font-size: 16px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
+}
+.selectedStaff-staff-ul li{
+    margin-top: 2px;
+    width: 80%;
+}
+.selectedStaff-staff-ul li:hover{
+    cursor: pointer;
+    font-size: 16px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
+}
+.goOutTable-goodsName-ul{
+    min-width: 180px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+ul.goOutTable-goodsName-ul li:hover{
+    cursor: pointer;
+    background-color: #333333;
+    color: #ffffff;
+}
+#myModal-GoOutRecordsDetails label,#myModal-GoOutRecordsDetails th,#myModal-GoOutRecordsDetails span{
+    color: #000000;
+    font-weight: bold;
+}
+.GoOutRecordsDetails-table-selfDefine{
+    text-align: center;
+    margin-bottom: 0px;
+}
+.GoOutRecordsDetails-table-selfDefine thead tr th{
+    text-align: center;
+    border: none;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+.GoOutRecordsDetails-table-selfDefine tbody tr td{
+    text-align: center;
+    border: none;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    padding: 0;
+}
+.table-selfDefine{
+    text-align: center;
+    margin-bottom: 0px;
+}
+.table-selfDefine thead tr th{
+    text-align: center;
+    border: none;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+}
+.table-selfDefine tbody tr td{
+    text-align: center;
+    border: none;
+    border-right: 1px solid #000000;
+    border-bottom: 1px solid #000000;
+    padding: 0;
+}
+.table-selfDefine tbody tr td input{
+    width: 100%;
+    text-align: center;
+    border: none;
+}
+.table-selfDefine tbody tr td img{
+    width: 25px;
+}
+.table-selfDefine tbody tr td img:hover{
+    cursor: pointer;
+    width: 30px;
+}
