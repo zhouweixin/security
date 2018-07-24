@@ -5,10 +5,13 @@ import com.xplusplus.security.domain.RunPropertyCommand;
 import com.xplusplus.security.repository.RunPropertyCommandRepository;
 import com.xplusplus.security.repository.RunPropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -120,5 +123,63 @@ public class RunPropertyService {
         // 日期减序排列
         Sort sort = new Sort(Sort.Direction.DESC, "date");
         return runPropertyCommandRepository.findAll(sort);
+    }
+
+    /**
+     * 删除所有数据
+     */
+    public void deleteAllData(){
+        runPropertyRepository.deleteAll();
+    }
+
+    /**
+     * 删除所有命令
+     */
+    public void deleteAllCommand(){
+        runPropertyCommandRepository.deleteAll();
+    }
+
+    /**
+     * 批量删除数据
+     */
+    public void deleteDataById(Collection<Long> ids){
+        runPropertyRepository.deleteByIdIn(ids);
+    }
+
+    /**
+     * 批量删除命令
+     */
+    public void deleteCommandById(Collection<Long> ids){
+        runPropertyCommandRepository.deleteByIdIn(ids);
+    }
+
+    /**
+     * 查询所有-分页
+     *
+     * @param page
+     * @param size
+     * @param sortFieldName
+     * @param asc
+     * @return
+     */
+    public Page<RunPropertyCommand> findAllCommandByPage(Integer page, Integer size, String sortFieldName, Integer asc) {
+
+        // 判断排序字段名是否存在
+        try {
+            RunPropertyCommand.class.getDeclaredField(sortFieldName);
+        } catch (Exception e) {
+            // 如果不存在就设置为id
+            sortFieldName = "id";
+        }
+
+        Sort sort = null;
+        if (asc == 0) {
+            sort = new Sort(Sort.Direction.DESC, sortFieldName);
+        } else {
+            sort = new Sort(Sort.Direction.ASC, sortFieldName);
+        }
+
+        Pageable pageable = new PageRequest(page, size, sort);
+        return runPropertyCommandRepository.findAll(pageable);
     }
 }

@@ -3,6 +3,8 @@ package com.xplusplus.security.repository;
 import com.xplusplus.security.domain.RunPropertyCommand;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Collection;
+
 /**
  * @Author: zhouweixin
  * @Description:
@@ -16,4 +18,11 @@ public interface RunPropertyCommandRepository extends JpaRepository<RunPropertyC
      * @return
      */
     public RunPropertyCommand findFirstByOrderByDateDesc();
+
+    /**
+     * 批量删除
+     *
+     * @param ids
+     */
+    public void deleteByIdIn(Collection<Long> ids);
 }

@@ -4,6 +4,7 @@ import com.xplusplus.security.domain.RunProperty;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -19,4 +20,11 @@ public interface RunPropertyRepository extends JpaRepository<RunProperty, Long> 
      * @return
      */
     public RunProperty findFirstByOrderByDateDesc();
+
+    /**
+     * 批量删除
+     *
+     * @param ids
+     */
+    public void deleteByIdIn(Collection<Long> ids);
 }
