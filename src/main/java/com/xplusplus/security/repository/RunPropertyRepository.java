@@ -3,6 +3,7 @@ package com.xplusplus.security.repository;
 import com.xplusplus.security.domain.RunProperty;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 
 import java.util.Collection;
 import java.util.Date;

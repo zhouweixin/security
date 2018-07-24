@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -142,6 +143,7 @@ public class RunPropertyService {
     /**
      * 批量删除数据
      */
+    @Transactional
     public void deleteDataById(Collection<Long> ids){
         runPropertyRepository.deleteByIdIn(ids);
     }
@@ -149,6 +151,7 @@ public class RunPropertyService {
     /**
      * 批量删除命令
      */
+    @Transactional
     public void deleteCommandById(Collection<Long> ids){
         runPropertyCommandRepository.deleteByIdIn(ids);
     }
