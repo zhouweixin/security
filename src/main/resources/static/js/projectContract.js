@@ -202,7 +202,7 @@ function setUpdateModalInformation(thisObj) {
     if(updateProjectStartDateSplit){
         var updateProjectStartDate = new Date()
         updateProjectStartDate.setFullYear(updateProjectStartDateSplit.split('-')[0], updateProjectStartDateSplit.split('-')[1] - 1, updateProjectStartDateSplit.split('-')[2])
-        document.getElementById("modal-updateProjectStartDate").valueAsDate = updateProjectStartDate
+        $('#modal-updateProjectStartDate').val(updateProjectStartDate.toLocaleDateString())
     }else {
         $('#modal-updateProjectStartDate').val('')
     }
@@ -210,7 +210,7 @@ function setUpdateModalInformation(thisObj) {
     if(updateProjectEndDateSplit){
         var updateProjectEndDate = new Date()
         updateProjectEndDate.setFullYear(updateProjectEndDateSplit.split('-')[0], updateProjectEndDateSplit.split('-')[1] - 1, updateProjectEndDateSplit.split('-')[2])
-        document.getElementById("modal-updateProjectEndDate").valueAsDate = updateProjectEndDate
+        $('#modal-updateProjectEndDate').val(updateProjectStartDate.toLocaleDateString())
     }else {
         $('#modal-updateProjectEndDate').val('')
     }
