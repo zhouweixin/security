@@ -79,10 +79,11 @@ public enum EnumExceptions {
     GODOWN_FAILED_NOT_AUDIT(68, "入库失败, 采购单未审核"),
     GODOWN_FAILED_AUDIT_NOT_APPROVAL(69, "入库失败, 采购单审核未通过"),
     GODOWN_FAILED_GODOWNED(70, "入库失败, 已入库"),
+    UPLOAD_FAILED_FILE_EMPTY(71, "上传失败, 文件为空"),
 
 	;
 
-	/** 编码 */
+    /** 编码 */
 	private Integer code;
 	/** 信息 */
 	private String message;

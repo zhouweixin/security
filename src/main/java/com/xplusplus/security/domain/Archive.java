@@ -125,7 +125,22 @@ public class Archive {
 	 */
 	private String identityCard;
 
-	public Long getId() {
+    /**
+     * 是否有保安证：0表示没有；1表示有
+     */
+	private Integer hasSecuCert = 0;
+
+    /**
+     * 保安证号
+     */
+	private String secuCertNum;
+
+    /**
+     * 介绍人名称
+     */
+	private String sponsorName;
+
+    public Long getId() {
 		return id;
 	}
 
@@ -277,7 +292,31 @@ public class Archive {
 		this.identityCard = identityCard;
 	}
 
-	@Override
+    public Integer getHasSecuCert() {
+        return hasSecuCert;
+    }
+
+    public void setHasSecuCert(Integer hasSecuCert) {
+        this.hasSecuCert = hasSecuCert;
+    }
+
+    public String getSecuCertNum() {
+        return secuCertNum;
+    }
+
+    public void setSecuCertNum(String secuCertNum) {
+        this.secuCertNum = secuCertNum;
+    }
+
+    public String getSponsorName() {
+        return sponsorName;
+    }
+
+    public void setSponsorName(String sponsorName) {
+        this.sponsorName = sponsorName;
+    }
+
+    @Override
 	public String toString() {
 		return "Archive [id=" + id + ", user=" + user + ", nation=" + nation + ", maritalStatus=" + maritalStatus
 				+ ", militaryStatus=" + militaryStatus + ", politicalStatus=" + politicalStatus + ", education="
