@@ -10,7 +10,6 @@ import java.util.Arrays;
  * @Modified By:
  */
 @Entity
-@Table(name = "eqmanage_image")
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

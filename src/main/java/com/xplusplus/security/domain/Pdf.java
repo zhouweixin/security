@@ -9,7 +9,6 @@ import javax.persistence.*;
  * @Modified By:
  */
 @Entity
-@Table(name = "eqmanage_pdf")
 public class Pdf {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
