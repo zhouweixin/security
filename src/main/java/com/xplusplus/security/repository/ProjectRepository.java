@@ -3,6 +3,7 @@ package com.xplusplus.security.repository;
 import com.xplusplus.security.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -57,4 +58,13 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 	@Modifying
 	@Query(value = "update Project p set p.receiptPrice=receiptPrice+?1 where id=?2")
 	public void updateReceiptPriceById(Double receiptPrice, Long id);
+
+    /**
+     * 通过队长和项目状态查询
+     *
+     * @param leader
+     * @param projectStatus
+     * @return
+     */
+    public List<Project> findByLeaderAndProjectStatus(User leader, ProjectStatus projectStatus, Sort sort);
 }

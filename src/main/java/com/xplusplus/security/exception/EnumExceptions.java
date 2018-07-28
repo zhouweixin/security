@@ -80,6 +80,9 @@ public enum EnumExceptions {
     GODOWN_FAILED_AUDIT_NOT_APPROVAL(69, "入库失败, 采购单审核未通过"),
     GODOWN_FAILED_GODOWNED(70, "入库失败, 已入库"),
     UPLOAD_FAILED_FILE_EMPTY(71, "上传失败, 文件为空"),
+    CARD_FAILED_LEADER_NOT_EXISTS(72, "打卡失败, 负责人不存在"),
+    CARD_FAILED_PROJECT_NOT_EXISTS(73, "打卡失败, 项目不存在"),
+    CARD_FAILED_ON_DUTY_NOT_EXISTS(74, "打卡失败, 上班记录不存在"),
 
 	;
 
