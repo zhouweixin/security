@@ -275,3 +275,6 @@ textarea{
 .to_date span{
      color:#555;
  }
+.input-group-addon{
+    border: 1px solid #e8e9ea;
+}

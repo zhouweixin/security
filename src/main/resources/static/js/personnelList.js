@@ -453,84 +453,6 @@ function setStaffTableInformation(obj) {
     }
 }
 /*
-设置详细页面人员信息栏/
- */
-function setDetailsStaffInformationColumn(obj) {
-    if(obj.data){
-        if(obj.data){
-            $('#staffInformation-name').val(obj.data.name)
-            $('#staffInformation-id').val(obj.data.id)
-        }
-    }
-    if(obj.data.sex == 0){
-        $('#staffInformation-sex').val("男")
-        $('#staffInformation-sex').attr('value', 0)
-    }else {
-        $('#staffInformation-sex').val("女")
-        $('#staffInformation-sex').attr('value', 1)
-    }
-    var staffInformationCycleA = $('.staffInformation-cycle-menu-ul li a')
-    if(obj.data.period == null){
-        $('#staffInformation-cycle').val(staffInformationCycleA.eq(0).text())
-        $('#staffInformation-cycle').attr('value', 0)
-    }else{
-        $('#staffInformation-cycle').val(staffInformationCycleA.eq(parseInt(obj.data.period.months)).text())
-        $('#staffInformation-cycle').attr('value', obj.data.period.months)
-    }
-    if(obj.data.department){
-        $('#staffInformation-department').val(obj.data.department.name)
-        $('#staffInformation-department').attr('value', obj.data.department.id)
-    }else{
-        $('#staffInformation-department').val('')
-        $('#staffInformation-department').attr('value', '')
-    }
-    if(obj.data.role){
-        $('#staffInformation-role').val(obj.data.role.name)
-        $('#staffInformation-role').attr('value', obj.data.role.id)
-    }else{
-        $('#staffInformation-role').val('')
-        $('#staffInformation-role').attr('value', '')
-    }
-
-    var joinDateSplit = obj.data.employDate
-    if(joinDateSplit){
-        var joinDate = new Date()
-        joinDate.setFullYear(joinDateSplit.split('-')[0], joinDateSplit.split('-')[1] - 1, joinDateSplit.split('-')[2])
-        $('#staffInformation-joinDate').val(joinDate.toLocaleDateString())
-        // document.getElementById("staffInformation-joinDate").valueAsDate = joinDate
-    }else{
-        $('#staffInformation-resignDate').val('')
-    }
-
-    $('#staffInformation-icID').val(obj.data.ic)
-    $('#staffInformation-weChat').val(obj.data.wechat)
-    $('#staffInformation-phone').val(obj.data.contact)
-    if(obj.data.jobNature){
-        $('#staffInformation-jobNature').val(obj.data.jobNature.name)
-        $('#staffInformation-jobNature').attr('value', obj.data.jobNature.id)
-    } else{
-        $('#staffInformation-jobNature').val('')
-        $('#staffInformation-jobNature').attr('value', '')
-    }
-    if(obj.data.resignType){
-        $('#staffInformation-resignType').val(obj.data.resignType.name)
-        $('#staffInformation-resignType').attr('value', obj.data.resignType.id)
-    }else{
-        $('#staffInformation-resignType').val('')
-        $('#staffInformation-resignType').attr('value', '')
-    }
-
-    var resignDateSplit = obj.data.resignDate
-    if(resignDateSplit){
-        var resignDate = new Date()
-        resignDate.setFullYear(resignDateSplit.split('-')[0], resignDateSplit.split('-')[1] - 1, resignDateSplit.split('-')[2])
-        $('#staffInformation-resignDate').val(resignDate.toLocaleDateString())
-        //document.getElementById("staffInformation-resignDate").valueAsDate = resignDate
-    }else{
-        $('#staffInformation-resignDate').val('')
-    }
-}
-/*
 设置离职面板信息/
  */
 function setQuitModalInformation(obj) {
@@ -616,6 +538,7 @@ function searchByDepartmentAndStaffName() {
         success:function (obj) {
             if(obj.code == 0){
                 if(obj.data.numberOfElements == 0){
+                    setStaffTableInformation(obj)
                     alert("未搜索到信息")
                     return
                 }
@@ -714,84 +637,356 @@ function leaveJob() {
     })
 }
 /*
+设置详细页面人员信息栏/
+ */
+function setDetailsStaffInformationColumn(obj) {
+    if(obj.data){
+        $('#staffInformation-name').val(obj.data.name)
+
+        $('#staffInformation-id').val(obj.data.id)
+        if(obj.data.sex == 0){
+            $('#staffInformation-sex').html("男" + "<span class='caret'></span>")
+            $('#staffInformation-sex').attr('value', 0)
+        }else if(obj.data.sex == 1){
+            $('#staffInformation-sex').html("女" + "<span class='caret'></span>")
+            $('#staffInformation-sex').attr('value', 1)
+        }else{
+            $('#staffInformation-sex').html("请选择" + "<span class='caret'></span>")
+            $('#staffInformation-sex').attr('value', '')
+        }
+
+        var staffInformationCycleA = $('#staffInformation-cycle').parent().find('ul').find('li a')
+        if(obj.data.period == null){
+            $('#staffInformation-cycle').html(staffInformationCycleA.eq(0).text() + "<span class='caret'></span>")
+            $('#staffInformation-cycle').attr('value', 0)
+        }else{
+            $('#staffInformation-cycle').html(staffInformationCycleA.eq(parseInt(obj.data.period.months)).text() + "<span class='caret'></span>")
+            $('#staffInformation-cycle').attr('value', obj.data.period.months)
+        }
+
+        if(obj.data.department){
+            $('#staffInformation-department').html(obj.data.department.name + "<span class='caret'></span>")
+            $('#staffInformation-department').attr('value', obj.data.department.id)
+        }else{
+            $('#staffInformation-department').html("请选择" + "<span class='caret'></span>")
+            $('#staffInformation-department').attr('value', '')
+        }
+
+        if(obj.data.role){
+            $('#staffInformation-role').html(obj.data.role.name + "<span class='caret'></span>")
+            $('#staffInformation-role').attr('value', obj.data.role.id)
+        }else{
+            $('#staffInformation-role').html("请选择" + "<span class='caret'></span>")
+            $('#staffInformation-role').attr('value', '')
+        }
+
+        var joinDateSplit = obj.data.employDate
+        if(joinDateSplit){
+            var joinDate = new Date()
+            joinDate.setFullYear(joinDateSplit.split('-')[0], joinDateSplit.split('-')[1] - 1, joinDateSplit.split('-')[2])
+            $('#staffInformation-joinDate').val(joinDate.toLocaleDateString())
+        }else{
+            $('#staffInformation-joinDate').val('')
+        }
+
+        $('#staffInformation-icID').val(obj.data.ic)
+        $('#staffInformation-weChat').val(obj.data.wechat)
+        $('#staffInformation-phone').val(obj.data.contact)
+
+        if(obj.data.jobNature){
+            $('#staffInformation-jobNature').html(obj.data.jobNature.name + "<span class='caret'></span>")
+            $('#staffInformation-jobNature').attr('value', obj.data.jobNature.id)
+        } else{
+            $('#staffInformation-jobNature').html("请选择" + "<span class='caret'></span>")
+            $('#staffInformation-jobNature').attr('value', '')
+        }
+
+        if(obj.data.resignType){
+            $('#staffInformation-resignType').html(obj.data.resignType.name + "<span class='caret'></span>")
+            $('#staffInformation-resignType').attr('value', obj.data.resignType.id)
+        }else{
+            $('#staffInformation-resignType').html("请选择" + "<span class='caret'></span>")
+            $('#staffInformation-resignType').attr('value', '')
+        }
+
+        var resignDateSplit = obj.data.resignDate
+        if(resignDateSplit){
+            var resignDate = new Date()
+            resignDate.setFullYear(resignDateSplit.split('-')[0], resignDateSplit.split('-')[1] - 1, resignDateSplit.split('-')[2])
+            $('#staffInformation-resignDate').val(resignDate.toLocaleDateString())
+        }else{
+            $('#staffInformation-resignDate').val('')
+        }
+    }
+}
+/*
+详细页面设置档案信息栏/
+ */
+function setDetailsArchiveInformationColumn(obj) {
+    $('#archiveInformation-archiveID').val(obj.data.id)
+
+    if(obj.data.nation){
+        $('#archiveInformation-nation').html(obj.data.nation.name + "<span class='caret'></span>")
+        $('#archiveInformation-nation').attr('value', obj.data.nation.id)
+    }else{
+        $('#staffInformation-nation').html("请选择" + "<span class='caret'></span>")
+        $('#staffInformation-nation').attr('value', '')
+    }
+
+    $('#archiveInformation-identityNumber').val(obj.data.identityNumber)
+
+    if(obj.data.maritalStatus){
+        $('#archiveInformation-maritalStatus').html(obj.data.maritalStatus.name + "<span class='caret'></span>")
+        $('#archiveInformation-maritalStatus').attr('value', obj.data.maritalStatus.id)
+    }else{
+        $('#staffInformation-maritalStatus').html("请选择" + "<span class='caret'></span>")
+        $('#staffInformation-maritalStatus').attr('value', '')
+    }
+
+    if(obj.data.militaryStatus){
+        $('#archiveInformation-militaryStatus').html(obj.data.militaryStatus.name + "<span class='caret'></span>")
+        $('#archiveInformation-militaryStatus').attr('value', obj.data.militaryStatus.id)
+    }else{
+        $('#staffInformation-militaryStatus').html("请选择" + "<span class='caret'></span>")
+        $('#staffInformation-militaryStatus').attr('value', '')
+    }
+
+    if(obj.data.politicalStatus){
+        $('#archiveInformation-politicalStatus').html(obj.data.politicalStatus.name + "<span class='caret'></span>")
+        $('#archiveInformation-politicalStatus').attr('value', obj.data.politicalStatus.id)
+    }else{
+        $('#staffInformation-politicalStatus').html("请选择" + "<span class='caret'></span>")
+        $('#staffInformation-politicalStatus').attr('value', '')
+    }
+
+    if(obj.data.education){
+        $('#archiveInformation-education').html(obj.data.education.name + "<span class='caret'></span>")
+        $('#archiveInformation-education').attr('value', obj.data.education.id)
+    }else{
+        $('#staffInformation-education').html("请选择" + "<span class='caret'></span>")
+        $('#staffInformation-education').attr('value', '')
+    }
+
+    $('#archiveInformation-major').val(obj.data.major)
+
+    var firstWorkDateSplit = obj.data.firstWorkDate
+    if(firstWorkDateSplit){
+        var firstWorkDate = new Date()
+        firstWorkDate.setFullYear(firstWorkDateSplit.split('-')[0], firstWorkDateSplit.split('-')[1] - 1, firstWorkDateSplit.split('-')[2])
+        $('#archiveInformation-firstWorkDate').val(firstWorkDate.toLocaleDateString())
+    }else {
+        $('#archiveInformation-firstWorkDate').val('')
+    }
+
+    $('#archiveInformation-height').val(obj.data.height)
+    $('#archiveInformation-weight').val(obj.data.weight)
+
+    if(obj.data.healthStatus){
+        $('#archiveInformation-healthStatus').html(obj.data.healthStatus.name + "<span class='caret'></span>")
+        $('#archiveInformation-healthStatus').attr('value', obj.data.healthStatus.id)
+    }else{
+        $('#staffInformation-healthStatus').html("请选择" + "<span class='caret'></span>")
+        $('#staffInformation-healthStatus').attr('value', '')
+    }
+
+    $('#archiveInformation-domicilePlace').val(obj.data.domicilePlace)
+    $('#archiveInformation-livePlace').val(obj.data.livePlace)
+
+    if(obj.data.insurance == 0){
+        $('#archiveInformation-insurance').html("无" + "<span class='caret'></span>")
+        $('#archiveInformation-insurance').attr('value', 0)
+    }else {
+        $('#archiveInformation-insurance').html("有" + "<span class='caret'></span>")
+        $('#archiveInformation-insurance').attr('value', 1)
+    }
+
+    $('#archiveInformation-familyMemberName').val(obj.data.familyMemberName)
+    $('#archiveInformation-familyMemberContact').val(obj.data.familyMemberContact)
+}
+/*
+设置详细页面合同信息栏/
+ */
+function setDetailsContractInformationColumn(obj) {
+    console.log(obj)
+    for (var i = 0; i < obj.data.numberOfElements; i ++){
+        if(obj.data.content[i].contractType.id == 3){
+            $('#formalContractID').val(obj.data.content[i].id)
+
+            var startDateSplit = obj.data.content[i].startDate
+            if(startDateSplit){
+                var startDate = new Date()
+                startDate.setFullYear(startDateSplit.split('-')[0], startDateSplit.split('-')[1] - 1, startDateSplit.split('-')[2])
+                $('#formalContractStartDate').val(startDate.toLocaleDateString())
+            }else {
+                $('#formalContractStartDate').val('')
+            }
+
+            var endDateSplit = obj.data.content[i].endDate
+            if(endDateSplit){
+                var endDate = new Date()
+                startDate.setFullYear(endDateSplit.split('-')[0], endDateSplit.split('-')[1] - 1, endDateSplit.split('-')[2])
+                $('#formalContractEndDate').val(endDate.toLocaleDateString())
+            }else {
+                $('#formalContractEndDate').val('')
+            }
+
+            $('#formalContractPeriod').val(obj.data.content[i].period)
+
+            if(obj.data.content[i].contractStatus){
+                $('#formalContractStatus').attr('value', obj.data.content[i].contractStatus.id)
+                $('#formalContractStatus').html(obj.data.content[i].contractStatus.name + "<span class='caret'></span>")
+            }else {
+                $('#formalContractStatus').attr('value', '')
+                $('#formalContractStatus').html("请选择" + "<span class='caret'></span>")
+            }
+
+            $('#formalContractContent').val(obj.data.content[i].content)
+            $('#formalContractScanningCopy').val(obj.data.content[i].scanningCopy)
+        }
+        else if (obj.data.content[i].contractType.id == 1) {
+            $('#temporaryContractID').val(obj.data.content[i].id)
+
+            var startDateSplit = obj.data.content[i].startDate
+            if(startDateSplit){
+                var startDate = new Date()
+                startDate.setFullYear(startDateSplit.split('-')[0], startDateSplit.split('-')[1] - 1, startDateSplit.split('-')[2])
+                $('#temporaryContractStartDate').val(startDate.toLocaleDateString())
+            }else {
+                $('#temporaryContractStartDate').val('')
+            }
+
+            var endDateSplit = obj.data.content[i].endDate
+            if(endDateSplit){
+                var endDate = new Date()
+                startDate.setFullYear(endDateSplit.split('-')[0], endDateSplit.split('-')[1] - 1, endDateSplit.split('-')[2])
+                $('#temporaryContractEndDate').val(endDate.toLocaleDateString())
+            }else {
+                $('#temporaryContractEndDate').val('')
+            }
+
+            $('#temporaryContractPeriod').val(obj.data.content[i].period)
+            if(obj.data.content[i].contractStatus){
+                $('#temporaryContractStatus').attr('value', obj.data.content[i].contractStatus.id)
+                $('#temporaryContractStatus').html(obj.data.content[i].contractStatus.name + "<span class='caret'></span>")
+            }else {
+                $('#temporaryContractStatus').attr('value', '')
+                $('#temporaryContractStatus').html("" + "<span class='caret'></span>")
+            }
+
+            $('#temporaryContractContent').val(obj.data.content[i].content)
+            $('#temporaryContractScanningCopy').val(obj.data.content[i].scanningCopy)
+        }
+        else if (obj.data.content[i].contractType.id == 2) {
+            $('#internshipAgreementID').val(obj.data.content[i].id)
+
+            var startDateSplit = obj.data.content[i].startDate
+            if(startDateSplit){
+                var startDate = new Date()
+                startDate.setFullYear(startDateSplit.split('-')[0], startDateSplit.split('-')[1] - 1, startDateSplit.split('-')[2])
+                $('#internshipAgreementStartDate').val(startDate.toLocaleDateString())
+            }else {
+                $('#internshipAgreementStartDate').val('')
+            }
+
+            var endDateSplit = obj.data.content[i].endDate
+            if(endDateSplit){
+                var endDate = new Date()
+                startDate.setFullYear(endDateSplit.split('-')[0], endDateSplit.split('-')[1] - 1, endDateSplit.split('-')[2])
+                $('#internshipAgreementEndDate').val(endDate.toLocaleDateString())
+            }else {
+                $('#internshipAgreementEndDate').val('')
+            }
+
+            $('#internshipAgreementPeriod').val(obj.data.content[i].period)
+            if(obj.data.content[i].contractStatus){
+                $('#internshipAgreementStatus').attr('value', obj.data.content[i].contractStatus.id)
+                $('#internshipAgreementStatus').html(obj.data.content[i].contractStatus.name + "<span class='caret'></span>")
+            }else {
+                $('#internshipAgreementStatus').attr('value', '')
+                $('#internshipAgreementStatus').html("" + "<span class='caret'></span>")
+            }
+            $('#internshipAgreementContent').val(obj.data.content[i].content)
+            $('#internshipAgreementScanningCopy').val(obj.data.content[i].scanningCopy)
+        }
+    }
+}
+/*
 详细信息页面编辑按钮/
  */
-function editButtonOnClick(thisObj){
-    //人员信息和档案信息
-    if($(thisObj).attr('value') == 'staff' || $(thisObj).attr('value') == 'archive'){
-        var panelName = $(thisObj).attr('value')
+function editButtonOnClick(str){
+    //人员信息
+    if(str == 'staff'){
+        var panelName = str
         panelName = '.' + panelName + 'Information'
         var input = $(panelName).find('input')
         var button = $(panelName).find('button')
-        var textarea = $(panelName).find('textarea')
         for(var i = 0; i < input.length; i++){
-            if(($(thisObj).attr('value') == 'staff' && (i == 1 || i == 2 || i == 3 || i ==4 || i == 5 || i==10 || i==11))
-                || ($(thisObj).attr('value') == 'archive' && (i == 0 || i == 1 || i == 3 || i ==4 || i == 5 || i==6 || i == 11 || i == 14)))continue
+            if(i == 1)continue
             input.eq(i).attr('disabled', false)
         }
         for(var i = 0; i < button.length; i++){
             button.eq(i).attr('disabled', false)
-            button.eq(i).removeClass('disable')
         }
-        for(var i = 0; i < textarea.length; i++){
-            textarea.eq(i).attr('disabled', false)
-            textarea.eq(i).removeClass('disable')
+        $('.' + str + 'CancelButton').removeClass('hidden')
+    }
+    //档案信息
+    else if(str == 'archive'){
+        var panelName = str
+        panelName = '.' + panelName + 'Information'
+        var input = $(panelName).find('input')
+        var button = $(panelName).find('button')
+        for(var i = 0; i < input.length; i++){
+            if(i == 0)continue
+            input.eq(i).attr('disabled', false)
         }
-        var cancelButton = '.' + $(thisObj).attr('value') + 'CancelButton'
-        $(cancelButton).removeClass('hidden')
+        for(var i = 0; i < button.length; i++){
+            button.eq(i).attr('disabled', false)
+        }
+        $('.' + str + 'CancelButton').removeClass('hidden')
     }
     //合同信息
-    else{
-        var panelName = $(thisObj).attr('value')
+    else if(str == 'formalContract' || str == 'internshipAgreement' || str == 'temporaryContract'){
+        var panelName = str
         panelName = '#' + panelName + '-panel'
         var input = $(panelName).find('input')
         var button = $(panelName).find('button')
-        var textarea = $(panelName).find('textarea')
+        var textArea = $(panelName).find('textarea')
         for(var i = 0; i < input.length; i++){
-            if(i == 1 || i == 0 || i == 5 || i == 4)continue
+            if(i == 1 || i == 0 || i == 4)continue
             input.eq(i).attr('disabled', false)
         }
         for(var i = 0; i < button.length; i++){
             button.eq(i).attr('disabled', false)
-            button.eq(i).removeClass('disable')
         }
-        for(var i = 0; i < textarea.length; i++){
-            textarea.eq(i).attr('disabled', false)
-            textarea.eq(i).removeClass('disable')
+        for(var i = 0; i < textArea.length; i++){
+            textArea.eq(i).attr('disabled', false)
+            textArea.eq(i).removeClass('disable')
         }
-        var cancelButton = '.' + $(thisObj).attr('value') + 'CancelButton'
-        $(cancelButton).removeClass('hidden')
+        $('.' + str + 'CancelButton').removeClass('hidden')
     }
 
 }
 /*
 详细信息页面取消编辑按钮/
  */
-function cancelEditButtonOnClick(thisObj) {
-    var cancelButton = '.' + $(thisObj).attr('value') + 'CancelButton'
+function cancelEditButtonOnClick(str) {
+    var cancelButton = '.' + str + 'CancelButton'
     $(cancelButton).addClass('hidden')
     //人员信息和档案信息
-    if($(thisObj).attr('value') == 'staff' || $(thisObj).attr('value') == 'archive'){
-        var panelName = $(thisObj).attr('value')
+    if(str == 'staff' || str == 'archive'){
+        var panelName = str
         panelName = '.' + panelName + 'Information'
         var input = $(panelName).find('input')
         var button = $(panelName).find('button')
-        var textarea = $(panelName).find('textarea')
         for(var i = 0; i < input.length; i++){
             input.eq(i).attr('disabled', 'disabled')
         }
         for(var i = 0; i < button.length; i++){
             button.eq(i).attr('disabled', 'disabled')
-            button.eq(i).addClass('disable')
         }
-        for(var i = 0; i < textarea.length; i++){
-            textarea.eq(i).attr('disabled', 'disabled')
-            textarea.eq(i).addClass('disable')
-        }
-
 
         var staffID = $('#staffInformation-id').val()
-        if($(thisObj).attr('value') == 'staff'){
+        if(str == 'staff'){
             var urlStr = ipPort + '/user/getById?id='+ staffID
             $.ajax({
                 url:urlStr,
@@ -803,14 +998,14 @@ function cancelEditButtonOnClick(thisObj) {
                         }
                     }
                     else{
-                        console.log(obj)
+                        alert(obj.message)
                     }
                 },
                 error:function (error) {
                     console.log(error)
                 }
             })
-        }else if($(thisObj).attr('value') == 'archive'){
+        }else if(str == 'archive'){
             var urlStr = ipPort + '/archive/getByUser?id='+ staffID
             $.ajax({
                 url:urlStr,
@@ -824,11 +1019,14 @@ function cancelEditButtonOnClick(thisObj) {
                                 input.eq(i).val('')
                                 input.eq(i).attr('value', '')
                             }
-                            textarea.eq(0).val('')
+                            for(var i = 0; i < button.length; i++){
+                                button.eq(i).html("请选择" + "<span class='caret'></span>")
+                                button.eq(i).attr('value', '')
+                            }
                         }
                     }
                     else{
-                        console.log(obj)
+                        alert(obj.message)
                     }
                 },
                 error:function (error) {
@@ -839,21 +1037,20 @@ function cancelEditButtonOnClick(thisObj) {
     }
     //合同信息
     else{
-        var contractName = $(thisObj).attr('value')
+        var contractName = str
         var panelName = '#' + contractName + '-panel'
         var input = $(panelName).find('input')
         var button = $(panelName).find('button')
-        var textarea = $(panelName).find('textarea')
+        var textArea = $(panelName).find('textarea')
         for(var i = 0; i < input.length; i++){
             input.eq(i).attr('disabled', 'disabled')
         }
         for(var i = 0; i < button.length; i++){
             button.eq(i).attr('disabled', 'disabled')
-            button.eq(i).addClass('disable')
         }
-        for(var i = 0; i < textarea.length; i++){
-            textarea.eq(i).attr('disabled', 'disabled')
-            textarea.eq(i).addClass('disable')
+        for(var i = 0; i < textArea.length; i++){
+            textArea.eq(i).attr('disabled', 'disabled')
+            textArea.eq(i).addClass('disable')
         }
         var contractID = $('#' + contractName + 'ID').val()
         if(contractID == ''){
@@ -863,8 +1060,12 @@ function cancelEditButtonOnClick(thisObj) {
                     input.eq(i).attr('value', '')
                 }
             }
-            for(var i = 0; i < textarea.length; i++){
-                textarea.eq(i).val('')
+            for(var i = 0; i < button.length; i++){
+                button.eq(i).html("请选择" + "<span class='caret'></span>")
+                button.eq(i).attr('value', '')
+            }
+            for(var i = 0; i < textArea.length; i++){
+                textArea.eq(i).val('')
             }
         }else{
             var urlStr = ipPort + '/contract/getById?id='+ contractID
@@ -876,120 +1077,13 @@ function cancelEditButtonOnClick(thisObj) {
                         setDetailsContractInformationColumnCancelButton(obj)
                     }
                     else{
-                        console.log(obj)
+                        alert(obj.message)
                     }
                 },
                 error:function (error) {
                     console.log(error)
                 }
             })
-        }
-    }
-}
-/*
-设置详细页面合同信息栏/
- */
-function setDetailsContractInformationColumn(obj) {
-    for (var i = 0; i < obj.data.numberOfElements; i ++){
-        if(obj.data.content[i].contractType.id == 3){
-            $('#formalContractID').val(obj.data.content[i].id)
-
-            var startDateSplit = obj.data.content[i].startDate
-            if(startDateSplit){
-                var startDate = new Date()
-                startDate.setFullYear(startDateSplit.split('-')[0], startDateSplit.split('-')[1] - 1, startDateSplit.split('-')[2])
-                $('#formalContractStartDate').val(startDate.toLocaleDateString())
-                //document.getElementById("formalContractStartDate").valueAsDate = startDate
-            }else {
-                $('#formalContractStartDate').val('')
-            }
-
-            var endDateSplit = obj.data.content[i].endDate
-            if(endDateSplit){
-                var endDate = new Date()
-                startDate.setFullYear(endDateSplit.split('-')[0], endDateSplit.split('-')[1] - 1, endDateSplit.split('-')[2])
-                $('#formalContractEndDate').val(endDate.toLocaleDateString())
-              //  document.getElementById("formalContractEndDate").valueAsDate = endDate
-            }else {
-                $('#formalContractEndDate').val('')
-            }
-
-            $('#formalContractPeriod').val(obj.data.content[i].period)
-            if(obj.data.content[i].contractStatus){
-                $('#formalContractStatus').attr('value', obj.data.content[i].contractStatus.id)
-                $('#formalContractStatus').val(obj.data.content[i].contractStatus.name)
-            }else {
-                $('#formalContractStatus').attr('value', '')
-                $('#formalContractStatus').val('')
-            }
-            $('#formalContractContent').val(obj.data.content[i].content)
-            $('#formalContractScanningCopy').val(obj.data.content[i].scanningCopy)
-        }else if (obj.data.content[i].contractType.id == 1) {
-            $('#temporaryContractID').val(obj.data.content[i].id)
-
-            var startDateSplit = obj.data.content[i].startDate
-            if(startDateSplit){
-                var startDate = new Date()
-                startDate.setFullYear(startDateSplit.split('-')[0], startDateSplit.split('-')[1] - 1, startDateSplit.split('-')[2])
-                $('#temporaryContractStartDate').val(startDate.toLocaleDateString())
-                //document.getElementById("temporaryContractStartDate").valueAsDate = startDate
-            }else {
-                $('#temporaryContractStartDate').val('')
-            }
-
-            var endDateSplit = obj.data.content[i].endDate
-            if(endDateSplit){
-                var endDate = new Date()
-                startDate.setFullYear(endDateSplit.split('-')[0], endDateSplit.split('-')[1] - 1, endDateSplit.split('-')[2])
-                $('#temporaryContractEndDate').val(endDate.toLocaleDateString())
-               // document.getElementById("temporaryContractEndDate").valueAsDate = endDate
-            }else {
-                $('#temporaryContractEndDate').val('')
-            }
-
-            $('#temporaryContractPeriod').val(obj.data.content[i].period)
-            if(obj.data.content[i].contractStatus){
-                $('#temporaryContractStatus').attr('value', obj.data.content[i].contractStatus.id)
-                $('#temporaryContractStatus').val(obj.data.content[i].contractStatus.name)
-            }else {
-                $('#temporaryContractStatus').attr('value', '')
-                $('#temporaryContractStatus').val('')
-            }
-            $('#temporaryContractContent').val(obj.data.content[i].content)
-            $('#temporaryContractScanningCopy').val(obj.data.content[i].scanningCopy)
-        }else if (obj.data.content[i].contractType.id == 2) {
-            $('#internshipAgreementID').val(obj.data.content[i].id)
-
-            var startDateSplit = obj.data.content[i].startDate
-            if(startDateSplit){
-                var startDate = new Date()
-                startDate.setFullYear(startDateSplit.split('-')[0], startDateSplit.split('-')[1] - 1, startDateSplit.split('-')[2])
-                $('#internshipAgreementStartDate').val(startDate.toLocaleDateString())
-            //    document.getElementById("internshipAgreementStartDate").valueAsDate = startDate
-            }else {
-                $('#internshipAgreementStartDate').val('')
-            }
-
-            var endDateSplit = obj.data.content[i].endDate
-            if(endDateSplit){
-                var endDate = new Date()
-                startDate.setFullYear(endDateSplit.split('-')[0], endDateSplit.split('-')[1] - 1, endDateSplit.split('-')[2])
-                $('#internshipAgreementEndDate').val(endDate.toLocaleDateString())
-             //   document.getElementById("internshipAgreementEndDate").valueAsDate = endDate
-            }else {
-                $('#internshipAgreementEndDate').val('')
-            }
-
-            $('#internshipAgreementPeriod').val(obj.data.content[i].period)
-            if(obj.data.content[i].contractStatus){
-                $('#internshipAgreementStatus').attr('value', obj.data.content[i].contractStatus.id)
-                $('#internshipAgreementStatus').val(obj.data.content[i].contractStatus.name)
-            }else {
-                $('#internshipAgreementStatus').attr('value', '')
-                $('#internshipAgreementStatus').val('')
-            }
-            $('#internshipAgreementContent').val(obj.data.content[i].content)
-            $('#internshipAgreementScanningCopy').val(obj.data.content[i].scanningCopy)
         }
     }
 }
@@ -1153,80 +1247,6 @@ function saveArchiveInformation() {
             }
         })
     }
-}
-/*
-详细页面设置档案信息栏/
- */
-function setDetailsArchiveInformationColumn(obj) {
-    $('#archiveInformation-archiveID').val(obj.data.id)
-    if(obj.data.nation){
-        $('#archiveInformation-nation').val(obj.data.nation.name)
-        $('#archiveInformation-nation').attr('value', obj.data.nation.id)
-    }else{
-        $('#staffInformation-nation').val('')
-        $('#staffInformation-nation').attr('value', '')
-    }
-    $('#archiveInformation-identityNumber').val(obj.data.identityNumber)
-    if(obj.data.maritalStatus){
-        $('#archiveInformation-maritalStatus').val(obj.data.maritalStatus.name)
-        $('#archiveInformation-maritalStatus').attr('value', obj.data.maritalStatus.id)
-    }else{
-        $('#staffInformation-maritalStatus').val('')
-        $('#staffInformation-maritalStatus').attr('value', '')
-    }
-    if(obj.data.militaryStatus){
-        $('#archiveInformation-militaryStatus').val(obj.data.militaryStatus.name)
-        $('#archiveInformation-militaryStatus').attr('value', obj.data.militaryStatus.id)
-    }else{
-        $('#staffInformation-militaryStatus').val('')
-        $('#staffInformation-militaryStatus').attr('value', '')
-    }
-    if(obj.data.politicalStatus){
-        $('#archiveInformation-politicalStatus').val(obj.data.politicalStatus.name)
-        $('#archiveInformation-politicalStatus').attr('value', obj.data.politicalStatus.id)
-    }else{
-        $('#staffInformation-politicalStatus').val('')
-        $('#staffInformation-politicalStatus').attr('value', '')
-    }
-    if(obj.data.education){
-        $('#archiveInformation-education').val(obj.data.education.name)
-        $('#archiveInformation-education').attr('value', obj.data.education.id)
-    }else{
-        $('#staffInformation-education').val('')
-        $('#staffInformation-education').attr('value', '')
-    }
-    $('#archiveInformation-major').val(obj.data.major)
-
-    var firstWorkDateSplit = obj.data.firstWorkDate
-    if(firstWorkDateSplit){
-        var firstWorkDate = new Date()
-        firstWorkDate.setFullYear(firstWorkDateSplit.split('-')[0], firstWorkDateSplit.split('-')[1] - 1, firstWorkDateSplit.split('-')[2])
-        $('#archiveInformation-firstWorkDate').val(firstWorkDate.toLocaleDateString())
-        //document.getElementById("archiveInformation-firstWorkDate").valueAsDate = firstWorkDate
-    }else {
-        $('#archiveInformation-firstWorkDate').val('')
-    }
-
-    $('#archiveInformation-height').val(obj.data.height)
-    $('#archiveInformation-weight').val(obj.data.weight)
-    if(obj.data.healthStatus){
-        $('#archiveInformation-healthStatus').val(obj.data.healthStatus.name)
-        $('#archiveInformation-healthStatus').attr('value', obj.data.healthStatus.id)
-    }else{
-        $('#staffInformation-healthStatus').val('')
-        $('#staffInformation-healthStatus').attr('value', '')
-    }
-    $('#archiveInformation-domicilePlace').val(obj.data.domicilePlace)
-    $('#archiveInformation-livePlace').val(obj.data.livePlace)
-    if(obj.data.insurance == 0){
-        $('#archiveInformation-insurance').val("无")
-        $('#archiveInformation-insurance').attr('value', 0)
-    }else {
-        $('#archiveInformation-insurance').val("有")
-        $('#archiveInformation-insurance').attr('value', 1)
-    }
-    $('#archiveInformation-familyMemberName').val(obj.data.familyMemberName)
-    $('#archiveInformation-familyMemberContact').val(obj.data.familyMemberContact)
 }
 /*
 详细页面保存正式合同栏信息/
