@@ -20,7 +20,14 @@ public class ProjectStatus {
 	// 名称
 	private String name;
 
-	public Integer getId() {
+    public ProjectStatus() {
+    }
+
+    public ProjectStatus(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getId() {
 		return id;
 	}
 

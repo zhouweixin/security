@@ -65,8 +65,6 @@ public class Project {
 	private String scanningCopy;
 
 	// 项目状态：0进行中；1已结束；
-	@ManyToOne(targetEntity = ProjectStatus.class)
-	@JoinColumn(name = "project_status_id", referencedColumnName = "id")
 	private ProjectStatus projectStatus;
 
 	// 项目负责人

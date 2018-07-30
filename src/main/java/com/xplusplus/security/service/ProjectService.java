@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
+import com.xplusplus.security.domain.User;
 import com.xplusplus.security.repository.ProjectUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -269,4 +270,16 @@ public class ProjectService {
 		Pageable pageable = new PageRequest(page, size, sort);
 		return projectRepository.findByProjectStatus(projectStatus, pageable);
 	}
+
+    /**
+     * 通过负责人查询正在进行中的项目
+     *
+     * @param leader
+     * @return
+     */
+    public List<Project> findByLeader(User leader) {
+        // 按名称升序排
+        Sort sort = new Sort(Direction.ASC, "name");
+	    return projectRepository.findByLeaderAndProjectStatus(leader, new ProjectStatus(0), sort);
+    }
 }
