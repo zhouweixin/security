@@ -343,6 +343,11 @@ function getDetailsInformation(thisObj) {
                         input.eq(i).val('')
                         input.eq(i).attr('value', '')
                     }
+                    var button =  $('.archiveInformation').find('button')
+                    for(var i = 0; i < button.length; i++){
+                        button.eq(i).html("请选择" + "<span class='caret'></span>")
+                        button.eq(i).attr('value', '')
+                    }
                 }
             }
             else{
@@ -355,12 +360,17 @@ function getDetailsInformation(thisObj) {
     })
     //合同信息
     var input = $('.contractInformation').find('input')
-    var textarea = $('.contractInformation').find('textarea')
+    var textArea = $('.contractInformation').find('textarea')
     for(var i = 0; i < input.length; i++){
         input.eq(i).val('')
         input.eq(i).attr('value', '')
     }
-    textarea.eq(0).val('')
+    var button =  $('.contractInformation').find('button')
+    for(var i = 0; i < button.length; i++){
+        button.eq(i).html("请选择" + "<span class='caret'></span>")
+        button.eq(i).attr('value', '')
+    }
+    textArea.eq(0).val('')
     var formalContractType = $('#formalContractType')
     setContractType(formalContractType, 2)
     var temporaryContractType = $('#temporaryContractType')
@@ -724,7 +734,6 @@ function setDetailsStaffInformationColumn(obj) {
  */
 function setDetailsArchiveInformationColumn(obj) {
     $('#archiveInformation-archiveID').val(obj.data.id)
-
     if(obj.data.nation){
         $('#archiveInformation-nation').html(obj.data.nation.name + "<span class='caret'></span>")
         $('#archiveInformation-nation').attr('value', obj.data.nation.id)
@@ -807,7 +816,6 @@ function setDetailsArchiveInformationColumn(obj) {
 设置详细页面合同信息栏/
  */
 function setDetailsContractInformationColumn(obj) {
-    console.log(obj)
     for (var i = 0; i < obj.data.numberOfElements; i ++){
         if(obj.data.content[i].contractType.id == 3){
             $('#formalContractID').val(obj.data.content[i].id)
@@ -1093,35 +1101,101 @@ function cancelEditButtonOnClick(str) {
 function setDetailsContractInformationColumnCancelButton(obj) {
     if(obj.data.contractType.id == 3){
         $('#formalContractID').val(obj.data.id)
-        $('#formalContractStartDate').val(obj.data.startDate)
-        $('#formalContractEndDate').val(obj.data.endDate)
-        $('#formalContractPeriod').val(obj.data.period)
-        if(obj.data.contractStatus != null){
-            $('#formalContractStatus').attr('value', obj.data.contractStatus.id)
-            $('#formalContractStatus').val(obj.data.contractStatus.name)
+
+        var startDateSplit = obj.data.startDate
+        if(startDateSplit){
+            var startDate = new Date()
+            startDate.setFullYear(startDateSplit.split('-')[0], startDateSplit.split('-')[1] - 1, startDateSplit.split('-')[2])
+            $('#formalContractStartDate').val(startDate.toLocaleDateString())
+        }else {
+            $('#formalContractStartDate').val('')
         }
+
+        var endDateSplit = obj.data.endDate
+        if(endDateSplit){
+            var endDate = new Date()
+            startDate.setFullYear(endDateSplit.split('-')[0], endDateSplit.split('-')[1] - 1, endDateSplit.split('-')[2])
+            $('#formalContractEndDate').val(endDate.toLocaleDateString())
+        }else {
+            $('#formalContractEndDate').val('')
+        }
+
+        $('#formalContractPeriod').val(obj.data.period)
+
+        if(obj.data.contractStatus){
+            $('#formalContractStatus').attr('value', obj.data.contractStatus.id)
+            $('#formalContractStatus').html(obj.data.contractStatus.name + "<span class='caret'></span>")
+        }else {
+            $('#formalContractStatus').attr('value', '')
+            $('#formalContractStatus').html("请选择" + "<span class='caret'></span>")
+        }
+
         $('#formalContractContent').val(obj.data.content)
         $('#formalContractScanningCopy').val(obj.data.scanningCopy)
     }else if (obj.data.contractType.id == 1) {
         $('#temporaryContractID').val(obj.data.id)
-        $('#temporaryContractStartDate').val(obj.data.startDate)
-        $('#temporaryContractEndDate').val(obj.data.endDate)
-        $('#temporaryContractPeriod').val(obj.data.period)
-        if(obj.data.contractStatus != null){
-            $('#temporaryContractStatus').attr('value', obj.data.contractStatus.id)
-            $('#temporaryContractStatus').val(obj.data.contractStatus.name)
+
+        var startDateSplit = obj.data.startDate
+        if(startDateSplit){
+            var startDate = new Date()
+            startDate.setFullYear(startDateSplit.split('-')[0], startDateSplit.split('-')[1] - 1, startDateSplit.split('-')[2])
+            $('#temporaryContractStartDate').val(startDate.toLocaleDateString())
+        }else {
+            $('#temporaryContractStartDate').val('')
         }
+
+        var endDateSplit = obj.data.endDate
+        if(endDateSplit){
+            var endDate = new Date()
+            startDate.setFullYear(endDateSplit.split('-')[0], endDateSplit.split('-')[1] - 1, endDateSplit.split('-')[2])
+            $('#temporaryContractEndDate').val(endDate.toLocaleDateString())
+        }else {
+            $('#temporaryContractEndDate').val('')
+        }
+
+        $('#temporaryContractPeriod').val(obj.data.period)
+
+        if(obj.data.contractStatus){
+            $('#temporaryContractStatus').attr('value', obj.data.contractStatus.id)
+            $('#temporaryContractStatus').html(obj.data.contractStatus.name + "<span class='caret'></span>")
+        }else {
+            $('#temporaryContractStatus').attr('value', '')
+            $('#temporaryContractStatus').html("请选择" + "<span class='caret'></span>")
+        }
+
         $('#temporaryContractContent').val(obj.data.content)
         $('#temporaryContractScanningCopy').val(obj.data.scanningCopy)
     }else if (obj.data.contractType.id == 2) {
         $('#internshipAgreementID').val(obj.data.id)
-        $('#internshipAgreementStartDate').val(obj.data.startDate)
-        $('#internshipAgreementEndDate').val(obj.data.endDate)
-        $('#internshipAgreementPeriod').val(obj.data.period)
-        if(obj.data.contractStatus != null){
-            $('#internshipAgreementStatus').attr('value', obj.data.contractStatus.id)
-            $('#internshipAgreementStatus').val(obj.data.contractStatus.name)
+
+        var startDateSplit = obj.data.startDate
+        if(startDateSplit){
+            var startDate = new Date()
+            startDate.setFullYear(startDateSplit.split('-')[0], startDateSplit.split('-')[1] - 1, startDateSplit.split('-')[2])
+            $('#internshipAgreementStartDate').val(startDate.toLocaleDateString())
+        }else {
+            $('#internshipAgreementStartDate').val('')
         }
+
+        var endDateSplit = obj.data.endDate
+        if(endDateSplit){
+            var endDate = new Date()
+            startDate.setFullYear(endDateSplit.split('-')[0], endDateSplit.split('-')[1] - 1, endDateSplit.split('-')[2])
+            $('#internshipAgreementEndDate').val(endDate.toLocaleDateString())
+        }else {
+            $('#internshipAgreementEndDate').val('')
+        }
+
+        $('#internshipAgreementPeriod').val(obj.data.period)
+
+        if(obj.data.contractStatus){
+            $('#internshipAgreementStatus').attr('value', obj.data.contractStatus.id)
+            $('#internshipAgreementStatus').html(obj.data.contractStatus.name + "<span class='caret'></span>")
+        }else {
+            $('#internshipAgreementStatus').attr('value', '')
+            $('#internshipAgreementStatus').html("请选择" + "<span class='caret'></span>")
+        }
+
         $('#internshipAgreementContent').val(obj.data.content)
         $('#internshipAgreementScanningCopy').val(obj.data.scanningCopy)
     }

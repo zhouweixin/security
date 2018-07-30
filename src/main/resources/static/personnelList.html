@@ -35,7 +35,7 @@
           </div>
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
-                  <li class="active"><a href="personnelAnalysis.html">人事</a></li>
+                  <li class="active"><a href="personnelAnalysis.html">人事管理</a></li>
                   <li><a href="attendanceHomePage.html">考勤</a></li>
                   <li><a href="salaryManagement.html">薪酬</a></li>
                   <li><a href="processManagement.html">流程</a></li>
@@ -73,7 +73,7 @@
                               员工列表
                           </a>
                       </li>
-                      <li class="sub-menu-li">
+                      <li class="sub-menu-li none">
                           <a href="personnelChange.html" class="sub-menu-link">
                               人事异动
                           </a>
@@ -1028,7 +1028,7 @@
                       <div class="button-body">
                           <a class="btn btn-default" onclick="editButtonOnClick('archive')">编辑</a>
                           <a class="store-staff btn btn-info" onclick="saveArchiveInformation()">保存</a>
-                          <a class="btn btn-default hidden archiveCancelButton" value="archive" onclick="cancelEditButtonOnClick(this)">取消</a>
+                          <a class="btn btn-default hidden archiveCancelButton" onclick="cancelEditButtonOnClick('archive')">取消</a>
                       </div>
                   </div>
               </div>
@@ -1128,7 +1128,7 @@
                               <div class="button-body">
                                   <a class="btn btn-default" onclick="editButtonOnClick('formalContract')">编辑</a>
                                   <a class="store-staff btn btn-info" onclick="saveFormalContract()">保存</a>
-                                  <a class="btn btn-default hidden formalContractCancelButton" value="formalContract" onclick="cancelEditButtonOnClick(this)">取消</a>
+                                  <a class="btn btn-default hidden formalContractCancelButton" onclick="cancelEditButtonOnClick('formalContract')">取消</a>
                               </div>
                           </div>
                           <div role="tabpanel" class="tab-pane" id="temporaryContract-panel">
@@ -1216,7 +1216,7 @@
                               <div class="button-body">
                                   <a class="btn btn-default" onclick="editButtonOnClick('temporaryContract')">编辑</a>
                                   <a class="store-staff btn btn-info" onclick="saveTemporaryContract()">保存</a>
-                                  <a class="btn btn-default hidden temporaryContractCancelButton" value="temporaryContract" onclick="cancelEditButtonOnClick(this)">取消</a>
+                                  <a class="btn btn-default hidden temporaryContractCancelButton" onclick="cancelEditButtonOnClick('temporaryContract')">取消</a>
                               </div>
                           </div>
                           <div role="tabpanel" class="tab-pane" id="internshipAgreement-panel">
@@ -1304,7 +1304,7 @@
                               <div class="button-body">
                                   <a class="btn btn-default" onclick="editButtonOnClick('internshipAgreement')">编辑</a>
                                   <a class="store-staff btn btn-info" onclick="saveInternshipAgreement()">保存</a>
-                                  <a class="btn btn-default hidden internshipAgreementCancelButton" value="internshipAgreement" onclick="cancelEditButtonOnClick(this)">取消</a>
+                                  <a class="btn btn-default hidden internshipAgreementCancelButton" onclick="cancelEditButtonOnClick('internshipAgreement')">取消</a>
                               </div>
                           </div>
                       </div>
@@ -1542,7 +1542,7 @@
                                                          </div>
                                                      </div>
                                                      <div class="form-group ">
-                                                         <label class="col-xs-2 control-label">离职类型：</label>
+                                                         <label class="col-xs-2 control-label">离职类型</label>
                                                          <div class="col-xs-9">
                                                              <div class="dropdown col-xs-12 dropdown-div" >
                                                                  <button class="btn btn-default dropdown-toggle" type="button" value='' id="select-leaveType" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
