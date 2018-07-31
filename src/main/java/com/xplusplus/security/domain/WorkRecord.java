@@ -1,5 +1,6 @@
 package com.xplusplus.security.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -23,20 +24,24 @@ public class WorkRecord {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    @JsonFormat
     @Temporal(value = TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date startTime;
 
+    @JsonFormat
     @Temporal(value = TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date endTime;
 
+    @JsonFormat
     // 实际上班打卡时间
     @Temporal(value = TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date realStartTime;
 
     // 实际下班打卡时间
+    @JsonFormat
     @Temporal(value = TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date realEndTime;
@@ -80,6 +85,14 @@ public class WorkRecord {
         this.user = user;
         this.leader = leader;
         this.project = project;
+    }
+
+    public String parseStatus(){
+        switch (status){
+            case 0:return "上班";
+            case 1:return "下班";
+            default:return "缺卡";
+        }
     }
 
     public Long getId() {

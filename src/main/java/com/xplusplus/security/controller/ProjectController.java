@@ -218,13 +218,13 @@ public class ProjectController {
     }
 
     /**
-     * 通过负责人查询项目
+     * 通过负责人查询进行中的项目
      *
      * @param leader
      * @return
      */
-    @RequestMapping(value = "/getByLeader")
-    public Result<List<Project>> getByLeader(User leader) {
+    @RequestMapping(value = "/getByLeaderAndStaue0")
+    public Result<List<Project>> getByLeaderAndStaue0(User leader) {
         return ResultUtil.success(projectService.findByLeader(leader));
     }
 }

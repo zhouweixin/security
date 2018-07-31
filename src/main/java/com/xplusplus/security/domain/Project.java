@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -32,11 +33,13 @@ public class Project {
 	private String name;
 
 	// 开始日期
+    @JsonFormat
 	@Temporal(value = TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date startDate;
 
 	// 结束日期
+    @JsonFormat
 	@Temporal(value = TemporalType.DATE)
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date endDate;
@@ -65,6 +68,8 @@ public class Project {
 	private String scanningCopy;
 
 	// 项目状态：0进行中；1已结束；
+    @ManyToOne(targetEntity = ProjectStatus.class)
+    @JoinColumn(name = "project_status_id", referencedColumnName = "id")
 	private ProjectStatus projectStatus;
 
 	// 项目负责人

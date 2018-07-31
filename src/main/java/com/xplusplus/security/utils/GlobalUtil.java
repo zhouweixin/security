@@ -1,5 +1,6 @@
 package com.xplusplus.security.utils;
 
+import java.io.UnsupportedEncodingException;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
@@ -12,33 +13,34 @@ import java.util.Date;
  */
 public class GlobalUtil {
 
-	/**
-	 * 计算周期
-	 * 
-	 * @param startDate
-	 * @param endDate
-	 * @return
-	 */
-	public static Period computePeriod(Date startDate, Date endDate) {
-		// 计算周期
-		if (startDate != null && endDate != null) {
-			// Date -> LocalDate
-			Instant startInstant = startDate.toInstant();
-			Instant endInstant = endDate.toInstant();
-			ZoneId zone = ZoneId.systemDefault();
-			LocalDate start = LocalDateTime.ofInstant(startInstant, zone).toLocalDate();
-			LocalDate end = LocalDateTime.ofInstant(endInstant, zone).toLocalDate();
+    /**
+     * 计算周期
+     *
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    public static Period computePeriod(Date startDate, Date endDate) {
+        // 计算周期
+        if (startDate != null && endDate != null) {
+            // Date -> LocalDate
+            Instant startInstant = startDate.toInstant();
+            Instant endInstant = endDate.toInstant();
+            ZoneId zone = ZoneId.systemDefault();
+            LocalDate start = LocalDateTime.ofInstant(startInstant, zone).toLocalDate();
+            LocalDate end = LocalDateTime.ofInstant(endInstant, zone).toLocalDate();
 
-			// 计算时间差
-			return Period.between(start, end);
-		}
-		
-		return null;
-	}
+            // 计算时间差
+            return Period.between(start, end);
+        }
+
+        return null;
+    }
 
 
     /**
      * 计算工作时长
+     *
      * @param startTime
      * @param endTime
      * @param startBreakTime
@@ -46,7 +48,7 @@ public class GlobalUtil {
      * @return
      */
     public static long computeWorkPeriod(Date startTime, Date endTime,
-                                               Date startBreakTime, Date endBreakTime) {
+                                         Date startBreakTime, Date endBreakTime) {
         // 计算休息时长-基于时间（时、分、秒等）
         if (startTime != null && endTime != null
                 && startBreakTime != null && endBreakTime != null) {
@@ -56,26 +58,27 @@ public class GlobalUtil {
             Instant ins4 = endBreakTime.toInstant();
 
             // 计算时间差
-            return ChronoUnit.MINUTES.between(ins1,ins2)-ChronoUnit.MINUTES.between(ins3,ins4);
+            return ChronoUnit.MINUTES.between(ins1, ins2) - ChronoUnit.MINUTES.between(ins3, ins4);
         }
         return 0;
     }
 
     /**
      * 计算休息时长
+     *
      * @param startTime
      * @param endTime
      * @return
      */
-	public static long computeBreakPeriod(Date startTime, Date endTime) {
-		// 计算工作时长-基于时间（时、分、秒等）
-		if (startTime != null && endTime != null) {
-			Instant startInstant = startTime.toInstant();
-			Instant endInstant = endTime.toInstant();
+    public static long computeBreakPeriod(Date startTime, Date endTime) {
+        // 计算工作时长-基于时间（时、分、秒等）
+        if (startTime != null && endTime != null) {
+            Instant startInstant = startTime.toInstant();
+            Instant endInstant = endTime.toInstant();
 
-			// 计算时间差
-			return ChronoUnit.MINUTES.between(startInstant,endInstant);
-		}
+            // 计算时间差
+            return ChronoUnit.MINUTES.between(startInstant, endInstant);
+        }
         return 0;
     }
 
@@ -93,7 +96,7 @@ public class GlobalUtil {
         double lon1 = (Math.PI / 180) * longitude1;
         double lon2 = (Math.PI / 180) * longitude2;
 
-	    // 维度
+        // 维度
         double lat1 = (Math.PI / 180) * latitude1;
         double lat2 = (Math.PI / 180) * latitude2;
 
@@ -106,4 +109,21 @@ public class GlobalUtil {
         return d * 1000;
     }
 
+    /**
+     * mediumblob乱码解决
+     *
+     * @param str
+     * @return
+     */
+    public static String iso2utf8(String str) {
+        if (str == null) {
+            return null;
+        }
+
+        try {
+            return new String(str.getBytes("ISO-8859-1"), "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            return str;
+        }
+    }
 }
