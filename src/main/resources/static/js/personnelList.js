@@ -258,6 +258,26 @@ $(document).ready(function () {
     设置统计栏数字/
      */
     setSummaryNumber()
+    /*
+    保安证事件/
+     */
+    $('#archiveInformation-secuCert').parent().find('li a').on('click', function () {
+        if($(this).attr('value') == 1){
+            $('#archiveInformation-secuCertNum').attr('disabled', false)
+        }else{
+            $('#archiveInformation-secuCertNum').val('')
+            $('#archiveInformation-secuCertNum').attr('disabled', 'disabled')
+        }
+    })
+    /*
+    选择图片/
+     */
+    $('input[class=bussinessInsuranceFile]').change(function() {
+        $(this).parent().find('.input-append input').val($(this).val())
+    });
+    $('input[class=socialSecurityContractFile]').change(function() {
+        $(this).parent().find('.input-append input').val($(this).val())
+    });
 
 })
 
@@ -371,12 +391,18 @@ function getDetailsInformation(thisObj) {
         button.eq(i).attr('value', '')
     }
     textArea.eq(0).val('')
+    //初始化合同信息panel的合同类型
     var formalContractType = $('#formalContractType')
     setContractType(formalContractType, 2)
     var temporaryContractType = $('#temporaryContractType')
     setContractType(temporaryContractType, 0)
     var internshipAgreementType = $('#internshipAgreementType')
     setContractType(internshipAgreementType, 1)
+    var businessInsuranceType = $('#businessInsuranceType')
+    setContractType(businessInsuranceType, 3)
+    var socialSecurityContractType = $('#socialSecurityContractType')
+    setContractType(socialSecurityContractType, 4)
+
     var urlStr = ipPort + '/contract/getByUserByPage?user='+ staffId
     $.ajax({
         url:urlStr,
@@ -809,6 +835,18 @@ function setDetailsArchiveInformationColumn(obj) {
         $('#archiveInformation-insurance').attr('value', 1)
     }
 
+    if(obj.data.hasSecuCert == 0){
+        $('#archiveInformation-secuCert').html("无" + "<span class='caret'></span>")
+        $('#archiveInformation-secuCert').attr('value', 0)
+        $('#archiveInformation-secuCertNum').val('')
+        $('#archiveInformation-secuCertNum').attr('disabled', 'disabled')
+    }else {
+        $('#archiveInformation-secuCert').html("有" + "<span class='caret'></span>")
+        $('#archiveInformation-secuCert').attr('value', 1)
+        $('#archiveInformation-secuCertNum').val(obj.data.secuCertNum)
+    }
+
+    $('#archiveInformation-sponsorName').val(obj.data.sponsorName)
     $('#archiveInformation-familyMemberName').val(obj.data.familyMemberName)
     $('#archiveInformation-familyMemberContact').val(obj.data.familyMemberContact)
 }
@@ -916,6 +954,86 @@ function setDetailsContractInformationColumn(obj) {
             $('#internshipAgreementContent').val(obj.data.content[i].content)
             $('#internshipAgreementScanningCopy').val(obj.data.content[i].scanningCopy)
         }
+        else if (obj.data.content[i].contractType.id == 4) {
+            $('#businessInsuranceID').val(obj.data.content[i].id)
+
+            var startDateSplit = obj.data.content[i].startDate
+            if(startDateSplit){
+                var startDate = new Date()
+                startDate.setFullYear(startDateSplit.split('-')[0], startDateSplit.split('-')[1] - 1, startDateSplit.split('-')[2])
+                $('#businessInsuranceStartDate').val(startDate.toLocaleDateString())
+            }else {
+                $('#businessInsuranceStartDate').val('')
+            }
+
+            var endDateSplit = obj.data.content[i].endDate
+            if(endDateSplit){
+                var endDate = new Date()
+                startDate.setFullYear(endDateSplit.split('-')[0], endDateSplit.split('-')[1] - 1, endDateSplit.split('-')[2])
+                $('#businessInsuranceEndDate').val(endDate.toLocaleDateString())
+            }else {
+                $('#businessInsuranceEndDate').val('')
+            }
+
+            $('#businessInsurancePeriod').val(obj.data.content[i].period)
+            if(obj.data.content[i].contractStatus){
+                $('#businessInsuranceStatus').attr('value', obj.data.content[i].contractStatus.id)
+                $('#businessInsuranceStatus').html(obj.data.content[i].contractStatus.name + "<span class='caret'></span>")
+            }else {
+                $('#businessInsuranceStatus').attr('value', '')
+                $('#businessInsuranceStatus').html("" + "<span class='caret'></span>")
+            }
+            $('#businessInsuranceContent').val(obj.data.content[i].content)
+            //加载扫描件
+            if(obj.data.content[i].scanningCopy){
+                $('#businessInsuranceScanningCopy').attr('value', obj.data.content[i].scanningCopy)
+                var affterStr = "<img class='col-xs-6 col-xs-pull-3 scanningCopyImg' height=300 style='display:none'>"+
+                    "<div class='col-xs-6 col-xs-pull-3 scanningCopyDiv' style='height:300px;color: #006dcc;text-align: center;'>正在加载扫描件...</div>"
+                $('#businessInsurance-panel iframe').after(affterStr)
+                $('#businessInsurance-panel img').attr('onload', "this.nextSibling.style.display='none';this.style.display='';")
+                $('#businessInsurance-panel img').attr('src', ipPort + '/image/' + obj.data.content[i].scanningCopy)
+            }
+        }
+        else if (obj.data.content[i].contractType.id == 5) {
+            $('#socialSecurityContractID').val(obj.data.content[i].id)
+
+            var startDateSplit = obj.data.content[i].startDate
+            if(startDateSplit){
+                var startDate = new Date()
+                startDate.setFullYear(startDateSplit.split('-')[0], startDateSplit.split('-')[1] - 1, startDateSplit.split('-')[2])
+                $('#socialSecurityContractStartDate').val(startDate.toLocaleDateString())
+            }else {
+                $('#socialSecurityContractStartDate').val('')
+            }
+
+            var endDateSplit = obj.data.content[i].endDate
+            if(endDateSplit){
+                var endDate = new Date()
+                startDate.setFullYear(endDateSplit.split('-')[0], endDateSplit.split('-')[1] - 1, endDateSplit.split('-')[2])
+                $('#socialSecurityContractEndDate').val(endDate.toLocaleDateString())
+            }else {
+                $('#socialSecurityContractEndDate').val('')
+            }
+
+            $('#socialSecurityContractPeriod').val(obj.data.content[i].period)
+            if(obj.data.content[i].contractStatus){
+                $('#socialSecurityContractStatus').attr('value', obj.data.content[i].contractStatus.id)
+                $('#socialSecurityContractStatus').html(obj.data.content[i].contractStatus.name + "<span class='caret'></span>")
+            }else {
+                $('#socialSecurityContractStatus').attr('value', '')
+                $('#socialSecurityContractStatus').html("" + "<span class='caret'></span>")
+            }
+            $('#socialSecurityContractContent').val(obj.data.content[i].content)
+            //加载扫描件
+            if(obj.data.content[i].scanningCopy){
+                $('#socialSecurityContractScanningCopy').attr('value', obj.data.content[i].scanningCopy)
+                var affterStr = "<img class='col-xs-6 col-xs-pull-3 scanningCopyImg' height=300 style='display:none'>"+
+                    "<div class='col-xs-6 col-xs-pull-3 scanningCopyDiv' style='height:300px;color: #006dcc;text-align: center;'>正在加载扫描件...</div>"
+                $('#socialSecurityContract-panel iframe').after(affterStr)
+                $('#socialSecurityContract-panel img').attr('onload', "this.nextSibling.style.display='none';this.style.display='';")
+                $('#socialSecurityContract-panel img').attr('src', ipPort + '/image/' + obj.data.content[i].scanningCopy)
+            }
+        }
     }
 }
 /*
@@ -950,15 +1068,21 @@ function editButtonOnClick(str){
         for(var i = 0; i < button.length; i++){
             button.eq(i).attr('disabled', false)
         }
+        if($('#archiveInformation-secuCert').attr('value') == 1){
+            $('#archiveInformation-secuCertNum').attr('disabled', false)
+        }else{
+            $('#archiveInformation-secuCertNum').attr('disabled', 'disabled')
+        }
         $('.' + str + 'CancelButton').removeClass('hidden')
     }
     //合同信息
-    else if(str == 'formalContract' || str == 'internshipAgreement' || str == 'temporaryContract'){
+    else if(str == 'formalContract' || str == 'internshipAgreement' || str == 'temporaryContract' || str == 'businessInsurance' || str == 'socialSecurityContract'){
         var panelName = str
         panelName = '#' + panelName + '-panel'
         var input = $(panelName).find('input')
         var button = $(panelName).find('button')
         var textArea = $(panelName).find('textarea')
+        var a = $(panelName).find('a')
         for(var i = 0; i < input.length; i++){
             if(i == 1 || i == 0 || i == 4)continue
             input.eq(i).attr('disabled', false)
@@ -969,6 +1093,9 @@ function editButtonOnClick(str){
         for(var i = 0; i < textArea.length; i++){
             textArea.eq(i).attr('disabled', false)
             textArea.eq(i).removeClass('disable')
+        }
+        for(var i = 0; i < a.length; i++){
+            a.eq(i).attr('disabled', false)
         }
         $('.' + str + 'CancelButton').removeClass('hidden')
     }
@@ -1050,6 +1177,7 @@ function cancelEditButtonOnClick(str) {
         var input = $(panelName).find('input')
         var button = $(panelName).find('button')
         var textArea = $(panelName).find('textarea')
+        var a = $(panelName).find('.input-append a')
         for(var i = 0; i < input.length; i++){
             input.eq(i).attr('disabled', 'disabled')
         }
@@ -1059,6 +1187,15 @@ function cancelEditButtonOnClick(str) {
         for(var i = 0; i < textArea.length; i++){
             textArea.eq(i).attr('disabled', 'disabled')
             textArea.eq(i).addClass('disable')
+        }
+        for(var i = 0; i < a.length; i++){
+            a.eq(i).attr('disabled', 'disabled')
+        }
+        if($(panelName).find('.scanningCopyImg')){
+            $(panelName).find('.scanningCopyImg').remove()
+        }
+        if($(panelName).find('.scanningCopyDiv')){
+            $(panelName).find('.scanningCopyDiv').remove()
         }
         var contractID = $('#' + contractName + 'ID').val()
         if(contractID == ''){
@@ -1096,7 +1233,7 @@ function cancelEditButtonOnClick(str) {
     }
 }
 /*
-设置详细页面合同信息栏保存按钮/
+设置详细页面合同信息栏取消按钮/
  */
 function setDetailsContractInformationColumnCancelButton(obj) {
     if(obj.data.contractType.id == 3){
@@ -1198,6 +1335,92 @@ function setDetailsContractInformationColumnCancelButton(obj) {
 
         $('#internshipAgreementContent').val(obj.data.content)
         $('#internshipAgreementScanningCopy').val(obj.data.scanningCopy)
+    }else if (obj.data.contractType.id == 4) {
+        $('#businessInsuranceID').val(obj.data.id)
+
+        var startDateSplit = obj.data.startDate
+        if(startDateSplit){
+            var startDate = new Date()
+            startDate.setFullYear(startDateSplit.split('-')[0], startDateSplit.split('-')[1] - 1, startDateSplit.split('-')[2])
+            $('#businessInsuranceStartDate').val(startDate.toLocaleDateString())
+        }else {
+            $('#businessInsuranceStartDate').val('')
+        }
+
+        var endDateSplit = obj.data.endDate
+        if(endDateSplit){
+            var endDate = new Date()
+            startDate.setFullYear(endDateSplit.split('-')[0], endDateSplit.split('-')[1] - 1, endDateSplit.split('-')[2])
+            $('#businessInsuranceEndDate').val(endDate.toLocaleDateString())
+        }else {
+            $('#businessInsuranceEndDate').val('')
+        }
+
+        $('#businessInsurancePeriod').val(obj.data.period)
+
+        if(obj.data.contractStatus){
+            $('#businessInsuranceStatus').attr('value', obj.data.contractStatus.id)
+            $('#businessInsuranceStatus').html(obj.data.contractStatus.name + "<span class='caret'></span>")
+        }else {
+            $('#businessInsuranceStatus').attr('value', '')
+            $('#businessInsuranceStatus').html("请选择" + "<span class='caret'></span>")
+        }
+
+        $('#businessInsuranceContent').val(obj.data.content)
+        $('#businessInsuranceScanningCopy').val('')
+        $('#businessInsuranceScanningCopy').attr(obj.data.scanningCopy)
+        //加载扫描件
+        if(obj.data.scanningCopy){
+            $('#businessInsuranceScanningCopy').attr('value', obj.data.scanningCopy)
+            var affterStr = "<img class='col-xs-6 col-xs-pull-3 scanningCopyImg' height=300 style='display:none'>"+
+                "<div class='col-xs-6 col-xs-pull-3 scanningCopyDiv' style='height:300px;color: #006dcc;text-align: center;'>正在加载扫描件...</div>"
+            $('#businessInsurance-panel iframe').after(affterStr)
+            $('#businessInsurance-panel img').attr('onload', "this.nextSibling.style.display='none';this.style.display='';")
+            $('#businessInsurance-panel img').attr('src', ipPort + '/image/' + obj.data.scanningCopy)
+        }
+    }else if (obj.data.contractType.id == 5) {
+        $('#socialSecurityContractID').val(obj.data.id)
+
+        var startDateSplit = obj.data.startDate
+        if(startDateSplit){
+            var startDate = new Date()
+            startDate.setFullYear(startDateSplit.split('-')[0], startDateSplit.split('-')[1] - 1, startDateSplit.split('-')[2])
+            $('#socialSecurityContractStartDate').val(startDate.toLocaleDateString())
+        }else {
+            $('#socialSecurityContractStartDate').val('')
+        }
+
+        var endDateSplit = obj.data.endDate
+        if(endDateSplit){
+            var endDate = new Date()
+            startDate.setFullYear(endDateSplit.split('-')[0], endDateSplit.split('-')[1] - 1, endDateSplit.split('-')[2])
+            $('#socialSecurityContractEndDate').val(endDate.toLocaleDateString())
+        }else {
+            $('#socialSecurityContractEndDate').val('')
+        }
+
+        $('#socialSecurityContractPeriod').val(obj.data.period)
+
+        if(obj.data.contractStatus){
+            $('#socialSecurityContractStatus').attr('value', obj.data.contractStatus.id)
+            $('#socialSecurityContractStatus').html(obj.data.contractStatus.name + "<span class='caret'></span>")
+        }else {
+            $('#socialSecurityContractStatus').attr('value', '')
+            $('#socialSecurityContractStatus').html("请选择" + "<span class='caret'></span>")
+        }
+
+        $('#socialSecurityContractContent').val(obj.data.content)
+        $('#socialSecurityContractScanningCopy').val('')
+        $('#socialSecurityContractScanningCopy').attr('value', obj.data.scanningCopy)
+        //加载扫描件
+        if(obj.data.scanningCopy){
+            $('#socialSecurityContractScanningCopy').attr('value', obj.data.scanningCopy)
+            var affterStr = "<img class='col-xs-6 col-xs-pull-3 scanningCopyImg' height=300 style='display:none'>"+
+                "<div class='col-xs-6 col-xs-pull-3 scanningCopyDiv' style='height:300px;color: #006dcc;text-align: center;'>正在加载扫描件...</div>"
+            $('#socialSecurityContract-panel iframe').after(affterStr)
+            $('#socialSecurityContract-panel img').attr('onload', "this.nextSibling.style.display='none';this.style.display='';")
+            $('#socialSecurityContract-panel img').attr('src', ipPort + '/image/' + obj.data.scanningCopy)
+        }
     }
 }
 /*
@@ -1279,6 +1502,9 @@ function saveArchiveInformation() {
     var domicilePlace = $('#archiveInformation-domicilePlace').val()
     var livePlace = $('#archiveInformation-livePlace').val()
     var insurance = $('#archiveInformation-insurance').attr('value')
+    var hasSecuCert = $('#archiveInformation-secuCert').attr('value')
+    var secuCertNum = $('#archiveInformation-secuCertNum').val()
+    var sponsorName = $('#archiveInformation-sponsorName').val()
     var familyMemberName = $('#archiveInformation-familyMemberName').val()
     var familyMemberContact = $('#archiveInformation-familyMemberContact').val()
 
@@ -1286,7 +1512,8 @@ function saveArchiveInformation() {
         var urlStr = ipPort + '/archive/add?user=' + staffID + '&nation=' + nation + '&identityNumber=' + identityNumber + '&maritalStatus=' + maritalStatus
             + '&militaryStatus=' + militaryStatus + '&politicalStatus=' + politicalStatus + '&education=' + education + '&major=' + major
             + '&firstWorkDate=' + firstWorkDate + '&height=' + height + '&weight=' + weight + '&healthStatus=' + healthStatus + '&domicilePlace=' + domicilePlace
-            + '&livePlace=' + livePlace + '&insurance=' + insurance + '&familyMemberName=' + familyMemberName + '&familyMemberContact=' + familyMemberContact
+            + '&livePlace=' + livePlace + '&insurance=' + insurance + '&hasSecuCert=' + hasSecuCert + '&secuCertNum=' + secuCertNum +
+            '&sponsorName=' + sponsorName + '&familyMemberName=' + familyMemberName + '&familyMemberContact=' + familyMemberContact
         $.ajax({
             url:urlStr,
             dataType:'json',
@@ -1305,7 +1532,8 @@ function saveArchiveInformation() {
         var urlStr = ipPort + '/archive/update?id=' + archiveID + '&user=' + staffID + '&nation=' + nation + '&identityNumber=' + identityNumber + '&maritalStatus=' + maritalStatus
             + '&militaryStatus=' + militaryStatus + '&politicalStatus=' + politicalStatus + '&education=' + education + '&major=' + major
             + '&firstWorkDate=' + firstWorkDate + '&height=' + height + '&weight=' + weight + '&healthStatus=' + healthStatus + '&domicilePlace=' + domicilePlace
-            + '&livePlace=' + livePlace + '&insurance=' + insurance + '&familyMemberName=' + familyMemberName + '&familyMemberContact=' + familyMemberContact
+            + '&livePlace=' + livePlace + '&insurance=' + insurance + '&hasSecuCert=' + hasSecuCert + '&secuCertNum=' + secuCertNum +
+            '&sponsorName=' + sponsorName + '&familyMemberName=' + familyMemberName + '&familyMemberContact=' + familyMemberContact
         $.ajax({
             url:urlStr,
             dataType:'json',
@@ -1505,6 +1733,267 @@ function saveInternshipAgreement() {
     }
 }
 /*
+详细页面保存商业保险合同栏信息/
+ */
+function saveBusinessInsurance() {
+    var contractID = $('#businessInsuranceID').val()
+    var userID = $('#staffInformation-id').val()
+    var contractType = $('#businessInsuranceType').attr('value')
+    var contractStartDate = new Date(($('#businessInsuranceStartDate').val()))
+    if(contractStartDate != 'Invalid Date'){
+        contractStartDate = (contractStartDate.toLocaleDateString()).replace(/\//g, '-')
+    }else{
+        contractStartDate = ''
+    }
+    var contractEndDate = new Date(($('#businessInsuranceEndDate').val()))
+    if(contractEndDate != 'Invalid Date'){
+        contractEndDate = (contractEndDate.toLocaleDateString()).replace(/\//g, '-')
+    }else{
+        contractEndDate = ''
+    }
+    var contractStatus = $('#businessInsuranceStatus').attr('value')
+    var contractContent = $('#businessInsuranceContent').val()
+    var contractScanningCopy = $('#businessInsuranceScanningCopy').val()
+    if(contractScanningCopy){
+        $("[data-toggle='popover']").popover('show');
+        var formData = new FormData($("#businessInsurance-uploadImage")[0]);
+        $.ajax({
+            url:ipPort + '/image/upload',
+            type:"post",
+            data:formData,
+            async: true,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success:function(obj_){
+                console.log(obj_)
+                if(obj_.code == 0){
+                    if(contractID == ''){
+                        var urlStr = ipPort + '/contract/add?user=' + userID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
+                            + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&scanningCopy=' + obj_.data.code
+                        $.ajax({
+                            url:urlStr,
+                            dataType:'json',
+                            success:function (obj) {
+                                if(obj.code == 0){
+                                    $("[data-toggle='popover']").popover('destroy');
+                                    alert(obj.message)
+                                    setContractID('businessInsurance')
+                                }else{
+                                    $("[data-toggle='popover']").popover('destroy');
+                                    console.log(obj)
+                                }
+                            },
+                            error:function (error) {
+                                $("[data-toggle='popover']").popover('destroy');
+                                console.log(error)
+                            }
+                        })
+                    }else{
+                        var urlStr = ipPort + '/contract/update?id=' + contractID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
+                            + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&scanningCopy=' + obj_.data.code + '&user=' + userID
+                        $.ajax({
+                            url:urlStr,
+                            dataType:'json',
+                            success:function (obj) {
+                                if(obj.code == 0){
+                                    $("[data-toggle='popover']").popover('destroy');
+                                    alert(obj.message)
+                                    setContractID('businessInsurance')
+                                }else{
+                                    $("[data-toggle='popover']").popover('destroy');
+                                    console.log(obj)
+                                }
+                            },
+                            error:function (error) {
+                                $("[data-toggle='popover']").popover('destroy');
+                                console.log(error)
+                            }
+                        })
+                    }
+                }else{
+                    $("[data-toggle='popover']").popover('destroy');
+                    alert(obj_.message)
+                }
+            },
+            error:function(e){
+                $("[data-toggle='popover']").popover('destroy');
+                alert("上传失败！！");
+            }
+        });
+    }
+    else{
+        if(contractID == ''){
+            var urlStr = ipPort + '/contract/add?user=' + userID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
+                + '&contractStatus=' + contractStatus + '&content=' + contractContent
+            $.ajax({
+                url:urlStr,
+                dataType:'json',
+                success:function (obj) {
+                    if(obj.code == 0){
+                        alert(obj.message)
+                        setContractID('businessInsurance')
+                    }else{
+                        console.log(obj)
+                    }
+                },
+                error:function (error) {
+                    console.log(error)
+                }
+            })
+        }else{
+            var urlStr = ipPort + '/contract/update?id=' + contractID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
+                + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&user=' + userID + '&scanningCopy=' + $('#businessInsuranceScanningCopy').attr('value')
+            $.ajax({
+                url:urlStr,
+                dataType:'json',
+                success:function (obj) {
+                    if(obj.code == 0){
+                        alert(obj.message)
+                        setContractID('businessInsurance')
+                    }else{
+                        console.log(obj)
+                    }
+                },
+                error:function (error) {
+                    console.log(error)
+                }
+            })
+        }
+    }
+}
+/*
+详细页面保存社保合同栏信息/
+ */
+function saveSocialSecurityContract() {
+    var contractID = $('#socialSecurityContractID').val()
+    var userID = $('#staffInformation-id').val()
+    var contractType = $('#socialSecurityContractType').attr('value')
+    var contractStartDate = new Date(($('#socialSecurityContractStartDate').val()))
+    if(contractStartDate != 'Invalid Date'){
+        contractStartDate = (contractStartDate.toLocaleDateString()).replace(/\//g, '-')
+    }else{
+        contractStartDate = ''
+    }
+    var contractEndDate = new Date(($('#socialSecurityContractEndDate').val()))
+    if(contractEndDate != 'Invalid Date'){
+        contractEndDate = (contractEndDate.toLocaleDateString()).replace(/\//g, '-')
+    }else{
+        contractEndDate = ''
+    }
+    var contractStatus = $('#socialSecurityContractStatus').attr('value')
+    var contractContent = $('#socialSecurityContractContent').val()
+    var contractScanningCopy = $('#socialSecurityContractScanningCopy').val()
+
+    if(contractScanningCopy){
+        $("[data-toggle='popover']").popover('show');
+        var formData = new FormData($("#socialSecurityContract-uploadImage")[0]);
+        $.ajax({
+            url:ipPort + '/image/upload',
+            type:"post",
+            data:formData,
+            async: true,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success:function(obj_){
+                console.log(obj_)
+                if(obj_.code == 0){
+                    if(contractID == ''){
+                        var urlStr = ipPort + '/contract/add?user=' + userID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
+                            + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&scanningCopy=' + obj_.data.code
+                        $.ajax({
+                            url:urlStr,
+                            dataType:'json',
+                            success:function (obj) {
+                                if(obj.code == 0){
+                                    $("[data-toggle='popover']").popover('destroy');
+                                    alert(obj.message)
+                                    setContractID('socialSecurityContract')
+                                }else{
+                                    $("[data-toggle='popover']").popover('destroy');
+                                    console.log(obj)
+                                }
+                            },
+                            error:function (error) {
+                                $("[data-toggle='popover']").popover('destroy');
+                                console.log(error)
+                            }
+                        })
+                    }else{
+                        var urlStr = ipPort + '/contract/update?id=' + contractID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
+                            + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&scanningCopy=' + obj_.data.code + '&user=' + userID
+                        $.ajax({
+                            url:urlStr,
+                            dataType:'json',
+                            success:function (obj) {
+                                if(obj.code == 0){
+                                    $("[data-toggle='popover']").popover('destroy');
+                                    alert(obj.message)
+                                    setContractID('socialSecurityContract')
+                                }else{
+                                    $("[data-toggle='popover']").popover('destroy');
+                                    console.log(obj)
+                                }
+                            },
+                            error:function (error) {
+                                $("[data-toggle='popover']").popover('destroy');
+                                console.log(error)
+                            }
+                        })
+                    }
+                }else{
+                    $("[data-toggle='popover']").popover('destroy');
+                    alert(obj_.message)
+                }
+            },
+            error:function(e){
+                $("[data-toggle='popover']").popover('destroy');
+                alert("上传失败！！");
+            }
+        });
+    }
+    else{
+        if(contractID == ''){
+            var urlStr = ipPort + '/contract/add?user=' + userID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
+                + '&contractStatus=' + contractStatus + '&content=' + contractContent
+            $.ajax({
+                url:urlStr,
+                dataType:'json',
+                success:function (obj) {
+                    if(obj.code == 0){
+                        alert(obj.message)
+                        setContractID('socialSecurityContract')
+                    }else{
+                        console.log(obj)
+                    }
+                },
+                error:function (error) {
+                    console.log(error)
+                }
+            })
+        }else{
+            var urlStr = ipPort + '/contract/update?id=' + contractID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
+                + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&user=' + userID + '&scanningCopy=' + $('#socialSecurityContractScanningCopy').attr('value')
+            $.ajax({
+                url:urlStr,
+                dataType:'json',
+                success:function (obj) {
+                    if(obj.code == 0){
+                        alert(obj.message)
+                        setContractID('socialSecurityContract')
+                    }else{
+                        console.log(obj)
+                    }
+                },
+                error:function (error) {
+                    console.log(error)
+                }
+            })
+        }
+    }
+}
+/*
 设置合同编号/
  */
 function setContractID(panelName) {
@@ -1531,6 +2020,18 @@ function setContractID(panelName) {
                     for (var i = 0; i < obj.data.numberOfElements; i ++){
                         if(obj.data.content[i].contractType.id == 2){
                             $('#internshipAgreementID').val(obj.data.content[i].id)
+                        }
+                    }
+                }else if(panelName == 'businessInsurance'){
+                    for (var i = 0; i < obj.data.numberOfElements; i ++){
+                        if(obj.data.content[i].contractType.id == 4){
+                            $('#businessInsuranceID').val(obj.data.content[i].id)
+                        }
+                    }
+                }else if(panelName == 'socialSecurityContract'){
+                    for (var i = 0; i < obj.data.numberOfElements; i ++){
+                        if(obj.data.content[i].contractType.id == 5){
+                            $('#socialSecurityContractID').val(obj.data.content[i].id)
                         }
                     }
                 }

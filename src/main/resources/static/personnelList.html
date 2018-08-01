@@ -1013,6 +1013,34 @@
                               </div>
                           </div>
                           <div class="form-group col-xs-6">
+                              <label class="col-xs-3 control-label">保安证：</label>
+                              <div class="col-xs-7">
+                                  <div class="dropdown col-xs-12 dropdown-div" >
+                                      <button class="btn btn-default dropdown-toggle" disabled="disabled" type="button" value='' id="archiveInformation-secuCert" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                          请选择
+                                          <span class="caret"></span>
+                                      </button>
+                                      <ul class="dropdown-menu" aria-labelledby="selectDepartment-dropdownMenu">
+                                          <li><a value="">请选择</a></li>
+                                          <li><a value="1">有</a></li>
+                                          <li><a value="0">无</a></li>
+                                      </ul>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-xs-6">
+                              <label class="col-xs-3 control-label">保安证号：</label>
+                              <div class="col-xs-7">
+                                  <input id="archiveInformation-secuCertNum" type="text" class="form-control" placeholder="" disabled="disabled">
+                              </div>
+                          </div>
+                          <div class="form-group col-xs-6">
+                              <label class="col-xs-3 control-label">介绍人姓名：</label>
+                              <div class="col-xs-7">
+                                  <input id="archiveInformation-sponsorName" type="text" class="form-control" placeholder="" disabled="disabled">
+                              </div>
+                          </div>
+                          <div class="form-group col-xs-6">
                               <label class="col-xs-3 control-label">家庭成员姓名：</label>
                               <div class="col-xs-7">
                                   <input id="archiveInformation-familyMemberName" type="text" class="form-control" placeholder="" disabled="disabled">
@@ -1025,7 +1053,7 @@
                               </div>
                           </div>
                       </form>
-                      <div class="button-body">
+                      <div class="button-body col-xs-12">
                           <a class="btn btn-default" onclick="editButtonOnClick('archive')">编辑</a>
                           <a class="store-staff btn btn-info" onclick="saveArchiveInformation()">保存</a>
                           <a class="btn btn-default hidden archiveCancelButton" onclick="cancelEditButtonOnClick('archive')">取消</a>
@@ -1041,6 +1069,8 @@
                           <li role="presentation" class="active"><a href="#formalContract-panel" aria-controls="formalContract-panel" role="tab" data-toggle="tab">正式合同</a></li>
                           <li role="presentation"><a href="#temporaryContract-panel" aria-controls="temporaryContract-panel" role="tab" data-toggle="tab">临时合同</a></li>
                           <li role="presentation"><a href="#internshipAgreement-panel" aria-controls="internshipAgreement-panel" role="tab" data-toggle="tab">实习合同</a></li>
+                          <li role="presentation"><a href="#businessInsurance-panel" aria-controls="businessInsurance-panel" role="tab" data-toggle="tab">商业保险合同</a></li>
+                          <li role="presentation"><a href="#socialSecurityContract-panel" aria-controls="socialSecurityContract-panel" role="tab" data-toggle="tab">社保合同</a></li>
                       </ul>
                       <div class="tab-content">
                           <div role="tabpanel" class="tab-pane active" id="formalContract-panel">
@@ -1118,12 +1148,12 @@
                                           <textarea class="form-control" id="formalContractContent" style="height: 90px;overflow: auto" disabled="disabled"></textarea>
                                       </div>
                                   </div>
-                                  <div class="form-group col-xs-6">
-                                      <label class="col-xs-3 control-label">扫描件：</label>
-                                      <div class="col-xs-7">
-                                          <input id="formalContractScanningCopy" disabled="disabled" type="text" class="form-control" placeholder="">
-                                      </div>
-                                  </div>
+                                  <!--<div class="form-group col-xs-6">-->
+                                      <!--<label class="col-xs-3 control-label">扫描件：</label>-->
+                                      <!--<div class="col-xs-7">-->
+                                          <!--<input id="formalContractScanningCopy" disabled="disabled" type="text" class="form-control" placeholder="">-->
+                                      <!--</div>-->
+                                  <!--</div>-->
                               </form>
                               <div class="button-body">
                                   <a class="btn btn-default" onclick="editButtonOnClick('formalContract')">编辑</a>
@@ -1206,12 +1236,12 @@
                                           <textarea class="form-control" id="temporaryContractContent" style="height: 90px;overflow: auto" disabled="disabled"></textarea>
                                       </div>
                                   </div>
-                                  <div class="form-group col-xs-6">
-                                      <label class="col-xs-3 control-label">扫描件：</label>
-                                      <div class="col-xs-7">
-                                          <input id="temporaryContractScanningCopy" disabled="disabled"type="text" class="form-control" placeholder="">
-                                      </div>
-                                  </div>
+                                  <!--<div class="form-group col-xs-6">-->
+                                      <!--<label class="col-xs-3 control-label">扫描件：</label>-->
+                                      <!--<div class="col-xs-7">-->
+                                          <!--<input id="temporaryContractScanningCopy" disabled="disabled"type="text" class="form-control" placeholder="">-->
+                                      <!--</div>-->
+                                  <!--</div>-->
                               </form>
                               <div class="button-body">
                                   <a class="btn btn-default" onclick="editButtonOnClick('temporaryContract')">编辑</a>
@@ -1294,17 +1324,205 @@
                                           <textarea class="form-control" id="internshipAgreementContent" style="height: 90px;overflow: auto" disabled="disabled"></textarea>
                                       </div>
                                   </div>
-                                  <div class="form-group col-xs-6">
-                                      <label class="col-xs-3 control-label">扫描件：</label>
-                                      <div class="col-xs-7">
-                                          <input id="internshipAgreementScanningCopy" type="text" disabled="disabled" class="form-control" placeholder="">
-                                      </div>
-                                  </div>
+                                  <!--<div class="form-group col-xs-6">-->
+                                      <!--<label class="col-xs-3 control-label">扫描件：</label>-->
+                                      <!--<div class="col-xs-7">-->
+                                          <!--<input id="internshipAgreementScanningCopy" type="text" disabled="disabled" class="form-control" placeholder="">-->
+                                      <!--</div>-->
+                                  <!--</div>-->
                               </form>
                               <div class="button-body">
                                   <a class="btn btn-default" onclick="editButtonOnClick('internshipAgreement')">编辑</a>
                                   <a class="store-staff btn btn-info" onclick="saveInternshipAgreement()">保存</a>
                                   <a class="btn btn-default hidden internshipAgreementCancelButton" onclick="cancelEditButtonOnClick('internshipAgreement')">取消</a>
+                              </div>
+                          </div>
+                          <div role="tabpanel" class="tab-pane" id="businessInsurance-panel">
+                              <form class="form-horizontal" id="businessInsurance-uploadImage" role="form" target="nm_iframe1"
+                                    method="post" enctype="multipart/form-data" style="height: 250px; overflow: visible">
+                                  <div class="form-group col-xs-6">
+                                      <label class="col-xs-3 control-label">合同编号：</label>
+                                      <div class="col-xs-7">
+                                          <input id="businessInsuranceID" type="text" class="form-control" placeholder="" disabled="disabled">
+                                      </div>
+                                  </div>
+                                  <div class="form-group col-xs-6">
+                                      <label class="col-xs-3 control-label">合同类型：</label>
+                                      <div class="col-xs-7">
+                                          <input id="businessInsuranceType" type="text" class="form-control" placeholder="" disabled="disabled">
+                                      </div>
+                                  </div>
+                                  <div class="form-group col-xs-6">
+                                      <label class="col-xs-3 control-label">合同开始日期：</label>
+                                      <div class="input-group date from_date col-xs-7" style="padding: 0 15px">
+                                          <input id="businessInsuranceStartDate" size="16" class="form-control"  value="年/月/日" type="text" disabled="disabled">
+                                          <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                      </div>
+                                  </div>
+                                  <div class="form-group col-xs-6">
+                                      <label class="col-xs-3 control-label">合同结束日期：</label>
+                                      <div class="input-group date from_date col-xs-7" style="padding: 0 15px">
+                                          <input id="businessInsuranceEndDate" size="16" class="form-control"  value="年/月/日" type="text" disabled="disabled">
+                                          <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                      </div>
+                                  </div>
+                                  <div class="form-group col-xs-6">
+                                      <label class="col-xs-3 control-label">合同周期：</label>
+                                      <div class="col-xs-7">
+                                          <input id="businessInsurancePeriod" type="text" class="form-control" placeholder="" disabled="disabled">
+                                      </div>
+                                  </div>
+                                  <div class="form-group col-xs-6">
+                                      <label class="col-xs-3 control-label">合同状态：</label>
+                                      <div class="col-xs-7">
+                                          <div class="dropdown col-xs-12 dropdown-div" >
+                                              <button class="btn btn-default dropdown-toggle" disabled="disabled" type="button" value='' id="businessInsuranceStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                  请选择
+                                                  <span class="caret"></span>
+                                              </button>
+                                              <ul class="dropdown-menu dropdown-menu-contractStatus" aria-labelledby="selectDepartment-dropdownMenu">
+                                                  <li><a value="">请选择</a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                              </ul>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="form-group col-xs-6">
+                                      <label for="businessInsuranceContent" class="col-xs-3 control-label">合同内容</label>
+                                      <div class="col-xs-7">
+                                          <textarea class="form-control" id="businessInsuranceContent" style="height: 90px;overflow: auto" disabled="disabled"></textarea>
+                                      </div>
+                                  </div>
+                                  <div class="form-group col-xs-6">
+                                      <label class="col-xs-3 control-label">扫描件：</label>
+                                      <input class="bussinessInsuranceFile" name="file" type="file" style="display:none" accept=".png,.jpg,.jpeg,.bmp" disabled="disabled">
+                                      <div class="input-append col-xs-7">
+                                          <input id="businessInsuranceScanningCopy" class="input-large col-xs-9" value="" type="text" disabled="disabled" style="height: 34px; border-radius: 4px;">
+                                          <a class="btn col-xs-3" onclick="$('input[class=bussinessInsuranceFile]').click();" disabled="disabled">选择文件</a>
+                                      </div>
+                                  </div>
+                              </form>
+                              <iframe name="nm_iframe1" style="display:none;"></iframe>
+                              <div class="button-body col-xs-12">
+                                  <a class="btn btn-default" onclick="editButtonOnClick('businessInsurance')">编辑</a>
+                                  <a class="store-staff btn btn-info" onclick="saveBusinessInsurance()" data-container="body" data-toggle="popover" data-placement="top"
+                                     data-content="正在上传图片和数据，请稍后！！！">保存</a>
+                                  <a class="btn btn-default hidden businessInsuranceCancelButton" onclick="cancelEditButtonOnClick('businessInsurance')">取消</a>
+                              </div>
+                          </div>
+                          <div role="tabpanel" class="tab-pane" id="socialSecurityContract-panel">
+                              <form id="socialSecurityContract-uploadImage" class="form-horizontal" role="form" target="nm_iframe"
+                                     method="post" enctype="multipart/form-data"style="height: 250px; overflow: visible">
+                                  <div class="form-group col-xs-6">
+                                      <label class="col-xs-3 control-label">合同编号：</label>
+                                      <div class="col-xs-7">
+                                          <input id="socialSecurityContractID" type="text" class="form-control" placeholder="" disabled="disabled">
+                                      </div>
+                                  </div>
+                                  <div class="form-group col-xs-6">
+                                      <label class="col-xs-3 control-label">合同类型：</label>
+                                      <div class="col-xs-7">
+                                          <input id="socialSecurityContractType" type="text" class="form-control" placeholder="" disabled="disabled">
+                                      </div>
+                                  </div>
+                                  <div class="form-group col-xs-6">
+                                      <label class="col-xs-3 control-label">合同开始日期：</label>
+                                      <div class="input-group date from_date col-xs-7" style="padding: 0 15px">
+                                          <input id="socialSecurityContractStartDate" size="16" class="form-control"  value="年/月/日" type="text" disabled="disabled">
+                                          <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                      </div>
+                                  </div>
+                                  <div class="form-group col-xs-6">
+                                      <label class="col-xs-3 control-label">合同结束日期：</label>
+                                      <div class="input-group date from_date col-xs-7" style="padding: 0 15px">
+                                          <input id="socialSecurityContractEndDate" size="16" class="form-control"  value="年/月/日" type="text" disabled="disabled">
+                                          <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                      </div>
+                                  </div>
+                                  <div class="form-group col-xs-6">
+                                      <label class="col-xs-3 control-label">合同周期：</label>
+                                      <div class="col-xs-7">
+                                          <input id="socialSecurityContractPeriod" type="text" class="form-control" placeholder="" disabled="disabled">
+                                      </div>
+                                  </div>
+                                  <div class="form-group col-xs-6">
+                                      <label class="col-xs-3 control-label">合同状态：</label>
+                                      <div class="col-xs-7">
+                                          <div class="dropdown col-xs-12 dropdown-div" >
+                                              <button class="btn btn-default dropdown-toggle" disabled="disabled" type="button" value='' id="socialSecurityContractStatus" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                  请选择
+                                                  <span class="caret"></span>
+                                              </button>
+                                              <ul class="dropdown-menu dropdown-menu-contractStatus" aria-labelledby="selectDepartment-dropdownMenu">
+                                                  <li><a value="">请选择</a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                                  <li class="hidden"><a></a></li>
+                                              </ul>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="form-group col-xs-6">
+                                      <label for="socialSecurityContractContent" class="col-xs-3 control-label">合同内容</label>
+                                      <div class="col-xs-7">
+                                          <textarea class="form-control" id="socialSecurityContractContent" style="height: 90px;overflow: auto" disabled="disabled"></textarea>
+                                      </div>
+                                  </div>
+                                  <div class="form-group col-xs-6">
+                                      <label class="col-xs-3 control-label">扫描件：</label>
+                                      <input class="socialSecurityContractFile" name="file" type="file" style="display:none" accept=".png,.jpg,.jpeg,.bmp" disabled="disabled" >
+                                      <div class="input-append col-xs-7">
+                                          <input id="socialSecurityContractScanningCopy" class="input-large col-xs-9" value="" type="text" disabled="disabled" style="height: 34px; border-radius: 4px;">
+                                          <a class="btn col-xs-3" onclick="$('input[class=socialSecurityContractFile]').click();" disabled="disabled">选择文件</a>
+                                      </div>
+                                  </div>
+                              </form>
+                              <iframe name="nm_iframe" style="display:none;"></iframe>
+                              <!--<img class="col-xs-6" height=300 style="display:none" onload='this.nextSibling.style.display="none";this.style.display="";'>-->
+                              <!--<div class="col-xs-6" style="height:300px;">正在加载图片...</div>-->
+                              <div class="button-body col-xs-12">
+                                  <a class="btn btn-default" onclick="editButtonOnClick('socialSecurityContract')">编辑</a>
+                                  <a type="button" class="store-staff btn btn-info" onclick="saveSocialSecurityContract()" data-container="body" data-toggle="popover" data-placement="top"
+                                     data-content="正在上传图片和数据，请稍后！！！">保存</a>
+                                  <a class="btn btn-default hidden socialSecurityContractCancelButton" onclick="cancelEditButtonOnClick('socialSecurityContract')">取消</a>
                               </div>
                           </div>
                       </div>
