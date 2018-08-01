@@ -656,7 +656,7 @@
                 <h4 class="modal-title" id="myModalLabel-signContract">修改合同</h4>
             </div>
             <div class="modal-body" style="padding: 15px 20px">
-                <form class="form-horizontal">
+                <form class="form-horizontal" id="updateContractModal-uploadImage" role="form" target="nm_iframe" enctype="multipart/form-data">
                     <div class="form-group ">
                         <label class="col-xs-3 control-label">员工姓名：</label>
                         <div class="col-xs-7">
@@ -681,18 +681,6 @@
                             <input id="modal-contractType" type="text" class="form-control" placeholder="" disabled="disabled">
                         </div>
                     </div>
-                    <!--<div class="form-group">
-                        <label for="modal-contractStartDate" class="col-xs-3 control-label">合同开始日期：</label>
-                        <div class="col-xs-7">
-                            <input type="date" class="form-control" id="modal-contractStartDate" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="modal-contractEndDate" class="col-xs-3 control-label">合同结束日期：</label>
-                        <div class="col-xs-7">
-                            <input type="date" class="form-control" id="modal-contractEndDate" >
-                        </div>
-                    </div>-->
                     <div class="form-group">
                         <label for="modal-contractStartDate" class="col-xs-3 control-label">合同开始日期：</label>
                         <div class="input-group date to_date col-xs-7" style="padding:0 15px">
@@ -757,11 +745,19 @@
                     </div>
                     <div class="form-group ">
                         <label class="col-xs-3 control-label">扫描件：</label>
-                        <div class="col-xs-7">
-                            <input id="modal-contractScanningCopy"type="text" class="form-control" placeholder="">
+                        <input class="scanningCopy" name="file" type="file" style="display:none" accept=".png,.jpg,.jpeg,.bmp" >
+                        <div class="input-append col-xs-7">
+                            <input id="modal-contractScanningCopy" class="input-large col-xs-9" value="" type="text" disabled="disabled" style="height: 34px; border-radius: 4px;" data-container="body" data-toggle="popover" data-placement="top"
+                                   data-content="正在上传图片和数据，请稍后！！！">
+                            <a class="btn col-xs-3" onclick="$('input[class=scanningCopy]').click();" >选择文件</a>
+                        </div>
+                        <div id="checkScanningCopyImg" class="col-xs-2 none" style="line-height: 34px;color: #337ab7;padding-left: 0px;">
+                            <span class="glyphicon glyphicon-eye-open" onclick="setScanningCopyImageModal()" data-toggle="modal" data-target="#myModal-checkScanningCopyImg"  aria-hidden="true" style="cursor: pointer;"></span>
                         </div>
                     </div>
                 </form>
+
+                <iframe name="nm_iframe" style="display:none;"></iframe>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -770,6 +766,21 @@
         </div>
     </div>
 </div>
+
+<!---------------------------------------------------查看扫描件modal----------------------------------------------------------->
+<!-------------------------------------------------------------------------------------------------------------->
+<div class="modal fade " id="myModal-checkScanningCopyImg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" value="">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 5px 15px;border-bottom: none;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" style="height:540px;">
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade bs-example-modal-sm" id="myModal-makeSureDelete" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" value="">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">

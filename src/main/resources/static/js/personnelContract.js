@@ -65,12 +65,18 @@ $(document).ready(function () {
         $('#modal-contractStatus').val($(this).text())
         $('#modal-contractStatus').attr('value', $(this).attr('value'))
     })
+    /*
+    选择图片/
+     */
+    $('input[class=scanningCopy]').change(function() {
+        $(this).parent().find('.input-append input').val($(this).val())
+    });
 })
 /*
 搜索全部合同信息/
  */
-function getAllContractInformation() {
-    currentPage = 0
+function getAllContractInformation(currentPage_=0) {
+    currentPage = currentPage_
     var page = currentPage
     var size = 10
     var sortFieldName = 'id'
@@ -186,27 +192,80 @@ function updateContractInformation() {
     var userID = $('#modal-contractStaffID').val()
     var contractID = $('#modal-contractID').val()
     var contractType = $('#modal-contractType').attr('value')
-    var contractStartDate = $('#modal-contractStartDate').val()
-    var contractEndDate = $('#modal-contractEndDate').val()
+
+    var contractStartDate = new Date(($('#modal-contractStartDate').val()))
+    contractStartDate = (contractStartDate.toLocaleDateString()).replace(/\//g, '-')
+
+    var contractEndDate = new Date(($('#modal-contractEndDate').val()))
+    contractEndDate = (contractEndDate.toLocaleDateString()).replace(/\//g, '-')
+
     var contractStatus = $('#modal-contractStatus').attr('value')
     var contractContent = $('#modal-contractContent').val()
+
     var contractScanningCopy = $('#modal-contractScanningCopy').val()
-    var urlStr = ipPort + '/contract/update?id=' + contractID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
-        + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&scanningCopy=' + contractScanningCopy + '&user=' + userID
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                alert(obj.message)
-            }else{
-                alert(obj.message)
+    //上传扫描件
+    if(contractScanningCopy){
+        $("[data-toggle='popover']").popover('show');
+        var formData = new FormData($("#updateContractModal-uploadImage")[0]);
+        $.ajax({
+            url:ipPort + '/image/upload',
+            type:"post",
+            data:formData,
+            async: true,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success:function(obj_){
+                if(obj_.code == 0){
+                    var urlStr = ipPort + '/contract/update?id=' + contractID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
+                        + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&scanningCopy=' + obj_.data.code + '&user=' + userID
+                    $.ajax({
+                        url:urlStr,
+                        dataType:'json',
+                        success:function (obj) {
+                            if(obj.code == 0){
+                                $("[data-toggle='popover']").popover('destroy');
+                                getAllContractInformation(currentPage)
+                                alert(obj.message)
+                            }else{
+                                alert(obj.message)
+                            }
+                        },
+                        error:function (error) {
+                            console.log(error)
+                        }
+                    })
+                }else{
+                    $("[data-toggle='popover']").popover('destroy');
+                    alert(obj_.message)
+                }
+            },
+            error:function(e){
+                $("[data-toggle='popover']").popover('destroy');
+                alert("上传失败！！");
             }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+        });
+    }
+    //不上传扫描件
+    else{
+        var urlStr = ipPort + '/contract/update?id=' + contractID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
+            + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&scanningCopy=' + $('#modal-contractScanningCopy').attr('value') + '&user=' + userID
+        $.ajax({
+            url:urlStr,
+            dataType:'json',
+            success:function (obj) {
+                if(obj.code == 0){
+                    getAllContractInformation(currentPage)
+                    alert(obj.message)
+                }else{
+                    alert(obj.message)
+                }
+            },
+            error:function (error) {
+                console.log(error)
+            }
+        })
+    }
 }
 /*
 设置修改合同modal/
@@ -228,20 +287,59 @@ function setUpdateModalInformation(thisObj) {
                 $('#modal-contractType').val(obj.data.contractType.name)
                 $('#modal-contractType').attr('value', obj.data.contractType.id)
             }
-            $('#modal-contractStartDate').val(obj.data.startDate)
-            $('#modal-contractEndDate').val(obj.data.endDate)
+            var startDateSplit = obj.data.startDate
+            if(startDateSplit){
+                var startDate = new Date()
+                startDate.setFullYear(startDateSplit.split('-')[0], startDateSplit.split('-')[1] - 1, startDateSplit.split('-')[2])
+                $('#modal-contractStartDate').val(startDate.toLocaleDateString())
+            }else {
+                $('#modal-contractStartDate').val('')
+            }
+            var endDateSplit = obj.data.endDate
+            if(endDateSplit){
+                var endDate = new Date()
+                endDate.setFullYear(endDateSplit.split('-')[0], endDateSplit.split('-')[1] - 1, endDateSplit.split('-')[2])
+                $('#modal-contractEndDate').val(endDate.toLocaleDateString())
+            }else {
+                $('#modal-contractEndDate').val('')
+            }
             $('#modal-contractPeriod').val(obj.data.period)
             if(obj.data.contractStatus){
-                $('#modal-contractStatus').val(obj.data.contractStatus.name)
                 $('#modal-contractStatus').attr('value', obj.data.contractStatus.id)
+                $('#modal-contractStatus').html(obj.data.contractStatus.name + "<span class='caret'></span>")
             }
             $('#modal-contractContent').val(obj.data.content)
-            $('#modal-contractScanningCopy').val(obj.data.scanningCopy)
+
+            if(obj.data.scanningCopy){
+                $('#modal-contractScanningCopy').attr('value', obj.data.scanningCopy)
+                $('#modal-contractScanningCopy').val('')
+                $('#checkScanningCopyImg').removeClass('none')
+            }else{
+                $('#modal-contractScanningCopy').attr('value', '')
+                $('#modal-contractScanningCopy').val('')
+                $('#checkScanningCopyImg').addClass('none')
+            }
         },
         error:function (error) {
             console.log(error)
         }
     })
+}
+/*
+设置扫描件图片modal/
+ */
+function setScanningCopyImageModal() {
+    if($('#myModal-checkScanningCopyImg .modal-body').find('.scanningCopyImg')){
+        $('#myModal-checkScanningCopyImg .modal-body').find('.scanningCopyImg').remove()
+    }
+    if($('#myModal-checkScanningCopyImg .modal-body').find('.scanningCopyDiv')){
+        $('#myModal-checkScanningCopyImg .modal-body').find('.scanningCopyDiv').remove()
+    }
+    var appendStr = "<img class='col-xs-12 scanningCopyImg' height=500 style='display:none'>"+
+        "<div class='col-xs-12 scanningCopyDiv'  style='height:500px;color: #337ab7;text-align: center;font-size: 16px;'>正在加载扫描件...</div>"
+    $('#myModal-checkScanningCopyImg .modal-body').append(appendStr)
+    $('#myModal-checkScanningCopyImg img').attr('onload', "this.nextSibling.style.display='none';this.style.display='';")
+    $('#myModal-checkScanningCopyImg img').attr('src', ipPort + '/image/' + $('#modal-contractScanningCopy').attr('value'))
 }
 /*
 设置makeSureModal的value/
