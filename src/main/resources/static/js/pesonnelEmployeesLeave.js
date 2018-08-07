@@ -38,27 +38,73 @@ $(document).ready(function () {
         $('#leftAndBanTab-selectDepartment').html($(this).text() + '<span style="margin-left:4px" class="caret"></span>')
         $('#leftAndBanTab-selectDepartment').attr('value', $(this).attr('value'))
     })
-
-    getAllStaffInformationByPage()
+    getLeftStaffInformationByPage()
 })
 /*
-获取全部员工信息/
+获取已离职员工信息/
  */
-function getAllStaffInformationByPage() {
+function getLeftStaffInformationByPage() {
     currentPage = 0
     var page = currentPage
     var size = 10
     var sortFieldName = 'id'
     var asc = 1
-    var urlStr = ipPort + '/user/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
+    var urlStr = ipPort + '/user/getByJobNatureByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&id=' + 8
     $.ajax({
         url:urlStr,
         dataType:'json',
         success:function (obj) {
             if(obj.code == 0){
-                setAllLeaveStaffTableInformation(obj)
                 setLeftLeaveStaffTableInformation(obj)
+            }else{
+                alert(obj.message)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+获取待离职员工信息/
+ */
+function getLeavingStaffInformationByPage() {
+    currentPage = 0
+    var page = currentPage
+    var size = 10
+    var sortFieldName = 'id'
+    var asc = 1
+    var urlStr = ipPort + '/user/getByJobNatureByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&id=' + 4
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
                 setLeavingLeaveStaffTableInformation(obj)
+            }else{
+                alert(obj.message)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+获取离职禁用员工信息/
+ */
+function getLeftAndBanStaffInformationByPage() {
+    currentPage = 0
+    var page = currentPage
+    var size = 10
+    var sortFieldName = 'id'
+    var asc = 1
+    var urlStr = ipPort + '/user/getByJobNatureByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&id=' + 9
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
                 setLeftAndBanLeaveStaffTableInformation(obj)
             }else{
                 alert(obj.message)
@@ -70,33 +116,7 @@ function getAllStaffInformationByPage() {
     })
 }
 /*
-allTab通过部门和姓名搜索信息/
- */
-function allTabSearchByDepartmentAndStaffName() {
-    var departmentId = $('#allTab-selectDepartment').attr('value')
-    var staffName = $('#staffName-searchInput-allTab').val()
-    var urlStr = ipPort + "/user/getByDepartmentAndNameLikeByPage?id=" + departmentId + "&name=" + staffName
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                if(obj.data.numberOfElements == 0){
-                    alert("未搜索到信息")
-                    return
-                }
-                setAllLeaveStaffTableInformation(obj)
-            }else {
-                alert(obj.message)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
-}
-/*
-leftTab通过部门和姓名搜索信息/
+已离职panel通过部门和姓名搜索信息/
  */
 function leftTabSearchByDepartmentAndStaffName() {
     var departmentId = $('#leftTab-selectDepartment').attr('value')
@@ -122,7 +142,7 @@ function leftTabSearchByDepartmentAndStaffName() {
     })
 }
 /*
-leavingTab通过部门和姓名搜索信息/
+待离职panel通过部门和姓名搜索信息/
  */
 function leavingTabSearchByDepartmentAndStaffName() {
     var departmentId = $('#leavingTab-selectDepartment').attr('value')
@@ -148,7 +168,7 @@ function leavingTabSearchByDepartmentAndStaffName() {
     })
 }
 /*
-leftAndBanTab通过部门和姓名搜索信息/
+离职禁用panel通过部门和姓名搜索信息/
  */
 function leftAndBanTabSearchByDepartmentAndStaffName() {
     var departmentId = $('#leftAndBanTab-selectDepartment').attr('value')
@@ -174,146 +194,11 @@ function leftAndBanTabSearchByDepartmentAndStaffName() {
     })
 }
 /*
-allTab获取全部员工信息/
- */
-function allTabGetAllStaffInformation() {
-    var page = 0
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/user/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setAllLeaveStaffTableInformation(obj)
-            }else{
-                alert(obj.message)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
-}
-/*
-leftTab获取全部员工信息/
- */
-function leftTabGetAllStaffInformation() {
-    var page = 0
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/user/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setLeftLeaveStaffTableInformation(obj)
-            }else{
-                alert(obj.message)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
-}
-/*
-leavingTab获取全部员工信息/
- */
-function leavingTabGetAllStaffInformation() {
-    var page = 0
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/user/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setLeavingLeaveStaffTableInformation(obj)
-            }else{
-                alert(obj.message)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
-}
-/*
-leftAndBanTab获取全部员工信息/
- */
-function leftAndBanTabGetAllStaffInformation() {
-    var page = 0
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/user/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setLeftAndBanLeaveStaffTableInformation(obj)
-            }else{
-                alert(obj.message)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
-}
-/*
-设置全部离职table/
- */
-function setAllLeaveStaffTableInformation(obj) {
-    var table_tr = $('.table-tr')
-    if(obj.data.numberOfElements > 0){
-        var staffName = $('.allTab-staff-name')
-        var staffID = $('.allTab-staff-number')
-        var staffDepartment = $('.allTab-staff-department')
-        var staffRole = $('.allTab-staff-position')
-        var staffJobNature = $('.allTab-staff-jobNature')
-        var staffJoinDate = $('.allTab-staff-joinDate')
-        var staffLeaveDate = $('.allTab-staff-LeaveDate')
-        var number = 0
-        for(var i = 0, j = 0; j < obj.data.numberOfElements; j++ ){
-            if(obj.data.content[j].jobNature.name == "已离职" || obj.data.content[j].jobNature.name == "待离职" || obj.data.content[j].jobNature.name == "离职禁用"){
-                table_tr.eq(i).removeClass('hidden')
-                staffName.eq(i).text(obj.data.content[j].name)
-                staffName.eq(i).attr('value', obj.data.content[j].id)
-                staffID.eq(i).text(obj.data.content[j].id)
-                if(obj.data.content[j].department){
-                    staffDepartment.eq(i).text(obj.data.content[j].department.name)
-                }
-                if(obj.data.content[j].role){
-                    staffRole.eq(i).text(obj.data.content[j].role.name)
-                }
-                if(obj.data.content[j].jobNature){
-                    staffJobNature.eq(i).text(obj.data.content[j].jobNature.name)
-                    staffJobNature.eq(i).attr('value', obj.data.content[j].jobNature.id)
-                }
-                staffJoinDate.eq(i).text(obj.data.content[j].employDate)
-                staffLeaveDate.eq(i).text(obj.data.content[j].resignDate)
-                i++
-                number++
-            }
-        }
-    }
-    for (var i = number; i < 10; i++){
-        table_tr.eq(i).addClass('hidden')
-    }
-}
-/*
 设置已离职table/
  */
 function setLeftLeaveStaffTableInformation(obj) {
+    $('.currentPage').text(currentPage + 1)
+    $('.totalPage').text(obj.data.totalPages)
     var table_tr = $('.table-tr-left')
     if(obj.data.numberOfElements > 0){
         var staffName = $('.leftTab-staff-name')
@@ -325,26 +210,24 @@ function setLeftLeaveStaffTableInformation(obj) {
         var staffLeaveDate = $('.leftTab-staff-LeaveDate')
         var number = 0
         for(var i = 0, j = 0; j < obj.data.numberOfElements; j++ ){
-            if(obj.data.content[j].jobNature.name == "已离职"){
-                table_tr.eq(i).removeClass('hidden')
-                staffName.eq(i).text(obj.data.content[j].name)
-                staffName.eq(i).attr('value', obj.data.content[j].id)
-                staffID.eq(i).text(obj.data.content[j].id)
-                if(obj.data.content[j].department){
-                    staffDepartment.eq(i).text(obj.data.content[j].department.name)
-                }
-                if(obj.data.content[j].role){
-                    staffRole.eq(i).text(obj.data.content[j].role.name)
-                }
-                if(obj.data.content[j].jobNature){
-                    staffJobNature.eq(i).text(obj.data.content[j].jobNature.name)
-                    staffJobNature.eq(i).attr('value', obj.data.content[j].jobNature.id)
-                }
-                staffJoinDate.eq(i).text(obj.data.content[j].employDate)
-                staffLeaveDate.eq(i).text(obj.data.content[j].resignDate)
-                i++
-                number++
+            table_tr.eq(i).removeClass('hidden')
+            staffName.eq(i).text(obj.data.content[j].name)
+            staffName.eq(i).attr('value', obj.data.content[j].id)
+            staffID.eq(i).text(obj.data.content[j].id)
+            if(obj.data.content[j].department){
+                staffDepartment.eq(i).text(obj.data.content[j].department.name)
             }
+            if(obj.data.content[j].role){
+                staffRole.eq(i).text(obj.data.content[j].role.name)
+            }
+            if(obj.data.content[j].jobNature){
+                staffJobNature.eq(i).text(obj.data.content[j].jobNature.name)
+                staffJobNature.eq(i).attr('value', obj.data.content[j].jobNature.id)
+            }
+            staffJoinDate.eq(i).text(obj.data.content[j].employDate)
+            staffLeaveDate.eq(i).text(obj.data.content[j].resignDate)
+            i++
+            number++
         }
     }
     for (var i = number; i < 10; i++){
@@ -355,6 +238,8 @@ function setLeftLeaveStaffTableInformation(obj) {
 设置待离职table/
  */
 function setLeavingLeaveStaffTableInformation(obj) {
+    $('.currentPage').text(currentPage + 1)
+    $('.totalPage').text(obj.data.totalPages)
     var table_tr = $('.table-tr-leaving')
     if(obj.data.numberOfElements > 0){
         var staffName = $('.leavingTab-staff-name')
@@ -366,26 +251,24 @@ function setLeavingLeaveStaffTableInformation(obj) {
         var staffLeaveDate = $('.leavingTab-staff-LeaveDate')
          var number = 0
         for(var i = 0, j = 0; j < obj.data.numberOfElements; j++ ){
-            if(obj.data.content[j].jobNature.name == "待离职"){
-                table_tr.eq(i).removeClass('hidden')
-                staffName.eq(i).text(obj.data.content[j].name)
-                staffName.eq(i).attr('value', obj.data.content[j].id)
-                staffID.eq(i).text(obj.data.content[j].id)
-                if(obj.data.content[j].department){
-                    staffDepartment.eq(i).text(obj.data.content[j].department.name)
-                }
-                if(obj.data.content[j].role){
-                    staffRole.eq(i).text(obj.data.content[j].role.name)
-                }
-                if(obj.data.content[j].jobNature){
-                    staffJobNature.eq(i).text(obj.data.content[j].jobNature.name)
-                    staffJobNature.eq(i).attr('value', obj.data.content[j].jobNature.id)
-                }
-                staffJoinDate.eq(i).text(obj.data.content[j].employDate)
-                staffLeaveDate.eq(i).text(obj.data.content[j].resignDate)
-                i++
-                number++
+            table_tr.eq(i).removeClass('hidden')
+            staffName.eq(i).text(obj.data.content[j].name)
+            staffName.eq(i).attr('value', obj.data.content[j].id)
+            staffID.eq(i).text(obj.data.content[j].id)
+            if(obj.data.content[j].department){
+                staffDepartment.eq(i).text(obj.data.content[j].department.name)
             }
+            if(obj.data.content[j].role){
+                staffRole.eq(i).text(obj.data.content[j].role.name)
+            }
+            if(obj.data.content[j].jobNature){
+                staffJobNature.eq(i).text(obj.data.content[j].jobNature.name)
+                staffJobNature.eq(i).attr('value', obj.data.content[j].jobNature.id)
+            }
+            staffJoinDate.eq(i).text(obj.data.content[j].employDate)
+            staffLeaveDate.eq(i).text(obj.data.content[j].resignDate)
+            i++
+            number++
         }
     }
     for (var i = number; i < 10; i++){
@@ -396,6 +279,8 @@ function setLeavingLeaveStaffTableInformation(obj) {
 设置离职禁用table/
  */
 function setLeftAndBanLeaveStaffTableInformation(obj) {
+    $('.currentPage').text(currentPage + 1)
+    $('.totalPage').text(obj.data.totalPages)
     var table_tr = $('.table-tr-leftAndBan')
     if(obj.data.numberOfElements > 0){
         var staffName = $('.leftAndBanTab-staff-name')
@@ -407,26 +292,24 @@ function setLeftAndBanLeaveStaffTableInformation(obj) {
         var staffLeaveDate = $('.leftAndBanTab-staff-LeaveDate')
         var number = 0
         for(var i = 0, j = 0; j < obj.data.numberOfElements; j++ ){
-            if(obj.data.content[j].jobNature.name == "离职禁用"){
-                table_tr.eq(i).removeClass('hidden')
-                staffName.eq(i).text(obj.data.content[j].name)
-                staffName.eq(i).attr('value', obj.data.content[j].id)
-                staffID.eq(i).text(obj.data.content[j].id)
-                if(obj.data.content[j].department){
-                    staffDepartment.eq(i).text(obj.data.content[j].department.name)
-                }
-                if(obj.data.content[j].role){
-                    staffRole.eq(i).text(obj.data.content[j].role.name)
-                }
-                if(obj.data.content[j].jobNature){
-                    staffJobNature.eq(i).text(obj.data.content[j].jobNature.name)
-                    staffJobNature.eq(i).attr('value', obj.data.content[j].jobNature.id)
-                }
-                staffJoinDate.eq(i).text(obj.data.content[j].employDate)
-                staffLeaveDate.eq(i).text(obj.data.content[j].resignDate)
-                i++
-                number++
+            table_tr.eq(i).removeClass('hidden')
+            staffName.eq(i).text(obj.data.content[j].name)
+            staffName.eq(i).attr('value', obj.data.content[j].id)
+            staffID.eq(i).text(obj.data.content[j].id)
+            if(obj.data.content[j].department){
+                staffDepartment.eq(i).text(obj.data.content[j].department.name)
             }
+            if(obj.data.content[j].role){
+                staffRole.eq(i).text(obj.data.content[j].role.name)
+            }
+            if(obj.data.content[j].jobNature){
+                staffJobNature.eq(i).text(obj.data.content[j].jobNature.name)
+                staffJobNature.eq(i).attr('value', obj.data.content[j].jobNature.id)
+            }
+            staffJoinDate.eq(i).text(obj.data.content[j].employDate)
+            staffLeaveDate.eq(i).text(obj.data.content[j].resignDate)
+            i++
+            number++
         }
     }
     for (var i = number; i < 10; i++){
@@ -446,7 +329,7 @@ function forbiddenLeftButton(thisObj) {
         success:function (obj) {
             if(obj.code == 0){
                 alert(obj.message)
-                getAllStaffInformationByPage()
+               // getAllStaffInformationByPage()
             }else{
                 alert(obj.message)
             }
@@ -468,7 +351,7 @@ function recoveryJobButton(thisObj) {
         success:function (obj) {
             if(obj.code == 0){
                 alert(obj.message)
-                getAllStaffInformationByPage()
+             //   getAllStaffInformationByPage()
             }else{
                 alert(obj.message)
             }
@@ -506,8 +389,8 @@ function leftToProveButton(thisObj) {
 /*
 上一页/
  */
-function previousPage() {
-    var currentPage_ = $('.currentPage').text()
+function previousPage(str) {
+    var currentPage_ = $(str).find('.currentPage').text()
     if(currentPage_ == 1){
         alert("已经是第一页！")
         return
@@ -520,13 +403,30 @@ function previousPage() {
     var size = 10
     var sortFieldName = 'id'
     var asc = 1
-    var urlStr = ipPort + '/user/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
+    var urlStr = ''
+    if(str == '#employeesLeft-panel'){
+        urlStr = ipPort + '/user/getByJobNatureByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&id=' + 8
+    }
+    else if(str == '#employeesLeaving-panel'){
+        urlStr = ipPort + '/user/getByJobNatureByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&id=' + 4
+    }
+    else if(str =='#employeesLeftAndBan-panel'){
+        urlStr = ipPort + '/user/getByJobNatureByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&id=' + 9
+    }
     $.ajax({
         url:urlStr,
         dataType:'json',
         success:function (obj) {
             if(obj.code == 0){
-                setStaffTableInformation(obj)
+                if(str == '#employeesLeft-panel'){
+                    setLeftLeaveStaffTableInformation(obj)
+                }
+                else if(str == '#employeesLeaving-panel'){
+                    setLeavingLeaveStaffTableInformation(obj)
+                }
+                else if(str =='#employeesLeftAndBan-panel'){
+                    setLeftAndBanLeaveStaffTableInformation(obj)
+                }
             }else{
                 console.log(obj)
             }
@@ -539,9 +439,9 @@ function previousPage() {
 /*
 下一页/
  */
-function nextPage() {
-    var currentPage_ = $('.currentPage').text()
-    var totalPage_ = $('.totalPage').text()
+function nextPage(str) {
+    var currentPage_ = $(str).find('.currentPage').text()
+    var totalPage_ = $(str).find('.totalPage').text()
     if(currentPage_ == totalPage_){
         alert("已经是最后一页！")
         return
@@ -551,13 +451,28 @@ function nextPage() {
     var size = 10
     var sortFieldName = 'id'
     var asc = 1
-    var urlStr = ipPort + '/user/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
+    if(str == '#employeesLeft-panel'){
+        urlStr = ipPort + '/user/getByJobNatureByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&id=' + 8
+    }
+    else if(str == '#employeesLeaving-panel'){
+        urlStr = ipPort + '/user/getByJobNatureByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&id=' + 4
+    }
+    else if(str =='#employeesLeftAndBan-panel'){
+        urlStr = ipPort + '/user/getByJobNatureByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&id=' + 9
+    }    $.ajax({
         url:urlStr,
         dataType:'json',
         success:function (obj) {
             if(obj.code == 0){
-                setStaffTableInformation(obj)
+                if(str == '#employeesLeft-panel'){
+                    setLeftLeaveStaffTableInformation(obj)
+                }
+                else if(str == '#employeesLeaving-panel'){
+                    setLeavingLeaveStaffTableInformation(obj)
+                }
+                else if(str =='#employeesLeftAndBan-panel'){
+                    setLeftAndBanLeaveStaffTableInformation(obj)
+                }
             }else{
                 console.log(obj)
             }
@@ -570,9 +485,9 @@ function nextPage() {
 /*
 跳转页/
  */
-function skipPage() {
-    var skipPage_ = parseInt($('.skipPage').val())
-    var totalPage_ = parseInt($('.totalPage').text())
+function skipPage(str) {
+    var skipPage_ = parseInt( $(str).find('.skipPage').val())
+    var totalPage_ = parseInt( $(str).find('.totalPage').text())
     if(skipPage_ - totalPage_ > 0){
         alert("没有此页！")
         return
@@ -586,13 +501,28 @@ function skipPage() {
     var size = 10
     var sortFieldName = 'id'
     var asc = 1
-    var urlStr = ipPort + '/user/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
+    if(str == '#employeesLeft-panel'){
+        urlStr = ipPort + '/user/getByJobNatureByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&id=' + 8
+    }
+    else if(str == '#employeesLeaving-panel'){
+        urlStr = ipPort + '/user/getByJobNatureByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&id=' + 4
+    }
+    else if(str =='#employeesLeftAndBan-panel'){
+        urlStr = ipPort + '/user/getByJobNatureByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&id=' + 9
+    }    $.ajax({
         url:urlStr,
         dataType:'json',
         success:function (obj) {
             if(obj.code == 0){
-                setStaffTableInformation(obj)
+                if(str == '#employeesLeft-panel'){
+                    setLeftLeaveStaffTableInformation(obj)
+                }
+                else if(str == '#employeesLeaving-panel'){
+                    setLeavingLeaveStaffTableInformation(obj)
+                }
+                else if(str =='#employeesLeftAndBan-panel'){
+                    setLeftAndBanLeaveStaffTableInformation(obj)
+                }
             }else{
                 console.log(obj)
             }

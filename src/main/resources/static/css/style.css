@@ -37,6 +37,7 @@ a{
     float: left;
     background-color: #F9FAFB;
     border-right: 1px solid #DCDDDE;
+    overflow-y: auto;
 }
 .left-nav-userInfo{
     width: 180px;
