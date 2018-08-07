@@ -6,6 +6,7 @@ import com.xplusplus.security.domain.WorkRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -29,6 +30,15 @@ public interface WorkRecordRepository extends JpaRepository<WorkRecord, Long> {
     public List<WorkRecord> findByLeaderAndProjectAndStatusAndStartTimeBetween(User leader, Project project, int status, Date date1, Date date2);
 
     /**
+     * 通过负责人, 项目和上班打卡的时间查询
+     *
+     * @param leader
+     * @param project
+     * @return
+     */
+    public List<WorkRecord> findByLeaderAndProjectAndStartTimeBetween(User leader, Project project, Date date1, Date date2);
+
+    /**
      * 通过用户和状态查询
      *
      * @param user
@@ -36,4 +46,11 @@ public interface WorkRecordRepository extends JpaRepository<WorkRecord, Long> {
      * @return
      */
      public WorkRecord findFirstByUserAndStatus(User user, Integer status);
+
+    /**
+     * 批量删除
+     *
+     * @param ids
+     */
+    public void deleteByIdIn(Collection<Long> ids);
 }

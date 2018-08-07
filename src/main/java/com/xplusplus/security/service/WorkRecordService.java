@@ -13,10 +13,7 @@ import com.xplusplus.security.vo.WorkRecordVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Author: zhouweixin
@@ -152,9 +149,124 @@ public class WorkRecordService {
         c2.setTime(date);
 
         c2.add(Calendar.DAY_OF_MONTH, 1);
-        workRecords = workRecordRepository.findByLeaderAndProjectAndStatusAndStartTimeBetween(leader, project, status, c1.getTime(), c2.getTime());
+
+        if(status < 0 || status > 2){
+            workRecords = workRecordRepository.findByLeaderAndProjectAndStartTimeBetween(leader, project, c1.getTime(), c2.getTime());
+        } else {
+            workRecords = workRecordRepository.findByLeaderAndProjectAndStatusAndStartTimeBetween(leader, project, status, c1.getTime(), c2.getTime());
+        }
         return new WorkRecordVO().parseWorkRecords(workRecords);
     }
 
+    /**
+     * 删除
+     *
+     * @param id
+     */
+    public void deleteById(Long id) {
 
+        // 验证是否存在
+        if (workRecordRepository.findOne(id) == null) {
+            throw new SecurityExceptions(EnumExceptions.DELETE_FAILED_NOT_EXIST);
+        }
+        workRecordRepository.delete(id);
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param ids
+     */
+    public void deleteByIdBatch(Long[] ids){
+        workRecordRepository.deleteByIdIn(Arrays.asList(ids));
+    }
+
+    /**
+     * 批量新增
+     *
+     * @param userIds
+     * @param leaderId
+     * @param projectId
+     * @param startLongitude
+     * @param startLatitude
+     * @param startTime
+     * @param endLongitude
+     * @param endLatitude
+     * @param endTime
+     * @param note
+     * @return
+     */
+    public List<WorkRecordVO> save(String[] userIds, String leaderId, Long projectId, Double startLongitude, Double startLatitude, Date startTime, Double endLongitude, Double endLatitude, Date endTime, String note, Integer status) {
+        List<User> users = userRepository.findAll(Arrays.asList(userIds));
+        if(users == null || users.size() == 0){
+            throw new SecurityExceptions(EnumExceptions.CARD_FAILED_NO_USERS);
+        }
+
+        User leader = userRepository.findOne(leaderId);
+        if(leader == null){
+            throw new SecurityExceptions(EnumExceptions.CARD_FAILED_LEADER_NOT_EXISTS);
+        }
+
+        Project project = projectRepository.findOne(projectId);
+        if(project == null){
+            throw new SecurityExceptions(EnumExceptions.CARD_FAILED_PROJECT_NOT_EXISTS);
+        }
+
+        List<WorkRecord> workRecords = new ArrayList<>();
+        for(User user : users){
+            workRecords.add(new WorkRecord(user, startTime, endTime, new Date(), new Date(), leader, project, startLongitude, startLatitude, endLongitude, endLatitude, status, note));
+        }
+        List<WorkRecord> save = workRecordRepository.save(workRecords);
+        return new WorkRecordVO().parseWorkRecords(save);
+    }
+
+    /**
+     * 批量更新
+     *
+     * @param ids
+     * @param leaderId
+     * @param projectId
+     * @param startLongitude
+     * @param startLatitude
+     * @param startTime
+     * @param endLongitude
+     * @param endLatitude
+     * @param endTime
+     * @param note
+     * @return
+     */
+    public List<WorkRecordVO> update(Long[] ids, String leaderId, Long projectId, Double startLongitude, Double startLatitude, Date startTime, Double endLongitude, Double endLatitude, Date endTime, String note, Integer status) {
+        // 验证是否存在
+        List<WorkRecord> workRecords = workRecordRepository.findAll(Arrays.asList(ids));
+        if (workRecords == null || workRecords.size() == 0) {
+            throw new SecurityExceptions(EnumExceptions.UPDATE_FAILED_NOT_EXIST);
+        }
+
+        User leader = userRepository.findOne(leaderId);
+        if(leader == null){
+            throw new SecurityExceptions(EnumExceptions.CARD_FAILED_LEADER_NOT_EXISTS);
+        }
+
+        Project project = projectRepository.findOne(projectId);
+        if(project == null){
+            throw new SecurityExceptions(EnumExceptions.CARD_FAILED_PROJECT_NOT_EXISTS);
+        }
+
+        for(WorkRecord workRecord : workRecords){
+            workRecord.setStartTime(startTime);
+            workRecord.setEndTime(endTime);
+            workRecord.setRealStartTime(new Date());
+            workRecord.setRealEndTime(new Date());
+            workRecord.setLeader(leader);
+            workRecord.setProject(project);
+            workRecord.setStartLongitude(startLongitude);
+            workRecord.setStartLatitude(startLatitude);
+            workRecord.setEndLongitude(endLongitude);
+            workRecord.setEndLatitude(endLatitude);
+            workRecord.setStatus(status);
+            workRecord.setNote(note);
+        }
+        List<WorkRecord> save = workRecordRepository.save(workRecords);
+        return new WorkRecordVO().parseWorkRecords(save);
+    }
 }

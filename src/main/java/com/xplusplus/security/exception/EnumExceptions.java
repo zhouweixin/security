@@ -84,6 +84,7 @@ public enum EnumExceptions {
     CARD_FAILED_PROJECT_NOT_EXISTS(73, "打卡失败, 项目不存在"),
     CARD_FAILED_ON_DUTY(74, "打卡失败, 正在上班中"),
     CARD_FAILED_ON_DUTY_NOT_EXISTS(75, "打卡失败, 上班记录不存在或已下班"),
+    CARD_FAILED_NO_USERS(76, "打卡失败, 未选择打卡用户"),
 
 	;
 
