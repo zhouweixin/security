@@ -17,7 +17,9 @@
     <script src="js/bootstrap-datetimepicker.fr.js"></script>
     <script src="js/bootstrap-datetimepicker.zh-CN.js" ></script>
     <script src="js/style.js"></script>
+    <script src="js/global.js"></script>
     <script src="js/timeInput.js"></script>
+    <script src="js/salaryQuery.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
@@ -33,9 +35,9 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="personnelAnalysis.html">人事管理</a></li>
+                <li class="active"><a href="personnelAnalysis.html">人事管理</a></li>
                 <li><a href="attendanceHomePage.html">考勤</a></li>
-                <li class="active"><a href="salaryManagement.html">薪酬</a></li>
+                <li><a href="salaryManagement.html">薪酬</a></li>
                 <li><a href="processManagement.html">流程</a></li>
                 <li><a href="warehouseCheck.html">仓库</a></li>
                 <li><a href="ManageDepartment.html">管理</a></li>
@@ -54,35 +56,98 @@
             </div>
         </div>
         <ul class="left-nav-menu">
-            <li class="left-nav-menu-li ">
-                <a class="menu-link" href="salaryManagement.html">
+            <li class="left-nav-menu-li">
+                <a href="personnelAnalysis.html" class="menu-link">
                     <img src="imgs/addressbook.png">
-                    <div>薪资方案</div>
+                    <div>人事分析</div>
                 </a>
             </li>
             <li class="left-nav-menu-li">
-                <a class="menu-link" href="salarySet.html">
-                    <img src="imgs/addressbook.png">
-                    <div>薪资设置</div>
+                <a class="menu-link">
+                    <img src="imgs/brush.png">
+                    <div>员工管理    <span class="glyphicon glyphicon-triangle-right"></span></div>
                 </a>
-            </li>
-            <li class="left-nav-menu-li li-active">
-                <a class="menu-link" href="salaryQuery.html">
-                    <img src="imgs/addressbook_fill.png">
-                    <div>工资查看</div>
-                </a>
+                <ul class="sub-menu none">
+                    <li class="sub-menu-li">
+                        <a href="personnelList.html" class="sub-menu-link">
+                            员工列表
+                        </a>
+                    </li>
+                    <li class="sub-menu-li none">
+                        <a href="personnelChange.html" class="sub-menu-link">
+                            人事异动
+                        </a>
+                    </li>
+                    <li class="sub-menu-li">
+                        <a href="personnelEmployeesLeave.html" class="sub-menu-link">
+                            离职员工
+                        </a>
+                    </li>
+                    <li class="sub-menu-li">
+                        <a href="personnelChangeCard.html" class="sub-menu-link">
+                            员工换卡
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li class="left-nav-menu-li">
-                <a class="menu-link" href="salaryExamine.html">
-                    <img src="imgs/addressbook.png">
-                    <div>工资审核</div>
+                <a class="menu-link">
+                    <img src="imgs/createtask.png">
+                    <div>合同管理    <span class="glyphicon glyphicon-triangle-right"></span></div>
                 </a>
+                <ul class="sub-menu none">
+                    <li class="sub-menu-li">
+                        <a href="personnelContract.html" class="sub-menu-link">
+                            人员合同
+                        </a>
+                    </li>
+                    <li class="sub-menu-li">
+                        <a href="projectContract.html" class="sub-menu-link">
+                            项目合同
+                        </a>
+                    </li>
+                </ul>
             </li>
-            <li class="left-nav-menu-li none ">
-                <a class="menu-link"href="salaryReport.html">
-                    <img src="imgs/addressbook.png">
-                    <div>薪资报表</div>
+            <li class="left-nav-menu-li">
+                <a class="menu-link">
+                    <img src="imgs/brush.png">
+                    <div>考勤统计    <span class="glyphicon glyphicon-triangle-right"></span></div>
                 </a>
+                <ul class="sub-menu none">
+                    <li class="sub-menu-li">
+                        <a href="attendanceMonthSummary.html" class="sub-menu-link">
+                            月度汇总
+                        </a>
+                    </li>
+                    <li class="sub-menu-li ">
+                        <a href="attendanceDailyStatistics.html" class="sub-menu-link">
+                            每日统计
+                        </a>
+                    </li>
+                    <li class="sub-menu-li none">
+                        <a href="attendancePunchTime.html" class="sub-menu-link">
+                            打卡时间
+                        </a>
+                    </li>
+                    <li class="sub-menu-li ">
+                        <a href="attendanceOriginalRecord.html" class="sub-menu-link">
+                            原始记录
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="left-nav-menu-li">
+                <a class="menu-link">
+                    <img src="imgs/brush_fill.png">
+                    <div>薪资管理    <span class="glyphicon glyphicon-triangle-bottom"></span></div>
+                </a>
+                <ul class="sub-menu">
+                    <li class="sub-menu-li sub-li-active">
+                        <a href="salaryQuery.html" class="sub-menu-link">
+                            薪资查看
+                        </a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>
@@ -90,7 +155,7 @@
         <div class="nav-path">
             <div class="path-title">
                 <ul class="path-ul">
-                    <li>工资查看</li>
+                    <li>薪资查看</li>
                 </ul>
             </div>
         </div>
@@ -98,14 +163,10 @@
             <div class="top-body" style="margin-top: 30px">
                 <div class="search-content" style="height: 34px;">
                     <div class="search-left">
-                        <!--<div style="display: inline-block;float: left;margin-right: 5px; margin-left: 5px"class="input-group">
-                            <label for="dailyStatistics-date" style="font-weight: normal">选择月份：</label>
-                            <input id="dailyStatistics-date" class="select-date" type="date">
-                        </div>-->
                         <div style="width:auto;height:34px;line-height:34px;float:left"><sapn>选择月份</sapn></div>
                         <div style="display: inline-block;float: left;width:200px;margin-right: 5px; margin-left: 5px">
                             <div class="input-group date to_date">
-                                <input id="dailyStatistics-date" class="form-control" type="text" value="年/月/日">
+                                <input id="dailyStatistics-date" class="form-control" type="text" value="年/月">
                                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
@@ -118,7 +179,8 @@
                         </div>
                     </div>
                     <div class="search-right">
-
+                        <input class="printAll-box" type="checkbox">打印全部
+                        <button class="btn btn-info" onclick="printSalaryTable()">打印</button>
                     </div>
                 </div>
             </div>
@@ -126,17 +188,16 @@
                 <table class="table table-bordered">
                     <thead style="background-color: #F9FAFB">
                     <tr>
-                        <th>员工姓名</th>
-                        <th>工资年月</th>
+                        <th>姓名</th>
+                        <th>部门</th>
+                        <th>证件号码</th>
+                        <th>卡号</th>
                         <th>基本工资</th>
-                        <th>项目工资</th>
-                        <th>迟到扣款</th>
-                        <th>严重迟到扣款</th>
-                        <th>绩效奖金</th>
-                        <th>工龄奖金</th>
-                        <th>病假扣款</th>
-                        <th>事假扣款</th>
-                        <th>其他扣款</th>
+                        <th>全勤奖</th>
+                        <th>奖金</th>
+                        <th>基金</th>
+                        <th>应扣款项</th>
+                        <th>工作天数</th>
                         <th>应发工资</th>
                         <th>实发工资</th>
                     </tr>
@@ -155,7 +216,6 @@
                         <td class="salaryScheme-affairLeaveDeductions"></td>
                         <td class="salaryScheme-otherDeductions"></td>
                         <td class="salaryScheme-salarying"></td>
-                        <td class="salaryScheme-salaryed"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -178,180 +238,19 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="myModal-addSalaryScheme" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
+
+<!---------------------------------------------------正在初始化打印----------------------------------------------------------->
+<!-------------------------------------------------------------------------------------------------------------->
+<div class="modal fade " id="myModal-printInit" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" value="">
+    <div class="modal-dialog " role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" style="padding: 5px 15px;border-bottom: none;">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">添加薪资方案</h4>
             </div>
-            <div class="modal-body" style="padding: 15px 20px;font-size: 14px">
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <label for="modal-addSalarySchemeName" class="col-xs-3 control-label"><span>*</span>薪资方案名称</label>
-                        <div class="col-xs-7">
-                            <input type="text" class="form-control" id="modal-addSalarySchemeName" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="modal-addSalarySchemeBaseSalary" class="col-xs-3 control-label"><span>*</span>基本工资</label>
-                        <div class="col-xs-7">
-                            <input type="text" class="form-control" id="modal-addSalarySchemeBaseSalary" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="modal-addSalarySchemeProjectSalary" class="col-xs-3 control-label">项目工资</label>
-                        <div class="col-xs-7">
-                            <input type="text" class="form-control" id="modal-addSalarySchemeProjectSalary" placeholder="每小时多少钱">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="modal-addSalarySchemeLateDeduct" class="col-xs-3 control-label">迟到扣款</label>
-                        <div class="col-xs-7">
-                            <input type="text" class="form-control" id="modal-addSalarySchemeLateDeduct" placeholder="迟到一次扣款多少">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="modal-addSalarySchemeSeriousLaSteDeduct" class="col-xs-3 control-label">严重迟到扣款</label>
-                        <div class="col-xs-7">
-                            <input type="text" class="form-control" id="modal-addSalarySchemeSeriousLaSteDeduct" placeholder="严重迟到一次扣款多少">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-3 checkbox-div">
-                            <input class="checkbox" type="checkbox" ><label>绩效奖金</label>
-                        </div>
-                        <div class="col-xs-7">
-                            <input type="text"  class="form-control" id="modal-addSalarySchemePerformanceBonus" placeholder="绩效奖金多少钱">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-3 checkbox-div">
-                            <input class="checkbox" type="checkbox" ><label>工龄奖金</label>
-                        </div>
-                        <div class="col-xs-7">
-                            <input type="text"  class="form-control" id="modal-addSalarySchemeSeniorityBonus" placeholder="每年工龄奖金多少钱">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-3 checkbox-div">
-                            <input class="checkbox" type="checkbox" ><label>病假扣款</label>
-                        </div>
-                        <div class="col-xs-7">
-                            <input type="text"  class="form-control" id="modal-addSalarySchemeSickLeaveDeductions" placeholder="每次扣款多少钱">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-3 checkbox-div">
-                            <input class="checkbox" type="checkbox" ><label>事假扣款</label>
-                        </div>
-                        <div class="col-xs-7">
-                            <input type="text"  class="form-control" id="modal-addSalarySchemeAffairLeaveDeductions" placeholder="每次扣款多少钱">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="modal-addSalarySchemeBiggestWage" class="col-xs-3 control-label">每月最大工资</label>
-                        <div class="col-xs-7">
-                            <input type="text" class="form-control" id="modal-addSalarySchemeBiggestWage" placeholder="每月最大工资多少钱">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary">确认</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="myModal-changeSalaryScheme" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">修改薪资方案</h4>
-            </div>
-            <div class="modal-body" style="padding: 15px 20px;font-size: 14px">
-                <form class="form-horizontal">
-                    <div class="form-group">
-                        <label for="modal-changeSalarySchemeID" class="col-xs-3 control-label">薪资方案编号</label>
-                        <div class="col-xs-7">
-                            <input type="text" class="form-control" id="modal-changeSalarySchemeID" disabled="disabled">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="modal-changeSalarySchemeName" class="col-xs-3 control-label"><span>*</span>薪资方案名称</label>
-                        <div class="col-xs-7">
-                            <input type="text" class="form-control" id="modal-changeSalarySchemeName" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="modal-changeSalarySchemeBaseSalary" class="col-xs-3 control-label"><span>*</span>基本工资</label>
-                        <div class="col-xs-7">
-                            <input type="text" class="form-control" id="modal-changeSalarySchemeBaseSalary" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="modal-changeSalarySchemeProjectSalary" class="col-xs-3 control-label">项目工资</label>
-                        <div class="col-xs-7">
-                            <input type="text" class="form-control" id="modal-changeSalarySchemeProjectSalary" placeholder="每小时多少钱">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="modal-changeSalarySchemeLateDeduct" class="col-xs-3 control-label">迟到扣款</label>
-                        <div class="col-xs-7">
-                            <input type="text" class="form-control" id="modal-changeSalarySchemeLateDeduct" placeholder="迟到一次扣款多少">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="modal-changeSalarySchemeSeriousLaSteDeduct" class="col-xs-3 control-label">严重迟到扣款</label>
-                        <div class="col-xs-7">
-                            <input type="text" class="form-control" id="modal-changeSalarySchemeSeriousLaSteDeduct" placeholder="严重迟到一次扣款多少">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-3 checkbox-div">
-                            <input class="checkbox" type="checkbox" ><label>绩效奖金</label>
-                        </div>
-                        <div class="col-xs-7">
-                            <input type="text"  class="form-control" id="modal-changeSalarySchemePerformanceBonus" placeholder="绩效奖金多少钱">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-3 checkbox-div">
-                            <input class="checkbox" type="checkbox" ><label>工龄奖金</label>
-                        </div>
-                        <div class="col-xs-7">
-                            <input type="text"  class="form-control" id="modal-changeSalarySchemeSeniorityBonus" placeholder="每年工龄奖金多少钱">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-3 checkbox-div">
-                            <input class="checkbox" type="checkbox" ><label>病假扣款</label>
-                        </div>
-                        <div class="col-xs-7">
-                            <input type="text"  class="form-control" id="modal-changeSalarySchemeSickLeaveDeductions" placeholder="每次扣款多少钱">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-xs-3 checkbox-div">
-                            <input class="checkbox" type="checkbox" ><label>事假扣款</label>
-                        </div>
-                        <div class="col-xs-7">
-                            <input type="text"  class="form-control" id="modal-changeSalarySchemeAffairLeaveDeductions" placeholder="每次扣款多少钱">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="modal-changeSalarySchemeBiggestWage" class="col-xs-3 control-label">每月最大工资</label>
-                        <div class="col-xs-7">
-                            <input type="text" class="form-control" id="modal-changeSalarySchemeBiggestWage" placeholder="每月最大工资多少钱">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary">确认</button>
+            <div class="modal-body" style="height:200px;text-align: center">
+                <span style="font-size: 20px">正在初始化打印</span>
+                <br>
+                <img src="imgs/init.gif" style="margin-top: 20px;height: 80px">
             </div>
         </div>
     </div>
