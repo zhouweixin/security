@@ -6,6 +6,8 @@ import com.xplusplus.security.domain.WorkRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,23 +18,39 @@ import java.util.List;
  */
 @Repository
 public interface WorkRecordRepository extends JpaRepository<WorkRecord, Long> {
-    /**
-     * 通过员工, 负责人和项目查询
-     *
-     * @param user
-     * @param leader
-     * @param project
-     * @return
-     */
-    public WorkRecord findFirstByUserAndLeaderAndProjectAndStatus(User user, User leader, Project project, int status);
 
     /**
-     * 通过负责人, 项目和状态查询
+     * 通过负责人, 项目, 状态和上班打卡的时间查询
      *
      * @param leader
      * @param project
      * @param status
      * @return
      */
-    public List<WorkRecord> findByLeaderAndProjectAndStatus(User leader, Project project, int status);
+    public List<WorkRecord> findByLeaderAndProjectAndStatusAndStartTimeBetween(User leader, Project project, int status, Date date1, Date date2);
+
+    /**
+     * 通过负责人, 项目和上班打卡的时间查询
+     *
+     * @param leader
+     * @param project
+     * @return
+     */
+    public List<WorkRecord> findByLeaderAndProjectAndStartTimeBetween(User leader, Project project, Date date1, Date date2);
+
+    /**
+     * 通过用户和状态查询
+     *
+     * @param user
+     * @param status
+     * @return
+     */
+     public WorkRecord findFirstByUserAndStatus(User user, Integer status);
+
+    /**
+     * 批量删除
+     *
+     * @param ids
+     */
+    public void deleteByIdIn(Collection<Long> ids);
 }

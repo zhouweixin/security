@@ -9,12 +9,11 @@ import com.xplusplus.security.exception.SecurityExceptions;
 import com.xplusplus.security.repository.ProjectRepository;
 import com.xplusplus.security.repository.UserRepository;
 import com.xplusplus.security.repository.WorkRecordRepository;
+import com.xplusplus.security.vo.WorkRecordVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Author: zhouweixin
@@ -44,34 +43,39 @@ public class WorkRecordService {
      * @param startTime 理论上班时间
      * @return
      */
-    public WorkRecord onDuty(String userId, String leaderId, Long projectId, Double startLongitude, Double startLatitude, Date startTime) {
+    public WorkRecordVO onDuty(String userId, String leaderId, Long projectId, Double startLongitude, Double startLatitude, Date startTime) {
         User user = null;
         if((user = userRepository.findOne(userId)) == null && (user = userRepository.findFirstByIc(userId)) == null){
             throw new SecurityExceptions(EnumExceptions.CARD_FAILED_USER_NOT_EXIST);
         }
 
+        // 判断是否已打卡
+        WorkRecord workRecord = workRecordRepository.findFirstByUserAndStatus(user, 0);
+        if(workRecord != null){
+            throw new SecurityExceptions(EnumExceptions.CARD_FAILED_ON_DUTY);
+        }
+
+        // 负责人
         User leader = null;
         if((leader = userRepository.findOne(leaderId)) == null){
             throw new SecurityExceptions(EnumExceptions.CARD_FAILED_LEADER_NOT_EXISTS);
         }
 
+        // 项目
         Project project = null;
         if((project = projectRepository.findOne(projectId)) == null){
             throw new SecurityExceptions(EnumExceptions.CARD_FAILED_PROJECT_NOT_EXISTS);
         }
 
-        // 如果已经存在则会覆盖
-        WorkRecord workRecord = workRecordRepository.findFirstByUserAndLeaderAndProjectAndStatus(user, leader, project, 0);
-        if(workRecord == null) {
-            workRecord = new WorkRecord(user, leader, project);
-        }
-
+        // 创建打卡记录
+        workRecord = new WorkRecord(user, leader, project);
         workRecord.setStartTime(startTime);
         workRecord.setRealStartTime(new Date());
         workRecord.setStartLongitude(startLongitude);
         workRecord.setStartLatitude(startLatitude);
         workRecord.setStatus(0);
-        return workRecordRepository.save(workRecord);
+        workRecord = workRecordRepository.save(workRecord);
+        return new WorkRecordVO(workRecord);
     }
 
     /**
@@ -85,25 +89,29 @@ public class WorkRecordService {
      * @param endTime
      * @return
      */
-    public WorkRecord offDuty(String userId, String leaderId, Long projectId, Double endLongitude, Double endLatitude, Date endTime) {
+    public WorkRecordVO offDuty(String userId, String leaderId, Long projectId, Double endLongitude, Double endLatitude, Date endTime) {
+        // 员工
         User user = null;
         if((user = userRepository.findOne(userId)) == null && (user = userRepository.findFirstByIc(userId)) == null){
             throw new SecurityExceptions(EnumExceptions.CARD_FAILED_USER_NOT_EXIST);
         }
 
+        // 判断是否有上班打卡记录
+        WorkRecord workRecord = workRecordRepository.findFirstByUserAndStatus(user, 0);
+        if(workRecord == null){
+            throw new SecurityExceptions(EnumExceptions.CARD_FAILED_ON_DUTY_NOT_EXISTS);
+        }
+
+        // 负责人
         User leader = null;
         if((leader = userRepository.findOne(leaderId)) == null){
             throw new SecurityExceptions(EnumExceptions.CARD_FAILED_LEADER_NOT_EXISTS);
         }
 
+        // 项目
         Project project = null;
         if((project = projectRepository.findOne(projectId)) == null){
             throw new SecurityExceptions(EnumExceptions.CARD_FAILED_PROJECT_NOT_EXISTS);
-        }
-
-        WorkRecord workRecord = workRecordRepository.findFirstByUserAndLeaderAndProjectAndStatus(user, leader, project, 0);
-        if(workRecord == null) {
-            throw new SecurityExceptions(EnumExceptions.CARD_FAILED_ON_DUTY_NOT_EXISTS);
         }
 
         workRecord.setEndTime(endTime);
@@ -111,8 +119,9 @@ public class WorkRecordService {
         workRecord.setEndLongitude(endLongitude);
         workRecord.setEndLatitude(endLatitude);
         workRecord.setStatus(1);
+        workRecord = workRecordRepository.save(workRecord);
 
-        return workRecordRepository.save(workRecord);
+        return new WorkRecordVO(workRecord);
     }
 
     /**
@@ -123,18 +132,141 @@ public class WorkRecordService {
      * @param status
      * @return
      */
-    public List<WorkRecord> getByLeaderAndProjectAndStatus(String leaderId, Long projectId, int status) {
+    public List<WorkRecordVO> getByLeaderAndProjectAndStatusAndDate(String leaderId, Long projectId, int status, Date date) {
         List<WorkRecord> workRecords = new ArrayList<>();
 
         // 验证负责人和项目
         User leader = userRepository.findOne(leaderId);
         Project project = projectRepository.findOne(projectId);
         if( leader== null || project == null){
-            return workRecords;
+            return new WorkRecordVO().parseWorkRecords(workRecords);
         }
 
-        return workRecordRepository.findByLeaderAndProjectAndStatus(leader, project, status);
+        Calendar c1 = Calendar.getInstance();
+        Calendar c2 = Calendar.getInstance();
+
+        c1.setTime(date);
+        c2.setTime(date);
+
+        c2.add(Calendar.DAY_OF_MONTH, 1);
+
+        if(status < 0 || status > 2){
+            workRecords = workRecordRepository.findByLeaderAndProjectAndStartTimeBetween(leader, project, c1.getTime(), c2.getTime());
+        } else {
+            workRecords = workRecordRepository.findByLeaderAndProjectAndStatusAndStartTimeBetween(leader, project, status, c1.getTime(), c2.getTime());
+        }
+        return new WorkRecordVO().parseWorkRecords(workRecords);
     }
 
+    /**
+     * 删除
+     *
+     * @param id
+     */
+    public void deleteById(Long id) {
 
+        // 验证是否存在
+        if (workRecordRepository.findOne(id) == null) {
+            throw new SecurityExceptions(EnumExceptions.DELETE_FAILED_NOT_EXIST);
+        }
+        workRecordRepository.delete(id);
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param ids
+     */
+    public void deleteByIdBatch(Long[] ids){
+        workRecordRepository.deleteByIdIn(Arrays.asList(ids));
+    }
+
+    /**
+     * 批量新增
+     *
+     * @param userIds
+     * @param leaderId
+     * @param projectId
+     * @param startLongitude
+     * @param startLatitude
+     * @param startTime
+     * @param endLongitude
+     * @param endLatitude
+     * @param endTime
+     * @param note
+     * @return
+     */
+    public List<WorkRecordVO> save(String[] userIds, String leaderId, Long projectId, Double startLongitude, Double startLatitude, Date startTime, Double endLongitude, Double endLatitude, Date endTime, String note, Integer status) {
+        List<User> users = userRepository.findAll(Arrays.asList(userIds));
+        if(users == null || users.size() == 0){
+            throw new SecurityExceptions(EnumExceptions.CARD_FAILED_NO_USERS);
+        }
+
+        User leader = userRepository.findOne(leaderId);
+        if(leader == null){
+            throw new SecurityExceptions(EnumExceptions.CARD_FAILED_LEADER_NOT_EXISTS);
+        }
+
+        Project project = projectRepository.findOne(projectId);
+        if(project == null){
+            throw new SecurityExceptions(EnumExceptions.CARD_FAILED_PROJECT_NOT_EXISTS);
+        }
+
+        List<WorkRecord> workRecords = new ArrayList<>();
+        for(User user : users){
+            workRecords.add(new WorkRecord(user, startTime, endTime, new Date(), new Date(), leader, project, startLongitude, startLatitude, endLongitude, endLatitude, status, note));
+        }
+        List<WorkRecord> save = workRecordRepository.save(workRecords);
+        return new WorkRecordVO().parseWorkRecords(save);
+    }
+
+    /**
+     * 批量更新
+     *
+     * @param ids
+     * @param leaderId
+     * @param projectId
+     * @param startLongitude
+     * @param startLatitude
+     * @param startTime
+     * @param endLongitude
+     * @param endLatitude
+     * @param endTime
+     * @param note
+     * @return
+     */
+    public List<WorkRecordVO> update(Long[] ids, String leaderId, Long projectId, Double startLongitude, Double startLatitude, Date startTime, Double endLongitude, Double endLatitude, Date endTime, String note, Integer status) {
+        // 验证是否存在
+        List<WorkRecord> workRecords = workRecordRepository.findAll(Arrays.asList(ids));
+        if (workRecords == null || workRecords.size() == 0) {
+            throw new SecurityExceptions(EnumExceptions.UPDATE_FAILED_NOT_EXIST);
+        }
+
+        User leader = userRepository.findOne(leaderId);
+        if(leader == null){
+            throw new SecurityExceptions(EnumExceptions.CARD_FAILED_LEADER_NOT_EXISTS);
+        }
+
+        Project project = projectRepository.findOne(projectId);
+        if(project == null){
+            throw new SecurityExceptions(EnumExceptions.CARD_FAILED_PROJECT_NOT_EXISTS);
+        }
+
+        for(WorkRecord workRecord : workRecords){
+            workRecord.setStartTime(startTime);
+            workRecord.setEndTime(endTime);
+            workRecord.setRealStartTime(new Date());
+            workRecord.setRealEndTime(new Date());
+            workRecord.setLeader(leader);
+            workRecord.setProject(project);
+            workRecord.setStartLongitude(startLongitude);
+            workRecord.setStartLatitude(startLatitude);
+            workRecord.setEndLongitude(endLongitude);
+            workRecord.setEndLatitude(endLatitude);
+            workRecord.setStatus(status);
+            workRecord.setNote(note);
+        }
+        List<WorkRecord> save = workRecordRepository.save(workRecords);
+        return new WorkRecordVO().parseWorkRecords(save);
+    }
 }

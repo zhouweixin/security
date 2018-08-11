@@ -41,7 +41,7 @@ public enum EnumExceptions {
 	ASSIGN_FAILED_PROJECT_NOT_EXIST(30, "分配失败, 项目不存在"),
 	SET_IC_CARD_FAILED_EXIST(31, "设置IC卡失败, 已被用"),
     FAILED_NOT_USERIDS(32, "请传参数userIds"),
-    CARD_FAILED_USER_NOT_EXIST(33, "打卡失败, 用户不存在"),
+    UPLOAD_FAILED_FILE_EMPTY(33, "上传失败, 文件为空"),
     CARD_FAILED_ATTENDANCE_GROUP_NOT_EXIST(34, "打卡失败, 用户的考勤组不存在"),
     CARD_FAILED_WORKING(35, "打卡失败, 已打卡"),
     CARD_FAILED_SCHEDULE_NOT_EXIST(36, "打卡失败, 班次不存在"),
@@ -79,10 +79,12 @@ public enum EnumExceptions {
     GODOWN_FAILED_NOT_AUDIT(68, "入库失败, 采购单未审核"),
     GODOWN_FAILED_AUDIT_NOT_APPROVAL(69, "入库失败, 采购单审核未通过"),
     GODOWN_FAILED_GODOWNED(70, "入库失败, 已入库"),
-    UPLOAD_FAILED_FILE_EMPTY(71, "上传失败, 文件为空"),
+    CARD_FAILED_USER_NOT_EXIST(71, "打卡失败, 用户不存在"),
     CARD_FAILED_LEADER_NOT_EXISTS(72, "打卡失败, 负责人不存在"),
     CARD_FAILED_PROJECT_NOT_EXISTS(73, "打卡失败, 项目不存在"),
-    CARD_FAILED_ON_DUTY_NOT_EXISTS(74, "打卡失败, 上班记录不存在"),
+    CARD_FAILED_ON_DUTY(74, "打卡失败, 正在上班中"),
+    CARD_FAILED_ON_DUTY_NOT_EXISTS(75, "打卡失败, 上班记录不存在或已下班"),
+    CARD_FAILED_NO_USERS(76, "打卡失败, 未选择打卡用户"),
 
 	;
 

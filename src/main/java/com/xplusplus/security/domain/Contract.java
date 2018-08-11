@@ -1,7 +1,11 @@
 package com.xplusplus.security.domain;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.sql.Blob;
 import java.time.Period;
 import java.util.Date;
+import java.util.SortedMap;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.xplusplus.security.utils.GlobalUtil;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -23,123 +28,123 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @Entity
 public class Contract {
-	// 主键
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    // 主键
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	// 员工
-	@ManyToOne(targetEntity = User.class)
-	@JoinColumn(name = "user_id", referencedColumnName = "id")
-	private User user;
+    // 员工
+    @ManyToOne(targetEntity = User.class)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
-	// 合同类型
-	@ManyToOne(targetEntity = ContractType.class)
-	@JoinColumn(name = "contract_type_id", referencedColumnName = "id")
-	private ContractType contractType;
+    // 合同类型
+    @ManyToOne(targetEntity = ContractType.class)
+    @JoinColumn(name = "contract_type_id", referencedColumnName = "id")
+    private ContractType contractType;
 
-	// 合同开始日期
-	@Temporal(value = TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date startDate;
+    // 合同开始日期
+    @Temporal(value = TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date startDate;
 
-	// 合同结束日期
-	@Temporal(value = TemporalType.DATE)
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date endDate;
+    // 合同结束日期
+    @Temporal(value = TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date endDate;
 
-	// 合同周期
-	private Period period;
+    // 合同周期
+    private Period period;
 
-	// 合同状态
-	@ManyToOne(targetEntity = ContractStatus.class)
-	@JoinColumn(name = "contract_status_id", referencedColumnName = "id")
-	private ContractStatus contractStatus;
+    // 合同状态
+    @ManyToOne(targetEntity = ContractStatus.class)
+    @JoinColumn(name = "contract_status_id", referencedColumnName = "id")
+    private ContractStatus contractStatus;
 
-	// 合同内容
-	@Lob
-	@Column(columnDefinition = "MediumBlob")
-	private String content;
+    // 合同内容
+    @Lob
+    @Column(columnDefinition = "MediumBlob")
+    private String content;
 
-	// 扫描件地址
-	private String scanningCopy;
+    // 扫描件地址
+    private String scanningCopy;
 
-	public Long getId() {
-		return id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public User getUser() {
-		return user;
-	}
+    public User getUser() {
+        return user;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-	public ContractType getContractType() {
-		return contractType;
-	}
+    public ContractType getContractType() {
+        return contractType;
+    }
 
-	public void setContractType(ContractType contractType) {
-		this.contractType = contractType;
-	}
+    public void setContractType(ContractType contractType) {
+        this.contractType = contractType;
+    }
 
-	public Date getStartDate() {
-		return startDate;
-	}
+    public Date getStartDate() {
+        return startDate;
+    }
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
 
-	public Date getEndDate() {
-		return endDate;
-	}
+    public Date getEndDate() {
+        return endDate;
+    }
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
 
-	public Period getPeriod() {
-		return period;
-	}
+    public Period getPeriod() {
+        return period;
+    }
 
-	public void setPeriod(Period period) {
-		this.period = period;
-	}
+    public void setPeriod(Period period) {
+        this.period = period;
+    }
 
-	public ContractStatus getContractStatus() {
-		return contractStatus;
-	}
+    public ContractStatus getContractStatus() {
+        return contractStatus;
+    }
 
-	public void setContractStatus(ContractStatus contractStatus) {
-		this.contractStatus = contractStatus;
-	}
+    public void setContractStatus(ContractStatus contractStatus) {
+        this.contractStatus = contractStatus;
+    }
 
-	public String getContent() {
-		return content;
-	}
+    public String getContent() {
+        return GlobalUtil.iso2utf8(content);
+    }
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+    public void setContent(String content) {
+        this.content = content;
+    }
 
-	public String getScanningCopy() {
-		return scanningCopy;
-	}
+    public String getScanningCopy() {
+        return scanningCopy;
+    }
 
-	public void setScanningCopy(String scanningCopy) {
-		this.scanningCopy = scanningCopy;
-	}
+    public void setScanningCopy(String scanningCopy) {
+        this.scanningCopy = scanningCopy;
+    }
 
-	@Override
-	public String toString() {
-		return "Contract [id=" + id + ", user=" + user + ", contractType=" + contractType + ", startDate=" + startDate
-				+ ", endDate=" + endDate + ", period=" + period + ", contractStatus=" + contractStatus + ", content="
-				+ content + ", scanningCopy=" + scanningCopy + "]";
-	}
+    @Override
+    public String toString() {
+        return "Contract [id=" + id + ", user=" + user + ", contractType=" + contractType + ", startDate=" + startDate
+                + ", endDate=" + endDate + ", period=" + period + ", contractStatus=" + contractStatus + ", content="
+                + content + ", scanningCopy=" + scanningCopy + "]";
+    }
 }
