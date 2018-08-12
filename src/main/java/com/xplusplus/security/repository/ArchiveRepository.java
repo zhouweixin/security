@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 import com.xplusplus.security.domain.Archive;
 import com.xplusplus.security.domain.User;
 
+import java.util.Collection;
+import java.util.List;
+
 /**
  * @Author: zhouweixin
  * @Description:
@@ -32,4 +35,12 @@ public interface ArchiveRepository extends JpaRepository<Archive, Long> {
      */
 	@Query(value = "select count(a.user) from Archive a where a.education=?1")
 	public int findCountByEducation(Education education);
+
+    /**
+     * 通过员工批量查询
+     *
+     * @param users
+     * @return
+     */
+	public List<Archive> findByUserIn(Collection<User> users);
 }

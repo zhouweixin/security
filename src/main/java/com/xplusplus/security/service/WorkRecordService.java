@@ -363,7 +363,7 @@ public class WorkRecordService {
             Calendar calendar2 = Calendar.getInstance();
             calendar1.setTime(date);
             calendar2.setTime(date);
-            calendar2.add(Calendar.DAY_OF_MONTH, 1);
+            calendar2.add(Calendar.MONTH, 1);
 
             workRecords = workRecordRepository.findByProjectAndStartTimeBetweenAndUserInAndStatus(project, calendar1.getTime(), calendar2.getTime(), users, 1);
         } else {

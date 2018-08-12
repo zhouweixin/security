@@ -93,6 +93,10 @@ public class Project {
     @ApiModelProperty(value = "项目负责人")
 	private User leader;
 
+	@Column(precision = 2, columnDefinition = "default 0")
+    @ApiModelProperty(value = "项目小时钱数")
+	private double wagePerHour = 0.00;
+
 	public Long getId() {
 		return id;
 	}
@@ -196,4 +200,12 @@ public class Project {
 	public void setScanningCopy(String scanningCopy) {
 		this.scanningCopy = scanningCopy;
 	}
+
+    public double getWagePerHour() {
+        return wagePerHour;
+    }
+
+    public void setWagePerHour(double wagePerHour) {
+        this.wagePerHour = wagePerHour;
+    }
 }

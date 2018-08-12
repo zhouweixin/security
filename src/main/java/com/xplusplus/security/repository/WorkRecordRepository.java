@@ -88,4 +88,12 @@ public interface WorkRecordRepository extends JpaRepository<WorkRecord, Long> {
      */
     public Page<WorkRecord> findByProjectAndStartTimeBetweenAndUserInAndStatus(Project project, Date date1, Date date2, Collection<User> users, Integer status, Pageable pageable);
     public List<WorkRecord> findByProjectAndStartTimeBetweenAndUserInAndStatus(Project project, Date date1, Date date2, Collection<User> users, Integer status);
+
+    /**
+     * 通过状态查询工作记录
+     *
+     * @param status
+     * @return
+     */
+    public List<WorkRecord> findByStartTimeBetweenAndStatus(Date d1, Date d2, Integer status);
 }

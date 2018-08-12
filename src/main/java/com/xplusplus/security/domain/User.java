@@ -15,8 +15,6 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 /**
  * @Author: zhouweixin
  * @Description: 员工表
@@ -139,10 +137,19 @@ public class User {
      */
     private String bankCardNum;
 
+    @Column(precision = 2)
+    private Double baseWage = 0.00;
+
     /**
      * 开户行
      */
     private String accountBank;
+
+    @Column(precision = 2)
+    private Double socialSecuritySubsidyWage = 0.00;
+
+    @Column(precision = 2)
+    private Double foundation = 0.00;
 
     public User() {
     }
@@ -301,5 +308,29 @@ public class User {
 
     public void setBornDate(Date bornDate) {
         this.bornDate = bornDate;
+    }
+
+    public Double getBaseWage() {
+        return baseWage;
+    }
+
+    public void setBaseWage(Double baseWage) {
+        this.baseWage = baseWage;
+    }
+
+    public Double getSocialSecuritySubsidyWage() {
+        return socialSecuritySubsidyWage;
+    }
+
+    public void setSocialSecuritySubsidyWage(Double socialSecuritySubsidyWage) {
+        this.socialSecuritySubsidyWage = socialSecuritySubsidyWage;
+    }
+
+    public Double getFoundation() {
+        return foundation;
+    }
+
+    public void setFoundation(Double foundation) {
+        this.foundation = foundation;
     }
 }

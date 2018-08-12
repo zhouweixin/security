@@ -25,7 +25,7 @@ public class SwaggerUtil {
         Predicate<String> predicate = new Predicate<String>() {
             @Override
             public boolean apply(String input) {
-                if(input.contains("/workRecord") || input.contains("/project")){
+                if(input.contains("/workRecord") || input.contains("/project") || input.contains("/wageEntry")){
                     return true;
                 }
                 return false;

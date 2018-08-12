@@ -1,11 +1,9 @@
 package com.xplusplus.security.vo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.xplusplus.security.domain.WorkRecord;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -17,9 +15,10 @@ import java.util.*;
 @ApiModel(value = "工作记录")
 public class WorkRecordMonthVO {
     @ApiModelProperty("用户工号")
-    private String userId;
+    private String userId = "";
     @ApiModelProperty("员工名")
-    private String userName;;
+    private String userName = "";
+    ;
     @ApiModelProperty("工作天数")
     private int days = 0;
     @ApiModelProperty("总天数")
@@ -28,6 +27,8 @@ public class WorkRecordMonthVO {
     private int hours = 0;
     @ApiModelProperty("实际工作小时数")
     private int realHours = 0;
+    @ApiModelProperty("项目钱数")
+    private double projectWage = 0.00;
 
     public WorkRecordMonthVO(int sumDays) {
         this.sumDays = sumDays;
@@ -73,6 +74,14 @@ public class WorkRecordMonthVO {
         this.realHours = realHours;
     }
 
+    public double getProjectWage() {
+        return projectWage;
+    }
+
+    public void setProjectWage(double projectWage) {
+        this.projectWage = projectWage;
+    }
+
     public static List<WorkRecordMonthVO> parseWorkRecords(List<WorkRecord> workRecords, Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -82,13 +91,13 @@ public class WorkRecordMonthVO {
         Map<String, List<WorkRecord>> userId2workRecords = new HashMap<String, List<WorkRecord>>();
         Map<String, WorkRecordMonthVO> userId2workRecordMonthVOs = new HashMap<String, WorkRecordMonthVO>();
 
-        for(WorkRecord workRecord : workRecords){
+        for (WorkRecord workRecord : workRecords) {
             String userId = workRecord.getUser().getId();
             List<WorkRecord> wrs = userId2workRecords.getOrDefault(userId, new ArrayList<>());
             wrs.add(workRecord);
             userId2workRecords.put(userId, wrs);
 
-            if(!userId2workRecordMonthVOs.containsKey(userId)){
+            if (!userId2workRecordMonthVOs.containsKey(userId)) {
                 WorkRecordMonthVO vo = new WorkRecordMonthVO(sumDays);
                 vo.setUserId(userId);
                 vo.setUserName(workRecord.getUser().getName());
@@ -96,21 +105,24 @@ public class WorkRecordMonthVO {
             }
         }
 
-        for(String userId:userId2workRecords.keySet()){
+        for (String userId : userId2workRecords.keySet()) {
             List<WorkRecord> workRecordList = userId2workRecords.get(userId);
             WorkRecordMonthVO vo = userId2workRecordMonthVOs.get(userId);
 
             Set<Integer> daySet = new HashSet<Integer>();
-            for(WorkRecord workRecord : workRecordList){
-                if(workRecord.getStatus() != 1){
+            for (WorkRecord workRecord : workRecordList) {
+                if (workRecord.getStatus() != 1) {
                     continue;
                 }
-                vo.setHours(vo.getHours()+workRecord.getHours());
-                vo.setRealHours(vo.getRealHours()+workRecord.getRealHours());
+                vo.setHours(vo.getHours() + workRecord.getHours());
+                vo.setRealHours(vo.getRealHours() + workRecord.getRealHours());
+                if(workRecord.getProject() != null) {
+                    vo.setProjectWage(vo.getProjectWage() + workRecord.getProject().getWagePerHour() * workRecord.getHours());
+                }
                 Calendar c = Calendar.getInstance();
-                if(workRecord.getStartTime() != null)
+                if (workRecord.getStartTime() != null)
                     c.setTime(workRecord.getStartTime());
-                if(workRecord.getHours() > 0)
+                if (workRecord.getHours() > 0)
                     daySet.add(c.get(Calendar.DAY_OF_MONTH));
             }
             vo.setDays(daySet.size());
