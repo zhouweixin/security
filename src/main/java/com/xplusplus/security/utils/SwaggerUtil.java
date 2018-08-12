@@ -1,5 +1,6 @@
 package com.xplusplus.security.utils;
 
+import com.google.common.base.Predicate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -21,11 +22,21 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerUtil {
     @Bean
     public Docket createRestApi() {
+        Predicate<String> predicate = new Predicate<String>() {
+            @Override
+            public boolean apply(String input) {
+                if(input.contains("/workRecord") || input.contains("/project")){
+                    return true;
+                }
+                return false;
+            }
+        };
+
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.xplusplus.security.controller"))
-                .paths(PathSelectors.any())
+                .paths(predicate)
                 .build();
     }
 

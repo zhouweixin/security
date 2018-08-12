@@ -1,6 +1,5 @@
 package com.xplusplus.security.service;
 
-import com.xplusplus.security.domain.Pdf;
 import com.xplusplus.security.domain.Project;
 import com.xplusplus.security.domain.User;
 import com.xplusplus.security.domain.WorkRecord;
@@ -9,10 +8,16 @@ import com.xplusplus.security.exception.SecurityExceptions;
 import com.xplusplus.security.repository.ProjectRepository;
 import com.xplusplus.security.repository.UserRepository;
 import com.xplusplus.security.repository.WorkRecordRepository;
+import com.xplusplus.security.vo.WorkRecordMonthVO;
 import com.xplusplus.security.vo.WorkRecordVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -268,5 +273,103 @@ public class WorkRecordService {
         }
         List<WorkRecord> save = workRecordRepository.save(workRecords);
         return new WorkRecordVO().parseWorkRecords(save);
+    }
+
+    /**
+     * 通过项目, 日期和姓名模糊查询-分页
+     *
+     * @param projectId
+     * @param date
+     * @param name
+     * @param page
+     * @param size
+     * @param sortFieldName
+     * @param asc
+     * @return
+     */
+    public Page<WorkRecord> getByProjectAndDateAndNameLike(Long projectId, Date date, String name, Integer page, Integer size, String sortFieldName, Integer asc) {
+        // 判断排序字段名是否存在
+        try {
+            Project.class.getDeclaredField(sortFieldName);
+        } catch (Exception e) {
+            // 如果不存在就设置为id
+            sortFieldName = "id";
+        }
+
+        Sort sort = null;
+        if (asc == 0) {
+            sort = new Sort(Sort.Direction.DESC, sortFieldName);
+        } else {
+            sort = new Sort(Sort.Direction.ASC, sortFieldName);
+        }
+
+        Pageable pageable = new PageRequest(page, size, sort);
+
+        // 查询用户
+        List<User> users = userRepository.findByNameLike("%" + name + "%");
+
+        if(projectId != -1 && date.toString().equals("2000-01-01")){
+            Project project = null;
+            if((project = projectRepository.findOne(projectId)) == null){
+                throw new SecurityExceptions(EnumExceptions.QUERY_FAILED_PROJECT_NOT_EXISTS);
+            }
+
+            return workRecordRepository.findByProjectAndUserInAndStatus(project, users, 1, pageable);
+        }
+
+        if(projectId != -1 && !date.toString().equals("2000-01-01")){
+            Project project = null;
+            if((project = projectRepository.findOne(projectId)) == null){
+                throw new SecurityExceptions(EnumExceptions.QUERY_FAILED_PROJECT_NOT_EXISTS);
+            }
+
+            Calendar calendar1 = Calendar.getInstance();
+            Calendar calendar2 = Calendar.getInstance();
+            calendar1.setTime(date);
+            calendar2.setTime(date);
+            calendar2.add(Calendar.DAY_OF_MONTH, 1);
+
+            return workRecordRepository.findByProjectAndStartTimeBetweenAndUserInAndStatus(project, calendar1.getTime(), calendar2.getTime(), users, 1, pageable);
+        }
+
+        return workRecordRepository.findByUserInAndStatus(users, 1, pageable);
+    }
+
+    /**
+     * 月度统计-分页
+     *
+     * @param projectId
+     * @param date
+     * @param name
+     * @return
+     */
+    public List<WorkRecordMonthVO> getByMonth(Long projectId, Date date, String name) {
+        List<WorkRecord> workRecords = null;
+
+        // 查询用户
+        List<User> users = userRepository.findByNameLike("%" + name + "%");
+
+        if(date.toString().equals("2000-01")){
+            throw new SecurityExceptions(EnumExceptions.QUERY_FAILED_DATE);
+        }
+
+        if(projectId != -1){
+            Project project = null;
+            if((project = projectRepository.findOne(projectId)) == null){
+                throw new SecurityExceptions(EnumExceptions.QUERY_FAILED_PROJECT_NOT_EXISTS);
+            }
+
+            Calendar calendar1 = Calendar.getInstance();
+            Calendar calendar2 = Calendar.getInstance();
+            calendar1.setTime(date);
+            calendar2.setTime(date);
+            calendar2.add(Calendar.DAY_OF_MONTH, 1);
+
+            workRecords = workRecordRepository.findByProjectAndStartTimeBetweenAndUserInAndStatus(project, calendar1.getTime(), calendar2.getTime(), users, 1);
+        } else {
+            workRecords = workRecordRepository.findByUserInAndStatus(users, 1);
+        }
+
+        return WorkRecordMonthVO.parseWorkRecords(workRecords, date);
     }
 }

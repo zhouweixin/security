@@ -7,6 +7,9 @@ import javax.validation.Valid;
 
 import com.xplusplus.security.domain.User;
 import com.xplusplus.security.service.ProjectUserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.validation.BindingResult;
@@ -28,6 +31,7 @@ import com.xplusplus.security.utils.ResultUtil;
  */
 @RestController
 @RequestMapping(value = "/project")
+@Api(tags = "项目接口")
 public class ProjectController {
     @Autowired
     private ProjectService projectService;
@@ -42,6 +46,7 @@ public class ProjectController {
      * @return
      */
     @RequestMapping(value = "/add")
+    @ApiOperation(value = "新增")
     public Result<Project> add(@Valid Project project, BindingResult bindingResult, String[] userIds) {
 
         if (bindingResult.hasErrors()) {
@@ -58,6 +63,7 @@ public class ProjectController {
      * @return
      */
     @RequestMapping(value = "/update")
+    @ApiOperation(value = "更新")
     public Result<Project> update(@Valid Project project, BindingResult bindingResult, String[] userIds) {
 
         if (bindingResult.hasErrors()) {
@@ -74,7 +80,8 @@ public class ProjectController {
      * @return
      */
     @RequestMapping(value = "/deleteById")
-    public Result<Object> deleteById(Long id) {
+    @ApiOperation(value = "通过id删除")
+    public Result<Object> deleteById(@ApiParam(value = "主键") @RequestParam Long id) {
         projectService.delete(id);
         return ResultUtil.success();
     }
@@ -86,7 +93,8 @@ public class ProjectController {
      * @return
      */
     @RequestMapping(value = "/deleteByIdBatch")
-    public Result<Object> deleteByIdBatch(@RequestBody Collection<Project> projects) {
+    @ApiOperation(value = "批量删除")
+    public Result<Object> deleteByIdBatch(@ApiParam(value = "项目集合, json格式")@RequestBody Collection<Project> projects) {
         projectService.deleteInBatch(projects);
         return ResultUtil.success();
     }
@@ -98,7 +106,8 @@ public class ProjectController {
      * @return
      */
     @RequestMapping(value = "/getById")
-    public Result<Project> getById(Long id) {
+    @ApiOperation(value = "通过id查询")
+    public Result<Project> getById(@ApiParam(value = "主键") @RequestParam Long id) {
         return ResultUtil.success(projectService.findOne(id));
     }
 
@@ -108,6 +117,7 @@ public class ProjectController {
      * @return
      */
     @RequestMapping(value = "/getAll")
+    @ApiOperation(value = "查询所有")
     public Result<List<Project>> getAll() {
         return ResultUtil.success(projectService.findAll());
 
@@ -123,10 +133,11 @@ public class ProjectController {
      * @return
      */
     @RequestMapping(value = "/getAllByPage")
-    public Result<Page<Project>> getAllByPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
-                                              @RequestParam(value = "size", defaultValue = "10") Integer size,
-                                              @RequestParam(value = "sortFieldName", defaultValue = "id") String sortFieldName,
-                                              @RequestParam(value = "asc", defaultValue = "1") Integer asc) {
+    @ApiOperation(value = "查询所有-分页")
+    public Result<Page<Project>> getAllByPage(@ApiParam(value = "页码") @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                              @ApiParam(value = "每页记录数") @RequestParam(value = "size", defaultValue = "10") Integer size,
+                                              @ApiParam(value = "排序字段名")@RequestParam(value = "sortFieldName", defaultValue = "id") String sortFieldName,
+                                              @ApiParam(value = "排序方向, 0降序; 1升序")@RequestParam(value = "asc", defaultValue = "1") Integer asc) {
 
         return ResultUtil.success(projectService.findAllByPage(page, size, sortFieldName, asc));
     }
@@ -142,11 +153,12 @@ public class ProjectController {
      * @return
      */
     @RequestMapping(value = "/getByNameLikeByPage")
-    public Result<Page<Project>> getByNameLikeByPage(@RequestParam(value = "name", defaultValue = "") String name,
-                                                     @RequestParam(value = "page", defaultValue = "0") Integer page,
-                                                     @RequestParam(value = "size", defaultValue = "10") Integer size,
-                                                     @RequestParam(value = "sortFieldName", defaultValue = "id") String sortFieldName,
-                                                     @RequestParam(value = "asc", defaultValue = "1") Integer asc) {
+    @ApiOperation(value = "通过名称模糊查询-分布")
+    public Result<Page<Project>> getByNameLikeByPage(@ApiParam(value = "名称") @RequestParam(value = "name", defaultValue = "") String name,
+                                                     @ApiParam(value = "页码") @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                     @ApiParam(value = "每页记录数") @RequestParam(value = "size", defaultValue = "10") Integer size,
+                                                     @ApiParam(value = "排序字段名")@RequestParam(value = "sortFieldName", defaultValue = "id") String sortFieldName,
+                                                     @ApiParam(value = "排序方向, 0降序; 1升序")@RequestParam(value = "asc", defaultValue = "1") Integer asc) {
 
         return ResultUtil.success(projectService.findByNameLikeByPage(name, page, size, sortFieldName, asc));
     }
@@ -162,12 +174,13 @@ public class ProjectController {
      * @return
      */
     @RequestMapping(value = "/getByCustomerUnitLikeByPage")
+    @ApiOperation(value = "通过客户单位模糊查询-分页")
     public Result<Page<Project>> getByCustomerUnitLikeByPage(
-            @RequestParam(value = "customerUnit", defaultValue = "") String customerUnit,
-            @RequestParam(value = "page", defaultValue = "0") Integer page,
-            @RequestParam(value = "size", defaultValue = "10") Integer size,
-            @RequestParam(value = "sortFieldName", defaultValue = "id") String sortFieldName,
-            @RequestParam(value = "asc", defaultValue = "1") Integer asc) {
+            @ApiParam(value = "客户单位") @RequestParam(value = "customerUnit", defaultValue = "") String customerUnit,
+            @ApiParam(value = "页码") @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @ApiParam(value = "每页记录数") @RequestParam(value = "size", defaultValue = "10") Integer size,
+            @ApiParam(value = "排序字段名")@RequestParam(value = "sortFieldName", defaultValue = "id") String sortFieldName,
+            @ApiParam(value = "排序方向, 0降序; 1升序")@RequestParam(value = "asc", defaultValue = "1") Integer asc) {
 
         return ResultUtil
                 .success(projectService.findByCustomerUnitLikeByPage(customerUnit, page, size, sortFieldName, asc));
@@ -184,11 +197,12 @@ public class ProjectController {
      * @return
      */
     @RequestMapping(value = "/getByProjectStatusByPage")
-    public Result<Page<Project>> getByProjectStatusByPage(ProjectStatus projectStatus,
-                                                          @RequestParam(value = "page", defaultValue = "0") Integer page,
-                                                          @RequestParam(value = "size", defaultValue = "10") Integer size,
-                                                          @RequestParam(value = "sortFieldName", defaultValue = "id") String sortFieldName,
-                                                          @RequestParam(value = "asc", defaultValue = "1") Integer asc) {
+    @ApiOperation(value = "通过项目状态查询-分页")
+    public Result<Page<Project>> getByProjectStatusByPage(@ApiParam(value = "项目状态") ProjectStatus projectStatus,
+                                                          @ApiParam(value = "页码") @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                          @ApiParam(value = "每页记录数") @RequestParam(value = "size", defaultValue = "10") Integer size,
+                                                          @ApiParam(value = "排序字段名")@RequestParam(value = "sortFieldName", defaultValue = "id") String sortFieldName,
+                                                          @ApiParam(value = "排序方向, 0降序; 1升序")@RequestParam(value = "asc", defaultValue = "1") Integer asc) {
 
         return ResultUtil
                 .success(projectService.findByProjectStatusByPage(projectStatus, page, size, sortFieldName, asc));
@@ -202,7 +216,9 @@ public class ProjectController {
      * @return
      */
     @RequestMapping(value = "/assignUsersToProject")
-    public Result<Integer> assignUsersToProject(Long projectId, String[] userIds) {
+    @ApiOperation(value = "分配员工到项目, 返回分配人数")
+    public Result<Integer> assignUsersToProject(@ApiParam(value = "项目主键") @RequestParam Long projectId,
+                                                @ApiParam(value = "用户主键数组") @RequestParam String[] userIds) {
         return ResultUtil.success(projectUserService.assignUsersToProject(projectId, userIds));
     }
 
@@ -213,7 +229,8 @@ public class ProjectController {
      * @return
      */
     @RequestMapping(value = "/getUsersByProject")
-    public Result<List<User>> getUsersByProject(Project project) {
+    @ApiOperation(value = "通过项目查询员工")
+    public Result<List<User>> getUsersByProject(@ApiParam(value = "项目") Project project) {
         return ResultUtil.success(projectUserService.findUsersByProject(project));
     }
 
@@ -224,7 +241,8 @@ public class ProjectController {
      * @return
      */
     @RequestMapping(value = "/getByLeaderAndStaue0")
-    public Result<List<Project>> getByLeaderAndStaue0(User leader) {
+    @ApiOperation(value = "通过负责人查询进行中的项目")
+    public Result<List<Project>> getByLeaderAndStaue0(@ApiParam(value = "员工") User leader) {
         return ResultUtil.success(projectService.findByLeader(leader));
     }
 }

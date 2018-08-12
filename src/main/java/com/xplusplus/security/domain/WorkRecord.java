@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -29,29 +31,29 @@ public class WorkRecord {
     @ApiModelProperty("用户")
     private User user;
 
-    @JsonFormat
     @Temporal(value = TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @ApiModelProperty("开始时间")
     private Date startTime;
 
-    @JsonFormat
     @Temporal(value = TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @ApiModelProperty("结束时间")
     private Date endTime;
 
-    @JsonFormat
     // 实际上班打卡时间
     @Temporal(value = TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @ApiModelProperty("实际上班打卡时间")
     private Date realStartTime;
 
     // 实际下班打卡时间
-    @JsonFormat
     @Temporal(value = TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @ApiModelProperty("实际下班打卡时间")
     private Date realEndTime;
 
@@ -94,6 +96,12 @@ public class WorkRecord {
     // 备注
     @ApiModelProperty("备注")
     private String note;
+
+    @ApiModelProperty("工作时长")
+    private int hours = 0;
+
+    @ApiModelProperty("实际工作时长")
+    private int realHours = 0;
 
     public WorkRecord() {
     }
@@ -167,6 +175,8 @@ public class WorkRecord {
 
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
+        computeHours();
+        computeRealHours();
     }
 
     public Date getEndTime() {
@@ -175,6 +185,8 @@ public class WorkRecord {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+        computeHours();
+        computeRealHours();
     }
 
     public Date getRealStartTime() {
@@ -255,5 +267,43 @@ public class WorkRecord {
 
     public void setEndLatitude(Double endLatitude) {
         this.endLatitude = endLatitude;
+    }
+
+    public int getHours() {
+        return hours;
+    }
+
+    public void setHours(int hours) {
+        this.hours = hours;
+    }
+
+    public int getRealHours() {
+        return realHours;
+    }
+
+    public void setRealHours(int realHours) {
+        this.realHours = realHours;
+    }
+
+    /**
+     * 计算理论工作时间
+     */
+    private void computeHours(){
+        if(startTime != null && endTime != null) {
+            long from = startTime.getTime();
+            long to = endTime.getTime();
+            this.hours = (int) ((to - from)/(1000.0 * 60 * 60) + 0.5);
+        }
+    }
+
+    /**
+     * 计算实际工作时间
+     */
+    private void computeRealHours(){
+        if(realStartTime != null && realEndTime != null) {
+            long from = realStartTime.getTime();
+            long to = realEndTime.getTime();
+            this.realHours = (int) ((to - from)/(1000.0 * 60 * 60) + 0.5);
+        }
     }
 }
