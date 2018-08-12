@@ -106,3 +106,14 @@
     color: #666;
     position: relative;
 }
+.search-right{
+    position: relative;
+    color: #2925D9;
+}
+input.printAll-box{
+    height: 18px;
+    width: 18px;
+    position: absolute;
+    left: -16px;
+    top: 4px;
+}
