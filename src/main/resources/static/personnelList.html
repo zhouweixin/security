@@ -544,7 +544,7 @@
                       <h5 class="panel-title">人员信息</h5>
                   </div>
                   <div class="panel-body">
-                      <form class="form-horizontal" style="height: 340px; overflow:visible">
+                      <form class="form-horizontal" style="overflow:visible">
                           <div class="form-group col-xs-6">
                               <label class="col-xs-3 control-label"><span>*</span>姓名：</label>
                               <div class="col-xs-7">
@@ -570,6 +570,13 @@
                                           <li><a value="1">女</a></li>
                                       </ul>
                                   </div>
+                              </div>
+                          </div>
+                          <div class="form-group col-xs-6">
+                              <label class="col-xs-3 control-label">出生日期：</label>
+                              <div class="input-group date to_date col-xs-7" style="padding: 0 15px">
+                                  <input id="staffInformation-bornDate" size="16" class="form-control"  value="年/月/日" type="text" disabled="disabled">
+                                  <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                               </div>
                           </div>
                           <div class="form-group col-xs-6">
@@ -764,8 +771,32 @@
                                   <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                               </div>
                           </div>
+                          <div class="form-group col-xs-6">
+                              <label class="col-xs-3 control-label">银行卡号：</label>
+                              <div class="col-xs-7">
+                                  <input id="staffInformation-bankCardNum" type="text" class="form-control"  disabled="disabled">
+                              </div>
+                          </div>
+                          <div class="form-group col-xs-6">
+                              <label class="col-xs-3 control-label">基本工资：</label>
+                              <div class="col-xs-7">
+                                  <input id="staffInformation-baseWage" type="text" class="form-control"  disabled="disabled">
+                              </div>
+                          </div>
+                          <div class="form-group col-xs-6">
+                              <label class="col-xs-3 control-label">基金：</label>
+                              <div class="col-xs-7">
+                                  <input id="staffInformation-foundation" type="text" class="form-control"  disabled="disabled">
+                              </div>
+                          </div>
+                          <div class="form-group col-xs-6">
+                              <label class="col-xs-3 control-label">社保：</label>
+                              <div class="col-xs-7">
+                                  <input id="staffInformation-socialSecuritySubsidyWage" type="text" class="form-control"  disabled="disabled">
+                              </div>
+                          </div>
                       </form>
-                      <div class="button-body">
+                      <div class="button-body col-xs-12">
                           <a class="btn btn-default" onclick="editButtonOnClick('staff')">编辑</a>
                           <a class="store-staff btn btn-info" onclick="updateStaffInformation()">保存</a>
                           <a class="btn btn-default hidden staffCancelButton" onclick="cancelEditButtonOnClick('staff')">取消</a>
@@ -1606,6 +1637,13 @@
                           </div>
                       </div>
                       <div class="form-group">
+                          <label class="col-xs-3 control-label">出生日期：</label>
+                          <div class="input-group date to_date col-xs-7" style="padding: 0 15px">
+                              <input id="modal-addStaffBornDate" size="16" class="form-control"  value="年/月/日" type="text" >
+                              <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                          </div>
+                      </div>
+                      <div class="form-group">
                           <label for="modal-addStaffICNumber" class="col-xs-3 control-label">IC卡号：</label>
                           <div class="col-xs-7">
                               <input id="modal-addStaffICNumber" type="text" class="form-control" placeholder="">
@@ -1752,7 +1790,30 @@
                               </div>
                           </div>
                       </div>
-
+                      <div class="form-group">
+                          <label class="col-xs-3 control-label">银行卡号：</label>
+                          <div class="col-xs-7">
+                              <input id="modal-addStaffBankCardNum" type="text" class="form-control" placeholder="">
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label class="col-xs-3 control-label">基本工资：</label>
+                          <div class="col-xs-7">
+                              <input id="modal-addStaffBaseWage" type="text" class="form-control" placeholder="">
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label class="col-xs-3 control-label">基金：</label>
+                          <div class="col-xs-7">
+                              <input id="modal-addStaffFoundation" type="text" class="form-control" placeholder="">
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label class="col-xs-3 control-label">社保：</label>
+                          <div class="col-xs-7">
+                              <input id="modal-addStaffSocialSecuritySubsidyWage" type="text" class="form-control" placeholder="">
+                          </div>
+                      </div>
                   </form>
               </div>
               <div class="modal-footer">

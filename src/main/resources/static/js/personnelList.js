@@ -287,6 +287,8 @@ $(document).ready(function () {
 function addStaff() {
     var staffName = $('#modal-addStaffName').val()
     var staffSex = $('#modal-addStaffSex').attr('value')
+    var bornDate = new Date(($('#modal-addStaffBornDate').val()))
+    bornDate = (bornDate.toLocaleDateString()).replace(/\//g, '-')
     var IcID = $('#modal-addStaffICNumber').val()
     var department = $('#modal-addStaffDepartment').attr('value')
     var weChat = $('#modal-addStaffWeChat').val()
@@ -303,12 +305,18 @@ function addStaff() {
     }else {
         period = ""
     }
+    var bankCardNum = $('#modal-addStaffBankCardNum').val()
+    var baseWage = $('#modal-addStaffBaseWage').val()
+    var foundation = $('#modal-addStaffFoundation').val()
+    var socialSecuritySubsidyWage = $('#modal-addStaffSocialSecuritySubsidyWage').val()
     if(!staffName || !phoneNumber){
         alert('姓名或者联系方式不能为空！')
         return
     }else {
         var urlStr = ipPort + '/user/add?name=' + staffName + '&sex=' + staffSex + '&ic=' + IcID + '&wechat=' + weChat + '&contact=' + phoneNumber
             + '&department=' + department + '&role=' + position + '&jobNature=' + jobNature + '&employDate=' + joinDate + '&practiceEndDate=' + period
+        + '&bornDate=' + bornDate + '&bankCardNum=' + bankCardNum + '&baseWage=' + baseWage + '&foundation=' + foundation
+            + '&socialSecuritySubsidyWage=' + socialSecuritySubsidyWage
         $.ajax({
             url:urlStr,
             dataType:'json',
@@ -691,6 +699,15 @@ function setDetailsStaffInformationColumn(obj) {
             $('#staffInformation-sex').attr('value', '')
         }
 
+        var bornDateSplit = obj.data.bornDate
+        if(bornDateSplit){
+            var bornDate = new Date()
+            bornDate.setFullYear(bornDateSplit.split('-')[0], bornDateSplit.split('-')[1] - 1, bornDateSplit.split('-')[2])
+            $('#staffInformation-bornDate').val(bornDate.toLocaleDateString())
+        }else{
+            $('#staffInformation-bornDate').val('')
+        }
+
         var staffInformationCycleA = $('#staffInformation-cycle').parent().find('ul').find('li a')
         if(obj.data.period == null){
             $('#staffInformation-cycle').html(staffInformationCycleA.eq(0).text() + "<span class='caret'></span>")
@@ -753,6 +770,11 @@ function setDetailsStaffInformationColumn(obj) {
         }else{
             $('#staffInformation-resignDate').val('')
         }
+
+        $('#staffInformation-bankCardNum').val(obj.data.bankCardNum)
+        $('#staffInformation-baseWage').val(obj.data.baseWage)
+        $('#staffInformation-foundation').val(obj.data.foundation)
+        $('#staffInformation-socialSecuritySubsidyWage').val(obj.data.socialSecuritySubsidyWage)
     }
 }
 /*
@@ -1430,6 +1452,8 @@ function updateStaffInformation() {
     var staffID = $('#staffInformation-id').val()
     var staffName = $('#staffInformation-name').val()
     var staffSex = $('#staffInformation-sex').attr('value')
+    var bornDate = new Date(($('#staffInformation-bornDate').val()))
+    bornDate = (bornDate.toLocaleDateString()).replace(/\//g, '-')
     var IcID = $('#staffInformation-icID').val()
     var department = $('#staffInformation-department').attr('value')
     var weChat = $('#staffInformation-weChat').val()
@@ -1454,13 +1478,18 @@ function updateStaffInformation() {
     }else{
         resignDate = ''
     }
-
+    var bankCardNum = $('#staffInformation-bankCardNum').val()
+    var baseWage = $('#staffInformation-baseWage').val()
+    var foundation = $('#staffInformation-foundation').val()
+    var socialSecuritySubsidyWage = $('#staffInformation-socialSecuritySubsidyWage').val()
     if(!staffName || !phoneNumber){
         alert('姓名或者联系方式不能为空！')
         return
     }else {
         var urlStr = ipPort + '/user/update?name=' + staffName + '&id=' + staffID + '&sex=' + staffSex + '&ic=' + IcID + '&wechat=' + weChat + '&contact=' + phoneNumber
             + '&department=' + department + '&role=' + position + '&jobNature=' + jobNature + '&employDate=' + joinDate + '&practiceEndDate=' + period + '&resignDate= ' + resignDate + '&resignType=' + resignType
+            + '&bornDate=' + bornDate + '&bankCardNum=' + bankCardNum + '&baseWage=' + baseWage + '&foundation=' + foundation
+            + '&socialSecuritySubsidyWage=' + socialSecuritySubsidyWage
         $.ajax({
             url:urlStr,
             dataType:'json',
