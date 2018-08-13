@@ -674,4 +674,23 @@ public class UserService {
 
         return userProjectAttendanceNumberVOS;
     }
+
+    /**
+     * 批量更新用户的基本工次，社保和基金
+     *
+     * @param userIds
+     * @param base
+     * @param socialSecurity
+     * @param foundation
+     */
+    @Transactional
+    public void updateBaseAndSocialSecurityAndFoundationBatch(String[] userIds, double base, double socialSecurity, double foundation) {
+        List<User> users = userRepository.findAll(Arrays.asList(userIds));
+        for(User user : users){
+            user.setBaseWage(base);
+            user.setSocialSecuritySubsidyWage(socialSecurity);
+            user.setFoundation(foundation);
+        }
+        userRepository.save(users);
+    }
 }

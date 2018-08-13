@@ -3,6 +3,8 @@ package com.xplusplus.security.repository;
 import com.xplusplus.security.domain.Project;
 import com.xplusplus.security.domain.User;
 import com.xplusplus.security.domain.WorkRecord;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -53,4 +55,45 @@ public interface WorkRecordRepository extends JpaRepository<WorkRecord, Long> {
      * @param ids
      */
     public void deleteByIdIn(Collection<Long> ids);
+
+    /**
+     * 通过用户查询-分页
+     *
+     * @param users
+     * @param pageable
+     * @return
+     */
+    public Page<WorkRecord> findByUserInAndStatus(Collection<User> users, Integer status, Pageable pageable);
+    public List<WorkRecord> findByUserInAndStatus(Collection<User> users, Integer status);
+
+    /**
+     * 通过项目， 用户查询-分页
+     * @param project
+     * @param users
+     * @param pageable
+     * @return
+     */
+    public Page<WorkRecord> findByProjectAndUserInAndStatus(Project project, Collection<User> users, Integer status, Pageable pageable);
+    public List<WorkRecord> findByProjectAndUserInAndStatus(Project project, Collection<User> users, Integer status);
+
+    /**
+     * 通过项目， 开始时间， 用户查询-分页
+     *
+     * @param project
+     * @param date1
+     * @param date2
+     * @param users
+     * @param pageable
+     * @return
+     */
+    public Page<WorkRecord> findByProjectAndStartTimeBetweenAndUserInAndStatus(Project project, Date date1, Date date2, Collection<User> users, Integer status, Pageable pageable);
+    public List<WorkRecord> findByProjectAndStartTimeBetweenAndUserInAndStatus(Project project, Date date1, Date date2, Collection<User> users, Integer status);
+
+    /**
+     * 通过状态查询工作记录
+     *
+     * @param status
+     * @return
+     */
+    public List<WorkRecord> findByStartTimeBetweenAndStatus(Date d1, Date d2, Integer status);
 }

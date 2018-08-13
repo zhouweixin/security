@@ -1,5 +1,6 @@
 package com.xplusplus.security.repository;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -207,4 +208,12 @@ public interface UserRepository extends JpaRepository<User, String> {
      */
     @Query(value = "select count(u) from User u where u.bornDate>=?1 and u.bornDate<?2")
 	public int findCountByBornDateGreaterThanEqualAndBornDateLessThan(Date date1, Date date2);
+
+    /**
+     * 查询员工
+     *
+     * @param userIds
+     * @return
+     */
+    public List<User> findByIdIn(Collection<String> userIds);
 }

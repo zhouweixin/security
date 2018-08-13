@@ -330,4 +330,14 @@ public class UserController {
 
         return ResultUtil.success(userService.getUserNumberByProjectAttenAndDate(date));
     }
+
+    /**
+     * 批量更新用户的基本工次，社保和基金
+     * @return
+     */
+    @RequestMapping(value = "/updateBaseAndSocialSecurityAndFoundationBatch")
+    public Result<Object> updateBaseAndSocialSecurityAndFoundationBatch(String[] userIds, double base, double socialSecurity, double foundation){
+        userService.updateBaseAndSocialSecurityAndFoundationBatch(userIds, base, socialSecurity, foundation);
+        return ResultUtil.success();
+    }
 }

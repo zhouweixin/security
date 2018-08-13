@@ -5,17 +5,16 @@ import com.xplusplus.security.domain.WorkRecord;
 import com.xplusplus.security.service.UserService;
 import com.xplusplus.security.service.WorkRecordService;
 import com.xplusplus.security.utils.ResultUtil;
+import com.xplusplus.security.vo.WorkRecordMonthVO;
 import com.xplusplus.security.vo.WorkRecordVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.hibernate.jdbc.Work;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.awt.print.Pageable;
 import java.util.Date;
@@ -100,7 +99,7 @@ public class WorkRecordController {
         return ResultUtil.success();
     }
 
-    @RequestMapping(value = "/deleteByIdBatch")
+    @PostMapping(value = "/deleteByIdBatch")
     @ApiOperation(value = "批量删除")
     public Result<List<WorkRecordVO>> deleteByIdBatch(@ApiParam(value = "主键数组") @RequestParam Long[] ids) {
         workRecordService.deleteByIdBatch(ids);
@@ -142,5 +141,35 @@ public class WorkRecordController {
 
 
         return ResultUtil.success(workRecordService.update(ids, leaderId, projectId, startLongitude, startLatitude, startTime, endLongitude, endLatitude, endTime, note, status));
+    }
+
+    @GetMapping(value = "/getByProjectAndDateAndNameLike")
+    @ApiOperation(value = "通过项目, 日期和姓名模糊查询-分页")
+    public Result<Page<WorkRecord>> getByProjectAndDateAndNameLike(
+            @ApiParam(value = "项目主键，默认为-1表示不启用此字段检索", defaultValue = "-1") @RequestParam(defaultValue = "-1") Long projectId,
+            @ApiParam(value = "日期, 格式为yyyy-MM-dd, 默认为2000-01-01表示不启用此字段检索", defaultValue = "2000-01-01") @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
+            @ApiParam(value = "姓名, 默认为\"\"表示查询所有", defaultValue = "") @RequestParam(defaultValue = "") String name,
+            @ApiParam(value = "页码", defaultValue = "0") @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @ApiParam(value = "每页记录数", defaultValue = "10") @RequestParam(value = "size", defaultValue = "10") Integer size,
+            @ApiParam(value = "排序字段名", defaultValue = "startTime")@RequestParam(value = "sortFieldName", defaultValue = "startTime") String sortFieldName,
+            @ApiParam(value = "排序方向, 0降序; 1升序", defaultValue = "0")@RequestParam(value = "asc", defaultValue = "0") Integer asc){
+        return ResultUtil.success(workRecordService.getByProjectAndDateAndNameLike(projectId, date, name, page, size, sortFieldName, asc));
+    }
+
+    /**
+     * 月度总结
+     *
+     * @param projectId
+     * @param date
+     * @param name
+     * @return
+     */
+    @GetMapping(value = "/getByMonth")
+    @ApiOperation(value = "月度统计-分页")
+    public Result<List<WorkRecordMonthVO>> getByMonth(
+            @ApiParam(value = "项目主键，默认为-1表示不启用此字段检索", defaultValue = "-1") @RequestParam(defaultValue = "-1") Long projectId,
+            @ApiParam(value = "日期, 格式为yyyy-MM, 默认为2000-01表示不启用此字段检索", defaultValue = "2000-01") @RequestParam @DateTimeFormat(pattern = "yyyy-MM") Date date,
+            @ApiParam(value = "姓名, 默认为\"\"表示查询所有", defaultValue = "") @RequestParam(defaultValue = "") String name){
+        return ResultUtil.success(workRecordService.getByMonth(projectId, date, name));
     }
 }

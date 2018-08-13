@@ -1,6 +1,12 @@
 package com.xplusplus.security.vo;
 
 import com.xplusplus.security.domain.WorkRecord;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -13,16 +19,22 @@ import java.util.List;
  * @Date: Created in 11:52 2018/7/31
  * @Modified By:
  */
+@ApiModel(value = "工作记录")
 public class WorkRecordVO {
     // 员工工号
+    @ApiModelProperty("用户工号")
     private String userId;
     // 员工名
+    @ApiModelProperty("员工名")
     private String userName;
     // 开始时间
+    @ApiModelProperty("开始时间")
     private String startTime;
     // 结束时间
+    @ApiModelProperty("结束时间")
     private String endTime;
     // 状态
+    @ApiModelProperty("状态")
     private String status;
 
     public WorkRecordVO() {
