@@ -217,77 +217,32 @@
                     </div>
                     <div class="table-body">
                         <table class="table table-bordered" id="staffMonthSummaryTable">
-                            <thead style="background-color: #F9FAFB">
+                            <thead>
                             <tr>
-                                <th>姓名</th>
-                                <th>工号</th>
-                                <th>部门</th>
-                                <th>日期</th>
-                                <th>出勤天数</th>
-                                <th>请假天数</th>
-                                <th>工作时长</th>
-                                <th>迟到次数</th>
+                                <th style="width: 15%;">姓名</th>
+                                <th style="width: 20%;">工号</th>
+                                <th style="width: 15%;">日期</th>
+                                <th style="width: 10%;">工作天数</th>
+                                <th style="width: 10%;">总天数</th>
+                                <th style="width: 15%;">工作时长</th>
+                                <th style="width: 15%;">实际工作时长</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr class="table-tr">
-                                <td class="staffMonthSummary-staffName">张三</td>
-                                <td class="staffMonthSummary-staffID">yx00001</td>
-                                <td class="staffMonthSummary-staffDepartment">营销部</td>
-                                <td class="staffMonthSummary-month">2018-06</td>
-                                <td class="staffMonthSummary-workDays">30</td>
-                                <td class="staffMonthSummary-leaveDays">0</td>
-                                <td class="staffMonthSummary-validWorkTime">240</td>
-                                <td class="staffMonthSummary-lateTimes">3</td>
-                            </tr>
-                            <tr class="table-tr">
-                                <td class="staffMonthSummary-staffName">王五</td>
-                                <td class="staffMonthSummary-staffID">dk00001</td>
-                                <td class="staffMonthSummary-staffDepartment">行政部</td>
-                                <td class="staffMonthSummary-month">2018-06</td>
-                                <td class="staffMonthSummary-workDays">28</td>
-                                <td class="staffMonthSummary-leaveDays">2</td>
-                                <td class="staffMonthSummary-validWorkTime">228</td>
-                                <td class="staffMonthSummary-lateTimes">4</td>
-                            </tr>
-                            <tr class="table-tr">
-                                <td class="staffMonthSummary-staffName">李四</td>
-                                <td class="staffMonthSummary-staffID">cw00001</td>
-                                <td class="staffMonthSummary-staffDepartment">财务部</td>
-                                <td class="staffMonthSummary-month">2018-06</td>
-                                <td class="staffMonthSummary-workDays">30</td>
-                                <td class="staffMonthSummary-leaveDays">0</td>
-                                <td class="staffMonthSummary-validWorkTime">240</td>
-                                <td class="staffMonthSummary-lateTimes">0</td>
-                            </tr>
-                            <tr class="table-tr">
-                                <td class="staffMonthSummary-staffName">曹六</td>
-                                <td class="staffMonthSummary-staffID">yx00002</td>
-                                <td class="staffMonthSummary-staffDepartment">营销部</td>
-                                <td class="staffMonthSummary-month">2018-06</td>
-                                <td class="staffMonthSummary-workDays">30</td>
-                                <td class="staffMonthSummary-leaveDays">0</td>
-                                <td class="staffMonthSummary-validWorkTime">240</td>
-                                <td class="staffMonthSummary-lateTimes">1</td>
-
-                            </tr>
+                            <tbody style="width:100%; overflow-y: scroll;">
+                                <!--<tr class="table-tr">-->
+                                    <!--<td class="staffMonthSummary-staffName"></td>-->
+                                    <!--<td class="staffMonthSummary-staffID"></td>-->
+                                    <!--<td class="staffMonthSummary-month"></td>-->
+                                    <!--<td class="staffMonthSummary-days"></td>-->
+                                    <!--<td class="staffMonthSummary-sumDays"></td>-->
+                                    <!--<td class="staffMonthSummary-hours"></td>-->
+                                    <!--<td class="staffMonthSummary-realHours"></td>-->
+                                <!--</tr>-->
                             </tbody>
                         </table>
                     </div>
                     <div class="page-body">
-                        <ul class="page-ul">
-                            <li class="page-ul-li">
-                                <div class="input-group" style="width: 110px">
-                                    <input type="text" class="form-control" placeholder="">
-                                    <span class="input-group-btn">
-                                <button id="jump-button" class="btn btn-default" type="button">跳转</button>
-                             </span>
-                                </div>
-                            </li>
-                            <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-left"></span></a></li>
-                            <li class="page-ul-li" style="margin-top: 8px"><span>1/255</span></li>
-                            <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-right"></span></a></li>
-                        </ul>
+
                     </div>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="projectMonthSummary-panel">

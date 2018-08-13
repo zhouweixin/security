@@ -163,10 +163,10 @@
             <div class="top-body" style="margin-top: 30px">
                 <div class="search-content" style="height: 34px;">
                     <div class="search-left">
-                        <div style="width:auto;height:34px;line-height:34px;float:left"><sapn>选择月份</sapn></div>
+                        <div style="width:auto;height:34px;line-height:34px;float:left"><span>选择月份</span></div>
                         <div style="display: inline-block;float: left;width:200px;margin-right: 5px; margin-left: 5px">
-                            <div class="input-group date to_date">
-                                <input id="dailyStatistics-date" class="form-control" type="text" value="年/月">
+                            <div class="input-group date bottom-month">
+                                <input id="salaryQuery-month" class="form-control" size="16" type="text" value="年/月">
                                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                             </div>
                         </div>
@@ -181,41 +181,254 @@
                     <div class="search-right">
                         <input class="printAll-box" type="checkbox">打印全部
                         <button class="btn btn-info" onclick="printSalaryTable()">打印</button>
+                        <button class="btn btn-default">批量修改</button>
                     </div>
                 </div>
             </div>
-            <div class="table-body">
-                <table class="table table-bordered">
+            <div id="salaryQueryTable" class="table-body" style="overflow-x: scroll">
+                <table class="table table-bordered" style="min-width: 1500px">
                     <thead style="background-color: #F9FAFB">
                     <tr>
+                        <th style="width: 34px"><input id="select-all" class="select-box" type="checkbox"></th>
                         <th>姓名</th>
                         <th>部门</th>
                         <th>证件号码</th>
                         <th>卡号</th>
                         <th>基本工资</th>
+                        <th>项目工资</th>
                         <th>全勤奖</th>
                         <th>奖金</th>
+                        <th>加班费</th>
+                        <th>伙食费</th>
+                        <th>社保补助</th>
                         <th>基金</th>
                         <th>应扣款项</th>
                         <th>工作天数</th>
                         <th>应发工资</th>
                         <th>实发工资</th>
+                        <th style="width: 50px">修改</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="table-tr">
-                        <td class="salaryScheme-staffName"></td>
-                        <td class="salaryScheme-salaryYearMonth"></td>
-                        <td class="salaryScheme-baseSalary"></td>
-                        <td class="salaryScheme-projectSalary"></td>
-                        <td class="salaryScheme-lateDeduct"></td>
-                        <td class="salaryScheme-seriousLateDeduct"></td>
-                        <td class="salaryScheme-performanceBonus"></td>
-                        <td class="salaryScheme-seniorityBonus"></td>
-                        <td class="salaryScheme-sickLeaveDeductions"></td>
-                        <td class="salaryScheme-affairLeaveDeductions"></td>
-                        <td class="salaryScheme-otherDeductions"></td>
-                        <td class="salaryScheme-salarying"></td>
+                    <tr class="table-tr hidden">
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="salaryQuery-staffName"></td>
+                        <td class="salaryQuery-department"></td>
+                        <td class="salaryQuery-idCard"></td>
+                        <td class="salaryQuery-bankCard"><input type="text"></td>
+                        <td class="salaryQuery-baseWage"><input type="text"></td>
+                        <td class="salaryQuery-projectWage"><input type="text"></td>
+                        <td class="salaryQuery-fullAttenBonus"><input type="text"></td>
+                        <td class="salaryQuery-bonus"><input type="text"></td>
+                        <td class="salaryQuery-overtimeWage"><input type="text"></td>
+                        <td class="salaryQuery-boardWage"><input type="text"></td>
+                        <td class="salaryQuery-socialSecuritySubsidyWage"><input type="text"></td>
+                        <td class="salaryQuery-foundation"><input type="text"></td>
+                        <td class="salaryQuery-deductionWage"><input type="text"></td>
+                        <td class="salaryQuery-workDays"><input type="text"></td>
+                        <td class="salaryQuery-grossPay"><input type="text"></td>
+                        <td class="salaryQuery-realPay"><input type="text"></td>
+                        <td class="alreadySignedStaff-operating">
+                            <a style="line-height: 37px" onclick="updateWage()"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="salaryQuery-staffName"></td>
+                        <td class="salaryQuery-department"></td>
+                        <td class="salaryQuery-idCard"></td>
+                        <td class="salaryQuery-bankCard"><input type="text"></td>
+                        <td class="salaryQuery-baseWage"><input type="text"></td>
+                        <td class="salaryQuery-projectWage"><input type="text"></td>
+                        <td class="salaryQuery-fullAttenBonus"><input type="text"></td>
+                        <td class="salaryQuery-bonus"><input type="text"></td>
+                        <td class="salaryQuery-overtimeWage"><input type="text"></td>
+                        <td class="salaryQuery-boardWage"><input type="text"></td>
+                        <td class="salaryQuery-socialSecuritySubsidyWage"><input type="text"></td>
+                        <td class="salaryQuery-foundation"><input type="text"></td>
+                        <td class="salaryQuery-deductionWage"><input type="text"></td>
+                        <td class="salaryQuery-workDays"><input type="text"></td>
+                        <td class="salaryQuery-grossPay"><input type="text"></td>
+                        <td class="salaryQuery-realPay"><input type="text"></td>
+                        <td class="alreadySignedStaff-operating">
+                            <a style="line-height: 37px" onclick="updateWage()"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="salaryQuery-staffName"></td>
+                        <td class="salaryQuery-department"></td>
+                        <td class="salaryQuery-idCard"></td>
+                        <td class="salaryQuery-bankCard"><input type="text"></td>
+                        <td class="salaryQuery-baseWage"><input type="text"></td>
+                        <td class="salaryQuery-projectWage"><input type="text"></td>
+                        <td class="salaryQuery-fullAttenBonus"><input type="text"></td>
+                        <td class="salaryQuery-bonus"><input type="text"></td>
+                        <td class="salaryQuery-overtimeWage"><input type="text"></td>
+                        <td class="salaryQuery-boardWage"><input type="text"></td>
+                        <td class="salaryQuery-socialSecuritySubsidyWage"><input type="text"></td>
+                        <td class="salaryQuery-foundation"><input type="text"></td>
+                        <td class="salaryQuery-deductionWage"><input type="text"></td>
+                        <td class="salaryQuery-workDays"><input type="text"></td>
+                        <td class="salaryQuery-grossPay"><input type="text"></td>
+                        <td class="salaryQuery-realPay"><input type="text"></td>
+                        <td class="alreadySignedStaff-operating">
+                            <a style="line-height: 37px" onclick="updateWage()"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="salaryQuery-staffName"></td>
+                        <td class="salaryQuery-department"></td>
+                        <td class="salaryQuery-idCard"></td>
+                        <td class="salaryQuery-bankCard"><input type="text"></td>
+                        <td class="salaryQuery-baseWage"><input type="text"></td>
+                        <td class="salaryQuery-projectWage"><input type="text"></td>
+                        <td class="salaryQuery-fullAttenBonus"><input type="text"></td>
+                        <td class="salaryQuery-bonus"><input type="text"></td>
+                        <td class="salaryQuery-overtimeWage"><input type="text"></td>
+                        <td class="salaryQuery-boardWage"><input type="text"></td>
+                        <td class="salaryQuery-socialSecuritySubsidyWage"><input type="text"></td>
+                        <td class="salaryQuery-foundation"><input type="text"></td>
+                        <td class="salaryQuery-deductionWage"><input type="text"></td>
+                        <td class="salaryQuery-workDays"><input type="text"></td>
+                        <td class="salaryQuery-grossPay"><input type="text"></td>
+                        <td class="salaryQuery-realPay"><input type="text"></td>
+                        <td class="alreadySignedStaff-operating">
+                            <a style="line-height: 37px" onclick="updateWage()"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="salaryQuery-staffName"></td>
+                        <td class="salaryQuery-department"></td>
+                        <td class="salaryQuery-idCard"></td>
+                        <td class="salaryQuery-bankCard"><input type="text"></td>
+                        <td class="salaryQuery-baseWage"><input type="text"></td>
+                        <td class="salaryQuery-projectWage"><input type="text"></td>
+                        <td class="salaryQuery-fullAttenBonus"><input type="text"></td>
+                        <td class="salaryQuery-bonus"><input type="text"></td>
+                        <td class="salaryQuery-overtimeWage"><input type="text"></td>
+                        <td class="salaryQuery-boardWage"><input type="text"></td>
+                        <td class="salaryQuery-socialSecuritySubsidyWage"><input type="text"></td>
+                        <td class="salaryQuery-foundation"><input type="text"></td>
+                        <td class="salaryQuery-deductionWage"><input type="text"></td>
+                        <td class="salaryQuery-workDays"><input type="text"></td>
+                        <td class="salaryQuery-grossPay"><input type="text"></td>
+                        <td class="salaryQuery-realPay"><input type="text"></td>
+                        <td class="alreadySignedStaff-operating">
+                            <a style="line-height: 37px" onclick="updateWage()"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="salaryQuery-staffName"></td>
+                        <td class="salaryQuery-department"></td>
+                        <td class="salaryQuery-idCard"></td>
+                        <td class="salaryQuery-bankCard"><input type="text"></td>
+                        <td class="salaryQuery-baseWage"><input type="text"></td>
+                        <td class="salaryQuery-projectWage"><input type="text"></td>
+                        <td class="salaryQuery-fullAttenBonus"><input type="text"></td>
+                        <td class="salaryQuery-bonus"><input type="text"></td>
+                        <td class="salaryQuery-overtimeWage"><input type="text"></td>
+                        <td class="salaryQuery-boardWage"><input type="text"></td>
+                        <td class="salaryQuery-socialSecuritySubsidyWage"><input type="text"></td>
+                        <td class="salaryQuery-foundation"><input type="text"></td>
+                        <td class="salaryQuery-deductionWage"><input type="text"></td>
+                        <td class="salaryQuery-workDays"><input type="text"></td>
+                        <td class="salaryQuery-grossPay"><input type="text"></td>
+                        <td class="salaryQuery-realPay"><input type="text"></td>
+                        <td class="alreadySignedStaff-operating">
+                            <a style="line-height: 37px" onclick="updateWage()"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="salaryQuery-staffName"></td>
+                        <td class="salaryQuery-department"></td>
+                        <td class="salaryQuery-idCard"></td>
+                        <td class="salaryQuery-bankCard"><input type="text"></td>
+                        <td class="salaryQuery-baseWage"><input type="text"></td>
+                        <td class="salaryQuery-projectWage"><input type="text"></td>
+                        <td class="salaryQuery-fullAttenBonus"><input type="text"></td>
+                        <td class="salaryQuery-bonus"><input type="text"></td>
+                        <td class="salaryQuery-overtimeWage"><input type="text"></td>
+                        <td class="salaryQuery-boardWage"><input type="text"></td>
+                        <td class="salaryQuery-socialSecuritySubsidyWage"><input type="text"></td>
+                        <td class="salaryQuery-foundation"><input type="text"></td>
+                        <td class="salaryQuery-deductionWage"><input type="text"></td>
+                        <td class="salaryQuery-workDays"><input type="text"></td>
+                        <td class="salaryQuery-grossPay"><input type="text"></td>
+                        <td class="salaryQuery-realPay"><input type="text"></td>
+                        <td class="alreadySignedStaff-operating">
+                            <a style="line-height: 37px" onclick="updateWage()"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="salaryQuery-staffName"></td>
+                        <td class="salaryQuery-department"></td>
+                        <td class="salaryQuery-idCard"></td>
+                        <td class="salaryQuery-bankCard"><input type="text"></td>
+                        <td class="salaryQuery-baseWage"><input type="text"></td>
+                        <td class="salaryQuery-projectWage"><input type="text"></td>
+                        <td class="salaryQuery-fullAttenBonus"><input type="text"></td>
+                        <td class="salaryQuery-bonus"><input type="text"></td>
+                        <td class="salaryQuery-overtimeWage"><input type="text"></td>
+                        <td class="salaryQuery-boardWage"><input type="text"></td>
+                        <td class="salaryQuery-socialSecuritySubsidyWage"><input type="text"></td>
+                        <td class="salaryQuery-foundation"><input type="text"></td>
+                        <td class="salaryQuery-deductionWage"><input type="text"></td>
+                        <td class="salaryQuery-workDays"><input type="text"></td>
+                        <td class="salaryQuery-grossPay"><input type="text"></td>
+                        <td class="salaryQuery-realPay"><input type="text"></td>
+                        <td class="alreadySignedStaff-operating">
+                            <a style="line-height: 37px" onclick="updateWage()"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="salaryQuery-staffName"></td>
+                        <td class="salaryQuery-department"></td>
+                        <td class="salaryQuery-idCard"></td>
+                        <td class="salaryQuery-bankCard"><input type="text"></td>
+                        <td class="salaryQuery-baseWage"><input type="text"></td>
+                        <td class="salaryQuery-projectWage"><input type="text"></td>
+                        <td class="salaryQuery-fullAttenBonus"><input type="text"></td>
+                        <td class="salaryQuery-bonus"><input type="text"></td>
+                        <td class="salaryQuery-overtimeWage"><input type="text"></td>
+                        <td class="salaryQuery-boardWage"><input type="text"></td>
+                        <td class="salaryQuery-socialSecuritySubsidyWage"><input type="text"></td>
+                        <td class="salaryQuery-foundation"><input type="text"></td>
+                        <td class="salaryQuery-deductionWage"><input type="text"></td>
+                        <td class="salaryQuery-workDays"><input type="text"></td>
+                        <td class="salaryQuery-grossPay"><input type="text"></td>
+                        <td class="salaryQuery-realPay"><input type="text"></td>
+                        <td class="alreadySignedStaff-operating">
+                            <a style="line-height: 37px" onclick="updateWage()"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="salaryQuery-staffName"></td>
+                        <td class="salaryQuery-department"></td>
+                        <td class="salaryQuery-idCard"></td>
+                        <td class="salaryQuery-bankCard"><input type="text"></td>
+                        <td class="salaryQuery-baseWage"><input type="text"></td>
+                        <td class="salaryQuery-projectWage"><input type="text"></td>
+                        <td class="salaryQuery-fullAttenBonus"><input type="text"></td>
+                        <td class="salaryQuery-bonus"><input type="text"></td>
+                        <td class="salaryQuery-overtimeWage"><input type="text"></td>
+                        <td class="salaryQuery-boardWage"><input type="text"></td>
+                        <td class="salaryQuery-socialSecuritySubsidyWage"><input type="text"></td>
+                        <td class="salaryQuery-foundation"><input type="text"></td>
+                        <td class="salaryQuery-deductionWage"><input type="text"></td>
+                        <td class="salaryQuery-workDays"><input type="text"></td>
+                        <td class="salaryQuery-grossPay"><input type="text"></td>
+                        <td class="salaryQuery-realPay"><input type="text"></td>
+                        <td class="alreadySignedStaff-operating">
+                            <a style="line-height: 37px" onclick="updateWage()"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -224,15 +437,15 @@
                 <ul class="page-ul">
                     <li class="page-ul-li">
                         <div class="input-group" style="width: 110px">
-                            <input type="text" class="form-control" placeholder="">
+                            <input type="text" class="form-control skipPage" placeholder="">
                             <span class="input-group-btn">
-                                <button id="jump-button" class="btn btn-default" type="button">跳转</button>
-                             </span>
+                                  <button id="jump-button" class="btn btn-default" type="button" onclick="skipPage()">跳转</button>
+                               </span>
                         </div>
                     </li>
-                    <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-left"></span></a></li>
-                    <li class="page-ul-li" style="margin-top: 8px"><span>1/255</span></li>
-                    <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-right"></span></a></li>
+                    <li class="page-ul-li"><a class="btn btn-default page-button" onclick="nextPage()"><span class="caret caret-left"></span></a></li>
+                    <li class="page-ul-li" style="margin-top: 8px"><span class="currentPage"></span>/<span class="totalPage"></span></li>
+                    <li class="page-ul-li"><a class="btn btn-default page-button" onclick="previousPage()"><span class="caret caret-right"></span></a></li>
                 </ul>
             </div>
         </div>

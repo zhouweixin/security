@@ -112,6 +112,7 @@ function getAllProjectContractInformation() {
         success:function (obj) {
             if(obj.code == 0){
                 setProjectContractTableInformation(obj)
+                console.log(obj)
             }
             else{
                 alert(obj.message)

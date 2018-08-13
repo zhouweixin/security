@@ -117,3 +117,13 @@ input.printAll-box{
     left: -16px;
     top: 4px;
 }
+#salaryQueryTable td{
+    height: 37px;
+    padding: 0 0;
+}
+#salaryQueryTable input{
+    height: 37px;
+    width: 100%;
+    border: none;
+    text-align: center;
+}
