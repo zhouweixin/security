@@ -531,17 +531,6 @@
                         </div>
                     </div>
                 </form>
-                <form id="form-selectStaff2" class="form-horizontal hidden">
-                    <div class="form-group " style="margin-bottom: 0px;">
-                        <ul class="selectStaff-staff-ul col-xs-6" style="height: 200px;overflow-y: scroll">
-
-                        </ul>
-                        <div class="col-xs-6" style="border-left: 1px solid #E5E5E5; height: 200px;overflow-y: scroll">
-                            <ul class="selectedStaff-staff-ul">
-                            </ul>
-                        </div>
-                    </div>
-                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -557,10 +546,16 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel-selectOneStaff">选择员工</h4>
+                <h4 class="modal-title col-xs-6" id="myModalLabel-selectOneStaff">选择员工</h4>
+                <div class="col-xs-5 modal-searchInput">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="姓名">
+                        <span class="input-group-addon glyphicon glyphicon-search" onclick="searchOneByName_modal(this)" aria-hidden="true"></span>
+                    </div>
+                </div>
             </div>
             <div class="modal-body" style="padding: 0px 20px;font-size: 14px">
-                <form class="form-horizontal">
+                <form id="form-selectOneStaff" class="form-horizontal">
                     <div class="form-group " style="margin-bottom: 0px;">
                         <ul class="selectOneStaff-department-ul" style="height: 200px;overflow-y: scroll">
                             <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
@@ -623,6 +618,9 @@
                                 <ul class="selectOneStaff-staff-ul hidden">
                                 </ul>
                             </li>
+                        </ul>
+                        <ul class="selectOneStaff-staff-ul2 col-xs-6 hidden" style="height: 200px;overflow-y: scroll；">
+
                         </ul>
                     </div>
                 </form>

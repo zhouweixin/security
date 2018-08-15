@@ -223,6 +223,19 @@
     background-color: #CECECE;
     border-radius: 5px 5px;
 }
+.selectOneStaff-staff-ul2 li{
+    font-size: 16px;
+    margin-left: 22px;
+    margin-top: 2px;
+    color: #4EB1E4;
+    width: 60%;
+}
+.selectOneStaff-staff-ul2 li:hover{
+    cursor: pointer;
+    font-size: 18px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
+}
 .path-arrow-left{
     padding: 3px 8px;
     border: none;
