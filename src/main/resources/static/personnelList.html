@@ -138,7 +138,7 @@
               </li>
               <li class="left-nav-menu-li">
                   <a class="menu-link">
-                      <img src="imgs/brush.png">
+                      <img src="imgs/coupons.png">
                       <div>薪资管理    <span class="glyphicon glyphicon-triangle-right"></span></div>
                   </a>
                   <ul class="sub-menu none">
@@ -797,6 +797,7 @@
                           </div>
                       </form>
                       <div class="button-body col-xs-12">
+                          <a class="btn btn-default" onclick="setUpdateBaseAndSocialSecurityAndFoundationBatchModal()">批量修改</a>
                           <a class="btn btn-default" onclick="editButtonOnClick('staff')">编辑</a>
                           <a class="store-staff btn btn-info" onclick="updateStaffInformation()">保存</a>
                           <a class="btn btn-default hidden staffCancelButton" onclick="cancelEditButtonOnClick('staff')">取消</a>
@@ -1890,6 +1891,160 @@
                                          </div>
                                      </div>
                                  </div>
+  <!---------------------------------------------------------选择多个人modal--------------------------------------------------------->
+  <!------------------------------------------------------------------------------------------------------------------>
+  <div class="modal fade" id="myModal-updateBaseWageBatch" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title col-xs-6" id="myModalLabel">批量修改基本工资等</h4>
+                  <div class="col-xs-5 modal-searchInput">
+                      <div class="input-group">
+                          <input type="text" class="form-control" placeholder="姓名">
+                          <span class="input-group-addon glyphicon glyphicon-search" onclick="searchByName_modal(this)" aria-hidden="true"></span>
+                      </div>
+                  </div>
+              </div>
+              <div class="modal-body" style="padding: 0px 20px;font-size: 14px">
+                  <form id="form-selectStaff1" class="form-horizontal">
+                      <div class="form-group " style="margin-bottom: 0px;">
+                          <ul class="selectStaff-department-ul col-xs-6" style="height: 200px;overflow-y: scroll">
+                              <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                  <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                  <span class="departmentName-span"></span>
+                                  <div class="selectAllDepartmentStaffs"></div>
+                                  <ul class="selectStaff-staff-ul hidden">
+                                  </ul>
+                              </li>
+                              <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                  <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                  <span class="departmentName-span"></span>
+                                  <div class="selectAllDepartmentStaffs"></div>
+                                  <ul class="selectStaff-staff-ul hidden">
+                                  </ul>
+                              </li>
+                              <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                  <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                  <span class="departmentName-span"></span>
+                                  <div class="selectAllDepartmentStaffs"></div>
+                                  <ul class="selectStaff-staff-ul hidden">
+                                  </ul>
+                              </li>
+                              <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                  <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                  <span class="departmentName-span"></span>
+                                  <div class="selectAllDepartmentStaffs"></div>
+                                  <ul class="selectStaff-staff-ul hidden">
+                                  </ul>
+                              </li>
+                              <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                  <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                  <span class="departmentName-span"></span>
+                                  <div class="selectAllDepartmentStaffs"></div>
+                                  <ul class="selectStaff-staff-ul hidden">
+                                  </ul>
+                              </li>
+                              <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                  <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                  <span class="departmentName-span"></span>
+                                  <div class="selectAllDepartmentStaffs"></div>
+                                  <ul class="selectStaff-staff-ul hidden">
+                                  </ul>
+                              </li>
+                              <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                  <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                  <span class="departmentName-span"></span>
+                                  <div class="selectAllDepartmentStaffs"></div>
+                                  <ul class="selectStaff-staff-ul hidden">
+                                  </ul>
+                              </li>
+                              <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                  <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                  <span class="departmentName-span"></span>
+                                  <div class="selectAllDepartmentStaffs"></div>
+                                  <ul class="selectStaff-staff-ul hidden">
+                                  </ul>
+                              </li>
+                              <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                  <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                  <span class="departmentName-span"></span>
+                                  <div class="selectAllDepartmentStaffs"></div>
+                                  <ul class="selectStaff-staff-ul hidden">
+                                  </ul>
+                              </li>
+                              <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                  <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                  <span class="departmentName-span"></span>
+                                  <div class="selectAllDepartmentStaffs"></div>
+                                  <ul class="selectStaff-staff-ul hidden">
+                                  </ul>
+                              </li>
+                              <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                  <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                  <span class="departmentName-span"></span>
+                                  <div class="selectAllDepartmentStaffs"></div>
+                                  <ul class="selectStaff-staff-ul hidden">
+                                  </ul>
+                              </li>
+                              <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                  <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                  <span class="departmentName-span"></span>
+                                  <div class="selectAllDepartmentStaffs"></div>
+                                  <ul class="selectStaff-staff-ul hidden">
+                                  </ul>
+                              </li>
+                              <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                  <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                  <span class="departmentName-span"></span>
+                                  <div class="selectAllDepartmentStaffs"></div>
+                                  <ul class="selectStaff-staff-ul hidden">
+                                  </ul>
+                              </li>
+                              <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                  <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                  <span class="departmentName-span"></span>
+                                  <div class="selectAllDepartmentStaffs"></div>
+                                  <ul class="selectStaff-staff-ul hidden">
+                                  </ul>
+                              </li>
+                          </ul>
+                          <ul class="selectStaff-staff-ul2 col-xs-6 hidden" style="height: 200px;overflow-y: scroll；">
+
+                          </ul>
+                          <div class="col-xs-6" style="border-left: 1px solid #E5E5E5; height: 200px;overflow-y: scroll">
+                              <ul class="selectedStaff-staff-ul">
+                              </ul>
+                          </div>
+                      </div>
+                      <div class="form-group col-xs-12" style="margin-top: 10px">
+                          <label class="col-xs-3 control-label">基本工资：</label>
+                          <div class="col-xs-7">
+                              <input id="updateBaseWageBatch-baseWage" type="text" class="form-control">
+                          </div>
+                      </div>
+                      <div class="form-group col-xs-12">
+                          <label class="col-xs-3 control-label">基金：</label>
+                          <div class="col-xs-7">
+                              <input id="updateBaseWageBatch-foundation" type="text" class="form-control">
+                          </div>
+                      </div>
+                      <div class="form-group col-xs-12">
+                          <label class="col-xs-3 control-label">社保：</label>
+                          <div class="col-xs-7">
+                              <input id="updateBaseWageBatch-socialSecuritySubsidyWage" type="text" class="form-control">
+                          </div>
+                      </div>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                  <button type="button" class="btn btn-primary selectedStaffs-button" value="" onclick="updateBaseAndSocialSecurityAndFoundationBatch()" data-dismiss="modal">确认</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
   <div class="modal fade bs-example-modal-sm" id="myModal-makeSureDelete" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" value="">
                                      <div class="modal-dialog modal-sm" role="document">
                                          <div class="modal-content">

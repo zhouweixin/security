@@ -164,6 +164,9 @@ $(document).ready(function () {
     //项目状态
     var projectStatus = $('.dropdown-menu-projectStatus ')
     getAllProjectStatusName(projectStatus)
+    //项目
+    var project = $('.dropdown-menu-project')
+    getAllProjectName(project)
 })
 function selectAllCheckButton(thisObj) {
     if(thisObj.checked == true){

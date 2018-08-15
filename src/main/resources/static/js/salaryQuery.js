@@ -11,7 +11,7 @@ $(document).ready(function () {
 获取所有固定日期的工资单/
  */
 function getALlWage() {
-    var page = currentPage
+    var page = 0
     var size = 10
     var sortFieldName = 'startTime'
     var asc = 1
@@ -36,6 +36,35 @@ function getALlWage() {
     })
 }
 /*
+获取所有固定日期的工资单/
+ */
+function getWageByParameters() {
+    var name = $('#salaryQuery-name').val()
+    var page = 0
+    var size = 10
+    var sortFieldName = 'startTime'
+    var asc = 1
+    var month = $('#salaryQuery-month').val()
+    month = month.replace(/\//g, '-')
+    var urlStr = ipPort + '/wageEntry/getByDateAndNameLikeByPage?page='+ page + '&size=' + size + '&sortFieldName='
+        + sortFieldName + '&asc=' + asc + '&date=' + month + '&name=' + name
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            console.log(obj)
+            if(obj.code == 0){
+                setAllWageTable(obj)
+            }else{
+                console.log(obj)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
 设置所有工资单table/
  */
 function setAllWageTable(obj) {
@@ -43,6 +72,7 @@ function setAllWageTable(obj) {
     $('.totalPage').text(obj.data.totalPages)
     var table_tr = $('.table-tr')
     if(obj.data.numberOfElements != 0){
+        var checkBox = $('.salaryQuery-checkBox')
         var name = $('.salaryQuery-staffName')
         var department = $('.salaryQuery-department')
         var idCard = $('.salaryQuery-idCard')
@@ -61,6 +91,7 @@ function setAllWageTable(obj) {
         var realPay = $('.salaryQuery-realPay').find('input')
         for(var i = 0; i < obj.data.numberOfElements; i++){
             table_tr.eq(i).removeClass('hidden')
+            checkBox.eq(i).attr('value', obj.data.content[i].id)
             name.eq(i).text(obj.data.content[i].userName)
             name.eq(i).attr('value', obj.data.content[i].userId)
             department.eq(i).text(obj.data.content[i].originalSpot)
@@ -84,7 +115,57 @@ function setAllWageTable(obj) {
         table_tr.eq(i).addClass('hidden')
     }
 }
+/*
+单个修改工资单/
+ */
+function updateWage() {
+    var parent = $(this).parent().parent()
+    var id = parent.find('.salaryQuery-checkBox').attr('value')
+    var staffName = parent.find('.salaryQuery-staffName').text()
+    var staffId = parent.find('.salaryQuery-staffName').attr('value')
+    var department = parent.find('.salaryQuery-department').text()
+    var idCard = parent.find('.salaryQuery-idCard').text()
+    var bankCard = parent.find('.salaryQuery-bankCard').val()
+    var baseWage = parent.find('.salaryQuery-baseWage').val()
+    var projectWage = parent.find('.salaryQuery-projectWage').val()
+    var fullAttenBonus = parent.find('.salaryQuery-fullAttenBonus').val()
+    var bonus = parent.find('.salaryQuery-bonus').val()
+    var overtimeWage = parent.find('.salaryQuery-overtimeWage').val()
+    var boardWage = parent.find('.salaryQuery-boardWage').val()
+    var socialSecuritySubsidyWage = parent.find('.salaryQuery-socialSecuritySubsidyWage').val()
+    var foundation = parent.find('.salaryQuery-foundation').val()
+    var deductionWage = parent.find('.salaryQuery-deductionWage').val()
+    var workDays = parent.find('.salaryQuery-workDays').val()
+    var grossPay = parent.find('.salaryQuery-grossPay').val()
+    var realPay = parent.find('.salaryQuery-realPay').val()
 
+    var jsonArr = []
+    var json_ = {
+        'id': id,
+        'userId': staffId,
+        'userName': staffName,
+        'originalSpot': department
+    }
+    jsonArr.push(json_)
+    let myjson = JSON.stringify(jsonArr)
+    $.ajax({
+        url: ipPort + '/wageEntry/update',
+        contentType: 'application/json',
+        data: myjson,
+        dataType: 'json',
+        type: 'post',
+        success: function (obj) {
+            if(obj.code == 0){
+                alert('修改成功！')
+            }else {
+                alert(obj.message)
+            }
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+}
 /*
 打印薪资表/
  */

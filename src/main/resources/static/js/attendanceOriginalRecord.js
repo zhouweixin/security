@@ -6,12 +6,48 @@ $(document).ready(function () {
 获取全部记录/
  */
 function getAllWorkRecords() {
-    var page = currentPage
+    var page = 0
     var size = 10
     var sortFieldName = 'startTime'
-    var asc = 1
+    var asc = 0
     var urlStr = ipPort + '/workRecord/getByProjectAndDateAndNameLike?page='+ page + '&size=' + size + '&sortFieldName='
         + sortFieldName + '&asc=' + asc + '&date=2000-01-01'
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            console.log(obj)
+            if(obj.code == 0){
+                setAllWorkRecordsTable(obj)
+            }else{
+                console.log(obj)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+通过参数搜索记录/
+ */
+
+function getWorkRecordsByParameters() {
+    var project = $('#originalRecord-project').attr('value')
+    var date = $('#originalRecord-date').val()
+    if(date == '年/月/日'){
+        date = ''
+    }else{
+        date = date.replace(/\//g, '-')
+    }
+    var name = $('#originalRecord-name').val()
+    var page = 0
+    var size = 10
+    var sortFieldName = 'startTime'
+    var asc = 0
+    var urlStr = ipPort + '/workRecord/getByProjectAndDateAndNameLike?page='+ page + '&size=' + size + '&sortFieldName='
+        + sortFieldName + '&asc=' + asc + '&date=' + date + '&name=' + name + 'projectId=' + project
+    console.log(urlStr)
     $.ajax({
         url:urlStr,
         dataType:'json',
@@ -127,7 +163,7 @@ function previousPage() {
     var page = currentPage
     var size = 10
     var sortFieldName = 'startTime'
-    var asc = 1
+    var asc = 0
     var urlStr = ipPort + '/workRecord/getByProjectAndDateAndNameLike?page='+ page + '&size=' + size + '&sortFieldName='
         + sortFieldName + '&asc=' + asc + '&date=2000-01-01'
     $.ajax({
@@ -159,7 +195,7 @@ function nextPage() {
     var page = currentPage
     var size = 10
     var sortFieldName = 'startTime'
-    var asc = 1
+    var asc = 0
     var urlStr = ipPort + '/workRecord/getByProjectAndDateAndNameLike?page='+ page + '&size=' + size + '&sortFieldName='
         + sortFieldName + '&asc=' + asc + '&date=2000-01-01'
     $.ajax({
@@ -195,7 +231,7 @@ function skipPage() {
     var page = currentPage
     var size = 10
     var sortFieldName = 'startTime'
-    var asc = 1
+    var asc = 0
     var urlStr = ipPort + '/workRecord/getByProjectAndDateAndNameLike?page='+ page + '&size=' + size + '&sortFieldName='
         + sortFieldName + '&asc=' + asc + '&date=2000-01-01'
     $.ajax({

@@ -316,30 +316,53 @@ function getAllContractStatusName(contractStatus){
         }
     })
 }
- /*
- 获取所有项目状态名称/
-  */
- function getAllProjectStatusName(projectStatus){
-     $.ajax({
-         url:ipPort + '/projectStatus/getAll',
-         dataType:'json',
-         success:function (obj) {
-             for(var j = 0; j < projectStatus.length; j++){
-                 var a = projectStatus.eq(j).find('li a')
-                 for(var i = 1; i < obj.data.length + 1; i ++ ){
-                     a.eq(i).parent().removeClass('hidden')
-                     a.eq(i).text(obj.data[i - 1].name)
-                     a.eq(i).attr('value', obj.data[i - 1].id)
-                 }
-             }
-         },
-         error:function (error) {
-             console.log(error)
-         }
-     })
- } /*
- 获取所有离职类型名称/
-  */
+/*
+获取所有项目状态名称/
+ */
+function getAllProjectStatusName(projectStatus){
+    $.ajax({
+        url:ipPort + '/projectStatus/getAll',
+        dataType:'json',
+        success:function (obj) {
+            for(var j = 0; j < projectStatus.length; j++){
+                var a = projectStatus.eq(j).find('li a')
+                for(var i = 1; i < obj.data.length + 1; i ++ ){
+                    a.eq(i).parent().removeClass('hidden')
+                    a.eq(i).text(obj.data[i - 1].name)
+                    a.eq(i).attr('value', obj.data[i - 1].id)
+                }
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+获取所有项目名称/
+ */
+function getAllProjectName(project){
+    $.ajax({
+        url:ipPort + '/project/getAll',
+        dataType:'json',
+        success:function (obj) {
+            for(var j = 0; j < project.length; j++){
+                var a = project.eq(j).find('li a')
+                for(var i = 1; i < obj.data.length + 1; i ++ ){
+                    a.eq(i).parent().removeClass('hidden')
+                    a.eq(i).text(obj.data[i - 1].name)
+                    a.eq(i).attr('value', obj.data[i - 1].id)
+                }
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+获取所有离职类型名称/
+ */
  function getAllResignTypeName(resignType){
      $.ajax({
          url:ipPort + '/resignType/getAll',

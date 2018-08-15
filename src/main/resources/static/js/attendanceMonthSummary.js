@@ -4,13 +4,56 @@ $(document).ready(function () {
     var tbody_height = $('.right-panel').height() - 245
     tbody_height = tbody_height + 'px'
     $('#staffMonthSummaryTable').find('tbody').css('max-height',  tbody_height)
+
+
+    //设置选择月份为当天日期
+    var today_date = new Date().toLocaleDateString()
+    $('#staffMonthSummary-date').val(today_date.split('/')[0] + '/' + today_date.split('/')[1])
 })
 
 /*
 获取所有月统计信息/
  */
 function getAllMonthSummary() {
-    var urlStr = ipPort + '/workRecord/getByMonth?date=2000-01'
+    var date = $('#staffMonthSummary-date').val()
+    if(date == '年/月'){
+        date = '2000-01'
+    }else{
+        date = date.replace(/\//g, '-')
+    }
+    var urlStr = ipPort + '/workRecord/getByMonth?date=' + date
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            console.log(obj)
+            if(obj.code == 0){
+                setMonthSummaryTable(obj)
+            }else{
+                console.log(obj)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+通过参数搜索记录/
+ */
+
+function getMonthSummaryByParameters() {
+    var project = $('#staffMonthSummary-project').attr('value')
+    var date = $('#staffMonthSummary-date').val()
+    if(date == '年/月'){
+        date = '2000-01'
+    }else{
+        date = date.replace(/\//g, '-')
+    }
+    var name = $('#staffMonthSummary-name').val()
+
+    var urlStr = ipPort  + '/workRecord/getByMonth?date=' + date + '&name=' + name + '&projectId=' + project
+    console.log(urlStr)
     $.ajax({
         url:urlStr,
         dataType:'json',
@@ -32,12 +75,19 @@ function getAllMonthSummary() {
  */
 function setMonthSummaryTable(obj) {
     if(obj.data.length != 0){
+        var date = $('#staffMonthSummary-date').val()
+        if(date == '年/月'){
+            date = ''
+        }else{
+            date = date.replace(/\//g, '-')
+        }
         var parent = $('#staffMonthSummaryTable tbody')
+        parent.find('.table-tr').remove()
         for(var i = 0; i < obj.data.length; i++){
             var appendStr = "<tr class='table-tr' style='display: block;'>\n" +
                 "<td class='staffMonthSummary-staffName' style='display: block;width: 15%'>" + obj.data[i].userName + "</td>" +
                 "<td class='staffMonthSummary-staffID' style='display: block;width: 20%'>" + obj.data[i].userId + "</td>" +
-                "<td class='staffMonthSummary-month' style='display: block;width: 15%'>" + '' + "</td>" +
+                "<td class='staffMonthSummary-month' style='display: block;width: 15%'>" + date + "</td>" +
                 "<td class='staffMonthSummary-days' style='display: block;width: 10%'>" + obj.data[i].days + "</td>" +
                 "<td class='staffMonthSummary-sumDays' style='display: block;width: 10%'>" + obj.data[i].sumDays + "</td>" +
                 "<td class='staffMonthSummary-hours' style='display: block;width: 15%'>" + obj.data[i].hours + "</td>" +

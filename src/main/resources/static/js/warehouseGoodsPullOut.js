@@ -8,13 +8,13 @@ $(document).ready(function () {
     /*
     选择多个员工/
     */
-    $('.selectStaff-department-li img').on('click', function () {
-        if($(this).parent().find('.hidden').length == 0){
-            $(this).parent().find('.selectStaff-staff-ul').addClass('hidden')
-            $(this).parent().find('.departmentName-img').attr('src', 'imgs/addition.png')
-            $(this).parent().find('.selectAllDepartmentStaffs').empty()
-        }else{
-            $(this).parent().find('.selectStaff-staff-ul').removeClass('hidden')
+            $('.selectStaff-department-li img').on('click', function () {
+                if($(this).parent().find('.hidden').length == 0){
+                    $(this).parent().find('.selectStaff-staff-ul').addClass('hidden')
+                    $(this).parent().find('.departmentName-img').attr('src', 'imgs/addition.png')
+                    $(this).parent().find('.selectAllDepartmentStaffs').empty()
+                }else{
+                    $(this).parent().find('.selectStaff-staff-ul').removeClass('hidden')
             $(this).parent().find('.departmentName-img').attr('src', 'imgs/offline.png')
             $(this).parent().find('.selectAllDepartmentStaffs').append("全选<input type='checkbox'>")
         }
@@ -77,8 +77,8 @@ $(document).ready(function () {
      */
     $('.modal-searchInput input').on('input propertychange', function () {
         if($(this).val() == ''){
-            $('#form-selectStaff2').addClass('hidden')
-            $('#form-selectStaff1').removeClass('hidden')
+            $('#form-selectStaff1 .selectStaff-staff-ul2').addClass('hidden')
+            $('#form-selectStaff1 .selectStaff-department-ul').removeClass('hidden')
         }
     })
     /*
@@ -416,9 +416,9 @@ function searchByName_modal(thisObj) {
             url:ipPort + '/user/getByNameLike?name=' + name,
             dataType:'json',
             success:function (obj) {
-                $('#form-selectStaff1').addClass('hidden')
-                $('#form-selectStaff2').removeClass('hidden')
-                var staffUl = $('#form-selectStaff2').find('.selectStaff-staff-ul')
+                $('#form-selectStaff1 .selectStaff-department-ul').addClass('hidden')
+                $('#form-selectStaff1 .selectStaff-staff-ul2').removeClass('hidden')
+                var staffUl = $('#form-selectStaff1').find('.selectStaff-staff-ul2')
                 staffUl.find('li').remove()
                 for(var i = 0; i < obj.data.length; i++){
                     var appendStr = '<li onclick="selectedStaff(this)"><img src="imgs/mine.png" height="20px" style="margin-top: -2px"><span ' + 'value="' + obj.data[i].id + '">' + obj.data[i].name + '</span></li>'
