@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta userName="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>徐州精诚特卫保安服务有限公司</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -11,6 +11,7 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/attendanceDailyStatistics.css" rel="stylesheet">
 
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=7scToNnXDjo5stP1HctvVwAGkED76OPw"></script>
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap-datetimepicker.js" ></script>
@@ -110,7 +111,7 @@
             </li>
             <li class="left-nav-menu-li">
                 <a class="menu-link">
-                    <img src="imgs/brush_fill.png">
+                    <img src="imgs/kaoqin_fill.png">
                     <div>考勤统计    <span class="glyphicon glyphicon-triangle-bottom"></span></div>
                 </a>
                 <ul class="sub-menu">
@@ -138,7 +139,7 @@
             </li>
             <li class="left-nav-menu-li">
                 <a class="menu-link">
-                    <img src="imgs/brush.png">
+                    <img src="imgs/coupons.png">
                     <div>薪资管理    <span class="glyphicon glyphicon-triangle-right"></span></div>
                 </a>
                 <ul class="sub-menu none">
@@ -168,12 +169,57 @@
                 <div class="search-content" style="height: 34px;">
                     <div class="search-left">
                         <div class="dropdown select-department">
-                            <button class="btn btn-default dropdown-toggle" type="button" value="" id="dailyStatistics-department" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                选择部门
+                            <button class="btn btn-default dropdown-toggle" type="button" value="" id="dailyStatistics-project" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                选择项目
                                 <span class="caret"></span>
                             </button>
-                            <ul class="dropdown-menu dailyStatistics-department-ul" aria-labelledby="dailyStatistics-department">
-                                <li ><a value="">选择部门</a></li>
+                            <ul class="dropdown-menu dropdown-menu-project" aria-labelledby="dailyStatistics-department">
+                                <li ><a value="">选择项目</a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
                                 <li class="hidden"><a></a></li>
                                 <li class="hidden"><a></a></li>
                                 <li class="hidden"><a></a></li>
@@ -185,11 +231,7 @@
                                 <li class="hidden"><a></a></li>
                             </ul>
                         </div>
-                        <!--<div style="display: inline-block;float: left;margin-right: 5px; margin-left: 5px"class="input-group">
-                            <label for="dailyStatistics-date" style="font-weight: normal">选择日期：</label>
-                            <input id="dailyStatistics-date" class="select-date" type="date">
-                        </div>-->
-                        <div style="width:auto;height:34px;line-height:34px;float:left"><sapn>选择日期：</sapn></div>
+                        <div style="width:auto;height:34px;line-height:34px;float:left;margin-left: 5px;"><sapn>选择日期：</sapn></div>
                         <div style="display: inline-block;width:200px;float: left;margin-right: 5px; margin-left: 5px">
                             <div class="input-group date to_date">
                                 <input id="dailyStatistics-date" class="form-control" type="text" value="年/月/日">
@@ -198,10 +240,10 @@
                         </div>
 
                         <div class="input-group" style="width: 350px">
-                            <input type="text" id="dailyStatistics-userName" class="form-control" placeholder="按姓名搜索">
+                            <input type="text" id="dailyStatistics-name" class="form-control" placeholder="按姓名搜索">
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" onclick="getInformationByParameters()">搜索</button>
-                                <button class="btn btn-default" type="button" onclick="getAllContractInformation()">搜索全部</button>
+                                <button class="btn btn-default" type="button" onclick="getWorkRecordsByParameters()">搜索</button>
+                                <button class="btn btn-default" type="button" onclick="getAllWorkRecords()">搜索全部</button>
                             </span>
                         </div>
                     </div>
@@ -217,6 +259,7 @@
                         <th>姓名</th>
                         <th>工号</th>
                         <th>部门</th>
+                        <th>项目</th>
                         <th>日期</th>
                         <th>上班打卡时间</th>
                         <th>下班打卡时间</th>
@@ -225,45 +268,115 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="table-tr">
-                        <td class="dailyStatistics-staffName">张三</td>
-                        <td class="dailyStatistics-staffID">yx00001</td>
-                        <td class="dailyStatistics-staffDepartment">营销部</td>
-                        <td class="dailyStatistics-attendanceDate">2018-06-29</td>
-                        <td class="dailyStatistics-startPunchTime">08:00:00</td>
-                        <td class="dailyStatistics-endPunchTime">17:00:00</td>
-                        <td class="dailyStatistics-validWorkTime">8</td>
-                        <td class="dailyStatistics-punchAddress">安徽省合肥市蜀山区金寨路88号</td>
+                    <tr class="table-tr hidden">
+                        <td class="dailyStatistics-staffName"></td>
+                        <td class="dailyStatistics-staffID"></td>
+                        <td class="dailyStatistics-staffDepartment"></td>
+                        <td class="dailyStatistics-project"></td>
+                        <td class="dailyStatistics-attendanceDate"></td>
+                        <td class="dailyStatistics-startPunchTime"></td>
+                        <td class="dailyStatistics-endPunchTime"></td>
+                        <td class="dailyStatistics-validWorkTime"></td>
+                        <td class="dailyStatistics-punchAddress"></td>
                     </tr>
-                    <tr class="table-tr">
-                        <td class="dailyStatistics-staffName">王五</td>
-                        <td class="dailyStatistics-staffID">dk00001</td>
-                        <td class="dailyStatistics-staffDepartment">行政部</td>
-                        <td class="dailyStatistics-attendanceDate">2018-06-29</td>
-                        <td class="dailyStatistics-startPunchTime">08:00:00</td>
-                        <td class="dailyStatistics-endPunchTime">17:00:00</td>
-                        <td class="dailyStatistics-validWorkTime">8</td>
-                        <td class="dailyStatistics-punchAddress">安徽省合肥市蜀山区金寨路88号</td>
+                    <tr class="table-tr hidden">
+                        <td class="dailyStatistics-staffName"></td>
+                        <td class="dailyStatistics-staffID"></td>
+                        <td class="dailyStatistics-staffDepartment"></td>
+                        <td class="dailyStatistics-project"></td>
+                        <td class="dailyStatistics-attendanceDate"></td>
+                        <td class="dailyStatistics-startPunchTime"></td>
+                        <td class="dailyStatistics-endPunchTime"></td>
+                        <td class="dailyStatistics-validWorkTime"></td>
+                        <td class="dailyStatistics-punchAddress"></td>
                     </tr>
-                    <tr class="table-tr">
-                        <td class="dailyStatistics-staffName">李四</td>
-                        <td class="dailyStatistics-staffID">cw00001</td>
-                        <td class="dailyStatistics-staffDepartment">财务部</td>
-                        <td class="dailyStatistics-attendanceDate">2018-06-29</td>
-                        <td class="dailyStatistics-startPunchTime">08:00:00</td>
-                        <td class="dailyStatistics-endPunchTime">17:00:00</td>
-                        <td class="dailyStatistics-validWorkTime">8</td>
-                        <td class="dailyStatistics-punchAddress">安徽省合肥市蜀山区金寨路88号</td>
+                    <tr class="table-tr hidden">
+                        <td class="dailyStatistics-staffName"></td>
+                        <td class="dailyStatistics-staffID"></td>
+                        <td class="dailyStatistics-staffDepartment"></td>
+                        <td class="dailyStatistics-project"></td>
+                        <td class="dailyStatistics-attendanceDate"></td>
+                        <td class="dailyStatistics-startPunchTime"></td>
+                        <td class="dailyStatistics-endPunchTime"></td>
+                        <td class="dailyStatistics-validWorkTime"></td>
+                        <td class="dailyStatistics-punchAddress"></td>
                     </tr>
-                    <tr class="table-tr">
-                        <td class="dailyStatistics-staffName">曹六</td>
-                        <td class="dailyStatistics-staffID">yx00002</td>
-                        <td class="dailyStatistics-staffDepartment">营销部</td>
-                        <td class="dailyStatistics-attendanceDate">2018-06-29</td>
-                        <td class="dailyStatistics-startPunchTime">08:00:00</td>
-                        <td class="dailyStatistics-endPunchTime">17:00:00</td>
-                        <td class="dailyStatistics-validWorkTime">8</td>
-                        <td class="dailyStatistics-punchAddress">安徽省合肥市蜀山区金寨路88号</td>
+                    <tr class="table-tr hidden">
+                        <td class="dailyStatistics-staffName"></td>
+                        <td class="dailyStatistics-staffID"></td>
+                        <td class="dailyStatistics-staffDepartment"></td>
+                        <td class="dailyStatistics-project"></td>
+                        <td class="dailyStatistics-attendanceDate"></td>
+                        <td class="dailyStatistics-startPunchTime"></td>
+                        <td class="dailyStatistics-endPunchTime"></td>
+                        <td class="dailyStatistics-validWorkTime"></td>
+                        <td class="dailyStatistics-punchAddress"></td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="dailyStatistics-staffName"></td>
+                        <td class="dailyStatistics-staffID"></td>
+                        <td class="dailyStatistics-staffDepartment"></td>
+                        <td class="dailyStatistics-project"></td>
+                        <td class="dailyStatistics-attendanceDate"></td>
+                        <td class="dailyStatistics-startPunchTime"></td>
+                        <td class="dailyStatistics-endPunchTime"></td>
+                        <td class="dailyStatistics-validWorkTime"></td>
+                        <td class="dailyStatistics-punchAddress"></td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="dailyStatistics-staffName"></td>
+                        <td class="dailyStatistics-staffID"></td>
+                        <td class="dailyStatistics-staffDepartment"></td>
+                        <td class="dailyStatistics-project"></td>
+                        <td class="dailyStatistics-attendanceDate"></td>
+                        <td class="dailyStatistics-startPunchTime"></td>
+                        <td class="dailyStatistics-endPunchTime"></td>
+                        <td class="dailyStatistics-validWorkTime"></td>
+                        <td class="dailyStatistics-punchAddress"></td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="dailyStatistics-staffName"></td>
+                        <td class="dailyStatistics-staffID"></td>
+                        <td class="dailyStatistics-staffDepartment"></td>
+                        <td class="dailyStatistics-project"></td>
+                        <td class="dailyStatistics-attendanceDate"></td>
+                        <td class="dailyStatistics-startPunchTime"></td>
+                        <td class="dailyStatistics-endPunchTime"></td>
+                        <td class="dailyStatistics-validWorkTime"></td>
+                        <td class="dailyStatistics-punchAddress"></td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="dailyStatistics-staffName"></td>
+                        <td class="dailyStatistics-staffID"></td>
+                        <td class="dailyStatistics-staffDepartment"></td>
+                        <td class="dailyStatistics-project"></td>
+                        <td class="dailyStatistics-attendanceDate"></td>
+                        <td class="dailyStatistics-startPunchTime"></td>
+                        <td class="dailyStatistics-endPunchTime"></td>
+                        <td class="dailyStatistics-validWorkTime"></td>
+                        <td class="dailyStatistics-punchAddress"></td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="dailyStatistics-staffName"></td>
+                        <td class="dailyStatistics-staffID"></td>
+                        <td class="dailyStatistics-staffDepartment"></td>
+                        <td class="dailyStatistics-project"></td>
+                        <td class="dailyStatistics-attendanceDate"></td>
+                        <td class="dailyStatistics-startPunchTime"></td>
+                        <td class="dailyStatistics-endPunchTime"></td>
+                        <td class="dailyStatistics-validWorkTime"></td>
+                        <td class="dailyStatistics-punchAddress"></td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="dailyStatistics-staffName"></td>
+                        <td class="dailyStatistics-staffID"></td>
+                        <td class="dailyStatistics-staffDepartment"></td>
+                        <td class="dailyStatistics-project"></td>
+                        <td class="dailyStatistics-attendanceDate"></td>
+                        <td class="dailyStatistics-startPunchTime"></td>
+                        <td class="dailyStatistics-endPunchTime"></td>
+                        <td class="dailyStatistics-validWorkTime"></td>
+                        <td class="dailyStatistics-punchAddress"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -272,15 +385,15 @@
                 <ul class="page-ul">
                     <li class="page-ul-li">
                         <div class="input-group" style="width: 110px">
-                            <input type="text" class="form-control" placeholder="">
+                            <input type="text" class="form-control skipPage" placeholder="">
                             <span class="input-group-btn">
-                                <button id="jump-button" class="btn btn-default" type="button">跳转</button>
-                             </span>
+                                  <button id="jump-button" class="btn btn-default" type="button" onclick="skipPage()">跳转</button>
+                               </span>
                         </div>
                     </li>
-                    <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-left"></span></a></li>
-                    <li class="page-ul-li" style="margin-top: 8px"><span>1/255</span></li>
-                    <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-right"></span></a></li>
+                    <li class="page-ul-li"><a class="btn btn-default page-button" onclick="nextPage()"><span class="caret caret-left"></span></a></li>
+                    <li class="page-ul-li" style="margin-top: 8px"><span class="currentPage"></span>/<span class="totalPage"></span></li>
+                    <li class="page-ul-li"><a class="btn btn-default page-button" onclick="previousPage()"><span class="caret caret-right"></span></a></li>
                 </ul>
             </div>
         </div>
@@ -296,7 +409,7 @@
 <!--<head>-->
     <!--<meta charset="UTF-8">-->
     <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
-    <!--<meta userName="viewport" content="width=device-width, initial-scale=1">-->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
     <!--<title>徐州精诚特卫保安服务有限公司</title>-->
 
     <!--<link href="css/bootstrap.min.css" rel="stylesheet">-->
@@ -383,9 +496,9 @@
                     <!--format = function(s, c) {-->
                         <!--return s.replace(/{(\w+)}/g,-->
                                 <!--function(m, p) { return c[p]; }) }-->
-            <!--return function(table, userName) {-->
+            <!--return function(table, name) {-->
                 <!--if (!table.nodeType) table = document.getElementById(table)-->
-                <!--var ctx = {worksheet: userName || 'Worksheet', table: table.innerHTML}-->
+                <!--var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}-->
                 <!--window.location.href = uri + base64(format(template, ctx))-->
             <!--}-->
         <!--})()-->

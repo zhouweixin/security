@@ -1,4 +1,4 @@
-select-box.nav-path{
+.nav-path{
     font-size: 16px;
     padding: 18px 16px 14px 16px;
     border-bottom: 1px solid #DCDDDE;
@@ -210,4 +210,61 @@ a.page-button{
 }
 .to_date span{
     color:#555;
+}
+.selectDepartment-ul li{
+    font-size: 16px;
+    margin-left: 22px;
+    margin-top: 2px;
+    color: #4EB1E4;
+    width: 60%;
+}
+.selectDepartment-ul li:hover{
+    cursor: pointer;
+    font-size: 18px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
+}
+.departmentName-span{
+    font-size: 16px;
+}
+.selectStaff-staff-ul li{
+    margin-left: 22px;
+    margin-top: 2px;
+    color: #4EB1E4;
+    width: 60%;
+}
+.departmentName-span:hover{
+    color: #7D7D7D;
+}
+.selectStaff-staff-ul2 li{
+    font-size: 16px;
+    margin-left: 22px;
+    margin-top: 2px;
+    color: #4EB1E4;
+    width: 60%;
+}
+.selectStaff-staff-ul2 li:hover{
+    cursor: pointer;
+    font-size: 18px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
+}
+.selectedStaff-staff-ul{
+    margin-top: 10px;
+    color: #4EB1E4;
+}
+.selectStaff-staff-ul li:hover{
+    font-size: 16px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
+}
+.selectedStaff-staff-ul li{
+    margin-top: 2px;
+    width: 80%;
+}
+.selectedStaff-staff-ul li:hover{
+    cursor: pointer;
+    font-size: 16px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
 }

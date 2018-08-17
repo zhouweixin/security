@@ -278,6 +278,40 @@ $(document).ready(function () {
     $('input[class=socialSecurityContractFile]').change(function() {
         $(this).parent().find('.input-append input').val($(this).val())
     });
+    /*
+    选择多个员工/
+    */
+    $('.selectStaff-department-li img').on('click', function () {
+        if($(this).parent().find('.hidden').length == 0){
+            $(this).parent().find('.selectStaff-staff-ul').addClass('hidden')
+            $(this).parent().find('.departmentName-img').attr('src', 'imgs/addition.png')
+            $(this).parent().find('.selectAllDepartmentStaffs').empty()
+        }else{
+            $(this).parent().find('.selectStaff-staff-ul').removeClass('hidden')
+            $(this).parent().find('.departmentName-img').attr('src', 'imgs/offline.png')
+            $(this).parent().find('.selectAllDepartmentStaffs').append("全选<input type='checkbox'>")
+        }
+    })
+    $('.selectStaff-department-li .departmentName-span').on('click', function () {
+        if($(this).parent().find('.hidden').length == 0){
+            $(this).parent().find('.selectStaff-staff-ul').addClass('hidden')
+            $(this).parent().find('.departmentName-img').attr('src', 'imgs/addition.png')
+            $(this).parent().find('.selectAllDepartmentStaffs').empty()
+        }else{
+            $(this).parent().find('.selectStaff-staff-ul').removeClass('hidden')
+            $(this).parent().find('.departmentName-img').attr('src', 'imgs/offline.png')
+            $(this).parent().find('.selectAllDepartmentStaffs').append("全选<input type='checkbox'>")
+        }
+    })
+    /*
+   按姓名搜索modal/
+    */
+    $('.modal-searchInput input').on('input propertychange', function () {
+        if($(this).val() == ''){
+            $('#form-selectStaff1 .selectStaff-staff-ul2').addClass('hidden')
+            $('#form-selectStaff1 .selectStaff-department-ul').removeClass('hidden')
+        }
+    })
 
 })
 
@@ -287,6 +321,8 @@ $(document).ready(function () {
 function addStaff() {
     var staffName = $('#modal-addStaffName').val()
     var staffSex = $('#modal-addStaffSex').attr('value')
+    var bornDate = new Date(($('#modal-addStaffBornDate').val()))
+    bornDate = (bornDate.toLocaleDateString()).replace(/\//g, '-')
     var IcID = $('#modal-addStaffICNumber').val()
     var department = $('#modal-addStaffDepartment').attr('value')
     var weChat = $('#modal-addStaffWeChat').val()
@@ -303,12 +339,18 @@ function addStaff() {
     }else {
         period = ""
     }
+    var bankCardNum = $('#modal-addStaffBankCardNum').val()
+    var baseWage = $('#modal-addStaffBaseWage').val()
+    var foundation = $('#modal-addStaffFoundation').val()
+    var socialSecuritySubsidyWage = $('#modal-addStaffSocialSecuritySubsidyWage').val()
     if(!staffName || !phoneNumber){
         alert('姓名或者联系方式不能为空！')
         return
     }else {
         var urlStr = ipPort + '/user/add?name=' + staffName + '&sex=' + staffSex + '&ic=' + IcID + '&wechat=' + weChat + '&contact=' + phoneNumber
             + '&department=' + department + '&role=' + position + '&jobNature=' + jobNature + '&employDate=' + joinDate + '&practiceEndDate=' + period
+        + '&bornDate=' + bornDate + '&bankCardNum=' + bankCardNum + '&baseWage=' + baseWage + '&foundation=' + foundation
+            + '&socialSecuritySubsidyWage=' + socialSecuritySubsidyWage
         $.ajax({
             url:urlStr,
             dataType:'json',
@@ -691,6 +733,15 @@ function setDetailsStaffInformationColumn(obj) {
             $('#staffInformation-sex').attr('value', '')
         }
 
+        var bornDateSplit = obj.data.bornDate
+        if(bornDateSplit){
+            var bornDate = new Date()
+            bornDate.setFullYear(bornDateSplit.split('-')[0], bornDateSplit.split('-')[1] - 1, bornDateSplit.split('-')[2])
+            $('#staffInformation-bornDate').val(bornDate.toLocaleDateString())
+        }else{
+            $('#staffInformation-bornDate').val('')
+        }
+
         var staffInformationCycleA = $('#staffInformation-cycle').parent().find('ul').find('li a')
         if(obj.data.period == null){
             $('#staffInformation-cycle').html(staffInformationCycleA.eq(0).text() + "<span class='caret'></span>")
@@ -753,6 +804,11 @@ function setDetailsStaffInformationColumn(obj) {
         }else{
             $('#staffInformation-resignDate').val('')
         }
+
+        $('#staffInformation-bankCardNum').val(obj.data.bankCardNum)
+        $('#staffInformation-baseWage').val(obj.data.baseWage)
+        $('#staffInformation-foundation').val(obj.data.foundation)
+        $('#staffInformation-socialSecuritySubsidyWage').val(obj.data.socialSecuritySubsidyWage)
     }
 }
 /*
@@ -986,6 +1042,8 @@ function setDetailsContractInformationColumn(obj) {
             $('#businessInsuranceContent').val(obj.data.content[i].content)
             //加载扫描件
             if(obj.data.content[i].scanningCopy){
+                $('#businessInsurance-panel .scanningCopyImg').remove()
+                $('#businessInsurance-panel .scanningCopyDiv').remove()
                 $('#businessInsuranceScanningCopy').attr('value', obj.data.content[i].scanningCopy)
                 var affterStr = "<img class='col-xs-6 col-xs-pull-3 scanningCopyImg' height=300 style='display:none'>"+
                     "<div class='col-xs-6 col-xs-pull-3 scanningCopyDiv' style='height:300px;color: #006dcc;text-align: center;'>正在加载扫描件...</div>"
@@ -1026,6 +1084,8 @@ function setDetailsContractInformationColumn(obj) {
             $('#socialSecurityContractContent').val(obj.data.content[i].content)
             //加载扫描件
             if(obj.data.content[i].scanningCopy){
+                $('#socialSecurityContract-panel .scanningCopyImg').remove()
+                $('#socialSecurityContract-panel .scanningCopyDiv').remove()
                 $('#socialSecurityContractScanningCopy').attr('value', obj.data.content[i].scanningCopy)
                 var affterStr = "<img class='col-xs-6 col-xs-pull-3 scanningCopyImg' height=300 style='display:none'>"+
                     "<div class='col-xs-6 col-xs-pull-3 scanningCopyDiv' style='height:300px;color: #006dcc;text-align: center;'>正在加载扫描件...</div>"
@@ -1430,6 +1490,13 @@ function updateStaffInformation() {
     var staffID = $('#staffInformation-id').val()
     var staffName = $('#staffInformation-name').val()
     var staffSex = $('#staffInformation-sex').attr('value')
+    var bornDate = $('#staffInformation-bornDate').val()
+    if(bornDate){
+        bornDate = new Date(bornDate)
+        bornDate = (bornDate.toLocaleDateString()).replace(/\//g, '-')
+    }else{
+        bornDate = ''
+    }
     var IcID = $('#staffInformation-icID').val()
     var department = $('#staffInformation-department').attr('value')
     var weChat = $('#staffInformation-weChat').val()
@@ -1454,13 +1521,18 @@ function updateStaffInformation() {
     }else{
         resignDate = ''
     }
-
+    var bankCardNum = $('#staffInformation-bankCardNum').val()
+    var baseWage = $('#staffInformation-baseWage').val()
+    var foundation = $('#staffInformation-foundation').val()
+    var socialSecuritySubsidyWage = $('#staffInformation-socialSecuritySubsidyWage').val()
     if(!staffName || !phoneNumber){
         alert('姓名或者联系方式不能为空！')
         return
     }else {
         var urlStr = ipPort + '/user/update?name=' + staffName + '&id=' + staffID + '&sex=' + staffSex + '&ic=' + IcID + '&wechat=' + weChat + '&contact=' + phoneNumber
             + '&department=' + department + '&role=' + position + '&jobNature=' + jobNature + '&employDate=' + joinDate + '&practiceEndDate=' + period + '&resignDate= ' + resignDate + '&resignType=' + resignType
+            + '&bornDate=' + bornDate + '&bankCardNum=' + bankCardNum + '&baseWage=' + baseWage + '&foundation=' + foundation
+            + '&socialSecuritySubsidyWage=' + socialSecuritySubsidyWage
         $.ajax({
             url:urlStr,
             dataType:'json',
@@ -1476,6 +1548,54 @@ function updateStaffInformation() {
             }
         })
     }
+}
+/*
+设置批量修改基本工资modal/
+ */
+function setUpdateBaseAndSocialSecurityAndFoundationBatchModal() {
+    getAllStaff_multi()
+    $('#updateBaseWageBatch-baseWage').val('')
+    $('#updateBaseWageBatch-foundation').val('')
+    $('#updateBaseWageBatch-socialSecuritySubsidyWage').val('')
+    $('#myModal-updateBaseWageBatch').modal('toggle')
+}
+/*
+批量修改基本工资等/
+ */
+function updateBaseAndSocialSecurityAndFoundationBatch() {
+    var baseWage = $('#updateBaseWageBatch-baseWage').val()
+    if(!baseWage){
+        baseWage = 0
+    }
+    var foundation = $('#updateBaseWageBatch-foundation').val()
+    if(!foundation){
+        foundation = 0
+    }
+    var socialSecuritySubsidyWage = $('#updateBaseWageBatch-socialSecuritySubsidyWage').val()
+    if(!socialSecuritySubsidyWage){
+        socialSecuritySubsidyWage = 0
+    }
+    var selectedStaff_span = $('.selectedStaff-span')
+    var strID = []
+    for(var i = 0; i < selectedStaff_span.length; i++){
+        strID.push(selectedStaff_span.eq(i).attr('value'))
+    }
+    var urlStr = ipPort + '/user/updateBaseAndSocialSecurityAndFoundationBatch?userIds=' + strID + '&base=' + baseWage
+        + '&socialSecurity=' + socialSecuritySubsidyWage + '&foundation=' + foundation
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                alert(obj.message)
+            }else{
+                alert(obj.message)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
 }
 /*
 详细信息页面保存档案信息/
@@ -2161,6 +2281,109 @@ function changeMonth(period, number) {
     period.setMonth(month + parseInt(number))
     return period
 }
+/****************************************************************/
+/*
+获取所有员工姓名/
+ */
+function getAllStaff_multi() {
+    $('.selectAllDepartmentStaffs input').prop('checked',false)
+    var staffInformationDepartmentA = $('.selectStaff-department-ul .selectStaff-department-li .departmentName-span')
+    $.ajax({
+        url:ipPort + '/department/getAll',
+        dataType:'json',
+        success:function (obj) {
+            $('.selectedStaff-staff-ul').find('li').remove()
+            for(var i = 0; i < obj.data.length; i++){
+                staffInformationDepartmentA.eq(i).parent().removeClass('hidden')
+                staffInformationDepartmentA.eq(i).text(obj.data[i].name)
+                staffInformationDepartmentA.eq(i).attr('value', obj.data[i].id)
+                staffInformationDepartmentA.eq(i).parent().find('li').remove()
+            }
+            $.ajax({
+                url:ipPort + '/user/getAll',
+                dataType:'json',
+                success:function (obj_) {
+                    if(obj_.data.length != 0){
+                        for(var j = 0; j < obj_.data.length; j++){
+                            for(var m = 0; m < obj.data.length; m++){
+                                if(obj_.data[j].department.id == obj.data[m].id){
+                                    var staffUl = staffInformationDepartmentA.eq(m).parent().find('.selectStaff-staff-ul')
+                                    var appendStr = '<li onclick="selectedStaff(this)"><img src="imgs/mine.png" height="20px" style="margin-top: -2px"><span ' + 'value="' + obj_.data[j].id + '">' + obj_.data[j].name + '</span></li>'
+                                    staffUl.append(appendStr)
+                                    break
+                                }
+                            }
+                        }
+                    }
+                },
+                error:function (error) {
+                    console.log(error)
+                }
+            })
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+选区人员/
+ */
+function selectedStaff(thisObj) {
+    var selectedStaffUl = $('#form-selectStaff1 .selectedStaff-staff-ul')
+    var appendStr = '<li><img src="imgs/mine.png" height="20px" style="margin-top: -2px"><span class="selectedStaff-span" ' + 'value="' + $(thisObj).find("span").attr("value") + '">' + $(thisObj).find("span").text() + '</span><span class="cancel-span" onclick="cancelSelectStaff(this)" aria-hidden="true" style="display: block; float: right">&times;</span></li>'
+    selectedStaffUl.append(appendStr)
+}
+/*
+取消选区/
+ */
+function cancelSelectStaff(thisObj) {
+    $(thisObj).parent().remove()
+}
+/*
+选定人员/
+ */
+function selectedPeople() {
+    var selectedStaff_span = $('.selectedStaff-span')
+    var strID = ''
+    var strName = ''
+    for(var i = 0; i < selectedStaff_span.length; i++){
+        strID = strID + selectedStaff_span.eq(i).attr('value')
+        strName = strName + selectedStaff_span.eq(i).text()
+        if(i != selectedStaff_span.length - 1){
+            strID = strID + '_'
+            strName = strName + '、'
+        }
+    }
+    $('#goOutPanel-staffNames').attr('value', strID)
+    $('#goOutPanel-staffNames').val(strName)
+}
+/*
+通过姓名搜索/
+ */
+function searchByName_modal(thisObj) {
+    var name = $(thisObj).parent().find('input').val()
+    if(name != ''){
+        $.ajax({
+            url:ipPort + '/user/getByNameLike?name=' + name,
+            dataType:'json',
+            success:function (obj) {
+                $('#form-selectStaff1 .selectStaff-department-ul').addClass('hidden')
+                $('#form-selectStaff1 .selectStaff-staff-ul2').removeClass('hidden')
+                var staffUl = $('#form-selectStaff1').find('.selectStaff-staff-ul2')
+                staffUl.find('li').remove()
+                for(var i = 0; i < obj.data.length; i++){
+                    var appendStr = '<li onclick="selectedStaff(this)"><img src="imgs/mine.png" height="20px" style="margin-top: -2px"><span ' + 'value="' + obj.data[i].id + '">' + obj.data[i].name + '</span></li>'
+                    staffUl.append(appendStr)
+                }
+            },
+            error:function (error) {
+                console.log(error)
+            }
+        })
+    }
+}
+/**********************************************************888/
 /*
 上一页/
  */

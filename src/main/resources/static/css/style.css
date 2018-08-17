@@ -279,3 +279,7 @@ textarea{
 .input-group-addon{
     border: 1px solid #e8e9ea;
 }
+.dropdown-menu{
+    max-height: 300px;
+    overflow-y: auto
+}

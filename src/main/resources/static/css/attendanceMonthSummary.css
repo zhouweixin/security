@@ -109,3 +109,13 @@ input.selectLateType-box{
     left: 0px;
     top: 0px;
 }
+#staffMonthSummaryTable thead tr th{
+    display: block;
+    float: left;
+    background-color: #F9FAFB;
+}
+#staffMonthSummaryTable tbody tr td{
+    display: block;
+    float: left;
+    height: 37px;
+}
