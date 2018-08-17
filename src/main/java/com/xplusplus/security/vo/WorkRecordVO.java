@@ -21,6 +21,9 @@ import java.util.List;
  */
 @ApiModel(value = "工作记录")
 public class WorkRecordVO {
+    // 工作记录主键
+    @ApiModelProperty("工作记录主键")
+    private Long workRecordId;
     // 员工工号
     @ApiModelProperty("用户工号")
     private String userId;
@@ -47,6 +50,7 @@ public class WorkRecordVO {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
+        this.workRecordId = workRecord.getId();
         this.userId = workRecord.getUser().getId();
         this.userName = workRecord.getUser().getName();
         if(workRecord.getStartTime() != null) {
@@ -104,5 +108,13 @@ public class WorkRecordVO {
             workRecordVOS.add(new WorkRecordVO(workRecord));
         }
         return workRecordVOS;
+    }
+
+    public Long getWorkRecordId() {
+        return workRecordId;
+    }
+
+    public void setWorkRecordId(Long workRecordId) {
+        this.workRecordId = workRecordId;
     }
 }
