@@ -14,6 +14,9 @@ import java.util.*;
  */
 @ApiModel(value = "工作记录")
 public class WorkRecordMonthVO {
+    // 工作记录主键
+    @ApiModelProperty("工作记录主键")
+    private Long workRecordId;
     @ApiModelProperty("用户工号")
     private String userId = "";
     @ApiModelProperty("员工名")
@@ -99,6 +102,7 @@ public class WorkRecordMonthVO {
 
             if (!userId2workRecordMonthVOs.containsKey(userId)) {
                 WorkRecordMonthVO vo = new WorkRecordMonthVO(sumDays);
+                vo.setWorkRecordId(workRecord.getId());
                 vo.setUserId(userId);
                 vo.setUserName(workRecord.getUser().getName());
                 userId2workRecordMonthVOs.put(userId, vo);
@@ -137,5 +141,13 @@ public class WorkRecordMonthVO {
 
     public void setSumDays(int sumDays) {
         this.sumDays = sumDays;
+    }
+
+    public Long getWorkRecordId() {
+        return workRecordId;
+    }
+
+    public void setWorkRecordId(Long workRecordId) {
+        this.workRecordId = workRecordId;
     }
 }

@@ -1,7 +1,6 @@
 package com.xplusplus.security.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.xplusplus.security.vo.WorkRecordMonthVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -364,7 +363,9 @@ public class WageEntry {
     }
 
     /**
-     * 计算应得工资:  应得工资=(基本工资+全勤+补助) * 工作天数 / 当月总天数 + 奖金
+     * 计算应得工资:
+     *      应得工资=(基本工资 + 全勤 + 固定加班费 + 社保补助) * 工作天数 / 当月总天数 + 奖金 + 加班费 + 延时加班费 + 顶岗加班费 + 伙食费 + 项目工资
+     *      实得工资=应得工资 - 应扣款项 - 基金 - 个税
      */
     public void computePay() {
         grossPay = (baseWage + fullAttenBonus + fixedOvertimeWage + socialSecuritySubsidyWage) * workDays / sumDays + bonus + overtimeWage + topSpotWage + delayWage + boardWage + projectWage;
