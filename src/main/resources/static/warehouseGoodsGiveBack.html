@@ -39,7 +39,7 @@
                 <li><a href="attendanceHomePage.html">考勤</a></li>
                 <li><a href="salaryManagement.html">薪酬</a></li>
                 <li><a href="processManagement.html">流程</a></li>
-                <li class="active"><a href="warehouseCheck.html">仓库</a></li>
+                <li class="active"><a href="warehouseCheck.html">采购管理</a></li>
                 <li><a href="ManageDepartment.html">管理</a></li>
             </ul>
         </div>
@@ -52,13 +52,13 @@
                 <img class="userImg" src="imgs/user.png">
             </div>
             <div class="userTitle">
-                <p>超级管理员</p>
+                <p>超级管理员</p><span class="glyphicon glyphicon-log-out" data-toggle="tooltip" data-placement="top" title="注销" aria-hidden="true"></span>
             </div>
         </div>
         <ul class="left-nav-menu">
             <li class="left-nav-menu-li">
                 <a href="warehouseCheck.html" class="menu-link">
-                    <img src="imgs/coupons.png">
+                    <img src="imgs/warehouse.png">
                     <div>库存盘点</div>
                 </a>
             </li>
@@ -111,7 +111,239 @@
             </li>
         </ul>
     </div>
+    <!------------------物品用户关系表panel-------------------->
     <div class="right-panel">
+        <div class="nav-path">
+            <div class="path-title">
+                <ul class="path-ul">
+                    <li>物品归还</li>
+                </ul>
+            </div>
+        </div>
+        <div class="main-body-content">
+
+            <div class="top-body" style="margin-top: 30px">
+                <div class="search-content" style="height: 34px;">
+                    <div class="search-left">
+                        <div class="dropdown col-xs-2 select-department" style="padding: 0">
+                            <button class="btn btn-default dropdown-toggle" type="button" value='' id="selectStatus-dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                选择状态
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu selectStatus-dropdownMenu-ul" aria-labelledby="selectStatus-dropdownMenu">
+                                <li><a value="">选择状态</a></li>
+                                <li><a value="0">未归还</a></li>
+                                <li><a value="1">已归还</a></li>
+                                <li><a value="2">无需归还</a></li>
+                            </ul>
+                        </div>
+                        <div class="input-group col-xs-4">
+                            <input id="applyStaffId-input" type="text" class="form-control" placeholder="归还人编号">
+                            <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" onclick="searchByParas()">搜索</button>
+                        <button class="btn btn-default" type="button" onclick="getAllMaterialUserBypage()">搜索全部</button>
+                        </span>
+                        </div>
+                    </div>
+                    <div class="search-right">
+                        <button onclick="setGiveBackMaterialInBatchModal()" class="btn btn-default" >批量归还</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-body">
+                <table class="table table-bordered">
+                    <thead style="background-color: #F9FAFB;">
+                    <tr>
+                        <th style="width: 34px;position: relative;"><input id="select-all" class="select-box" type="checkbox"></th>
+                        <th style="width: 50px">编号</th>
+                        <th>借用人</th>
+                        <th>物品</th>
+                        <th>数量</th>
+                        <th>借用时间</th>
+                        <th>借用经办人</th>
+                        <th>归还时间</th>
+                        <th>归还经办人</th>
+                        <th>状态</th>
+                        <th style="width: 50px">归还</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="table-tr hidden">
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="giveBack-id"></td>
+                        <td class="giveBack-staffName"></td>
+                        <td class="giveBack-goods"></td>
+                        <td class="giveBack-goodsNumber"></td>
+                        <td class="giveBack-gooutTime"></td>
+                        <td class="giveBack-gooutOperator"></td>
+                        <td class="giveBack-returnTime"></td>
+                        <td class="giveBack-returnOperator"></td>
+                        <td class="giveBack-status"></td>
+                        <td class="giveBack-giveBack">
+                            <a><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="giveBack-id"></td>
+                        <td class="giveBack-staffName"></td>
+                        <td class="giveBack-goods"></td>
+                        <td class="giveBack-goodsNumber"></td>
+                        <td class="giveBack-gooutTime"></td>
+                        <td class="giveBack-gooutOperator"></td>
+                        <td class="giveBack-returnTime"></td>
+                        <td class="giveBack-returnOperator"></td>
+                        <td class="giveBack-status"></td>
+                        <td class="giveBack-giveBack">
+                            <a><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="giveBack-id"></td>
+                        <td class="giveBack-staffName"></td>
+                        <td class="giveBack-goods"></td>
+                        <td class="giveBack-goodsNumber"></td>
+                        <td class="giveBack-gooutTime"></td>
+                        <td class="giveBack-gooutOperator"></td>
+                        <td class="giveBack-returnTime"></td>
+                        <td class="giveBack-returnOperator"></td>
+                        <td class="giveBack-status"></td>
+                        <td class="giveBack-giveBack">
+                            <a><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="giveBack-id"></td>
+                        <td class="giveBack-staffName"></td>
+                        <td class="giveBack-goods"></td>
+                        <td class="giveBack-goodsNumber"></td>
+                        <td class="giveBack-gooutTime"></td>
+                        <td class="giveBack-gooutOperator"></td>
+                        <td class="giveBack-returnTime"></td>
+                        <td class="giveBack-returnOperator"></td>
+                        <td class="giveBack-status"></td>
+                        <td class="giveBack-giveBack">
+                            <a><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="giveBack-id"></td>
+                        <td class="giveBack-staffName"></td>
+                        <td class="giveBack-goods"></td>
+                        <td class="giveBack-goodsNumber"></td>
+                        <td class="giveBack-gooutTime"></td>
+                        <td class="giveBack-gooutOperator"></td>
+                        <td class="giveBack-returnTime"></td>
+                        <td class="giveBack-returnOperator"></td>
+                        <td class="giveBack-status"></td>
+                        <td class="giveBack-giveBack">
+                            <a><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="giveBack-id"></td>
+                        <td class="giveBack-staffName"></td>
+                        <td class="giveBack-goods"></td>
+                        <td class="giveBack-goodsNumber"></td>
+                        <td class="giveBack-gooutTime"></td>
+                        <td class="giveBack-gooutOperator"></td>
+                        <td class="giveBack-returnTime"></td>
+                        <td class="giveBack-returnOperator"></td>
+                        <td class="giveBack-status"></td>
+                        <td class="giveBack-giveBack">
+                            <a><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="giveBack-id"></td>
+                        <td class="giveBack-staffName"></td>
+                        <td class="giveBack-goods"></td>
+                        <td class="giveBack-goodsNumber"></td>
+                        <td class="giveBack-gooutTime"></td>
+                        <td class="giveBack-gooutOperator"></td>
+                        <td class="giveBack-returnTime"></td>
+                        <td class="giveBack-returnOperator"></td>
+                        <td class="giveBack-status"></td>
+                        <td class="giveBack-giveBack">
+                            <a><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="giveBack-id"></td>
+                        <td class="giveBack-staffName"></td>
+                        <td class="giveBack-goods"></td>
+                        <td class="giveBack-goodsNumber"></td>
+                        <td class="giveBack-gooutTime"></td>
+                        <td class="giveBack-gooutOperator"></td>
+                        <td class="giveBack-returnTime"></td>
+                        <td class="giveBack-returnOperator"></td>
+                        <td class="giveBack-status"></td>
+                        <td class="giveBack-giveBack">
+                            <a><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="giveBack-id"></td>
+                        <td class="giveBack-staffName"></td>
+                        <td class="giveBack-goods"></td>
+                        <td class="giveBack-goodsNumber"></td>
+                        <td class="giveBack-gooutTime"></td>
+                        <td class="giveBack-gooutOperator"></td>
+                        <td class="giveBack-returnTime"></td>
+                        <td class="giveBack-returnOperator"></td>
+                        <td class="giveBack-status"></td>
+                        <td class="giveBack-giveBack">
+                            <a><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="staff-checkBox tbody-td-id" style="width: 34px"><input class="select-box select-sub-box" type="checkbox"></td>
+                        <td class="giveBack-id"></td>
+                        <td class="giveBack-staffName"></td>
+                        <td class="giveBack-goods"></td>
+                        <td class="giveBack-goodsNumber"></td>
+                        <td class="giveBack-gooutTime"></td>
+                        <td class="giveBack-gooutOperator"></td>
+                        <td class="giveBack-returnTime"></td>
+                        <td class="giveBack-returnOperator"></td>
+                        <td class="giveBack-status"></td>
+                        <td class="giveBack-giveBack">
+                            <a><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="page-body">
+                <ul class="page-ul">
+                    <li class="page-ul-li">
+                        <div class="input-group" style="width: 110px">
+                            <input type="text" class="form-control skipPage" placeholder="">
+                            <span class="input-group-btn">
+                                  <button id="jump-button" class="btn btn-default" type="button" onclick="skipPage()">跳转</button>
+                               </span>
+                        </div>
+                    </li>
+                    <li class="page-ul-li"><a class="btn btn-default page-button" onclick="nextPage()"><span class="caret caret-left"></span></a></li>
+                    <li class="page-ul-li" style="margin-top: 8px"><span class="currentPage"></span>/<span class="totalPage"></span></li>
+                    <li class="page-ul-li"><a class="btn btn-default page-button" onclick="previousPage()"><span class="caret caret-right"></span></a></li>
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+    <!-------------------------------------->
+    <div class="right-panel hidden">
         <div class="nav-path">
             <div class="path-title">
                 <ul class="path-ul">
@@ -273,6 +505,23 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                 <button type="button" class="btn btn-primary">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bs-example-modal-sm" id="myModal-makeSureGiveBack" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" value="">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 5px 15px">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" style="padding: 25px 15px;">
+                是否确认要归还？
+            </div>
+            <div class="modal-footer" style="padding: 5px 15px;">
+                <button type="button" class="btn btn-default" data-dismiss="modal" style="float: right; margin-left: 5px">取消</button>
+                <button type="button" class="btn btn-primary" style="float: right;" data-dismiss="modal">确认</button>
             </div>
         </div>
     </div>

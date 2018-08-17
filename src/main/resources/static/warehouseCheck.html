@@ -39,7 +39,7 @@
                 <li><a href="attendanceHomePage.html">考勤</a></li>
                 <li><a href="salaryManagement.html">薪酬</a></li>
                 <li><a href="processManagement.html">流程</a></li>
-                <li class="active"><a href="warehouseCheck.html">仓库</a></li>
+                <li class="active"><a href="warehouseCheck.html">采购管理</a></li>
                 <li><a href="ManageDepartment.html">管理</a></li>
             </ul>
         </div>
@@ -52,13 +52,13 @@
                 <img class="userImg" src="imgs/user.png">
             </div>
             <div class="userTitle">
-                <p>超级管理员</p>
+                <p>超级管理员</p><span class="glyphicon glyphicon-log-out" data-toggle="tooltip" data-placement="top" title="注销" aria-hidden="true"></span>
             </div>
         </div>
         <ul class="left-nav-menu">
             <li class="left-nav-menu-li li-active">
                 <a href="warehouseCheck.html" class="menu-link">
-                    <img src="imgs/coupons_fill.png">
+                    <img src="imgs/warehouse_fill.png">
                     <div>库存盘点</div>
                 </a>
             </li>
@@ -137,7 +137,7 @@
                         </div>
                     </div>
                     <div class="search-right">
-                        <a class="btn btn-default lookReportSpoiledTable">查看报损表</a>
+                        <a href="#reportSpoiledTablePanel" class="btn btn-default lookReportSpoiledTable" onclick="getAllLossEntry()">查看报损表</a>
                     </div>
                 </div>
             </div>
@@ -149,7 +149,7 @@
                         <th style="width: 100px">物品编号</th>
                         <th>物品名称</th>
                         <th>单位</th>
-                        <th>物品数量</th>
+                        <th>库存数量</th>
                         <th style="width: 100px">申请报损</th>
                     </tr>
                     </thead>
@@ -292,7 +292,7 @@
                             <input type="text" class="form-control" placeholder="物品名称">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button" onclick="searchByName()">搜索</button>
-                                <button class="btn btn-default" type="button" onclick="getAllGroupInformation()">搜索全部</button>
+                                <button class="btn btn-default" type="button" onclick="getAllLossEntry()">搜索全部</button>
                             </span>
                         </div>
                     </div>
@@ -308,7 +308,7 @@
                     <tr>
                         <th style="width: 100px">物品编号</th>
                         <th>物品名称</th>
-                        <th>物品数量</th>
+                        <th>库存数量</th>
                         <th>时间</th>
                         <th>原因</th>
                         <th>审核状态</th>
@@ -335,15 +335,15 @@
                 <ul class="page-ul">
                     <li class="page-ul-li">
                         <div class="input-group" style="width: 110px">
-                            <input type="text" id="page_num"class="form-control" placeholder="0">
+                            <input type="text" class="form-control skipPage" placeholder="0">
                             <span class="input-group-btn">
-                                <button id="jump-button"  onclick="getAllGroupInformation()" class="btn btn-default" type="button">跳转</button>
+                                <button  onclick="skipPage('#reportSpoiledTablePanel')" class="btn btn-default" type="button">跳转</button>
                              </span>
                         </div>
                     </li>
-                    <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-left"></span></a></li>
-                    <li class="page-ul-li" style="margin-top: 8px"><span>1/255</span></li>
-                    <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-right"></span></a></li>
+                    <li class="page-ul-li"><a class="btn btn-default page-button" onclick="nextPage('#reportSpoiledTablePanel')"><span class="caret caret-left"></span></a></li>
+                    <li class="page-ul-li" style="margin-top: 8px"><span class="currentPage"></span>/<span class="totalPage"></span></li>
+                    <li class="page-ul-li"><a class="btn btn-default page-button" onclick="previousPage('#reportSpoiledTablePanel')"><span class="caret caret-right"></span></a></li>
                 </ul>
             </div>
 
@@ -372,32 +372,28 @@
             <div class="main-table col-xs-8 col-xs-push-2" style="color: #000000;">
                 <div style="height: 41px; border-bottom: 1px solid #000000">
                     <div class="col-xs-3" style="text-align: center;"><label style="height: 100%; margin-bottom: 0px; line-height: 40px">申请人</label></div>
-                    <input id="applyDepartment" class="col-xs-3" onclick="getAllDepartment()" data-toggle="modal" data-target="#myModal-selectDepartment" style="border:none; border-right: 1px solid #000000;border-left: 1px solid #000000;height: 40px">
-                    <div class="col-xs-2"  style="text-align: center;"><label style="height: 100%; margin-bottom: 0px; line-height: 40px">申请时间</label></div>
-                    <!--<input class="col-xs-4" type="datetime-local" style="border:none;border-left: 1px solid #000000;height: 40px">-->
-                    <div class="input-group date to_date col-xs-4" >
-                        <input id="modal-addStaffJoinDate" size="16" class="form-control"  value="年/月/日" type="text" style="border:none;border-left: 1px solid #000000;height: 40px">
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                    </div>
+                    <div id="reportSpoiledPanel-applyName" class="col-xs-9" style="border:none; border-left: 1px solid #000000;height: 40px;text-align: center;line-height: 40px;"></div>
                 </div>
                 <div style="height: 61px; border-bottom: 1px solid #000000">
                     <div class="col-xs-3" style="text-align: center;"><label style="height: 100%; margin-bottom: 0px; line-height: 60px">原因</label></div>
-                    <textarea class="col-xs-9" style="border:none; border-left: 1px solid #000000;height: 60px;"></textarea>
+                    <textarea class="col-xs-9" id="reportSpoiledPanel-reason" style="border:none; border-left: 1px solid #000000;height: 60px;"></textarea>
                 </div>
                 <div class="table-body" style="margin: 0">
                     <table class="table table-bordered table-selfDefine">
                         <thead>
                         <tr>
-                            <th style="width: 100px">物品编号</th>
+                            <th style="width: 10%">物品编号</th>
                             <th>物品名称</th>
-                            <th style="border-right: none">报损数量</th>
+                            <th style="width: 25%">库存</th>
+                            <th style="width: 25%;border-right: none">报损数量</th>
                         </tr>
                         </thead>
                         <tbody>
                             <tr class="table-tr" style="height: 50px">
-                                <td></td>
-                                <td></td>
-                                <td style="border-right: none"><input></td>
+                                <td style="line-height: 50px;"></td>
+                                <td style="line-height: 50px;"></td>
+                                <td style="line-height: 50px;"></td>
+                                <td style="border-right: none"><input style="height: 50px;"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -423,9 +419,8 @@
                 </div>
             </div>
             <div class="col-xs-12" style="text-align: center;margin-top: 30px">
-                <a class="btn btn-default" >取消</a>
-                <a class="btn btn-info">提交</a>
-                <a href="#reportSpoiledTablePanel" class="btn btn-default lookReportSpoiledTable">查看报损表</a>
+                <a class="btn btn-info" onclick="submitReportSpoiled()">提交</a>
+                <a href="#reportSpoiledTablePanel" class="btn btn-default lookReportSpoiledTable" onclick="getAllLossEntry()">查看报损表</a>
             </div>
         </div>
     </div>

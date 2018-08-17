@@ -11,7 +11,8 @@ $(document).ready(function () {
 获取所有固定日期的工资单/
  */
 function getALlWage() {
-    var page = 0
+    currentPage = 0
+    var page = currentPage
     var size = 10
     var sortFieldName = 'startTime'
     var asc = 1
@@ -40,7 +41,8 @@ function getALlWage() {
  */
 function getWageByParameters() {
     var name = $('#salaryQuery-name').val()
-    var page = 0
+    currentPage = 0
+    var page = currentPage
     var size = 10
     var sortFieldName = 'startTime'
     var asc = 1
@@ -144,7 +146,21 @@ function updateWage() {
         'id': id,
         'userId': staffId,
         'userName': staffName,
-        'originalSpot': department
+        'originalSpot': department,
+        'idNumber': idCard,
+        'cardNumber': bankCard,
+        'baseWage': baseWage,
+        'projectWage': projectWage,
+        'fullAttenBonus': fullAttenBonus,
+        'bonus': bonus,
+        'overtimeWage': overtimeWage,
+        'boardWage': boardWage,
+        'socialSecuritySubsidyWage': socialSecuritySubsidyWage,
+        'foundation': foundation,
+        'deductionWage': deductionWage,
+        'workDays': workDays,
+        'grossPay': grossPay,
+        'realPay': realPay
     }
     jsonArr.push(json_)
     let myjson = JSON.stringify(jsonArr)

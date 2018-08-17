@@ -468,6 +468,7 @@ function getDetailsInformation(thisObj) {
 获取全部员工信息/
  */
 function getAllStaffInformationByPage() {
+    currentPage = 0
     var page = currentPage
     var size = 10
     var sortFieldName = 'id'

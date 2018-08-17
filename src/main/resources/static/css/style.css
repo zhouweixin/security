@@ -283,3 +283,13 @@ textarea{
     max-height: 300px;
     overflow-y: auto
 }
+.userTitle{
+    position: relative;
+}
+.userTitle span{
+    position: absolute;
+    right: 20px;
+    top: 2px;
+    color: #D3E4F6;
+    cursor: pointer;
+}

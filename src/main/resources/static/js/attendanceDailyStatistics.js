@@ -6,7 +6,8 @@ $(document).ready(function () {
 获取全部记录/
  */
 function getAllWorkRecords() {
-    var page = 0
+    currentPage = 0
+    var page = currentPage
     var size = 10
     var sortFieldName = 'startTime'
     var asc = 0
@@ -40,7 +41,8 @@ function getWorkRecordsByParameters() {
         date = date.replace(/\//g, '-')
     }
     var name = $('#dailyStatistics-name').val()
-    var page = 0
+    currentPage = 0
+    var page = currentPage
     var size = 10
     var sortFieldName = 'startTime'
     var asc = 0

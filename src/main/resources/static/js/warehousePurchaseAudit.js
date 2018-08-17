@@ -229,8 +229,9 @@ function setPurchaseApplyRecordModal(thisObj) {
  */
 function submitPurchaseAudit(thisObj) {
     var applyId = $('#myModal-PurchaseAuditDetails').attr('value')
-    var auditor = $('#purchaseApplyDetails-auditor').text('value')
+    var auditor = $('#purchaseApplyDetails-auditor').text()
     var note = $('#purchaseApplyDetails-note').val()
+    console.log(auditor)
     $.ajax({
         url: ipPort + '/purchaseHeader/audit?curAuditorId=' + auditor + '&purchaseHeaderId=' + applyId + '&status=' + thisObj + '&note=' + note,
         success: function (obj) {

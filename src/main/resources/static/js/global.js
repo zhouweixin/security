@@ -33,7 +33,9 @@ var contractStatusID = []
 // getAllEducationName()
 // getAllPersonnelContractTypeName()
 // getAllContractStatusName()
-
+$(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
 /*
 获取所有部门名称/
  */

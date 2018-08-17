@@ -59,10 +59,12 @@ function setAllStockTable(obj) {
     for(var i = 0; i < obj.data.numberOfElements; i++){
         tr.eq(i).removeClass('hidden')
         id.eq(i).text('')
+        id.eq(i).attr('value', '')
         name.eq(i).text('')
         unit.eq(i).text('')
         number.eq(i).text('')
         id.eq(i).text(obj.data.content[i].material.id)
+        id.eq(i).attr('value', obj.data.content[i].id)
         name.eq(i).text(obj.data.content[i].material.name)
         unit.eq(i).text(obj.data.content[i].material.unit)
         number.eq(i).text(obj.data.content[i].number)
@@ -101,7 +103,99 @@ function searchByName() {
 设置报损单/
  */
 function setReportSpoiledPanel(thisObj) {
+    var parent = $(thisObj).parent().parent()
+    $('#reportSpoiledPanel-applyName').text('李四')
+    $('#reportSpoiledPanel-applyName').attr('value', 'zy00001')
+    var td = $('#reportSpoiledPanel table tbody').find('td')
+    td.eq(0).text(parent.find('.allWarehouseGoodsInformation-goodsId').text())
+    td.eq(1).text(parent.find('.allWarehouseGoodsInformation-goodsName').text())
+    td.eq(2).text(parent.find('.allWarehouseGoodsInformation-goodsNumber').text())
+    td.eq(0).attr('value', parent.find('.allWarehouseGoodsInformation-goodsId').attr('value'))
+}
+/*
+提交报损单/
+ */
+function submitReportSpoiled() {
+    var td = $('#reportSpoiledPanel table tbody').find('td')
+    var storeId = td.eq(0).attr('value')
+    var goodsId = td.eq(0).text()
+    var applyId = $('#reportSpoiledPanel-applyName').attr('value')
+    var lossNum = td.eq(3).find('input').val()
+    var restNum = td.eq(2).text()
+    var stockNum = parseInt(lossNum) + parseInt(restNum)
+    var reason = $('#reportSpoiledPanel-reason').val()
 
+    var urlStr = ipPort + '/lossEntry/add?stock.id='+ storeId + '&material.id=' + goodsId + '&applyUser.id=' + applyId
+        + '&stockNumber=' + stockNum + '&lossNumber=' + lossNum + '&restNumber=' + restNum + '&reason=' + reason
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                alert('提交成功！')
+            }else{
+                alert(obj.message)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+获取所有报损表/
+ */
+function getAllLossEntry() {
+    currentPage = 0
+    var page = currentPage
+    var size = 10
+    var sortFieldName = 'id'
+    var asc = 1
+    var urlStr = ipPort + '/lossEntry/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName='
+        + sortFieldName + '&asc=' + asc
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            console.log(obj)
+            if(obj.code == 0){
+                //setAllLossEntryTable(obj)
+            }else{
+                console.log(obj)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+设置报损table/
+ */
+function setAllLossEntryTable(obj) {
+    $('#allWarehouseGoodsInformationPanel .currentPage').text(currentPage + 1)
+    $('#allWarehouseGoodsInformationPanel .totalPage').text(obj.data.totalPages)
+    var id = $('.allWarehouseGoodsInformation-goodsId')
+    var name = $('.allWarehouseGoodsInformation-goodsName')
+    var unit = $('.allWarehouseGoodsInformation-unit')
+    var number = $('.allWarehouseGoodsInformation-goodsNumber')
+    var tr = $('#allWarehouseGoodsInformationPanel .table-tr')
+    for(var i = 0; i < obj.data.numberOfElements; i++){
+        tr.eq(i).removeClass('hidden')
+        id.eq(i).text('')
+        id.eq(i).attr('value', '')
+        name.eq(i).text('')
+        unit.eq(i).text('')
+        number.eq(i).text('')
+        id.eq(i).text(obj.data.content[i].material.id)
+        id.eq(i).attr('value', obj.data.content[i].id)
+        name.eq(i).text(obj.data.content[i].material.name)
+        unit.eq(i).text(obj.data.content[i].material.unit)
+        number.eq(i).text(obj.data.content[i].number)
+    }
+    for(var i = obj.data.numberOfElements; i < 10; i++){
+        tr.eq(i).addClass('hidden')
+    }
 }
 /*
 上一页/
