@@ -1,10 +1,12 @@
 package com.xplusplus.security.controller;
 
+import com.xplusplus.security.domain.Project;
 import com.xplusplus.security.domain.Result;
 import com.xplusplus.security.domain.WorkRecord;
 import com.xplusplus.security.service.UserService;
 import com.xplusplus.security.service.WorkRecordService;
 import com.xplusplus.security.utils.ResultUtil;
+import com.xplusplus.security.vo.ProjectHoursVO;
 import com.xplusplus.security.vo.WorkRecordMonthVO;
 import com.xplusplus.security.vo.WorkRecordVO;
 import io.swagger.annotations.Api;
@@ -171,5 +173,27 @@ public class WorkRecordController {
             @ApiParam(value = "日期, 格式为yyyy-MM, 默认为2000-01表示不启用此字段检索", defaultValue = "2000-01") @RequestParam @DateTimeFormat(pattern = "yyyy-MM") Date date,
             @ApiParam(value = "姓名, 默认为\"\"表示查询所有", defaultValue = "") @RequestParam(defaultValue = "") String name){
         return ResultUtil.success(workRecordService.getByMonth(projectId, date, name));
+    }
+
+    /**
+     * 统计项目工作总时长
+     *
+     * @return
+     */
+    @GetMapping(value = "/getProjectHours")
+    @ApiOperation(value = "统计项目工作总时长")
+    public Result<List<ProjectHoursVO>> getProjectHours(){
+        return ResultUtil.success(workRecordService.getProjectHours());
+    }
+
+    /**
+     * 统计项目工作总时长
+     *
+     * @return
+     */
+    @GetMapping(value = "/getProjectHoursByMonth")
+    @ApiOperation(value = "统计项目工作总时长-按月")
+    public Result<List<ProjectHoursVO>> getProjectHoursByMonth(@ApiParam(value = "日期， 格式yyyy-MM") @RequestParam @DateTimeFormat(pattern = "yyyy-MM") Date date){
+        return ResultUtil.success(workRecordService.getProjectHoursByMonth(date));
     }
 }

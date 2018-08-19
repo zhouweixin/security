@@ -4,6 +4,8 @@ import com.xplusplus.security.domain.Goout;
 import com.xplusplus.security.domain.GooutHeader;
 import com.xplusplus.security.domain.GooutMaterialUser;
 import com.xplusplus.security.domain.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -34,4 +36,13 @@ public interface GooutMaterialUserRepository extends JpaRepository<GooutMaterial
      * @return
      */
     public List<GooutMaterialUser> findByIdInAndUserInAndStatus(Collection<Long> ids, Collection<User> users, int status);
+
+    public Page<GooutMaterialUser> findByUser(User user, Pageable pageable);
+
+    public Page<GooutMaterialUser> findByUserIn(Collection<User> users, Pageable pageable);
+
+    public Page<GooutMaterialUser> findByStatus(Integer status, Pageable pageable);
+
+    public Page<GooutMaterialUser> findByUserAndStatus(User user, Integer status, Pageable pageable);
+    public Page<GooutMaterialUser> findByUserInAndStatus(Collection<User> users, Integer status, Pageable pageable);
 }

@@ -97,7 +97,14 @@ public class Project {
     @ApiModelProperty(value = "项目小时钱数")
 	private double wagePerHour = 0.00;
 
-	public Long getId() {
+    public Project() {
+    }
+
+    public Project(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
 		return id;
 	}
 

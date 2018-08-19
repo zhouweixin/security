@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author: zhouweixin
@@ -34,4 +35,12 @@ public interface WageEntryRepository extends JpaRepository<WageEntry, Long> {
      * @return
      */
     public Page<WageEntry> findByDateBetweenAndUserIdIn(Date d1, Date d2, Collection<String> userIds, Pageable pageable);
+
+    /**
+     * 通过日期查询所有
+     *
+     * @param date
+     * @return
+     */
+    public List<WageEntry> findByDate(Date date);
 }

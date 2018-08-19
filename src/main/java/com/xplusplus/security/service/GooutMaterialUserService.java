@@ -130,4 +130,65 @@ public class GooutMaterialUserService {
 		Pageable pageable = new PageRequest(page, size, sort);
 		return gooutMaterialUserRepository.findAll(pageable);
 	}
+
+    public Page<GooutMaterialUser> getByStatusAndUserId(Integer status, String userId, Integer page, Integer size, String sortFieldName, Integer asc) {
+	    if(status == -1 && "-1".equals(userId)){
+	        return findAllByPage(page, size, sortFieldName, asc);
+        }
+
+        // 判断排序字段名是否存在
+        try {
+            GooutMaterialUser.class.getDeclaredField(sortFieldName);
+        } catch (Exception e) {
+            // 如果不存在就设置为id
+            sortFieldName = "id";
+        }
+
+        Sort sort = null;
+        if (asc == 0) {
+            sort = new Sort(Direction.DESC, sortFieldName);
+        } else {
+            sort = new Sort(Direction.ASC, sortFieldName);
+        }
+
+        Pageable pageable = new PageRequest(page, size, sort);
+
+        User user = new User();
+        user.setId(userId);
+        if(status == -1 && !"-1".equals(userId)){
+            return gooutMaterialUserRepository.findByUser(user, pageable);
+        }
+
+        if(status != -1 && "-1".equals(userId)){
+            return gooutMaterialUserRepository.findByStatus(status, pageable);
+        }
+
+        return gooutMaterialUserRepository.findByUserAndStatus(user, status, pageable);
+    }
+
+    public Page<GooutMaterialUser> getByStatusAndNameLike(Integer status, String name, Integer page, Integer size, String sortFieldName, Integer asc) {
+        // 判断排序字段名是否存在
+        try {
+            GooutMaterialUser.class.getDeclaredField(sortFieldName);
+        } catch (Exception e) {
+            // 如果不存在就设置为id
+            sortFieldName = "id";
+        }
+
+        Sort sort = null;
+        if (asc == 0) {
+            sort = new Sort(Direction.DESC, sortFieldName);
+        } else {
+            sort = new Sort(Direction.ASC, sortFieldName);
+        }
+
+        Pageable pageable = new PageRequest(page, size, sort);
+
+        List<User> users = userRepository.findByNameLike("%" + name + "%");
+        if(status == -1){
+            return gooutMaterialUserRepository.findByUserIn(users, pageable);
+        }
+
+        return gooutMaterialUserRepository.findByUserInAndStatus(users, status, pageable);
+    }
 }

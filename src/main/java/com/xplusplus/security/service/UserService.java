@@ -6,11 +6,20 @@ import java.time.temporal.TemporalField;
 import java.util.*;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import com.xplusplus.security.domain.*;
 import com.xplusplus.security.repository.*;
 import com.xplusplus.security.vo.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiParam;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.mgt.DefaultSecurityManager;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -64,6 +73,9 @@ public class UserService {
 
     @Autowired
     private WorkLoggingRepository workLoggingRepository;
+
+    @Autowired
+    private RealmService realmService;
 
     /**
      * 新增
@@ -686,11 +698,73 @@ public class UserService {
     @Transactional
     public void updateBaseAndSocialSecurityAndFoundationBatch(String[] userIds, double base, double socialSecurity, double foundation) {
         List<User> users = userRepository.findAll(Arrays.asList(userIds));
-        for(User user : users){
+        for (User user : users) {
             user.setBaseWage(base);
             user.setSocialSecuritySubsidyWage(socialSecurity);
             user.setFoundation(foundation);
         }
         userRepository.save(users);
+    }
+
+    /**
+     * 登录
+     *
+     * @param id
+     * @param password
+     * @param session
+     * @return
+     */
+    public User login(String id, String password, HttpSession session) {
+        // 验证用户是否存在
+        if (userRepository.findOne(id) == null) {
+            throw new SecurityExceptions(EnumExceptions.LOGIN_FAILED_USER_NOT_EXISTS);
+        }
+
+        // 登录验证
+        User user = null;
+        if ((user = this.checkUserPasswordForLogin(id, password)) == null) {
+            throw new SecurityExceptions(EnumExceptions.LOGIN_FAILED_USER_PASSWORD_NOT_MATCHER);
+        }
+
+        session.setAttribute("user", user);
+
+        return user;
+    }
+
+    /**
+     * 校验用户密码-用于登录
+     *
+     * @param id
+     * @param password
+     */
+    private User checkUserPasswordForLogin(String id, String password) {
+        // 验证用户是否存在
+        User user = userRepository.findOne(id);
+        if (user == null) {
+            return null;
+        }
+
+        HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
+        // md5 加密
+        matcher.setHashAlgorithmName("md5");
+
+        // 1、构建SecurityManager环境
+        DefaultSecurityManager defaultSecurityManager = new DefaultSecurityManager();
+        defaultSecurityManager.setRealm(realmService);
+        realmService.setCredentialsMatcher(matcher);
+
+        // 2、主体提交认证请求
+        SecurityUtils.setSecurityManager(defaultSecurityManager);
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(id + "", password);
+
+        try {
+            // 认证登录
+            subject.login(token);
+            return user;
+        } catch (Exception e) {
+            // 登录失败
+            return null;
+        }
     }
 }

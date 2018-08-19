@@ -8,6 +8,7 @@ import com.xplusplus.security.repository.UserRepository;
 import com.xplusplus.security.repository.WageEntryRepository;
 import com.xplusplus.security.repository.WorkRecordRepository;
 import com.xplusplus.security.vo.WorkRecordMonthVO;
+import org.hibernate.jdbc.WorkExecutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -173,6 +174,29 @@ public class WageEntryService {
      * @param wageEntries
      */
     public void update(Set<WageEntry> wageEntries) {
+        for(WageEntry wageEntry : wageEntries){
+            if(wageEntry.getId() != null){
+                WageEntry one = wageEntryRepository.findOne(wageEntry.getId());
+                wageEntry.setUserId(one.getUserId());
+                wageEntry.setUserName(one.getUserName());
+                wageEntry.setOriginalSpot(one.getOriginalSpot());
+                wageEntry.setDate(one.getDate());
+                wageEntry.setIdNumber(one.getIdNumber());
+                wageEntry.setCardNumber(one.getCardNumber());
+                wageEntry.setDate(one.getDate());
+            }
+        }
+
         wageEntryRepository.save(wageEntries);
+    }
+
+    /**
+     * 通过月份查询所有工资单
+     *
+     * @param date
+     * @return
+     */
+    public List<WageEntry> getAllByMonth(Date date) {
+        return wageEntryRepository.findByDate(date);
     }
 }

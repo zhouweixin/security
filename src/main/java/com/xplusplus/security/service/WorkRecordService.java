@@ -1,6 +1,7 @@
 package com.xplusplus.security.service;
 
 import com.xplusplus.security.domain.Project;
+import com.xplusplus.security.domain.ProjectStatus;
 import com.xplusplus.security.domain.User;
 import com.xplusplus.security.domain.WorkRecord;
 import com.xplusplus.security.exception.EnumExceptions;
@@ -8,6 +9,7 @@ import com.xplusplus.security.exception.SecurityExceptions;
 import com.xplusplus.security.repository.ProjectRepository;
 import com.xplusplus.security.repository.UserRepository;
 import com.xplusplus.security.repository.WorkRecordRepository;
+import com.xplusplus.security.vo.ProjectHoursVO;
 import com.xplusplus.security.vo.WorkRecordMonthVO;
 import com.xplusplus.security.vo.WorkRecordVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,8 @@ public class WorkRecordService {
 
     @Autowired
     private ProjectRepository projectRepository;
+
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
      * 上班打卡
@@ -308,16 +312,22 @@ public class WorkRecordService {
         // 查询用户
         List<User> users = userRepository.findByNameLike("%" + name + "%");
 
-        if(projectId != -1 && date.toString().equals("2000-01-01")){
+
+        if(projectId != -1 && sdf.format(date).equals("2000-01-01")){
             Project project = null;
             if((project = projectRepository.findOne(projectId)) == null){
                 throw new SecurityExceptions(EnumExceptions.QUERY_FAILED_PROJECT_NOT_EXISTS);
             }
 
+            System.out.println("=====================");
+            System.out.println(project.getId());
+            System.out.println(users.size());
+            System.out.println("=====================");
+
             return workRecordRepository.findByProjectAndUserInAndStatus(project, users, 1, pageable);
         }
 
-        if(projectId != -1 && !date.toString().equals("2000-01-01")){
+        if(projectId != -1 && sdf.format(date).equals("2000-01-01")){
             Project project = null;
             if((project = projectRepository.findOne(projectId)) == null){
                 throw new SecurityExceptions(EnumExceptions.QUERY_FAILED_PROJECT_NOT_EXISTS);
@@ -349,7 +359,7 @@ public class WorkRecordService {
         // 查询用户
         List<User> users = userRepository.findByNameLike("%" + name + "%");
 
-        if(date.toString().equals("2000-01")){
+        if(sdf.format(date).equals("2000-01")){
             throw new SecurityExceptions(EnumExceptions.QUERY_FAILED_DATE);
         }
 
@@ -371,5 +381,26 @@ public class WorkRecordService {
         }
 
         return WorkRecordMonthVO.parseWorkRecords(workRecords, date);
+    }
+
+    /**
+     * 统计项目工作的总时长
+     *
+     * @return
+     */
+    public List<ProjectHoursVO> getProjectHours() {
+        return workRecordRepository.findProjectHours();
+    }
+
+    /**
+     * 按月统计项目工作的总时长
+     *
+     * @return
+     */
+    public List<ProjectHoursVO> getProjectHoursByMonth(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.MONTH, 1);
+        return workRecordRepository.findProjectHoursByMonth(date, calendar.getTime());
     }
 }

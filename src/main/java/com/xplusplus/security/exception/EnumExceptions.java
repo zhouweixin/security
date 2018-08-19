@@ -88,6 +88,8 @@ public enum EnumExceptions {
     QUERY_FAILED_PROJECT_NOT_EXISTS(77, "查询失败, 项目不存在"),
     QUERY_FAILED_DATE(78, "查询失败, 日期不可为空"),
     WAGE_GENERATE_FAILED_DATE_NULL(79, "工资单生成失败, 日期不可为空"),
+    LOGIN_FAILED_USER_NOT_EXISTS(80, "登录失败, 用户不存在"),
+    LOGIN_FAILED_USER_PASSWORD_NOT_MATCHER(81, "登录失败, 用户名或密码错误"),
 
 	;
 

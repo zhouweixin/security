@@ -13,6 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -52,5 +53,11 @@ public class WageEntryController {
     public Result<Object> update(@ApiParam(value = "工资单数组") @RequestBody Set<WageEntry> wageEntries){
         wageEntryService.update(wageEntries);
         return ResultUtil.success();
+    }
+
+    @ApiOperation(value = "通过月份查询所有")
+    @PostMapping(value = "/getAllByMonth")
+    public Result<List<WageEntry>> getAllByMonth(@ApiParam(value = "时间, 格式为yyyy-MM") @RequestParam @DateTimeFormat(pattern = "yyyy-MM") Date date){
+        return ResultUtil.success(wageEntryService.getAllByMonth(date));
     }
 }

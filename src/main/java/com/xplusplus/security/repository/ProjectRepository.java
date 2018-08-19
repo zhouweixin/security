@@ -67,4 +67,8 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
      * @return
      */
     public List<Project> findByLeaderAndProjectStatus(User leader, ProjectStatus projectStatus, Sort sort);
+
+    @Modifying
+    @Query(value = "update Project p set p.wagePerHour=?1 where p.id=?2")
+    public void updateWagePerHour(double wagePerHour, Long id);
 }
