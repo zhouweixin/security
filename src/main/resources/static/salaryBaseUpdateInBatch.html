@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>徐州精诚特卫保安服务有限公司</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/salaryBaseUpdateInBatch.css" rel="stylesheet">
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-datetimepicker.js" ></script>
+    <script src="js/bootstrap-datetimepicker.fr.js"></script>
+    <script src="js/bootstrap-datetimepicker.zh-CN.js" ></script>
+    <script src="js/style.js"></script>
+    <script src="js/global.js"></script>
+    <script src="js/timeInput.js"></script>
+    <script src="js/salaryBaseUpdateInBatch.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">OA系统</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="personnelAnalysis.html">人事管理</a></li>
+                <li><a href="marketingManager.html">营销管理</a></li>
+                <li><a href="operationProjectManager.html">运营管理</a></li>
+                <li><a href="financialManager.html">财务管理</a></li>
+                <li><a href="warehouseCheck.html">采购管理</a></li>
+                <li><a href="ManageDepartment.html">基本设置</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div id="" class="container-fluid main-body">
+    <div id="left-nav" class="">
+        <div class="left-nav-userInfo">
+            <div class="userHead">
+                <img class="userImg" src="imgs/user.png">
+            </div>
+            <div class="userTitle">
+                <p>超级管理员</p><span class="glyphicon glyphicon-log-out" data-toggle="tooltip" data-placement="top" title="注销" aria-hidden="true"></span>
+            </div>
+        </div>
+        <ul class="left-nav-menu">
+            <li class="left-nav-menu-li">
+                <a href="personnelAnalysis.html" class="menu-link">
+                    <img src="imgs/addressbook.png">
+                    <div>人事分析</div>
+                </a>
+            </li>
+            <li class="left-nav-menu-li">
+                <a class="menu-link">
+                    <img src="imgs/brush.png">
+                    <div>员工管理    <span class="glyphicon glyphicon-triangle-right"></span></div>
+                </a>
+                <ul class="sub-menu none">
+                    <li class="sub-menu-li">
+                        <a href="personnelList.html" class="sub-menu-link">
+                            员工列表
+                        </a>
+                    </li>
+                    <li class="sub-menu-li none">
+                        <a href="personnelChange.html" class="sub-menu-link">
+                            人事异动
+                        </a>
+                    </li>
+                    <li class="sub-menu-li">
+                        <a href="personnelEmployeesLeave.html" class="sub-menu-link">
+                            离职员工
+                        </a>
+                    </li>
+                    <li class="sub-menu-li">
+                        <a href="personnelChangeCard.html" class="sub-menu-link">
+                            员工换卡
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="left-nav-menu-li">
+                <a class="menu-link">
+                    <img src="imgs/createtask.png">
+                    <div>合同管理    <span class="glyphicon glyphicon-triangle-right"></span></div>
+                </a>
+                <ul class="sub-menu none">
+                    <li class="sub-menu-li">
+                        <a href="personnelContract.html" class="sub-menu-link">
+                            人员合同
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="left-nav-menu-li">
+                <a class="menu-link">
+                    <img src="imgs/kaoqin.png">
+                    <div>考勤统计    <span class="glyphicon glyphicon-triangle-right"></span></div>
+                </a>
+                <ul class="sub-menu none">
+                    <li class="sub-menu-li">
+                        <a href="attendanceMonthSummary.html" class="sub-menu-link">
+                            月度汇总
+                        </a>
+                    </li>
+                    <li class="sub-menu-li ">
+                        <a href="attendanceDailyStatistics.html" class="sub-menu-link">
+                            每日统计
+                        </a>
+                    </li>
+                    <li class="sub-menu-li none">
+                        <a href="attendancePunchTime.html" class="sub-menu-link">
+                            打卡时间
+                        </a>
+                    </li>
+                    <li class="sub-menu-li ">
+                        <a href="attendanceOriginalRecord.html" class="sub-menu-link">
+                            原始记录
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="left-nav-menu-li">
+                <a class="menu-link">
+                    <img src="imgs/coupons_fill.png">
+                    <div>薪资管理    <span class="glyphicon glyphicon-triangle-bottom"></span></div>
+                </a>
+                <ul class="sub-menu">
+                    <li class="sub-menu-li">
+                        <a href="salaryQuery.html" class="sub-menu-link">
+                            薪资查看
+                        </a>
+                    </li>
+                    <li class="sub-menu-li sub-li-active">
+                        <a href="salaryBaseUpdateInBatch.html" class="sub-menu-link">
+                            基本工资修改
+                        </a>
+                    </li>
+                    <li class="sub-menu-li">
+                        <a href="salaryProject.html" class="sub-menu-link">
+                            项目工资
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="right-panel">
+        <div class="nav-path">
+            <div class="path-title">
+                <ul class="path-ul">
+                    <li>基本工资修改</li>
+                </ul>
+            </div>
+        </div>
+        <div class="main-body-content">
+            <div class="top-body" style="margin-top: 30px">
+                <div class="search-content" style="height: 34px;">
+                    <div class="search-left">
+                        <div class="dropdown select-department">
+                            <button class="btn btn-default dropdown-toggle" type="button" value="" id="salaryBaseUpdate-department" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                选择部门
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-department" aria-labelledby="salaryBaseUpdate-department">
+                                <li ><a value="">选择部门</a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                                <li class="hidden"><a></a></li>
+                            </ul>
+                        </div>
+                        <div class="input-group" style="width: 350px;padding-left: 10px;">
+                            <input type="text" id="salaryBaseUpdate-name" class="form-control" placeholder="按姓名搜索">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" onclick="searchByDepartmentAndStaffName()">搜索</button>
+                                <button class="btn btn-default" type="button" onclick="getAllBaseWageByPage()">搜索全部</button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="search-right">
+                        <button class="btn btn-default" onclick="setUpdateBaseAndSocialSecurityAndFoundationBatchModal()">批量修改</button>
+                    </div>
+                </div>
+            </div>
+            <div id="salaryQueryTable" class="table-body">
+                <table class="table table-bordered">
+                    <thead style="background-color: #F9FAFB">
+                    <tr>
+                        <th>姓名</th>
+                        <th>员工编号</th>
+                        <th>部门</th>
+                        <th>基本工资</th>
+                        <th>基金</th>
+                        <th>社保</th>
+                        <th style="width: 50px">修改</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="table-tr hidden">
+                        <td class="salaryBaseUpdate-staffName"></td>
+                        <td class="salaryBaseUpdate-staffID"></td>
+                        <td class="salaryBaseUpdate-department"></td>
+                        <td class="salaryBaseUpdate-baseWage"><input type="text"></td>
+                        <td class="salaryBaseUpdate-foundation"><input type="text"></td>
+                        <td class="salaryBaseUpdate-socialSecuritySubsidyWage"><input type="text"></td>
+                        <td class="salaryBaseUpdate-operating">
+                            <a style="line-height: 37px" onclick="updateBaseWage(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="salaryBaseUpdate-staffName"></td>
+                        <td class="salaryBaseUpdate-staffID"></td>
+                        <td class="salaryBaseUpdate-department"></td>
+                        <td class="salaryBaseUpdate-baseWage"><input type="text"></td>
+                        <td class="salaryBaseUpdate-foundation"><input type="text"></td>
+                        <td class="salaryBaseUpdate-socialSecuritySubsidyWage"><input type="text"></td>
+                        <td class="salaryBaseUpdate-operating">
+                            <a style="line-height: 37px" onclick="updateBaseWage(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="salaryBaseUpdate-staffName"></td>
+                        <td class="salaryBaseUpdate-staffID"></td>
+                        <td class="salaryBaseUpdate-department"></td>
+                        <td class="salaryBaseUpdate-baseWage"><input type="text"></td>
+                        <td class="salaryBaseUpdate-foundation"><input type="text"></td>
+                        <td class="salaryBaseUpdate-socialSecuritySubsidyWage"><input type="text"></td>
+                        <td class="salaryBaseUpdate-operating">
+                            <a style="line-height: 37px" onclick="updateBaseWage(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="salaryBaseUpdate-staffName"></td>
+                        <td class="salaryBaseUpdate-staffID"></td>
+                        <td class="salaryBaseUpdate-department"></td>
+                        <td class="salaryBaseUpdate-baseWage"><input type="text"></td>
+                        <td class="salaryBaseUpdate-foundation"><input type="text"></td>
+                        <td class="salaryBaseUpdate-socialSecuritySubsidyWage"><input type="text"></td>
+                        <td class="salaryBaseUpdate-operating">
+                            <a style="line-height: 37px" onclick="updateBaseWage(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="salaryBaseUpdate-staffName"></td>
+                        <td class="salaryBaseUpdate-staffID"></td>
+                        <td class="salaryBaseUpdate-department"></td>
+                        <td class="salaryBaseUpdate-baseWage"><input type="text"></td>
+                        <td class="salaryBaseUpdate-foundation"><input type="text"></td>
+                        <td class="salaryBaseUpdate-socialSecuritySubsidyWage"><input type="text"></td>
+                        <td class="salaryBaseUpdate-operating">
+                            <a style="line-height: 37px" onclick="updateBaseWage(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="salaryBaseUpdate-staffName"></td>
+                        <td class="salaryBaseUpdate-staffID"></td>
+                        <td class="salaryBaseUpdate-department"></td>
+                        <td class="salaryBaseUpdate-baseWage"><input type="text"></td>
+                        <td class="salaryBaseUpdate-foundation"><input type="text"></td>
+                        <td class="salaryBaseUpdate-socialSecuritySubsidyWage"><input type="text"></td>
+                        <td class="salaryBaseUpdate-operating">
+                            <a style="line-height: 37px" onclick="updateBaseWage(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="salaryBaseUpdate-staffName"></td>
+                        <td class="salaryBaseUpdate-staffID"></td>
+                        <td class="salaryBaseUpdate-department"></td>
+                        <td class="salaryBaseUpdate-baseWage"><input type="text"></td>
+                        <td class="salaryBaseUpdate-foundation"><input type="text"></td>
+                        <td class="salaryBaseUpdate-socialSecuritySubsidyWage"><input type="text"></td>
+                        <td class="salaryBaseUpdate-operating">
+                            <a style="line-height: 37px" onclick="updateBaseWage(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="salaryBaseUpdate-staffName"></td>
+                        <td class="salaryBaseUpdate-staffID"></td>
+                        <td class="salaryBaseUpdate-department"></td>
+                        <td class="salaryBaseUpdate-baseWage"><input type="text"></td>
+                        <td class="salaryBaseUpdate-foundation"><input type="text"></td>
+                        <td class="salaryBaseUpdate-socialSecuritySubsidyWage"><input type="text"></td>
+                        <td class="salaryBaseUpdate-operating">
+                            <a style="line-height: 37px" onclick="updateBaseWage(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="salaryBaseUpdate-staffName"></td>
+                        <td class="salaryBaseUpdate-staffID"></td>
+                        <td class="salaryBaseUpdate-department"></td>
+                        <td class="salaryBaseUpdate-baseWage"><input type="text"></td>
+                        <td class="salaryBaseUpdate-foundation"><input type="text"></td>
+                        <td class="salaryBaseUpdate-socialSecuritySubsidyWage"><input type="text"></td>
+                        <td class="salaryBaseUpdate-operating">
+                            <a style="line-height: 37px" onclick="updateBaseWage(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    <tr class="table-tr hidden">
+                        <td class="salaryBaseUpdate-staffName"></td>
+                        <td class="salaryBaseUpdate-staffID"></td>
+                        <td class="salaryBaseUpdate-department"></td>
+                        <td class="salaryBaseUpdate-baseWage"><input type="text"></td>
+                        <td class="salaryBaseUpdate-foundation"><input type="text"></td>
+                        <td class="salaryBaseUpdate-socialSecuritySubsidyWage"><input type="text"></td>
+                        <td class="salaryBaseUpdate-operating">
+                            <a style="line-height: 37px" onclick="updateBaseWage(this)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="page-body">
+                <ul class="page-ul">
+                    <li class="page-ul-li">
+                        <div class="input-group" style="width: 110px">
+                            <input type="text" class="form-control skipPage" placeholder="">
+                            <span class="input-group-btn">
+                                  <button id="jump-button" class="btn btn-default" type="button" onclick="skipPage()">跳转</button>
+                               </span>
+                        </div>
+                    </li>
+                    <li class="page-ul-li"><a class="btn btn-default page-button" onclick="nextPage()"><span class="caret caret-left"></span></a></li>
+                    <li class="page-ul-li" style="margin-top: 8px"><span class="currentPage"></span>/<span class="totalPage"></span></li>
+                    <li class="page-ul-li"><a class="btn btn-default page-button" onclick="previousPage()"><span class="caret caret-right"></span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!---------------------------------------------------------批量修改基本工资等modal--------------------------------------------------------->
+<!------------------------------------------------------------------------------------------------------------------>
+<div class="modal fade" id="myModal-updateBaseWageBatch" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title col-xs-6" id="myModalLabel">批量修改基本工资等</h4>
+                <div class="col-xs-5 modal-searchInput">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="姓名">
+                        <span class="input-group-addon glyphicon glyphicon-search" onclick="searchByName_modal(this)" aria-hidden="true"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body" style="padding: 0px 20px;font-size: 14px">
+                <form id="form-selectStaff1" class="form-horizontal">
+                    <div class="form-group " style="margin-bottom: 0px;">
+                        <ul class="selectStaff-department-ul col-xs-6" style="height: 200px;overflow-y: scroll">
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="selectStaff-staff-ul2 col-xs-6 hidden" style="height: 200px;overflow-y: scroll；">
+
+                        </ul>
+                        <div class="col-xs-6" style="border-left: 1px solid #E5E5E5; height: 200px;overflow-y: scroll">
+                            <ul class="selectedStaff-staff-ul">
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12" style="margin-top: 10px">
+                        <label class="col-xs-3 control-label">基本工资：</label>
+                        <div class="col-xs-7">
+                            <input id="updateBaseWageBatch-baseWage" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <label class="col-xs-3 control-label">基金：</label>
+                        <div class="col-xs-7">
+                            <input id="updateBaseWageBatch-foundation" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <label class="col-xs-3 control-label">社保：</label>
+                        <div class="col-xs-7">
+                            <input id="updateBaseWageBatch-socialSecuritySubsidyWage" type="text" class="form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary selectedStaffs-button" value="" onclick="updateBaseAndSocialSecurityAndFoundationBatch()" data-dismiss="modal">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

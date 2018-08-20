@@ -108,9 +108,12 @@ $(document).ready(function () {
 function getAllGoOutRecords() {
     currentPage = 0
     var page = currentPage
+    var sortFieldName = 'gooutTime'
+    var asc = 0
     $.ajax({
-        url: ipPort + '/gooutHeader/getAllByPage' + '?page=' + page,
+        url: ipPort + '/gooutHeader/getAllByPage' + '?page=' + page + '&sortFieldName=' + sortFieldName + '&asc=' + asc,
         success:function (obj) {
+            console.log(obj)
             if(obj.code == 0){
                 setGoOutRecordsTable(obj)
             }else {
@@ -529,8 +532,8 @@ function previousPage() {
     }
     var page = currentPage
     var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
+    var sortFieldName = 'gooutTime'
+    var asc = 0
     var urlStr = ipPort + '/gooutHeader/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
     $.ajax({
         url:urlStr,
@@ -560,8 +563,8 @@ function nextPage() {
     currentPage++
     var page = currentPage
     var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
+    var sortFieldName = 'gooutTime'
+    var asc = 0
     var urlStr = ipPort + '/gooutHeader/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
     $.ajax({
         url:urlStr,
@@ -595,8 +598,8 @@ function skipPage() {
     currentPage = skipPage_ - 1
     var page = currentPage
     var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
+    var sortFieldName = 'gooutTime'
+    var asc = 0
     var urlStr = ipPort + '/gooutHeader/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
     $.ajax({
         url:urlStr,

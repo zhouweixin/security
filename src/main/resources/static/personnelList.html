@@ -36,9 +36,9 @@
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
                   <li class="active"><a href="personnelAnalysis.html">人事管理</a></li>
-                  <li><a href="attendanceHomePage.html">营销管理</a></li>
-                  <li><a href="salaryManagement.html">运营管理</a></li>
-                  <li><a href="processManagement.html">财务管理</a></li>
+                  <li><a href="marketingManager.html">营销管理</a></li>
+                  <li><a href="operationProjectManager.html">运营管理</a></li>
+                  <li><a href="financialManager.html">财务管理</a></li>
                   <li><a href="warehouseCheck.html">采购管理</a></li>
                   <li><a href="ManageDepartment.html">基本设置</a></li>
               </ul>
@@ -101,11 +101,6 @@
                               人员合同
                           </a>
                       </li>
-                      <li class="sub-menu-li">
-                          <a href="projectContract.html" class="sub-menu-link">
-                              项目合同
-                          </a>
-                      </li>
                   </ul>
               </li>
               <li class="left-nav-menu-li">
@@ -145,6 +140,16 @@
                       <li class="sub-menu-li">
                           <a href="salaryQuery.html" class="sub-menu-link">
                               薪资查看
+                          </a>
+                      </li>
+                      <li class="sub-menu-li">
+                          <a href="salaryBaseUpdateInBatch.html" class="sub-menu-link">
+                              基本工资修改
+                          </a>
+                      </li>
+                      <li class="sub-menu-li">
+                          <a href="salaryProject.html" class="sub-menu-link">
+                              项目工资
                           </a>
                       </li>
                   </ul>
@@ -797,7 +802,6 @@
                           </div>
                       </form>
                       <div class="button-body col-xs-12">
-                          <a class="btn btn-default" onclick="setUpdateBaseAndSocialSecurityAndFoundationBatchModal()">批量修改</a>
                           <a class="btn btn-default" onclick="editButtonOnClick('staff')">编辑</a>
                           <a class="store-staff btn btn-info" onclick="updateStaffInformation()">保存</a>
                           <a class="btn btn-default hidden staffCancelButton" onclick="cancelEditButtonOnClick('staff')">取消</a>
