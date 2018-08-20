@@ -282,4 +282,9 @@ public class ProjectService {
         Sort sort = new Sort(Direction.ASC, "name");
 	    return projectRepository.findByLeaderAndProjectStatus(leader, new ProjectStatus(0), sort);
     }
+
+    @Transactional
+    public void updateWagePerHour(Long id, double wagePerHour) {
+        projectRepository.updateWagePerHour(wagePerHour, id);
+    }
 }

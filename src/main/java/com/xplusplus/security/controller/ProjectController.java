@@ -245,4 +245,13 @@ public class ProjectController {
     public Result<List<Project>> getByLeaderAndStaue0(@ApiParam(value = "员工") User leader) {
         return ResultUtil.success(projectService.findByLeader(leader));
     }
+
+    @RequestMapping(value = "/updateWagePerHour")
+    @ApiOperation(value = "更新每小时钱数")
+    public Result<Object> updateWagePerHour(
+            @ApiParam(value = "项目主键") @RequestParam Long id,
+            @ApiParam(value = "每小时钱数") @RequestParam double wagePerHour){
+        projectService.updateWagePerHour(id, wagePerHour);
+        return ResultUtil.success();
+    }
 }

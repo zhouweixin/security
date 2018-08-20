@@ -5,18 +5,18 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import com.xplusplus.security.domain.*;
 import com.xplusplus.security.vo.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.xplusplus.security.service.ProjectUserService;
 import com.xplusplus.security.service.UserService;
@@ -30,6 +30,7 @@ import com.xplusplus.security.utils.ResultUtil;
  */
 @RestController
 @RequestMapping(value = "/user")
+@Api(tags = "用户接口")
 public class UserController {
 	@Autowired
 	private UserService userService;
@@ -338,6 +339,19 @@ public class UserController {
     @RequestMapping(value = "/updateBaseAndSocialSecurityAndFoundationBatch")
     public Result<Object> updateBaseAndSocialSecurityAndFoundationBatch(String[] userIds, double base, double socialSecurity, double foundation){
         userService.updateBaseAndSocialSecurityAndFoundationBatch(userIds, base, socialSecurity, foundation);
+        return ResultUtil.success();
+    }
+
+    @PostMapping(value = "/login")
+    @ApiOperation(value = "登录")
+    public Result<User> login(String id, String password, HttpSession session) {
+        return ResultUtil.success(userService.login(id, password, session));
+    }
+
+    @GetMapping(value = "/logout")
+    @ApiOperation(value = "注销")
+    public Result<Object> logout(HttpSession session) {
+        session.removeAttribute("user");
         return ResultUtil.success();
     }
 }

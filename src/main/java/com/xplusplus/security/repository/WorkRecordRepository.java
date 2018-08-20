@@ -3,9 +3,11 @@ package com.xplusplus.security.repository;
 import com.xplusplus.security.domain.Project;
 import com.xplusplus.security.domain.User;
 import com.xplusplus.security.domain.WorkRecord;
+import com.xplusplus.security.vo.ProjectHoursVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
@@ -96,4 +98,22 @@ public interface WorkRecordRepository extends JpaRepository<WorkRecord, Long> {
      * @return
      */
     public List<WorkRecord> findByStartTimeBetweenAndStatus(Date d1, Date d2, Integer status);
+
+    /**
+     * 统计项目工作总时长
+     *
+     * @return
+     */
+    @Query(value = "select new com.xplusplus.security.vo.ProjectHoursVO(w.project, sum(w.hours)) from WorkRecord w where w.status=1 group by w.project")
+    List<ProjectHoursVO> findProjectHours();
+
+    /**
+     * 按月统计项目工作总时长
+     *
+     * @param date1
+     * @param date2
+     * @return
+     */
+    @Query(value = "select new com.xplusplus.security.vo.ProjectHoursVO(w.project, sum(w.hours)) from WorkRecord w where w.status=1 and w.startTime>=?1 and w.startTime<?2 group by w.project")
+    List<ProjectHoursVO> findProjectHoursByMonth(Date date1, Date date2);
 }
