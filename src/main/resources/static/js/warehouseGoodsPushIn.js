@@ -2,6 +2,7 @@
 全局变量/
  */
 var index = 0
+var currentPage = 0
 $(document).ready(function () {
     index = 0
     /*
@@ -38,6 +39,7 @@ $(document).ready(function () {
 获取所有申请/
  */
 function getAllPurchaseApply() {
+    currentPage = 0
     $.ajax({
         url: ipPort + '/purchaseHeader/getAllByPage',
         success:function (obj) {
@@ -56,6 +58,8 @@ function getAllPurchaseApply() {
 设置入库表/
  */
 function setPurchaseApplyTable(obj) {
+    $('.currentPage').text(currentPage + 1)
+    $('.totalPage').text(obj.data.totalPages)
     var id = $('.purchaseApply-id')
     var name = $('.purchaseApply-staffName')
     var department = $('.purchaseApply-department')
@@ -219,6 +223,7 @@ function pushInGoods() {
 通过参数搜索/
  */
 function searchByParas() {
+    currentPage = 0
     var status = $('#selectStatus-dropdownMenu').attr('value')
     var staffId = $('#applyStaffId-input').val()
     if(status == '' && staffId != ''){
@@ -280,4 +285,104 @@ function searchByParas() {
         })
     }
 
+}
+/**********************************************************888/
+ /*
+ 上一页/
+ */
+function previousPage() {
+    var currentPage_ = $('.currentPage').text()
+    if(currentPage_ == 1){
+        alert("已经是第一页！")
+        return
+    }
+    currentPage--
+    if(currentPage < 0){
+        currentPage = 0
+    }
+    var page = currentPage
+    var size = 10
+    var sortFieldName = 'id'
+    var asc = 1
+    var urlStr = ipPort + '/purchaseHeader/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                setPurchaseApplyTable(obj)
+            }else{
+                console.log(obj)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+下一页/
+ */
+function nextPage() {
+    var currentPage_ = $('.currentPage').text()
+    var totalPage_ = $('.totalPage').text()
+    if(currentPage_ == totalPage_){
+        alert("已经是最后一页！")
+        return
+    }
+    currentPage++
+    var page = currentPage
+    var size = 10
+    var sortFieldName = 'id'
+    var asc = 1
+    var urlStr = ipPort + '/purchaseHeader/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                setPurchaseApplyTable(obj)
+            }else{
+                console.log(obj)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+跳转页/
+ */
+function skipPage() {
+    var skipPage_ = parseInt($('.skipPage').val())
+    var totalPage_ = parseInt($('.totalPage').text())
+    if(skipPage_ - totalPage_ > 0){
+        alert("没有此页！")
+        return
+    }
+    if(skipPage_ < 1){
+        alert("没有此页！")
+        return
+    }
+    currentPage = skipPage_ - 1
+    var page = currentPage
+    var size = 10
+    var sortFieldName = 'id'
+    var asc = 1
+    var urlStr = ipPort + '/purchaseHeader/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                setPurchaseApplyTable(obj)
+            }else{
+                console.log(obj)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
 }

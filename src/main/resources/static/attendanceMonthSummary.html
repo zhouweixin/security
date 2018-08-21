@@ -170,7 +170,7 @@
         <div class="main-body-content">
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#staffMonthSummary-panel" aria-controls="staffMonthSummary-panel" role="tab" data-toggle="tab">人员</a></li>
-                <li role="presentation"><a href="#projectMonthSummary-panel" aria-controls="projectMonthSummary-panel" role="tab" data-toggle="tab">项目</a></li>
+                <li role="presentation"><a href="#projectMonthSummary-panel" onclick="getProjectHoursByMonth()" aria-controls="projectMonthSummary-panel" role="tab" data-toggle="tab">项目</a></li>
             </ul>
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="staffMonthSummary-panel">
@@ -300,22 +300,13 @@
                                 </div>-->
                                 <div style="width:auto;height:34px;line-height:34px;float:left"><sapn>选择日期：</sapn></div>
                                 <div style="display: inline-block;width:200px;float: left;margin-right: 5px; margin-left: 5px">
-                                    <div class="input-group date to_date">
+                                    <div class="input-group date bottom-month">
                                         <input id="projectMonthSummary-date" class="form-control" type="text" value="年/月/日">
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                     </div>
                                 </div>
-
-                                <div class="input-group" style="width: 350px">
-                                    <input type="text" id="projectMonthSummary-name" class="form-control" placeholder="按项目名称搜索">
-                                    <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" onclick="getInformationByParameters()">搜索</button>
-                                <button class="btn btn-default" type="button" onclick="getAllContractInformation()">搜索全部</button>
-                            </span>
-                                </div>
-                            </div>
+                                <button class="btn btn-default" type="button" onclick="getProjectHoursByMonth()">搜索</button>
                             <div class="search-right">
-                                <button id="projectMonthSummary-export-button" class="btn btn-default" onclick="exportOriginalRecordTable('projectMonthSummaryTable')">导出记录</button>
                             </div>
                         </div>
                     </div>
@@ -331,51 +322,17 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="table-tr">
-                                <td class="projectMonthSummary-staffName">项目0</td>
-                                <td class="projectMonthSummary-staffID">未开始</td>
-                                <td class="projectMonthSummary-staffDepartment">徐州</td>
-                                <td class="projectMonthSummary-month">张三</td>
-                                <td class="projectMonthSummary-workDays">0</td>
-                            </tr>
-                            <tr class="table-tr">
-                                <td class="projectMonthSummary-staffName">项目1</td>
-                                <td class="projectMonthSummary-staffID">进行中</td>
-                                <td class="projectMonthSummary-staffDepartment">徐州公司</td>
-                                <td class="projectMonthSummary-month">张三</td>
-                                <td class="projectMonthSummary-workDays">1500</td>
-                            </tr>
-                            <tr class="table-tr">
-                                <td class="projectMonthSummary-staffName">项目2</td>
-                                <td class="projectMonthSummary-staffID">进行中</td>
-                                <td class="projectMonthSummary-staffDepartment">徐州公司</td>
-                                <td class="projectMonthSummary-month">张三</td>
-                                <td class="projectMonthSummary-workDays">1480</td>
-                            </tr>
-                            <tr class="table-tr">
-                                <td class="projectMonthSummary-staffName">项目3</td>
-                                <td class="projectMonthSummary-staffID">已结束</td>
-                                <td class="projectMonthSummary-staffDepartment">徐州公司</td>
-                                <td class="projectMonthSummary-month">产世兵</td>
-                                <td class="projectMonthSummary-workDays">0</td>
-                            </tr>
-                            </tbody>
+                            <!--<tr class="table-tr hidden">-->
+                                <!--<td class="projectMonthSummary-name"></td>-->
+                                <!--<td class="projectMonthSummary-status"></td>-->
+                                <!--<td class="projectMonthSummary-customerName"></td>-->
+                                <!--<td class="projectMonthSummary-leader"></td>-->
+                                <!--<td class="projectMonthSummary-hours"></td>-->
+                            <!--</tr>-->
                         </table>
                     </div>
                     <div class="page-body">
-                        <ul class="page-ul">
-                            <li class="page-ul-li">
-                                <div class="input-group" style="width: 110px">
-                                    <input type="text" class="form-control" placeholder="">
-                                    <span class="input-group-btn">
-                                <button id="jump-button" class="btn btn-default" type="button">跳转</button>
-                             </span>
-                                </div>
-                            </li>
-                            <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-left"></span></a></li>
-                            <li class="page-ul-li" style="margin-top: 8px"><span>1/255</span></li>
-                            <li class="page-ul-li"><a class="btn btn-default page-button"><span class="caret caret-right"></span></a></li>
-                        </ul>
+
                     </div>
                 </div>
             </div>

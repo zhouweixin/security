@@ -9,6 +9,7 @@ $(document).ready(function () {
     //设置选择月份为当天日期
     var today_date = new Date().toLocaleDateString()
     $('#staffMonthSummary-date').val(today_date.split('/')[0] + '/' + today_date.split('/')[1])
+    $('#projectMonthSummary-date').val(today_date.split('/')[0] + '/' + today_date.split('/')[1])
 })
 
 /*
@@ -97,6 +98,56 @@ function setMonthSummaryTable(obj) {
         }
         $('#staffMonthSummaryTable').find('tbody td').css('border-top', 'none')
         $('#staffMonthSummaryTable').find('tbody td').css('border-right', 'none')
+    }
+}
+
+/**************************************项目*****************************************/
+/*
+获取项目小时/
+ */
+function getProjectHoursByMonth() {
+    var date = $('#projectMonthSummary-date').val()
+    if(date == '年/月'){
+        date = '2000-01'
+    }else{
+        date = date.replace(/\//g, '-')
+    }
+    var urlStr = ipPort + '/workRecord/getProjectHoursByMonth?date=' + date
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                setProjectMonthSummaryTable(obj)
+            }else{
+                console.log(obj)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+设置月统计table/
+ */
+function setProjectMonthSummaryTable(obj) {
+    console.log(obj)
+    if(obj.data.length != 0){
+        var parent = $('#projectMonthSummaryTable tbody')
+        parent.find('.table-tr').remove()
+        for(var i = 0; i < obj.data.length; i++){
+            var appendStr = "<tr class='table-tr'>\n" +
+                "<td class='projectMonthSummary-name'>" + obj.data[i].project.name + "</td>" +
+                "<td class='projectMonthSummary-status'>" + obj.data[i].project.projectStatus.name + "</td>" +
+                "<td class='staffMonthSummary-customerName'>" + obj.data[i].project.customerUnit + "</td>" +
+                "<td class='staffMonthSummary-leader'>" + obj.data[i].project.leader.name + "</td>" +
+                "<td class='staffMonthSummary-hours'>" + obj.data[i].hours + "</td>" +
+                "</tr>"
+            parent.append(appendStr)
+        }
+        $('#projectMonthSummaryTable').find('tbody td').css('border-top', 'none')
+        $('#projectMonthSummaryTable').find('tbody td').css('border-right', 'none')
     }
 }
 /*

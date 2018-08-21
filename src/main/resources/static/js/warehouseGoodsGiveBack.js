@@ -58,6 +58,35 @@ function getAllMaterialUserBypage() {
     })
 }
 /*
+通过参数获取物品用户关系/
+ */
+function searchByParas() {
+    var name = $('#giveBack-name').val()
+    var status = $('#giveBack-status').attr('value')
+    currentPage = 0
+    var page = currentPage
+    var size = 10
+    var sortFieldName = 'id'
+    var asc = 1
+    var urlStr = ipPort + '/gooutMaterialUser/getByStatusAndNameLikeByPage?page='+ page + '&size=' + size + '&sortFieldName='
+        + sortFieldName + '&asc=' + asc + '&status=' + status + '&userName=' + name
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            console.log(obj)
+            if(obj.code == 0){
+                setAllMaterialUserTable(obj)
+            }else{
+                console.log(obj)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
 设置物品用户关系table/
  */
 function setAllMaterialUserTable(obj) {

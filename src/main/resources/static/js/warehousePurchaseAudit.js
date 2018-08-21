@@ -2,6 +2,7 @@
 全局变量/
  */
 var index = 0
+var currentPage = 0
 $(document).ready(function () {
     index = 0
     /*
@@ -89,6 +90,7 @@ $(document).ready(function () {
 初始化/
  */
 function getPurchaseApplyinit() {
+    currentPage = 0
     var id = 'zy00002'
     $.ajax({
         url: ipPort + '/purchaseHeader/getByAuditorByPage?id=' + id,
@@ -108,6 +110,7 @@ function getPurchaseApplyinit() {
 通过审核人编码查询/
  */
 function getPurchaseApplyByAuditId() {
+    currentPage = 0
     var id = $('#auditorId-input').val()
     var status = $('#selectStatus-dropdownMenu').attr('value')
     console.log(ipPort + '/purchaseHeader/getByAuditorByPage?id=' + id + '&status=' + status)
@@ -135,6 +138,8 @@ function getPurchaseApplyByAuditId() {
 设置申请表/
  */
 function setMainTable(obj, auditId) {
+    $('.currentPage').text(currentPage + 1)
+    $('.totalPage').text(obj.data.totalPages)
     var id = $('.purchaseApply-id')
     var name = $('.purchaseApply-staffName')
     var time = $('.purchaseApply-applyTime')
@@ -243,6 +248,109 @@ function submitPurchaseAudit(thisObj) {
             }
         },
         error: function (error) {
+            console.log(error)
+        }
+    })
+}
+/**********************************************************888/
+ /*
+ 上一页/
+ */
+function previousPage() {
+    var currentPage_ = $('.currentPage').text()
+    if(currentPage_ == 1){
+        alert("已经是第一页！")
+        return
+    }
+    currentPage--
+    if(currentPage < 0){
+        currentPage = 0
+    }
+    var page = currentPage
+    var size = 10
+    var sortFieldName = 'id'
+    var asc = 1
+    var id = 'zy00002'
+    var urlStr = ipPort + '/purchaseHeader/getByAuditorByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&id=' + id
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                setMainTable(obj, id)
+            }else{
+                console.log(obj)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+下一页/
+ */
+function nextPage() {
+    var currentPage_ = $('.currentPage').text()
+    var totalPage_ = $('.totalPage').text()
+    if(currentPage_ == totalPage_){
+        alert("已经是最后一页！")
+        return
+    }
+    currentPage++
+    var page = currentPage
+    var size = 10
+    var sortFieldName = 'id'
+    var asc = 1
+    var id = 'zy00002'
+    var urlStr = ipPort + '/purchaseHeader/getByAuditorByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&id=' + id
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                setMainTable(obj, id)
+            }else{
+                console.log(obj)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+跳转页/
+ */
+function skipPage() {
+    var skipPage_ = parseInt($('.skipPage').val())
+    var totalPage_ = parseInt($('.totalPage').text())
+    if(skipPage_ - totalPage_ > 0){
+        alert("没有此页！")
+        return
+    }
+    if(skipPage_ < 1){
+        alert("没有此页！")
+        return
+    }
+    currentPage = skipPage_ - 1
+    var page = currentPage
+    var size = 10
+    var sortFieldName = 'id'
+    var asc = 1
+    var id = 'zy00002'
+    var urlStr = ipPort + '/purchaseHeader/getByAuditorByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&id=' + id
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                setMainTable(obj, id)
+            }else{
+                console.log(obj)
+            }
+        },
+        error:function (error) {
             console.log(error)
         }
     })

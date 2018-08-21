@@ -1,4 +1,5 @@
 var currentPage = 0
+var deleteID = ''
 $(document).ready(function () {
     /*
     申请报损按钮/
@@ -127,6 +128,7 @@ function submitReportSpoiled() {
 
     var urlStr = ipPort + '/lossEntry/add?stock.id='+ storeId + '&material.id=' + goodsId + '&applyUser.id=' + applyId
         + '&stockNumber=' + stockNum + '&lossNumber=' + lossNum + '&restNumber=' + restNum + '&reason=' + reason
+    console.log(urlStr)
     $.ajax({
         url:urlStr,
         dataType:'json',
@@ -159,7 +161,7 @@ function getAllLossEntry() {
         success:function (obj) {
             console.log(obj)
             if(obj.code == 0){
-                //setAllLossEntryTable(obj)
+                setAllLossEntryTable(obj)
             }else{
                 console.log(obj)
             }
@@ -170,32 +172,184 @@ function getAllLossEntry() {
     })
 }
 /*
+通过参数搜索报损表/
+ */
+function searchLossEntryByParas() {
+    currentPage = 0
+    var page = currentPage
+    var status = $('#selectStatus-dropdownMenu').attr('value')
+    var name = $('#reportSpoiledTablePanel-goodsName').val()
+    if(status == '' && name != ''){
+        $.ajax({
+            url: ipPort + '/lossEntry/getByMaterialNameLikeByPage?name=' + name + '&page=' + page,
+            success:function (obj) {
+                if(obj.code == 0){
+                    if(obj.data.content.numberOfElements == 0){
+                        alert('无相关信息！')
+                        setAllLossEntryTable(obj)
+                    }else{
+                        setAllLossEntryTable(obj)
+                    }
+                }else{
+                    alert(obj.message)
+                }
+            },
+            error:function (error) {
+                console.log(error)
+            }
+        })
+    }else {
+        $.ajax({
+            url: ipPort + '/lossEntry/getByStatusAndMaterialNameLikeByPage?status=' + status + '&name=' + name + '&page=' + page,
+            success:function (obj) {
+                if(obj.code == 0){
+                    if(obj.data.content.numberOfElements == 0){
+                        alert('无相关信息！')
+                        setAllLossEntryTable(obj)
+                    }else{
+                        setAllLossEntryTable(obj)
+                    }
+                }else{
+                    alert(obj.message)
+                }
+            },
+            error:function (error) {
+                console.log(error)
+            }
+        })
+    }
+
+}
+/*
 设置报损table/
  */
 function setAllLossEntryTable(obj) {
-    $('#allWarehouseGoodsInformationPanel .currentPage').text(currentPage + 1)
-    $('#allWarehouseGoodsInformationPanel .totalPage').text(obj.data.totalPages)
-    var id = $('.allWarehouseGoodsInformation-goodsId')
-    var name = $('.allWarehouseGoodsInformation-goodsName')
-    var unit = $('.allWarehouseGoodsInformation-unit')
-    var number = $('.allWarehouseGoodsInformation-goodsNumber')
-    var tr = $('#allWarehouseGoodsInformationPanel .table-tr')
+    $('#reportSpoiledTablePanel .currentPage').text(currentPage + 1)
+    $('#reportSpoiledTablePanel .totalPage').text(obj.data.totalPages)
+    var id = $('.reportSpoiledTablePanel-goodsID')
+    var name = $('.reportSpoiledTablePanel-goodsName')
+    var applyUserName = $('.reportSpoiledTablePanel-applyUserName')
+    var stockNumber = $('.reportSpoiledTablePanel-stockNumber')
+    var lossNumber = $('.reportSpoiledTablePanel-lossNumber')
+    var applyTime = $('.reportSpoiledTablePanel-applyTime')
+    var reason = $('.reportSpoiledTablePanel-reason')
+    var status = $('.reportSpoiledTablePanel-status')
+    var deleteA = $('.reportSpoiledTablePanel-delete').find('a')
+    var tr = $('#reportSpoiledTablePanel .table-tr')
     for(var i = 0; i < obj.data.numberOfElements; i++){
         tr.eq(i).removeClass('hidden')
-        id.eq(i).text('')
-        id.eq(i).attr('value', '')
-        name.eq(i).text('')
-        unit.eq(i).text('')
-        number.eq(i).text('')
+        deleteA.eq(i).attr('onclick', 'setMakeSureDeleteModal(this)')
+        deleteA.eq(i).css('color', '#337ab7')
+        deleteA.eq(i).css('cursor', 'pointer')
         id.eq(i).text(obj.data.content[i].material.id)
         id.eq(i).attr('value', obj.data.content[i].id)
         name.eq(i).text(obj.data.content[i].material.name)
-        unit.eq(i).text(obj.data.content[i].material.unit)
-        number.eq(i).text(obj.data.content[i].number)
+        applyUserName.eq(i).text(obj.data.content[i].applyUser.name)
+        applyUserName.eq(i).attr('value', obj.data.content[i].id)
+        stockNumber.eq(i).text(obj.data.content[i].stockNumber)
+        lossNumber.eq(i).text(obj.data.content[i].lossNumber)
+        applyTime.eq(i).text(new Date(obj.data.content[i].applyTime).toLocaleDateString())
+        reason.eq(i).text(obj.data.content[i].reason)
+        switch (obj.data.content[i].status) {
+            case 0:status.eq(i).text('未审核');break;
+            case 1:status.eq(i).text('通过');
+                deleteA.eq(i).removeAttr('onclick');
+                deleteA.eq(i).css('color', '#5A5A5A');
+                deleteA.eq(i).css('cursor', 'default');
+                break;
+            case 2:status.eq(i).text('未通过');break;
+            case 3:status.eq(i).text('无需审核');
+                deleteA.eq(i).removeAttr('onclick');
+                deleteA.eq(i).css('color', '#5A5A5A');
+                deleteA.eq(i).css('cursor', 'default');
+                break;
+            break;
+        }
     }
     for(var i = obj.data.numberOfElements; i < 10; i++){
         tr.eq(i).addClass('hidden')
     }
+}
+/*
+设置报损详情modal/
+ */
+function setReportSpoiledDetailsModal(thisObj) {
+    var parent = $(thisObj).parent().parent()
+    var id = parent.find('.reportSpoiledTablePanel-goodsID').attr('value')
+    $('#myModal-reportSpoiledDetails').modal('toggle')
+    $.ajax({
+        url: ipPort + '/lossEntry/getById?id=' + id,
+        success: function (obj) {
+            console.log(obj)
+
+            $('#myModal-reportSpoiledDetails .applyUserName').text('')
+            $('#myModal-reportSpoiledDetails .applyTime').text('')
+            $('#myModal-reportSpoiledDetails .applyReason').val('')
+            $('#myModal-reportSpoiledDetails .applyStatus').val('')
+            $('#myModal-reportSpoiledDetails table tbody').find('td').eq(0).text('')
+            $('#myModal-reportSpoiledDetails table tbody').find('td').eq(1).text('')
+            $('#myModal-reportSpoiledDetails table tbody').find('td').eq(2).text('')
+            $('#myModal-reportSpoiledDetails .note').val('')
+            $('#myModal-reportSpoiledDetails .auditor').text('')
+            $('#myModal-reportSpoiledDetails .auditTime').text('')
+
+            if (obj.code == 0) {
+                $('#myModal-reportSpoiledDetails .applyUserName').text(obj.data.applyUser.name)
+                $('#myModal-reportSpoiledDetails .applyTime').text(new Date(obj.data.applyTime).toLocaleDateString())
+                $('#myModal-reportSpoiledDetails .applyReason').val(obj.data.reason)
+                switch (obj.data.status) {
+                    case 0:  $('#myModal-reportSpoiledDetails .applyStatus').text('未审核');break;
+                    case 1:  $('#myModal-reportSpoiledDetails .applyStatus').text('通过');break;
+                    case 2:  $('#myModal-reportSpoiledDetails .applyStatus').text('未通过');break;
+                    case 3:  $('#myModal-reportSpoiledDetails .applyStatus').text('无需审核');break;
+                    break;
+                }
+               var td = $('#myModal-reportSpoiledDetails table tbody').find('td')
+                td.eq(0).text(obj.data.material.id)
+                td.eq(1).text(obj.data.material.name)
+                td.eq(2).text(obj.data.lossNumber)
+                $('#myModal-reportSpoiledDetails .note').val(obj.data.note)
+                if(obj.data.auditor){
+                    $('#myModal-reportSpoiledDetails .auditor').text(obj.data.auditor.name)
+                }
+                if(obj.data.auditTime){
+                    $('#myModal-reportSpoiledDetails .auditTime').text(new Date(obj.data.auditTime).toLocaleDateString())
+                }
+            } else {
+                alert(obj.message);
+            }
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+设置删除modal/
+ */
+function setMakeSureDeleteModal(thisObj) {
+    var parent = $(thisObj).parent().parent()
+    deleteID = parent.find('.reportSpoiledTablePanel-goodsID').attr('value')
+    $('#myModal-makeSureDelete').modal('toggle')
+}
+/*
+确认删除/
+ */
+function makeSureDelete() {
+    $.ajax({
+        url: ipPort + '/lossEntry/deleteById?id=' + deleteID,
+        success: function (obj) {
+            if (obj.code == 0) {
+                alert('删除成功！')
+                getAllLossEntry()
+            } else {
+                alert(obj.message);
+            }
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    })
 }
 /*
 上一页/

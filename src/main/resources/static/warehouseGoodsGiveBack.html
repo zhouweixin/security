@@ -126,19 +126,19 @@
                 <div class="search-content" style="height: 34px;">
                     <div class="search-left">
                         <div class="dropdown col-xs-2 select-department" style="padding: 0">
-                            <button class="btn btn-default dropdown-toggle" type="button" value='' id="selectStatus-dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <button class="btn btn-default dropdown-toggle" type="button" value='-1' id="giveBack-status" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                 选择状态
                                 <span class="caret"></span>
                             </button>
-                            <ul class="dropdown-menu selectStatus-dropdownMenu-ul" aria-labelledby="selectStatus-dropdownMenu">
-                                <li><a value="">选择状态</a></li>
+                            <ul class="dropdown-menu selectStatus-dropdownMenu-ul" aria-labelledby="giveBack-status">
+                                <li><a value="-1">选择状态</a></li>
                                 <li><a value="0">未归还</a></li>
                                 <li><a value="1">已归还</a></li>
                                 <li><a value="2">无需归还</a></li>
                             </ul>
                         </div>
                         <div class="input-group col-xs-4">
-                            <input id="applyStaffId-input" type="text" class="form-control" placeholder="归还人编号">
+                            <input id="giveBack-name" type="text" class="form-control" placeholder="归还人姓名">
                             <span class="input-group-btn">
                         <button class="btn btn-default" type="button" onclick="searchByParas()">搜索</button>
                         <button class="btn btn-default" type="button" onclick="getAllMaterialUserBypage()">搜索全部</button>

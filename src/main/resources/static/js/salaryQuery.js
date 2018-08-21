@@ -187,6 +187,23 @@ function updateWage() {
  */
 function printSalaryTable() {
     $('#myModal-printInit').modal('toggle')
+    var urlStr = ipPort + '/wageEntry/getAllByMonth?date=' + '2018-08'
+    console.log(urlStr)
+    $.ajax({
+        url:urlStr,
+        type:'post',
+        dataType:'json',
+        success:function (obj) {
+            console.log(obj)
+            if(obj.code == 0){
+            }else{
+                console.log(obj)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
     if($('.printAll-box').checked == true){//如果全部打印为真
 
     }

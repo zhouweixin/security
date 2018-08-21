@@ -34,9 +34,12 @@ function getAllWorkRecords() {
 
 function getWorkRecordsByParameters() {
     var project = $('#dailyStatistics-project').attr('value')
+    if(!project){
+        project = ''
+    }
     var date = $('#dailyStatistics-date').val()
     if(date == '年/月/日'){
-        date = ''
+        date = '2000-01-01'
     }else{
         date = date.replace(/\//g, '-')
     }
@@ -47,7 +50,7 @@ function getWorkRecordsByParameters() {
     var sortFieldName = 'startTime'
     var asc = 0
     var urlStr = ipPort + '/workRecord/getByProjectAndDateAndNameLike?page='+ page + '&size=' + size + '&sortFieldName='
-        + sortFieldName + '&asc=' + asc + '&date=' + date + '&name=' + name + 'projectId=' + project
+        + sortFieldName + '&asc=' + asc + '&date=' + date + '&name=' + name + '&projectId=' + project
     console.log(urlStr)
     $.ajax({
         url:urlStr,
