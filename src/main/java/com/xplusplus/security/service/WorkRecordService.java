@@ -319,15 +319,10 @@ public class WorkRecordService {
                 throw new SecurityExceptions(EnumExceptions.QUERY_FAILED_PROJECT_NOT_EXISTS);
             }
 
-            System.out.println("=====================");
-            System.out.println(project.getId());
-            System.out.println(users.size());
-            System.out.println("=====================");
-
             return workRecordRepository.findByProjectAndUserInAndStatus(project, users, 1, pageable);
         }
 
-        if(projectId != -1 && sdf.format(date).equals("2000-01-01")){
+        if(projectId != -1 && !sdf.format(date).equals("2000-01-01")){
             Project project = null;
             if((project = projectRepository.findOne(projectId)) == null){
                 throw new SecurityExceptions(EnumExceptions.QUERY_FAILED_PROJECT_NOT_EXISTS);
@@ -340,6 +335,16 @@ public class WorkRecordService {
             calendar2.add(Calendar.DAY_OF_MONTH, 1);
 
             return workRecordRepository.findByProjectAndStartTimeBetweenAndUserInAndStatus(project, calendar1.getTime(), calendar2.getTime(), users, 1, pageable);
+        }
+
+        if(projectId == -1 && !sdf.format(date).equals("2000-01-01")){
+            Calendar calendar1 = Calendar.getInstance();
+            Calendar calendar2 = Calendar.getInstance();
+            calendar1.setTime(date);
+            calendar2.setTime(date);
+            calendar2.add(Calendar.DAY_OF_MONTH, 1);
+
+            return workRecordRepository.findByStartTimeBetweenAndUserInAndStatus(calendar1.getTime(), calendar2.getTime(), users, 1, pageable);
         }
 
         return workRecordRepository.findByUserInAndStatus(users, 1, pageable);

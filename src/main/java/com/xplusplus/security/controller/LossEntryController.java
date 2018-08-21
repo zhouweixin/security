@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
 import java.util.List;
@@ -19,6 +20,8 @@ import java.util.List;
  * @Date: Created in 8:28 2018/7/9
  * @Modified By:
  */
+@RestController
+@RequestMapping(value = "/lossEntry")
 public class LossEntryController {
     @Autowired
     private LossEntryService lossEntryService;

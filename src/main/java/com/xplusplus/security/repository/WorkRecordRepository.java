@@ -116,4 +116,6 @@ public interface WorkRecordRepository extends JpaRepository<WorkRecord, Long> {
      */
     @Query(value = "select new com.xplusplus.security.vo.ProjectHoursVO(w.project, sum(w.hours)) from WorkRecord w where w.status=1 and w.startTime>=?1 and w.startTime<?2 group by w.project")
     List<ProjectHoursVO> findProjectHoursByMonth(Date date1, Date date2);
+
+    Page<WorkRecord> findByStartTimeBetweenAndUserInAndStatus(Date time, Date time1, List<User> users, int status, Pageable pageable);
 }

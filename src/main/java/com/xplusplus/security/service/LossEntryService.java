@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Date;
@@ -25,6 +26,7 @@ import java.util.List;
  * @Date: Created in 8:27 2018/7/9
  * @Modified By:
  */
+@Service
 public class LossEntryService {
     @Autowired
     private LossEntryRepository lossEntryRepository;
