@@ -120,26 +120,26 @@ function setAllWageTable(obj) {
 /*
 单个修改工资单/
  */
-function updateWage() {
-    var parent = $(this).parent().parent()
+function updateWage(thisObj) {
+    var parent = $(thisObj).parent().parent()
     var id = parent.find('.salaryQuery-checkBox').attr('value')
     var staffName = parent.find('.salaryQuery-staffName').text()
     var staffId = parent.find('.salaryQuery-staffName').attr('value')
     var department = parent.find('.salaryQuery-department').text()
     var idCard = parent.find('.salaryQuery-idCard').text()
-    var bankCard = parent.find('.salaryQuery-bankCard').val()
-    var baseWage = parent.find('.salaryQuery-baseWage').val()
-    var projectWage = parent.find('.salaryQuery-projectWage').val()
-    var fullAttenBonus = parent.find('.salaryQuery-fullAttenBonus').val()
-    var bonus = parent.find('.salaryQuery-bonus').val()
-    var overtimeWage = parent.find('.salaryQuery-overtimeWage').val()
-    var boardWage = parent.find('.salaryQuery-boardWage').val()
-    var socialSecuritySubsidyWage = parent.find('.salaryQuery-socialSecuritySubsidyWage').val()
-    var foundation = parent.find('.salaryQuery-foundation').val()
-    var deductionWage = parent.find('.salaryQuery-deductionWage').val()
-    var workDays = parent.find('.salaryQuery-workDays').val()
-    var grossPay = parent.find('.salaryQuery-grossPay').val()
-    var realPay = parent.find('.salaryQuery-realPay').val()
+    var bankCard = parent.find('.salaryQuery-bankCard input').val()
+    var baseWage = parent.find('.salaryQuery-baseWage input').val()
+    var projectWage = parent.find('.salaryQuery-projectWage input').val()
+    var fullAttenBonus = parent.find('.salaryQuery-fullAttenBonus input').val()
+    var bonus = parent.find('.salaryQuery-bonus input').val()
+    var overtimeWage = parent.find('.salaryQuery-overtimeWage input').val()
+    var boardWage = parent.find('.salaryQuery-boardWage input').val()
+    var socialSecuritySubsidyWage = parent.find('.salaryQuery-socialSecuritySubsidyWage input').val()
+    var foundation = parent.find('.salaryQuery-foundation input').val()
+    var deductionWage = parent.find('.salaryQuery-deductionWage input').val()
+    var workDays = parent.find('.salaryQuery-workDays input').val()
+    var grossPay = parent.find('.salaryQuery-grossPay input').val()
+    var realPay = parent.find('.salaryQuery-realPay input').val()
 
     var jsonArr = []
     var json_ = {
@@ -163,6 +163,7 @@ function updateWage() {
         'realPay': realPay
     }
     jsonArr.push(json_)
+    console.log(jsonArr)
     let myjson = JSON.stringify(jsonArr)
     $.ajax({
         url: ipPort + '/wageEntry/update',
@@ -183,35 +184,222 @@ function updateWage() {
     })
 }
 /*
-打印薪资表/
+批量修改工资单/
  */
-function printSalaryTable() {
-    $('#myModal-printInit').modal('toggle')
-    var urlStr = ipPort + '/wageEntry/getAllByMonth?date=' + '2018-08'
-    console.log(urlStr)
+function updateWageInBatch() {
+    var select_sub_box = $('.select-sub-box')
+    var table_tr = $('.table-tr')
+    var jsonArr = []
+    for(var i = 0; i < select_sub_box.length; i++){
+        if(select_sub_box.eq(i).is(':checked') == true){
+            var parent = table_tr.eq(i)
+            var id = parent.find('.salaryQuery-checkBox').attr('value')
+            var staffName = parent.find('.salaryQuery-staffName').text()
+            var staffId = parent.find('.salaryQuery-staffName').attr('value')
+            var department = parent.find('.salaryQuery-department').text()
+            var idCard = parent.find('.salaryQuery-idCard').text()
+            var bankCard = parent.find('.salaryQuery-bankCard input').val()
+            var baseWage = parent.find('.salaryQuery-baseWage input').val()
+            var projectWage = parent.find('.salaryQuery-projectWage input').val()
+            var fullAttenBonus = parent.find('.salaryQuery-fullAttenBonus input').val()
+            var bonus = parent.find('.salaryQuery-bonus input').val()
+            var overtimeWage = parent.find('.salaryQuery-overtimeWage input').val()
+            var boardWage = parent.find('.salaryQuery-boardWage input').val()
+            var socialSecuritySubsidyWage = parent.find('.salaryQuery-socialSecuritySubsidyWage input').val()
+            var foundation = parent.find('.salaryQuery-foundation input').val()
+            var deductionWage = parent.find('.salaryQuery-deductionWage input').val()
+            var workDays = parent.find('.salaryQuery-workDays input').val()
+            var grossPay = parent.find('.salaryQuery-grossPay input').val()
+            var realPay = parent.find('.salaryQuery-realPay input').val()
+            var json_ = {
+                'id': id,
+                'userId': staffId,
+                'userName': staffName,
+                'originalSpot': department,
+                'idNumber': idCard,
+                'cardNumber': bankCard,
+                'baseWage': baseWage,
+                'projectWage': projectWage,
+                'fullAttenBonus': fullAttenBonus,
+                'bonus': bonus,
+                'overtimeWage': overtimeWage,
+                'boardWage': boardWage,
+                'socialSecuritySubsidyWage': socialSecuritySubsidyWage,
+                'foundation': foundation,
+                'deductionWage': deductionWage,
+                'workDays': workDays,
+                'grossPay': grossPay,
+                'realPay': realPay
+            }
+            jsonArr.push(json_)
+        }
+    }
+    console.log(jsonArr)
+    let myjson = JSON.stringify(jsonArr)
     $.ajax({
-        url:urlStr,
-        type:'post',
-        dataType:'json',
-        success:function (obj) {
-            console.log(obj)
+        url: ipPort + '/wageEntry/update',
+        contentType: 'application/json',
+        data: myjson,
+        dataType: 'json',
+        type: 'post',
+        success: function (obj) {
             if(obj.code == 0){
-            }else{
-                console.log(obj)
+                alert('修改成功！')
+            }else {
+                alert(obj.message)
             }
         },
-        error:function (error) {
+        error: function (error) {
             console.log(error)
         }
     })
-    if($('.printAll-box').checked == true){//如果全部打印为真
-
+}
+/*
+设置打印薪资表modal/
+ */
+function setPrintSalaryTable() {
+    $('.print-body2').addClass('hidden')
+    $('.print-body1').removeClass('hidden')
+    $('#myModal-printTable').modal('toggle')
+    if($('.printAll-box').is(':checked') == true){//如果全部打印为真
+        var month = $('#salaryQuery-month').val()
+        month = month.replace(/\//g, '-')
+        var urlStr = ipPort + '/wageEntry/getAllByMonth?date=' + month
+        $.ajax({
+            url:urlStr,
+            type:'post',
+            dataType:'json',
+            success:function (obj) {
+                console.log(obj)
+                if(obj.code == 0){
+                    setAllPrintTable(obj)
+                }else{
+                    console.log(obj)
+                }
+            },
+            error:function (error) {
+                console.log(error)
+            }
+        })
     }
     else{//为否
-
+        var page = currentPage
+        var size = 10
+        var sortFieldName = 'startTime'
+        var asc = 1
+        var month = $('#salaryQuery-month').val()
+        month = month.replace(/\//g, '-')
+        var urlStr = ipPort + '/wageEntry/getByDateAndNameLikeByPage?page='+ page + '&size=' + size + '&sortFieldName='
+            + sortFieldName + '&asc=' + asc + '&date=' + month
+        $.ajax({
+            url:urlStr,
+            dataType:'json',
+            success:function (obj) {
+                console.log(obj)
+                if(obj.code == 0){
+                    setPartPrintTable(obj)
+                }else{
+                    console.log(obj)
+                }
+            },
+            error:function (error) {
+                console.log(error)
+            }
+        })
     }
 }
-
+/*
+设置部分打印table/
+ */
+function setPartPrintTable(obj) {
+    var parent = $('#myModal-printTable tbody')
+    parent.find('.table-tr').remove()
+    var length = obj.data.content.length
+    if(length != 0){
+        for(var i = 0; i < length; i++){
+            var idNumber = ''
+            if(obj.data.content[i].idNumber){
+                idNumber = obj.data.content[i].idNumber
+            }
+            var cardNumber = ''
+            if(obj.data.content[i].cardNumber){
+                cardNumber = obj.data.content[i].cardNumber
+            }
+            var appendStr = "<tr class='table-tr' style='display: block;'>\n" +
+                "<td style='display: block;width: 6%'>" + obj.data.content[i].userName + "</td>" +
+                "<td style='display: block;width: 6%'>" + obj.data.content[i].originalSpot + "</td>" +
+                "<td style='display: block;width: 14%'>" + idNumber + "</td>" +
+                "<td style='display: block;width: 14%'>" + cardNumber + "</td>" +
+                "<td style='display: block;width: 5%'>" + obj.data.content[i].baseWage + "</td>" +
+                "<td style='display: block;width: 5%'>" + obj.data.content[i].projectWage + "</td>" +
+                "<td style='display: block;width: 5%'>" + obj.data.content[i].fullAttenBonus + "</td>" +
+                "<td style='display: block;width: 5%'>" + obj.data.content[i].bonus + "</td>" +
+                "<td style='display: block;width: 5%'>" + obj.data.content[i].overtimeWage + "</td>" +
+                "<td style='display: block;width: 5%'>" + obj.data.content[i].boardWage + "</td>" +
+                "<td style='display: block;width: 5%'>" + obj.data.content[i].socialSecuritySubsidyWage + "</td>" +
+                "<td style='display: block;width: 5%'>" + obj.data.content[i].foundation + "</td>" +
+                "<td style='display: block;width: 5%'>" + obj.data.content[i].deductionWage + "</td>" +
+                "<td style='display: block;width: 5%'>" + obj.data.content[i].workDays + "</td>" +
+                "<td style='display: block;width: 5%'>" + obj.data.content[i].grossPay + "</td>" +
+                "<td style='display: block;width: 5%'>" + obj.data.content[i].realPay + "</td>" +
+                "</tr>"
+            parent.append(appendStr)
+        }
+        $('#myModal-printTable').find('tbody td').css('border-top', 'none')
+        $('#myModal-printTable').find('tbody td').css('border-right', 'none')
+    }
+    $('.print-body1').addClass('hidden')
+    $('.print-body2').removeClass('hidden')
+}
+/*
+设置部分打印table/
+ */
+function setAllPrintTable(obj) {
+    var parent = $('#myModal-printTable tbody')
+    parent.find('.table-tr').remove()
+    var length = obj.data.length
+    if(length != 0){
+        for(var i = 0; i < length; i++){
+            var idNumber = ''
+            if(obj.data[i].idNumber){
+                idNumber = obj.data[i].idNumber
+            }
+            var cardNumber = ''
+            if(obj.data[i].cardNumber){
+                cardNumber = obj.data[i].cardNumber
+            }
+            var appendStr = "<tr class='table-tr' style='display: block;'>\n" +
+                "<td style='display: block;width: 6%'>" + obj.data[i].userName + "</td>" +
+                "<td style='display: block;width: 6%'>" + obj.data[i].originalSpot + "</td>" +
+                "<td style='display: block;width: 14%'>" + idNumber + "</td>" +
+                "<td style='display: block;width: 14%'>" + cardNumber + "</td>" +
+                "<td style='display: block;width: 5%'>" + obj.data[i].baseWage + "</td>" +
+                "<td style='display: block;width: 5%'>" + obj.data[i].projectWage + "</td>" +
+                "<td style='display: block;width: 5%'>" + obj.data[i].fullAttenBonus + "</td>" +
+                "<td style='display: block;width: 5%'>" + obj.data[i].bonus + "</td>" +
+                "<td style='display: block;width: 5%'>" + obj.data[i].overtimeWage + "</td>" +
+                "<td style='display: block;width: 5%'>" + obj.data[i].boardWage + "</td>" +
+                "<td style='display: block;width: 5%'>" + obj.data[i].socialSecuritySubsidyWage + "</td>" +
+                "<td style='display: block;width: 5%'>" + obj.data[i].foundation + "</td>" +
+                "<td style='display: block;width: 5%'>" + obj.data[i].deductionWage + "</td>" +
+                "<td style='display: block;width: 5%'>" + obj.data[i].workDays + "</td>" +
+                "<td style='display: block;width: 5%'>" + obj.data[i].grossPay + "</td>" +
+                "<td style='display: block;width: 5%'>" + obj.data[i].realPay + "</td>" +
+                "</tr>"
+            parent.append(appendStr)
+        }
+        $('#myModal-printTable').find('tbody td').css('border-top', 'none')
+        $('#myModal-printTable').find('tbody td').css('border-right', 'none')
+    }
+    $('.print-body1').addClass('hidden')
+    $('.print-body2').removeClass('hidden')
+}
+/*
+打印/
+ */
+function printSalaryTable() {
+    
+}
 /*
 上一页/
  */

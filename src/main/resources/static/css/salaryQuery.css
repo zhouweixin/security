@@ -131,3 +131,12 @@ input.printAll-box{
     height: 18px;
     width: 18px;
 }
+#printTable thead tr th{
+    display: block;
+    float: left;
+}
+#printTable tbody tr td{
+    display: block;
+    float: left;
+    height: 37px;
+}
