@@ -35,7 +35,7 @@ function getAllWorkRecords() {
 function getWorkRecordsByParameters() {
     var project = $('#dailyStatistics-project').attr('value')
     if(!project){
-        project = ''
+        project = '-1'
     }
     var date = $('#dailyStatistics-date').val()
     if(date == '年/月/日'){
@@ -78,6 +78,8 @@ function setAllWorkRecordsTable(obj) {
         var i = 0
         setAllWorkRecordsTableCallBack(i, obj)
 
+    }else {
+        alert('没有相关信息！')
     }
 
     var table_tr = $('.table-tr')

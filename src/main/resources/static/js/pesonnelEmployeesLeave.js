@@ -127,10 +127,6 @@ function leftTabSearchByDepartmentAndStaffName() {
         dataType:'json',
         success:function (obj) {
             if(obj.code == 0){
-                if(obj.data.numberOfElements == 0){
-                    alert("未搜索到信息")
-                    return
-                }
                 setLeftLeaveStaffTableInformation(obj)
             }else {
                 alert(obj.message)
@@ -153,10 +149,6 @@ function leavingTabSearchByDepartmentAndStaffName() {
         dataType:'json',
         success:function (obj) {
             if(obj.code == 0){
-                if(obj.data.numberOfElements == 0){
-                    alert("未搜索到信息")
-                    return
-                }
                 setLeavingLeaveStaffTableInformation(obj)
             }else {
                 alert(obj.message)
@@ -179,10 +171,6 @@ function leftAndBanTabSearchByDepartmentAndStaffName() {
         dataType:'json',
         success:function (obj) {
             if(obj.code == 0){
-                if(obj.data.numberOfElements == 0){
-                    alert("未搜索到信息")
-                    return
-                }
                 setLeftAndBanLeaveStaffTableInformation(obj)
             }else {
                 alert(obj.message)
@@ -197,9 +185,11 @@ function leftAndBanTabSearchByDepartmentAndStaffName() {
 设置已离职table/
  */
 function setLeftLeaveStaffTableInformation(obj) {
+    console.log(obj)
     $('.currentPage').text(currentPage + 1)
     $('.totalPage').text(obj.data.totalPages)
     var table_tr = $('.table-tr-left')
+    var number = 0
     if(obj.data.numberOfElements > 0){
         var staffName = $('.leftTab-staff-name')
         var staffID = $('.leftTab-staff-number')
@@ -208,30 +198,34 @@ function setLeftLeaveStaffTableInformation(obj) {
         var staffJobNature = $('.leftTab-staff-jobNature')
         var staffJoinDate = $('.leftTab-staff-joinDate')
         var staffLeaveDate = $('.leftTab-staff-LeaveDate')
-        var number = 0
         for(var i = 0, j = 0; j < obj.data.numberOfElements; j++ ){
-            table_tr.eq(i).removeClass('hidden')
-            staffName.eq(i).text(obj.data.content[j].name)
-            staffName.eq(i).attr('value', obj.data.content[j].id)
-            staffID.eq(i).text(obj.data.content[j].id)
-            if(obj.data.content[j].department){
-                staffDepartment.eq(i).text(obj.data.content[j].department.name)
+            if(obj.data.content[j].jobNature.name == '已离职'){
+                table_tr.eq(i).removeClass('hidden')
+                staffName.eq(i).text(obj.data.content[j].name)
+                staffName.eq(i).attr('value', obj.data.content[j].id)
+                staffID.eq(i).text(obj.data.content[j].id)
+                if(obj.data.content[j].department){
+                    staffDepartment.eq(i).text(obj.data.content[j].department.name)
+                }
+                if(obj.data.content[j].role){
+                    staffRole.eq(i).text(obj.data.content[j].role.name)
+                }
+                if(obj.data.content[j].jobNature){
+                    staffJobNature.eq(i).text(obj.data.content[j].jobNature.name)
+                    staffJobNature.eq(i).attr('value', obj.data.content[j].jobNature.id)
+                }
+                staffJoinDate.eq(i).text(obj.data.content[j].employDate)
+                staffLeaveDate.eq(i).text(obj.data.content[j].resignDate)
+                i++
+                number++
             }
-            if(obj.data.content[j].role){
-                staffRole.eq(i).text(obj.data.content[j].role.name)
-            }
-            if(obj.data.content[j].jobNature){
-                staffJobNature.eq(i).text(obj.data.content[j].jobNature.name)
-                staffJobNature.eq(i).attr('value', obj.data.content[j].jobNature.id)
-            }
-            staffJoinDate.eq(i).text(obj.data.content[j].employDate)
-            staffLeaveDate.eq(i).text(obj.data.content[j].resignDate)
-            i++
-            number++
         }
     }
     for (var i = number; i < 10; i++){
         table_tr.eq(i).addClass('hidden')
+    }
+    if(number == 0){
+        alert('未搜索到相关信息！')
     }
 }
 /*
@@ -241,6 +235,8 @@ function setLeavingLeaveStaffTableInformation(obj) {
     $('.currentPage').text(currentPage + 1)
     $('.totalPage').text(obj.data.totalPages)
     var table_tr = $('.table-tr-leaving')
+
+    var number = 0
     if(obj.data.numberOfElements > 0){
         var staffName = $('.leavingTab-staff-name')
         var staffID = $('.leavingTab-staff-number')
@@ -249,30 +245,35 @@ function setLeavingLeaveStaffTableInformation(obj) {
         var staffJobNature = $('.leavingTab-staff-jobNature')
         var staffJoinDate = $('.leavingTab-staff-joinDate')
         var staffLeaveDate = $('.leavingTab-staff-LeaveDate')
-         var number = 0
         for(var i = 0, j = 0; j < obj.data.numberOfElements; j++ ){
-            table_tr.eq(i).removeClass('hidden')
-            staffName.eq(i).text(obj.data.content[j].name)
-            staffName.eq(i).attr('value', obj.data.content[j].id)
-            staffID.eq(i).text(obj.data.content[j].id)
-            if(obj.data.content[j].department){
-                staffDepartment.eq(i).text(obj.data.content[j].department.name)
+            if(obj.data.content[j].jobNature.name == '待离职'){
+                table_tr.eq(i).removeClass('hidden')
+                staffName.eq(i).text(obj.data.content[j].name)
+                staffName.eq(i).attr('value', obj.data.content[j].id)
+                staffID.eq(i).text(obj.data.content[j].id)
+                if(obj.data.content[j].department){
+                    staffDepartment.eq(i).text(obj.data.content[j].department.name)
+                }
+                if(obj.data.content[j].role){
+                    staffRole.eq(i).text(obj.data.content[j].role.name)
+                }
+                if(obj.data.content[j].jobNature){
+                    staffJobNature.eq(i).text(obj.data.content[j].jobNature.name)
+                    staffJobNature.eq(i).attr('value', obj.data.content[j].jobNature.id)
+                }
+                staffJoinDate.eq(i).text(obj.data.content[j].employDate)
+                staffLeaveDate.eq(i).text(obj.data.content[j].resignDate)
+                i++
+                number++
             }
-            if(obj.data.content[j].role){
-                staffRole.eq(i).text(obj.data.content[j].role.name)
-            }
-            if(obj.data.content[j].jobNature){
-                staffJobNature.eq(i).text(obj.data.content[j].jobNature.name)
-                staffJobNature.eq(i).attr('value', obj.data.content[j].jobNature.id)
-            }
-            staffJoinDate.eq(i).text(obj.data.content[j].employDate)
-            staffLeaveDate.eq(i).text(obj.data.content[j].resignDate)
-            i++
-            number++
+
         }
     }
     for (var i = number; i < 10; i++){
         table_tr.eq(i).addClass('hidden')
+    }
+    if(number == 0){
+        alert('未搜索到相关信息！')
     }
 }
 /*
@@ -282,6 +283,7 @@ function setLeftAndBanLeaveStaffTableInformation(obj) {
     $('.currentPage').text(currentPage + 1)
     $('.totalPage').text(obj.data.totalPages)
     var table_tr = $('.table-tr-leftAndBan')
+    var number = 0
     if(obj.data.numberOfElements > 0){
         var staffName = $('.leftAndBanTab-staff-name')
         var staffID = $('.leftAndBanTab-staff-number')
@@ -290,30 +292,35 @@ function setLeftAndBanLeaveStaffTableInformation(obj) {
         var staffJobNature = $('.leftAndBanTab-staff-jobNature')
         var staffJoinDate = $('.leftAndBanTab-staff-joinDate')
         var staffLeaveDate = $('.leftAndBanTab-staff-LeaveDate')
-        var number = 0
         for(var i = 0, j = 0; j < obj.data.numberOfElements; j++ ){
-            table_tr.eq(i).removeClass('hidden')
-            staffName.eq(i).text(obj.data.content[j].name)
-            staffName.eq(i).attr('value', obj.data.content[j].id)
-            staffID.eq(i).text(obj.data.content[j].id)
-            if(obj.data.content[j].department){
-                staffDepartment.eq(i).text(obj.data.content[j].department.name)
+            if(obj.data.content[j].jobNature.name == '离职禁用'){
+                table_tr.eq(i).removeClass('hidden')
+                staffName.eq(i).text(obj.data.content[j].name)
+                staffName.eq(i).attr('value', obj.data.content[j].id)
+                staffID.eq(i).text(obj.data.content[j].id)
+                if(obj.data.content[j].department){
+                    staffDepartment.eq(i).text(obj.data.content[j].department.name)
+                }
+                if(obj.data.content[j].role){
+                    staffRole.eq(i).text(obj.data.content[j].role.name)
+                }
+                if(obj.data.content[j].jobNature){
+                    staffJobNature.eq(i).text(obj.data.content[j].jobNature.name)
+                    staffJobNature.eq(i).attr('value', obj.data.content[j].jobNature.id)
+                }
+                staffJoinDate.eq(i).text(obj.data.content[j].employDate)
+                staffLeaveDate.eq(i).text(obj.data.content[j].resignDate)
+                i++
+                number++
             }
-            if(obj.data.content[j].role){
-                staffRole.eq(i).text(obj.data.content[j].role.name)
-            }
-            if(obj.data.content[j].jobNature){
-                staffJobNature.eq(i).text(obj.data.content[j].jobNature.name)
-                staffJobNature.eq(i).attr('value', obj.data.content[j].jobNature.id)
-            }
-            staffJoinDate.eq(i).text(obj.data.content[j].employDate)
-            staffLeaveDate.eq(i).text(obj.data.content[j].resignDate)
-            i++
-            number++
+
         }
     }
     for (var i = number; i < 10; i++){
         table_tr.eq(i).addClass('hidden')
+    }
+    if(number == 0){
+        alert('未搜索到相关信息！')
     }
 }
 /*

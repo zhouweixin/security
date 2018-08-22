@@ -75,6 +75,9 @@ function getMonthSummaryByParameters() {
 设置月统计table/
  */
 function setMonthSummaryTable(obj) {
+    console.log(obj)
+    var parent = $('#staffMonthSummaryTable tbody')
+    parent.find('.table-tr').remove()
     if(obj.data.length != 0){
         var date = $('#staffMonthSummary-date').val()
         if(date == '年/月'){
@@ -82,8 +85,6 @@ function setMonthSummaryTable(obj) {
         }else{
             date = date.replace(/\//g, '-')
         }
-        var parent = $('#staffMonthSummaryTable tbody')
-        parent.find('.table-tr').remove()
         for(var i = 0; i < obj.data.length; i++){
             var appendStr = "<tr class='table-tr' style='display: block;'>\n" +
                 "<td class='staffMonthSummary-staffName' style='display: block;width: 15%'>" + obj.data[i].userName + "</td>" +
@@ -98,6 +99,8 @@ function setMonthSummaryTable(obj) {
         }
         $('#staffMonthSummaryTable').find('tbody td').css('border-top', 'none')
         $('#staffMonthSummaryTable').find('tbody td').css('border-right', 'none')
+    }else{
+        alert('没有相关信息！')
     }
 }
 
@@ -133,9 +136,9 @@ function getProjectHoursByMonth() {
  */
 function setProjectMonthSummaryTable(obj) {
     console.log(obj)
+    var parent = $('#projectMonthSummaryTable tbody')
+    parent.find('.table-tr').remove()
     if(obj.data.length != 0){
-        var parent = $('#projectMonthSummaryTable tbody')
-        parent.find('.table-tr').remove()
         for(var i = 0; i < obj.data.length; i++){
             var appendStr = "<tr class='table-tr'>\n" +
                 "<td class='projectMonthSummary-name'>" + obj.data[i].project.name + "</td>" +

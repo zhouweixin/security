@@ -36,11 +36,11 @@ function getAllWorkRecords() {
 function getWorkRecordsByParameters() {
     var project = $('#originalRecord-project').attr('value')
     if(!project){
-        project = ''
+        project = '-1'
     }
     var date = $('#originalRecord-date').val()
     if(date == '年/月/日'){
-        date = ''
+        date = '2000-01-01'
     }else{
         date = date.replace(/\//g, '-')
     }
@@ -79,6 +79,8 @@ function setAllWorkRecordsTable(obj) {
         var i = 0
         setAllWorkRecordsTableCallBack(i, obj)
 
+    }else {
+        alert('没有相关信息！')
     }
 
     var table_tr = $('.table-tr')

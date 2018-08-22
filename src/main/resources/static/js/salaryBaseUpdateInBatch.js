@@ -89,6 +89,8 @@ function setAllBaseWageATable(obj) {
             socialSecuritySubsidyWage.eq(i).val(obj.data.content[i].socialSecuritySubsidyWage)
             foundation.eq(i).val(obj.data.content[i].foundation)
         }
+    }else{
+        alert('没有相关信息！')
     }
     for (var i = obj.data.numberOfElements; i < 10; i++){
         table_tr.eq(i).addClass('hidden')

@@ -112,6 +112,8 @@ function setAllWageTable(obj) {
             grossPay.eq(i).val(obj.data.content[i].grossPay)
             realPay.eq(i).val(obj.data.content[i].realPay)
         }
+    }else {
+        alert('没有相关信息！')
     }
     for (var i = obj.data.numberOfElements; i < 10; i++){
         table_tr.eq(i).addClass('hidden')

@@ -141,6 +141,7 @@ function setContractTableInformation(obj) {
             var table_tr = $('.table-tr')
             table_tr.eq(i).addClass('hidden')
         }
+        alert('未搜索到相关信息！')
     }
 }
 /*
@@ -167,7 +168,7 @@ function getInformationByParameters() {
     }else{
         endDate = endDate.replace(/\//g, '-')
     }
-    var userName = $('#alreadySigned-userName').val()
+    var userName = $('#alreadySigned-name').val()
     var urlStr = ipPort + '/contract/getByParametersByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
     + '&departmentId=' + departmentID + '&jobNatureId=' + jobNatureID + '&contractTypeId=' + contractTypeID + '&date1=' + startDate
         + '&date2=' + endDate + '&userName=' + userName

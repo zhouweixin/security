@@ -46,7 +46,6 @@ function getInformationByProjectName() {
                     return
                 }
                 setAllProjectWageTable(obj)
-                alert('搜索成功!')
             }
             else{
                 alert(obj.message)
@@ -80,6 +79,8 @@ function setAllProjectWageTable(obj) {
             }
             wage.eq(i).val(obj.data.content[i].wagePerHour)
         }
+    }else {
+        alert('没有相关信息！')
     }
     for (var i = obj.data.numberOfElements; i < 10; i++){
         table_tr.eq(i).addClass('hidden')
