@@ -63,6 +63,8 @@ $(document).ready(function () {
         $('#goOutPanel-staffNames').val('')
         $('#goOutPanel-staffNumbers').val('')
         $('#goOutPanel .table-selfDefine tbody').find('tr').remove()
+        $('#goOutPanel-operatorName').attr('value', window.localStorage.userID)
+        $('#goOutPanel-operatorName').val(window.localStorage.userName)
     })
     /*
    左箭头/

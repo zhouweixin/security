@@ -91,7 +91,7 @@ $(document).ready(function () {
  */
 function getPurchaseApplyinit() {
     currentPage = 0
-    var id = 'zy00002'
+    var id = window.localStorage.userID
     $.ajax({
         url: ipPort + '/purchaseHeader/getByAuditorByPage?id=' + id,
         success:function (obj) {
@@ -163,7 +163,7 @@ function setMainTable(obj, auditId) {
         name.eq(i).text(obj.data.content[i].applyUser.name)
         time.eq(i).text((new Date(obj.data.content[i].applyTime).toLocaleString()))
         price.eq(i).text(obj.data.content[i].price)
-        auditor.eq(i).text(auditId)
+        auditor.eq(i).text(window.localStorage.userName)
         status.eq(i).attr('value', obj.data.content[i].status)
         if(obj.data.content[i].status == 0){
             status.eq(i).text('未审核')
@@ -193,7 +193,7 @@ function setPurchaseApplyRecordModal(thisObj) {
     $('.purchaseApplyDetails-table-selfDefine').find('.table-tr').remove()
     $('#myModal-PurchaseAuditDetails').attr('value', '')
     var id = $(thisObj).parent().parent().find('td').eq(0).text()
-    var auditorId = $(thisObj).parent().parent().find('td').eq(4).text()
+   // var auditorId = $(thisObj).parent().parent().find('td').eq(4).text()
     $.ajax({
         url: ipPort + '/purchaseHeader/getById?id=' + id,
         success: function (obj) {
@@ -204,7 +204,8 @@ function setPurchaseApplyRecordModal(thisObj) {
                 $('#purchaseApplyDetails-process').text(obj.data.purchaseAuditProcess.name)
                 $('#purchaseApplyDetails-applyTime').text((new Date(obj.data.applyTime)).toLocaleString())
                 $('#purchaseApplyDetails-reason').text(obj.data.reason)
-                $('#purchaseApplyDetails-auditor').text(auditorId)
+                $('#purchaseApplyDetails-auditor').text(window.localStorage.userName)
+                $('#purchaseApplyDetails-auditor').attr('value', window.localStorage.userID)
                 if(obj.data.status == 0){
                     $('#purchaseApplyDetails-status').text('未审核')
                 }else if(obj.data.status == 1 || obj.data.status == 3){
@@ -234,7 +235,7 @@ function setPurchaseApplyRecordModal(thisObj) {
  */
 function submitPurchaseAudit(thisObj) {
     var applyId = $('#myModal-PurchaseAuditDetails').attr('value')
-    var auditor = $('#purchaseApplyDetails-auditor').text()
+    var auditor = $('#purchaseApplyDetails-auditor').attr('value')
     var note = $('#purchaseApplyDetails-note').val()
     console.log(auditor)
     $.ajax({

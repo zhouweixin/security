@@ -176,7 +176,7 @@ function giveBackMaterial() {
     var userID = []
     userID.push($('#myModal-makeSureGiveBack').attr('user-value'))
     $.ajax({
-        url: ipPort + '/gooutMaterialUser/returnMaterials?gooutMaterialUserIds=' + materialID + '&userIds=' + userID + '&operatorId=' + 'zy00001',
+        url: ipPort + '/gooutMaterialUser/returnMaterials?gooutMaterialUserIds=' + materialID + '&userIds=' + userID + '&operatorId=' + window.localStorage.userID,
         success:function (obj) {
             if(obj.code == 0){
                 alert(obj.message)
