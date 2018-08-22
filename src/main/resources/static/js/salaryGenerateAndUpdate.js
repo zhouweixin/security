@@ -120,6 +120,46 @@ function setAllWageTable(obj) {
     }
 }
 /*
+设置生成工资单modal/
+ */
+function setGenerateSalaryModal() {
+    $('#myModal-generateSalary').modal('toggle')
+    //设置选择月份为当天日期
+    var today_date = new Date().toLocaleDateString()
+    $('#generateSalary-month').val(today_date.split('/')[0] + '/' + today_date.split('/')[1])
+}
+/*
+设置是否确认生成工资单modal/
+ */
+function setMakeSureGenerateSalaryModal() {
+    $('#myModal-makeSureGenerateSalary').modal('toggle')
+}
+/*
+生成工资单/
+ */
+function generateSalary() {
+    var month = $('#generateSalary-month').val()
+    month = month.replace(/\//g, '-')
+    var urlStr = ipPort + '/wageEntry/generateWageEntry?date='+ month
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                alert('生成工资单成功！')
+                $('#myModal-makeSureGenerateSalary').modal('toggle')
+                $('#myModal-generateSalary').modal('toggle')
+            }else{
+                alert(obj.message)
+                $('#myModal-makeSureGenerateSalary').modal('toggle')
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
 单个修改工资单/
  */
 function updateWage(thisObj) {
