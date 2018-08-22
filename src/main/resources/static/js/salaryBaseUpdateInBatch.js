@@ -165,8 +165,17 @@ function setUpdateBaseAndSocialSecurityAndFoundationBatchModal() {
  */
 function updateBaseAndSocialSecurityAndFoundationBatch() {
     var baseWage = $('#updateBaseWageBatch-baseWage').val()
+    if(!baseWage){
+        baseWage = -1
+    }
     var foundation = $('#updateBaseWageBatch-foundation').val()
+    if(!foundation){
+        foundation = -1
+    }
     var socialSecuritySubsidyWage = $('#updateBaseWageBatch-socialSecuritySubsidyWage').val()
+    if(!socialSecuritySubsidyWage){
+        socialSecuritySubsidyWage = -1
+    }
     var selectedStaff_span = $('.selectedStaff-span')
     var strID = []
     for(var i = 0; i < selectedStaff_span.length; i++){

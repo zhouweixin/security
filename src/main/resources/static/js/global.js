@@ -1,3 +1,4 @@
+
 var ipPort = "http://39.108.89.212:8080/security"
 //var ipPort = "http://127.0.0.1:9000/security"
 var departmentsName = []
@@ -35,6 +36,11 @@ var contractStatusID = []
 // getAllContractStatusName()
 $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip()
+
+
+    var storage = window.localStorage
+    $('.userTitle p').text(storage.userName)
+    $('.userTitle p').attr('value', storage.userID)
 })
 /*
 获取所有部门名称/
@@ -425,3 +431,24 @@ function getAllProjectName(project){
          window.location.href = uri + base64(format(template, ctx))
      }
  })()
+
+/*
+注销登录/
+ */
+function logout() {
+    var urlStr = ipPort + '/user/logout'
+    $.ajax({
+        url: urlStr,
+        type: 'get',
+        success: function (obj) {
+            if(obj.code == 0){
+                document.location = 'login.html'
+            }else{
+                alert(obj.message)
+            }
+        },
+        error: function (err) {
+            console.log(err)
+        }
+    })
+}
