@@ -5,6 +5,15 @@ $(document).ready(function () {
     var today_date = new Date().toLocaleDateString()
     $('#salaryQuery-month').val(today_date.split('/')[0] + '/' + today_date.split('/')[1])
 
+    /*
+    工资单修改事件/
+     */
+    $('.salaryQuery-baseWage,.salaryQuery-projectWage,.salaryQuery-fullAttenBonus,.salaryQuery-bonus' +
+        ',.salaryQuery-overtimeWage,.salaryQuery-boardWage,.salaryQuery-socialSecuritySubsidyWage,.salaryQuery-foundation' +
+        ',.salaryQuery-deductionWage,.salaryQuery-workDays').on('input', 'input', function () {
+        computeSalary(this)
+    })
+
     getALlWage()
 })
 /*
@@ -89,6 +98,7 @@ function setAllWageTable(obj) {
         var foundation = $('.salaryQuery-foundation').find('input')
         var deductionWage = $('.salaryQuery-deductionWage').find('input')
         var workDays = $('.salaryQuery-workDays').find('input')
+        var sumDays = $('.salaryQuery-sumDays').find('input')
         var grossPay = $('.salaryQuery-grossPay').find('input')
         var realPay = $('.salaryQuery-realPay').find('input')
         for(var i = 0; i < obj.data.numberOfElements; i++){
@@ -109,6 +119,7 @@ function setAllWageTable(obj) {
             foundation.eq(i).val(obj.data.content[i].foundation)
             deductionWage.eq(i).val(obj.data.content[i].deductionWage)
             workDays.eq(i).val(obj.data.content[i].workDays)
+            sumDays.eq(i).val(obj.data.content[i].sumDays)
             grossPay.eq(i).val(parseFloat(obj.data.content[i].grossPay).toFixed(2))
             realPay.eq(i).val(parseFloat(obj.data.content[i].realPay).toFixed(2))
         }
@@ -158,6 +169,19 @@ function generateSalary() {
             console.log(error)
         }
     })
+}
+/*
+工资单计算/
+ */
+function computeSalary(thisObj) {
+    var td = $(thisObj).parent().parent().find('td')
+    console.log(parseFloat(td.eq(5).find('input').val()))
+    var grossPay = (parseFloat(td.eq(5).find('input').val()) + parseFloat(td.eq(7).find('input').val()) + parseFloat(td.eq(11).find('input').val())) * parseFloat(td.eq(14).find('input').val()) / parseFloat(td.eq(15).find('input').val())
+    + parseFloat(td.eq(8).find('input').val()) + parseFloat(td.eq(9).find('input').val()) + parseFloat(td.eq(10).find('input').val()) + parseFloat(td.eq(6).find('input').val())
+    var realPay = grossPay - parseFloat(td.eq(12).find('input').val()) - parseFloat(td.eq(13).find('input').val())
+    console.log(grossPay)
+    td.eq(16).find('input').val(parseFloat(grossPay).toFixed(2))
+    td.eq(17).find('input').val(parseFloat(realPay).toFixed(2))
 }
 /*
 单个修改工资单/
