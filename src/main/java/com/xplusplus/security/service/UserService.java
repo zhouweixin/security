@@ -756,6 +756,7 @@ public class UserService {
         // 2、主体提交认证请求
         SecurityUtils.setSecurityManager(defaultSecurityManager);
         Subject subject = SecurityUtils.getSubject();
+        subject.getSession().setTimeout(-1000);
         UsernamePasswordToken token = new UsernamePasswordToken(id + "", password);
 
         try {
