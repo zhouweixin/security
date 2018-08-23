@@ -1155,7 +1155,8 @@
                       </ul>
                       <div class="tab-content">
                           <div role="tabpanel" class="tab-pane active" id="formalContract-panel">
-                              <form class="form-horizontal" style="height: 250px; overflow: visible">
+                              <form id="formalContract-uploadImage" class="form-horizontal" role="form" target="nm_iframe"
+                                    method="post" enctype="multipart/form-data" style="height: 250px; overflow: visible">
                                   <div class="form-group col-xs-6">
                                       <label class="col-xs-3 control-label">合同编号：</label>
                                       <div class="col-xs-7">
@@ -1229,21 +1230,28 @@
                                           <textarea class="form-control" id="formalContractContent" style="height: 90px;overflow: auto" disabled="disabled"></textarea>
                                       </div>
                                   </div>
-                                  <!--<div class="form-group col-xs-6">-->
-                                      <!--<label class="col-xs-3 control-label">扫描件：</label>-->
-                                      <!--<div class="col-xs-7">-->
-                                          <!--<input id="formalContractScanningCopy" disabled="disabled" type="text" class="form-control" placeholder="">-->
-                                      <!--</div>-->
-                                  <!--</div>-->
+                                  <div class="form-group col-xs-6">
+                                      <label class="col-xs-3 control-label">扫描件：</label>
+                                      <input class="formalContractFile" name="file" type="file" style="display:none" accept=".png,.jpg,.jpeg,.bmp" disabled="disabled" >
+                                      <div class="input-append col-xs-7">
+                                          <input id="formalContractScanningCopy" class="input-large col-xs-9" value="" type="text" disabled="disabled" style="height: 34px; border-radius: 4px;">
+                                          <a class="btn col-xs-3" onclick="$('input[class=formalContractFile]').click();" disabled="disabled">选择文件</a>
+                                      </div>
+                                  </div>
                               </form>
-                              <div class="button-body">
+                              <iframe name="nm_iframe" style="display:none;"></iframe>
+                              <!--<img class="col-xs-6" height=300 style="display:none" onload='this.nextSibling.style.display="none";this.style.display="";'>-->
+                              <!--<div class="col-xs-6" style="height:300px;">正在加载图片...</div>-->
+                              <div class="button-body col-xs-12">
                                   <a class="btn btn-default" onclick="editButtonOnClick('formalContract')">编辑</a>
-                                  <a class="store-staff btn btn-info" onclick="saveFormalContract()">保存</a>
+                                  <a type="button" class="store-staff btn btn-info" onclick="saveFormalContract()" data-container="body" data-toggle="popover" data-placement="top"
+                                     data-content="正在上传图片和数据，请稍后！！！">保存</a>
                                   <a class="btn btn-default hidden formalContractCancelButton" onclick="cancelEditButtonOnClick('formalContract')">取消</a>
                               </div>
                           </div>
                           <div role="tabpanel" class="tab-pane" id="temporaryContract-panel">
-                              <form class="form-horizontal" style="height: 250px; overflow: visible">
+                              <form id="temporaryContract-uploadImage" class="form-horizontal" role="form" target="nm_iframe"
+                                    method="post" enctype="multipart/form-data" style="height: 250px; overflow: visible">
                                   <div class="form-group col-xs-6">
                                       <label class="col-xs-3 control-label">合同编号：</label>
                                       <div class="col-xs-7">
@@ -1317,21 +1325,28 @@
                                           <textarea class="form-control" id="temporaryContractContent" style="height: 90px;overflow: auto" disabled="disabled"></textarea>
                                       </div>
                                   </div>
-                                  <!--<div class="form-group col-xs-6">-->
-                                      <!--<label class="col-xs-3 control-label">扫描件：</label>-->
-                                      <!--<div class="col-xs-7">-->
-                                          <!--<input id="temporaryContractScanningCopy" disabled="disabled"type="text" class="form-control" placeholder="">-->
-                                      <!--</div>-->
-                                  <!--</div>-->
+                                  <div class="form-group col-xs-6">
+                                      <label class="col-xs-3 control-label">扫描件：</label>
+                                      <input class="temporaryContractFile" name="file" type="file" style="display:none" accept=".png,.jpg,.jpeg,.bmp" disabled="disabled" >
+                                      <div class="input-append col-xs-7">
+                                          <input id="temporaryContractScanningCopy" class="input-large col-xs-9" value="" type="text" disabled="disabled" style="height: 34px; border-radius: 4px;">
+                                          <a class="btn col-xs-3" onclick="$('input[class=temporaryContractFile]').click();" disabled="disabled">选择文件</a>
+                                      </div>
+                                  </div>
                               </form>
-                              <div class="button-body">
+                              <iframe name="nm_iframe" style="display:none;"></iframe>
+                              <!--<img class="col-xs-6" height=300 style="display:none" onload='this.nextSibling.style.display="none";this.style.display="";'>-->
+                              <!--<div class="col-xs-6" style="height:300px;">正在加载图片...</div>-->
+                              <div class="button-body col-xs-12">
                                   <a class="btn btn-default" onclick="editButtonOnClick('temporaryContract')">编辑</a>
-                                  <a class="store-staff btn btn-info" onclick="saveTemporaryContract()">保存</a>
+                                  <a type="button" class="store-staff btn btn-info" onclick="saveTemporaryContract()" data-container="body" data-toggle="popover" data-placement="top"
+                                     data-content="正在上传图片和数据，请稍后！！！">保存</a>
                                   <a class="btn btn-default hidden temporaryContractCancelButton" onclick="cancelEditButtonOnClick('temporaryContract')">取消</a>
                               </div>
                           </div>
                           <div role="tabpanel" class="tab-pane" id="internshipAgreement-panel">
-                              <form class="form-horizontal" style="height: 250px; overflow: visible">
+                              <form id="internshipAgreement-uploadImage" class="form-horizontal" role="form" target="nm_iframe"
+                                    method="post" enctype="multipart/form-data" style="height: 250px; overflow: visible">
                                   <div class="form-group col-xs-6">
                                       <label class="col-xs-3 control-label">合同编号：</label>
                                       <div class="col-xs-7">
@@ -1405,16 +1420,22 @@
                                           <textarea class="form-control" id="internshipAgreementContent" style="height: 90px;overflow: auto" disabled="disabled"></textarea>
                                       </div>
                                   </div>
-                                  <!--<div class="form-group col-xs-6">-->
-                                      <!--<label class="col-xs-3 control-label">扫描件：</label>-->
-                                      <!--<div class="col-xs-7">-->
-                                          <!--<input id="internshipAgreementScanningCopy" type="text" disabled="disabled" class="form-control" placeholder="">-->
-                                      <!--</div>-->
-                                  <!--</div>-->
+                                  <div class="form-group col-xs-6">
+                                      <label class="col-xs-3 control-label">扫描件：</label>
+                                      <input class="internshipAgreementFile" name="file" type="file" style="display:none" accept=".png,.jpg,.jpeg,.bmp" disabled="disabled" >
+                                      <div class="input-append col-xs-7">
+                                          <input id="internshipAgreementScanningCopy" class="input-large col-xs-9" value="" type="text" disabled="disabled" style="height: 34px; border-radius: 4px;">
+                                          <a class="btn col-xs-3" onclick="$('input[class=internshipAgreementFile]').click();" disabled="disabled">选择文件</a>
+                                      </div>
+                                  </div>
                               </form>
-                              <div class="button-body">
+                              <iframe name="nm_iframe" style="display:none;"></iframe>
+                              <!--<img class="col-xs-6" height=300 style="display:none" onload='this.nextSibling.style.display="none";this.style.display="";'>-->
+                              <!--<div class="col-xs-6" style="height:300px;">正在加载图片...</div>-->
+                              <div class="button-body col-xs-12">
                                   <a class="btn btn-default" onclick="editButtonOnClick('internshipAgreement')">编辑</a>
-                                  <a class="store-staff btn btn-info" onclick="saveInternshipAgreement()">保存</a>
+                                  <a type="button" class="store-staff btn btn-info" onclick="saveInternshipAgreement()" data-container="body" data-toggle="popover" data-placement="top"
+                                     data-content="正在上传图片和数据，请稍后！！！">保存</a>
                                   <a class="btn btn-default hidden internshipAgreementCancelButton" onclick="cancelEditButtonOnClick('internshipAgreement')">取消</a>
                               </div>
                           </div>
@@ -1827,7 +1848,7 @@
               </div>
               <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                  <button type="button" class="btn btn-primary" onclick="addStaff()">确认</button>
+                  <button type="button" class="btn btn-primary" onclick="addStaff()" data-dismiss="modal">确认</button>
               </div>
           </div>
       </div>
@@ -2062,7 +2083,7 @@
                                              <div class="modal-body">
                                                  是否确认要删除？
                                                  <button type="button" class="btn btn-default" data-dismiss="modal" style="float: right; margin-left: 5px">取消</button>
-                                                 <button type="button" class="btn btn-primary" style="float: right;" onclick="deleteStaff()">确认</button>
+                                                 <button type="button" class="btn btn-primary" style="float: right;" onclick="deleteStaff()" data-dismiss="modal" >确认</button>
                                              </div>
                                              <div class="modal-footer">
 
@@ -2079,7 +2100,7 @@
                                              <div class="modal-body">
                                                  是否确认要批量删除？
                                                  <button type="button" class="btn btn-default" data-dismiss="modal" style="float: right; margin-left: 5px">取消</button>
-                                                 <button type="button" class="btn btn-primary" style="float: right;" onclick="deleteStaffInBatch()">确认</button>
+                                                 <button type="button" class="btn btn-primary" style="float: right;" onclick="deleteStaffInBatch()" data-dismiss="modal" >确认</button>
                                              </div>
                                              <div class="modal-footer">
 

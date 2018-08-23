@@ -43,8 +43,8 @@ $(document).ready(function () {
 /*
 获取已离职员工信息/
  */
-function getLeftStaffInformationByPage() {
-    currentPage = 0
+function getLeftStaffInformationByPage(page_ = 0) {
+    currentPage = page_
     var page = currentPage
     var size = 10
     var sortFieldName = 'id'
@@ -68,8 +68,8 @@ function getLeftStaffInformationByPage() {
 /*
 获取待离职员工信息/
  */
-function getLeavingStaffInformationByPage() {
-    currentPage = 0
+function getLeavingStaffInformationByPage(page_ = 0) {
+    currentPage = page_
     var page = currentPage
     var size = 10
     var sortFieldName = 'id'
@@ -93,8 +93,8 @@ function getLeavingStaffInformationByPage() {
 /*
 获取离职禁用员工信息/
  */
-function getLeftAndBanStaffInformationByPage() {
-    currentPage = 0
+function getLeftAndBanStaffInformationByPage(page_ = 0) {
+    currentPage = page_
     var page = currentPage
     var size = 10
     var sortFieldName = 'id'
@@ -199,26 +199,24 @@ function setLeftLeaveStaffTableInformation(obj) {
         var staffJoinDate = $('.leftTab-staff-joinDate')
         var staffLeaveDate = $('.leftTab-staff-LeaveDate')
         for(var i = 0, j = 0; j < obj.data.numberOfElements; j++ ){
-            if(obj.data.content[j].jobNature.name == '已离职'){
-                table_tr.eq(i).removeClass('hidden')
-                staffName.eq(i).text(obj.data.content[j].name)
-                staffName.eq(i).attr('value', obj.data.content[j].id)
-                staffID.eq(i).text(obj.data.content[j].id)
-                if(obj.data.content[j].department){
-                    staffDepartment.eq(i).text(obj.data.content[j].department.name)
-                }
-                if(obj.data.content[j].role){
-                    staffRole.eq(i).text(obj.data.content[j].role.name)
-                }
-                if(obj.data.content[j].jobNature){
-                    staffJobNature.eq(i).text(obj.data.content[j].jobNature.name)
-                    staffJobNature.eq(i).attr('value', obj.data.content[j].jobNature.id)
-                }
-                staffJoinDate.eq(i).text(obj.data.content[j].employDate)
-                staffLeaveDate.eq(i).text(obj.data.content[j].resignDate)
-                i++
-                number++
+            table_tr.eq(i).removeClass('hidden')
+            staffName.eq(i).text(obj.data.content[j].name)
+            staffName.eq(i).attr('value', obj.data.content[j].id)
+            staffID.eq(i).text(obj.data.content[j].id)
+            if(obj.data.content[j].department){
+                staffDepartment.eq(i).text(obj.data.content[j].department.name)
             }
+            if(obj.data.content[j].role){
+                staffRole.eq(i).text(obj.data.content[j].role.name)
+            }
+            if(obj.data.content[j].jobNature){
+                staffJobNature.eq(i).text(obj.data.content[j].jobNature.name)
+                staffJobNature.eq(i).attr('value', obj.data.content[j].jobNature.id)
+            }
+            staffJoinDate.eq(i).text(obj.data.content[j].employDate)
+            staffLeaveDate.eq(i).text(obj.data.content[j].resignDate)
+            i++
+            number++
         }
     }
     for (var i = number; i < 10; i++){
@@ -246,26 +244,24 @@ function setLeavingLeaveStaffTableInformation(obj) {
         var staffJoinDate = $('.leavingTab-staff-joinDate')
         var staffLeaveDate = $('.leavingTab-staff-LeaveDate')
         for(var i = 0, j = 0; j < obj.data.numberOfElements; j++ ){
-            if(obj.data.content[j].jobNature.name == '待离职'){
-                table_tr.eq(i).removeClass('hidden')
-                staffName.eq(i).text(obj.data.content[j].name)
-                staffName.eq(i).attr('value', obj.data.content[j].id)
-                staffID.eq(i).text(obj.data.content[j].id)
-                if(obj.data.content[j].department){
-                    staffDepartment.eq(i).text(obj.data.content[j].department.name)
-                }
-                if(obj.data.content[j].role){
-                    staffRole.eq(i).text(obj.data.content[j].role.name)
-                }
-                if(obj.data.content[j].jobNature){
-                    staffJobNature.eq(i).text(obj.data.content[j].jobNature.name)
-                    staffJobNature.eq(i).attr('value', obj.data.content[j].jobNature.id)
-                }
-                staffJoinDate.eq(i).text(obj.data.content[j].employDate)
-                staffLeaveDate.eq(i).text(obj.data.content[j].resignDate)
-                i++
-                number++
+            table_tr.eq(i).removeClass('hidden')
+            staffName.eq(i).text(obj.data.content[j].name)
+            staffName.eq(i).attr('value', obj.data.content[j].id)
+            staffID.eq(i).text(obj.data.content[j].id)
+            if(obj.data.content[j].department){
+                staffDepartment.eq(i).text(obj.data.content[j].department.name)
             }
+            if(obj.data.content[j].role){
+                staffRole.eq(i).text(obj.data.content[j].role.name)
+            }
+            if(obj.data.content[j].jobNature){
+                staffJobNature.eq(i).text(obj.data.content[j].jobNature.name)
+                staffJobNature.eq(i).attr('value', obj.data.content[j].jobNature.id)
+            }
+            staffJoinDate.eq(i).text(obj.data.content[j].employDate)
+            staffLeaveDate.eq(i).text(obj.data.content[j].resignDate)
+            i++
+            number++
 
         }
     }
@@ -293,26 +289,24 @@ function setLeftAndBanLeaveStaffTableInformation(obj) {
         var staffJoinDate = $('.leftAndBanTab-staff-joinDate')
         var staffLeaveDate = $('.leftAndBanTab-staff-LeaveDate')
         for(var i = 0, j = 0; j < obj.data.numberOfElements; j++ ){
-            if(obj.data.content[j].jobNature.name == '离职禁用'){
-                table_tr.eq(i).removeClass('hidden')
-                staffName.eq(i).text(obj.data.content[j].name)
-                staffName.eq(i).attr('value', obj.data.content[j].id)
-                staffID.eq(i).text(obj.data.content[j].id)
-                if(obj.data.content[j].department){
-                    staffDepartment.eq(i).text(obj.data.content[j].department.name)
-                }
-                if(obj.data.content[j].role){
-                    staffRole.eq(i).text(obj.data.content[j].role.name)
-                }
-                if(obj.data.content[j].jobNature){
-                    staffJobNature.eq(i).text(obj.data.content[j].jobNature.name)
-                    staffJobNature.eq(i).attr('value', obj.data.content[j].jobNature.id)
-                }
-                staffJoinDate.eq(i).text(obj.data.content[j].employDate)
-                staffLeaveDate.eq(i).text(obj.data.content[j].resignDate)
-                i++
-                number++
+            table_tr.eq(i).removeClass('hidden')
+            staffName.eq(i).text(obj.data.content[j].name)
+            staffName.eq(i).attr('value', obj.data.content[j].id)
+            staffID.eq(i).text(obj.data.content[j].id)
+            if(obj.data.content[j].department){
+                staffDepartment.eq(i).text(obj.data.content[j].department.name)
             }
+            if(obj.data.content[j].role){
+                staffRole.eq(i).text(obj.data.content[j].role.name)
+            }
+            if(obj.data.content[j].jobNature){
+                staffJobNature.eq(i).text(obj.data.content[j].jobNature.name)
+                staffJobNature.eq(i).attr('value', obj.data.content[j].jobNature.id)
+            }
+            staffJoinDate.eq(i).text(obj.data.content[j].employDate)
+            staffLeaveDate.eq(i).text(obj.data.content[j].resignDate)
+            i++
+            number++
 
         }
     }
@@ -327,8 +321,8 @@ function setLeftAndBanLeaveStaffTableInformation(obj) {
 禁用/
  */
 function forbiddenLeftButton(thisObj) {
-    var staffID = $(thisObj).parent().parent().parent().parent().parent().find('td').eq(1).text()
-    var urlStr = ipPort + '/user/updateJobNatureById?jobNatureId=8' + '&id=' + staffID
+    var staffID = $(thisObj).parent().parent().find('td').eq(1).text()
+    var urlStr = ipPort + '/user/updateJobNatureById?jobNatureId=9' + '&id=' + staffID
     console.log(urlStr)
     $.ajax({
         url:urlStr,
@@ -336,7 +330,9 @@ function forbiddenLeftButton(thisObj) {
         success:function (obj) {
             if(obj.code == 0){
                 alert(obj.message)
-               // getAllStaffInformationByPage()
+                getLeavingStaffInformationByPage(currentPage)
+                getLeftStaffInformationByPage(currentPage)
+                getLeftAndBanStaffInformationByPage(currentPage)
             }else{
                 alert(obj.message)
             }
@@ -350,7 +346,7 @@ function forbiddenLeftButton(thisObj) {
 离职恢复/
  */
 function recoveryJobButton(thisObj) {
-    var staffID = $(thisObj).parent().parent().parent().parent().parent().find('td').eq(1).text()
+    var staffID = $(thisObj).parent().parent().find('td').eq(1).text()
     var urlStr = ipPort + '/user/updateJobNatureById?jobNatureId=' + 1 + '&id=' + staffID
     $.ajax({
         url:urlStr,
@@ -358,7 +354,9 @@ function recoveryJobButton(thisObj) {
         success:function (obj) {
             if(obj.code == 0){
                 alert(obj.message)
-             //   getAllStaffInformationByPage()
+                getLeavingStaffInformationByPage(currentPage)
+                getLeftStaffInformationByPage(currentPage)
+                getLeftAndBanStaffInformationByPage(currentPage)
             }else{
                 alert(obj.message)
             }

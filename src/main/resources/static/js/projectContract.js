@@ -1,4 +1,9 @@
 var currentPage = 0
+/*
+currentModal == 0 添加
+currentModal == 1 修改/
+ */
+var currentModal = 0
 $(document).ready(function () {
     $('#modal-contractStartDate').val( new Date().toLocaleDateString())
     $('#modal-contractEndDate').val( new Date().toLocaleDateString())
@@ -19,45 +24,67 @@ $(document).ready(function () {
 
     getAllProjectContractInformation()
     /*
- 选择员工Modal/
-  */
+      选择多个员工/
+      */
     $('.selectStaff-department-li img').on('click', function () {
         if($(this).parent().find('.hidden').length == 0){
             $(this).parent().find('.selectStaff-staff-ul').addClass('hidden')
             $(this).parent().find('.departmentName-img').attr('src', 'imgs/addition.png')
+            $(this).parent().find('.selectAllDepartmentStaffs').empty()
         }else{
             $(this).parent().find('.selectStaff-staff-ul').removeClass('hidden')
             $(this).parent().find('.departmentName-img').attr('src', 'imgs/offline.png')
+            $(this).parent().find('.selectAllDepartmentStaffs').append("全选<input type='checkbox'>")
         }
     })
-    $('.departmentName-span').on('click', function () {
+    $('.selectStaff-department-li .departmentName-span').on('click', function () {
         if($(this).parent().find('.hidden').length == 0){
             $(this).parent().find('.selectStaff-staff-ul').addClass('hidden')
             $(this).parent().find('.departmentName-img').attr('src', 'imgs/addition.png')
+            $(this).parent().find('.selectAllDepartmentStaffs').empty()
         }else{
             $(this).parent().find('.selectStaff-staff-ul').removeClass('hidden')
+            $(this).parent().find('.departmentName-img').attr('src', 'imgs/offline.png')
+            $(this).parent().find('.selectAllDepartmentStaffs').append("全选<input type='checkbox'>")
+        }
+    })
+    /*
+    按姓名搜索modal/
+     */
+    $('#myModal-selectStaff .modal-searchInput input').on('input propertychange', function () {
+        if($('#myModal-selectStaff .modal-searchInput input').val() == ''){
+            $('#form-selectStaff1 .selectStaff-staff-ul2').addClass('hidden')
+            $('#form-selectStaff1 .selectStaff-department-ul').removeClass('hidden')
+        }
+    })
+    /*
+     选择one员工/
+      */
+    $('.selectOneStaff-department-li img').on('click', function () {
+        if($(this).parent().find('.hidden').length == 0){
+            $(this).parent().find('.selectOneStaff-staff-ul').addClass('hidden')
+            $(this).parent().find('.departmentName-img').attr('src', 'imgs/addition.png')
+        }else{
+            $(this).parent().find('.selectOneStaff-staff-ul').removeClass('hidden')
+            $(this).parent().find('.departmentName-img').attr('src', 'imgs/offline.png')
+        }
+    })
+    $('.selectOneStaff-department-li .departmentName-span').on('click', function () {
+        if($(this).parent().find('.hidden').length == 0){
+            $(this).parent().find('.selectOneStaff-staff-ul').addClass('hidden')
+            $(this).parent().find('.departmentName-img').attr('src', 'imgs/addition.png')
+        }else{
+            $(this).parent().find('.selectOneStaff-staff-ul').removeClass('hidden')
             $(this).parent().find('.departmentName-img').attr('src', 'imgs/offline.png')
         }
     })
     /*
-    选择One员工Modal/
+    按姓名搜索modal/
      */
-    $('.selectOneStaff-department-li img').on('click', function () {
-        if($(this).parent().find('.hidden').length == 0){
-            $(this).parent().find('.selectOneStaff-staff-ul').addClass('hidden')
-            $(this).parent().find('.departmentName-img_').attr('src', 'imgs/addition.png')
-        }else{
-            $(this).parent().find('.selectOneStaff-staff-ul').removeClass('hidden')
-            $(this).parent().find('.departmentName-img_').attr('src', 'imgs/offline.png')
-        }
-    })
-    $('.departmentName-span_').on('click', function () {
-        if($(this).parent().find('.hidden').length == 0){
-            $(this).parent().find('.selectOneStaff-staff-ul').addClass('hidden')
-            $(this).parent().find('.departmentName-img_').attr('src', 'imgs/addition.png')
-        }else{
-            $(this).parent().find('.selectOneStaff-staff-ul').removeClass('hidden')
-            $(this).parent().find('.departmentName-img_').attr('src', 'imgs/offline.png')
+    $('#myModal-selectOneStaff .modal-searchInput input').on('input propertychange', function () {
+        if($(this).val() == ''){
+            $('#form-selectOneStaff .selectOneStaff-staff-ul2').addClass('hidden')
+            $('#form-selectOneStaff .selectOneStaff-department-ul').removeClass('hidden')
         }
     })
 })
@@ -386,127 +413,6 @@ function getInformationByProjectName() {
     })
 }
 /*
-获取所有员工姓名/
- */
-function getAllStaff(thisObj) {
-    $('.selectedStaffs-button').attr('value', $(thisObj).attr('data-value'))
-    var staffInformationDepartmentA = $('.selectStaff-department-ul .selectStaff-department-li .departmentName-span')
-    $.ajax({
-        url:ipPort + '/department/getAll',
-        dataType:'json',
-        success:function (obj) {
-            $('.selectedStaff-staff-ul').find('li').remove()
-            for(var i = 0; i < obj.data.length; i++){
-                staffInformationDepartmentA.eq(i).parent().removeClass('hidden')
-                staffInformationDepartmentA.eq(i).text(obj.data[i].name)
-                staffInformationDepartmentA.eq(i).attr('value', obj.data[i].id)
-                staffInformationDepartmentA.eq(i).parent().find('li').remove()
-            }
-            $.ajax({
-                url:ipPort + '/user/getAll',
-                dataType:'json',
-                success:function (obj_) {
-                    if(obj_.data.length != 0){
-                        for(var j = 0; j < obj_.data.length; j++){
-                            for(var m = 0; m < obj.data.length; m++){
-                                if(obj_.data[j].department.id == obj.data[m].id){
-                                    var staffUl = staffInformationDepartmentA.eq(m).parent().find('.selectStaff-staff-ul')
-                                    var appendStr = '<li onclick="selectedStaff(this)"><img src="imgs/mine.png" height="20px" style="margin-top: -2px"><span ' + 'value="' + obj_.data[j].id + '">' + obj_.data[j].name + '</span></li>'
-                                    staffUl.append(appendStr)
-                                    break
-                                }
-                            }
-                        }
-                    }
-                },
-                error:function (error) {
-                    console.log(error)
-                }
-            })
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
-}
-/*
-选区人员/
- */
-function selectedStaff(thisObj) {
-    var selectedStaffUl = $('.selectedStaff-staff-ul')
-    var appendStr = '<li><img src="imgs/mine.png" height="20px" style="margin-top: -2px"><span class="selectedStaff-span" ' + 'value="' + $(thisObj).find("span").attr("value") + '">' + $(thisObj).find("span").text() + '</span><span class="cancel-span" onclick="cancelSelectStaff(this)" aria-hidden="true" style="display: block; float: right">&times;</span></li>'
-    selectedStaffUl.append(appendStr)
-}
-/*
-取消选区/
- */
-function cancelSelectStaff(thisObj) {
-    $(thisObj).parent().remove()
-}
-/*
-选定人员/
- */
-function selectedPeople(thisObj) {
-    if($(thisObj).attr('value') == 'contractResponsibleName'){
-        var selectedStaff_span = $('.selectedStaff-span')
-        var strID = ''
-        var strName = ''
-        for(var i = 0; i < selectedStaff_span.length; i++){
-            strID = strID + selectedStaff_span.eq(i).attr('value')
-            strName = strName + selectedStaff_span.eq(i).text()
-            if(i != selectedStaff_span.length - 1){
-                strID = strID + '_'
-                strName = strName + '、'
-            }
-        }
-        $('#modal-contractResponsibleName').attr('value', strID)
-        $('#modal-contractResponsibleName').val(strName)
-    }else if($(thisObj).attr('value') == 'contractStaffs'){
-        var selectedStaff_span = $('.selectedStaff-span')
-        var strID = ''
-        var strName = ''
-        for(var i = 0; i < selectedStaff_span.length; i++){
-            strID = strID + selectedStaff_span.eq(i).attr('value')
-            strName = strName + selectedStaff_span.eq(i).text()
-            if(i != selectedStaff_span.length - 1){
-                strID = strID + '_'
-                strName = strName + '、'
-            }
-        }
-        $('#modal-contractStaffs').attr('value', strID)
-        $('#modal-contractStaffs').val(strName)
-    }else if($(thisObj).attr('value') == 'updateProjectResponsibleName'){
-        var selectedStaff_span = $('.selectedStaff-span')
-        var strID = ''
-        var strName = ''
-        for(var i = 0; i < selectedStaff_span.length; i++){
-            strID = strID + selectedStaff_span.eq(i).attr('value')
-            strName = strName + selectedStaff_span.eq(i).text()
-            if(i != selectedStaff_span.length - 1){
-                strID = strID + '_'
-                strName = strName + '、'
-            }
-        }
-        $('#modal-updateProjectResponsibleName').attr('value', strID)
-        $('#modal-updateProjectResponsibleName').val(strName)
-    }else if($(thisObj).attr('value') == 'updateProjectStaffs'){
-        var selectedStaff_span = $('.selectedStaff-span')
-        var strID = ''
-        var strName = ''
-        for(var i = 0; i < selectedStaff_span.length; i++){
-            strID = strID + selectedStaff_span.eq(i).attr('value')
-            strName = strName + selectedStaff_span.eq(i).text()
-            if(i != selectedStaff_span.length - 1){
-                strID = strID + '_'
-                strName = strName + '、'
-            }
-        }
-        $('#modal-updateProjectStaffs').attr('value', strID)
-        $('#modal-updateProjectStaffs').val(strName)
-    }
-
-}
-/*
 设置项目收款记录表modal/
  */
 function setProjectReceiptModalInformation(thisObj) {
@@ -582,18 +488,8 @@ function setAddProjectReceiptModalInformation() {
     $('#modal-addProjectReceipt-operator').attr('value', '')
     $('#modal-addProjectReceipt-projectName').val($('#projectReceipt-projectName-th').attr('value-name'))
     $('#modal-addProjectReceipt-projectName').attr('value', $('#projectReceipt-projectName-th').attr('value-id'))
-    // var format = ''
-    // var nTime = new Date()
-    // format += nTime.getFullYear()+"-";
-    // format += (nTime.getMonth()+1)<10?"0"+(nTime.getMonth()+1):(nTime.getMonth()+1);
-    // format += "-";
-    // format += nTime.getDate()<10?"0"+(nTime.getDate()):(nTime.getDate());
-    // format += "T";
-    // format += nTime.getHours()<10?"0"+(nTime.getHours()):(nTime.getHours());
-    // format += ":";
-    // format += nTime.getMinutes()<10?"0"+(nTime.getMinutes()):(nTime.getMinutes());
-    // format += ":00";
-    // document.getElementById("modal-addProjectReceipt-time").value = format
+    $('#modal-addProjectReceipt-operator').val(window.localStorage.userName)
+    $('#modal-addProjectReceipt-operator').attr('value', window.localStorage.userID)
 }
 /*
 添加收款记录/
@@ -601,10 +497,6 @@ function setAddProjectReceiptModalInformation() {
 function addProjectReceipt() {
     var projectID = $('#modal-addProjectReceipt-projectName').attr('value')
     var price = $('#modal-addProjectReceipt-price').val()
-    // var time = new Date(($('#modal-addProjectReceipt-time').val()))
-    // time = (time.toLocaleString()).replace(/\//g, '-')
-    // time = time.replace('上午', '')
-    // time = time.replace('下午', '')
     var description = $('#modal-addProjectReceipt-description').val()
     var operator = $('#modal-addProjectReceipt-operator').attr('value')
     var urlStr = ipPort + '/projectReceipt/add?project=' + projectID + '&price=' + price + '&description=' + description + '&operator=' + operator
@@ -620,6 +512,7 @@ function addProjectReceipt() {
                     success:function (obj) {
                         if(obj.code == 0){
                             setProjectReceiptModalTableInformation(obj)
+                            getAllProjectContractInformation()
                         }
                         else{
                             alert(obj.message)
@@ -650,6 +543,8 @@ function setUpdateProjectReceiptModalInformation(thisObj) {
     $('#modal-updateProjectReceipt-operator').val(td.eq(4).text())
     $('#modal-updateProjectReceipt-operator').attr('value', td.eq(4).attr('value'))
     $('#modal-updateProjectReceipt-projectName').val(td.eq(0).text())
+    $('#modal-updateProjectReceipt-operator').val(window.localStorage.userName)
+    $('#modal-updateProjectReceipt-operator').attr('value', window.localStorage.userID)
 }
 /*
 修改收款记录/
@@ -657,10 +552,6 @@ function setUpdateProjectReceiptModalInformation(thisObj) {
 function updateProjectReceipt() {
     var id = $('#modal-updateProjectReceipt-id').val()
     var price = $('#modal-updateProjectReceipt-price').val()
-    // var time = new Date(($('#modal-addProjectReceipt-time').val()))
-    // time = (time.toLocaleString()).replace(/\//g, '-')
-    // time = time.replace('上午', '')
-    // time = time.replace('下午', '')
     var description = $('#modal-updateProjectReceipt-description').val()
     var operator = $('#modal-updateProjectReceipt-operator').attr('value')
     var urlStr = ipPort + '/projectReceipt/update?id=' + id + '&price=' + price + '&description=' + description + '&operator=' + operator
@@ -695,11 +586,126 @@ function updateProjectReceipt() {
         }
     })
 }
+
+
+/*************************************选取多个员工modal*****************************************/
 /*
 获取所有员工姓名/
  */
-function getAllOneStaff() {
-    var staffInformationDepartmentA = $('.selectOneStaff-department-ul .selectOneStaff-department-li .departmentName-span_')
+function getAllStaff_multi(str) {
+    currentModal = str
+    $('.selectAllDepartmentStaffs input').prop('checked',false)
+    var staffInformationDepartmentA = $('.selectStaff-department-ul .selectStaff-department-li .departmentName-span')
+    $.ajax({
+        url:ipPort + '/department/getAll',
+        dataType:'json',
+        success:function (obj) {
+            $('.selectedStaff-staff-ul').find('li').remove()
+            for(var i = 0; i < obj.data.length; i++){
+                staffInformationDepartmentA.eq(i).parent().removeClass('hidden')
+                staffInformationDepartmentA.eq(i).text(obj.data[i].name)
+                staffInformationDepartmentA.eq(i).attr('value', obj.data[i].id)
+                staffInformationDepartmentA.eq(i).parent().find('li').remove()
+            }
+            $.ajax({
+                url:ipPort + '/user/getAll',
+                dataType:'json',
+                success:function (obj_) {
+                    if(obj_.data.length != 0){
+                        for(var j = 0; j < obj_.data.length; j++){
+                            for(var m = 0; m < obj.data.length; m++){
+                                if(obj_.data[j].department.id == obj.data[m].id){
+                                    var staffUl = staffInformationDepartmentA.eq(m).parent().find('.selectStaff-staff-ul')
+                                    var appendStr = '<li onclick="selectedStaff(this)"><img src="imgs/mine.png" height="20px" style="margin-top: -2px"><span ' + 'value="' + obj_.data[j].id + '">' + obj_.data[j].name + '</span></li>'
+                                    staffUl.append(appendStr)
+                                    break
+                                }
+                            }
+                        }
+                    }
+                },
+                error:function (error) {
+                    console.log(error)
+                }
+            })
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+选区人员/
+ */
+function selectedStaff(thisObj) {
+    var selectedStaffUl = $('#form-selectStaff1 .selectedStaff-staff-ul')
+    var appendStr = '<li><img src="imgs/mine.png" height="20px" style="margin-top: -2px"><span class="selectedStaff-span" ' + 'value="' + $(thisObj).find("span").attr("value") + '">' + $(thisObj).find("span").text() + '</span><span class="cancel-span" onclick="cancelSelectStaff(this)" aria-hidden="true" style="display: block; float: right">&times;</span></li>'
+    selectedStaffUl.append(appendStr)
+}
+/*
+取消选区/
+ */
+function cancelSelectStaff(thisObj) {
+    $(thisObj).parent().remove()
+}
+/*
+选定人员/
+ */
+function selectedPeople() {
+    var selectedStaff_span = $('.selectedStaff-span')
+    var strID = ''
+    var strName = ''
+    for(var i = 0; i < selectedStaff_span.length; i++){
+        strID = strID + selectedStaff_span.eq(i).attr('value')
+        strName = strName + selectedStaff_span.eq(i).text()
+        if(i != selectedStaff_span.length - 1){
+            strID = strID + '_'
+            strName = strName + '、'
+        }
+    }
+    if(currentModal == 0)
+    {
+        $('#modal-contractStaffs').attr('value', strID)
+        $('#modal-contractStaffs').val(strName)
+    }else if(currentModal == 1){
+        $('#modal-updateProjectStaffs').attr('value', strID)
+        $('#modal-updateProjectStaffs').val(strName)
+    }
+}
+/*
+通过姓名搜索/
+ */
+function searchByName_modal(thisObj) {
+    var name = $(thisObj).parent().find('input').val()
+    if(name != ''){
+        $.ajax({
+            url:ipPort + '/user/getByNameLike?name=' + name,
+            dataType:'json',
+            success:function (obj) {
+                $('#form-selectStaff1 .selectStaff-department-ul').addClass('hidden')
+                $('#form-selectStaff1 .selectStaff-staff-ul2').removeClass('hidden')
+                var staffUl = $('#form-selectStaff1').find('.selectStaff-staff-ul2')
+                staffUl.find('li').remove()
+                for(var i = 0; i < obj.data.length; i++){
+                    var appendStr = '<li onclick="selectedStaff(this)"><img src="imgs/mine.png" height="20px" style="margin-top: -2px"><span ' + 'value="' + obj.data[i].id + '">' + obj.data[i].name + '</span></li>'
+                    staffUl.append(appendStr)
+                }
+            },
+            error:function (error) {
+                console.log(error)
+            }
+        })
+    }
+}
+/******************************************************************************/
+
+/*************************************选取一个员工modal*****************************************/
+/*
+获取所有员工/
+ */
+function getAllStaff_one(str) {
+    currentModal = str
+    var staffInformationDepartmentA = $('.selectOneStaff-department-ul .selectOneStaff-department-li .departmentName-span')
     $.ajax({
         url:ipPort + '/department/getAll',
         dataType:'json',
@@ -738,14 +744,43 @@ function getAllOneStaff() {
     })
 }
 /*
-选区人员/
+通过姓名搜索/
+ */
+function searchOneByName_modal(thisObj) {
+    var name = $(thisObj).parent().find('input').val()
+    if(name != ''){
+        $.ajax({
+            url:ipPort + '/user/getByNameLike?name=' + name,
+            dataType:'json',
+            success:function (obj) {
+                $('#form-selectOneStaff .selectOneStaff-department-ul').addClass('hidden')
+                $('#form-selectOneStaff .selectOneStaff-staff-ul2').removeClass('hidden')
+                var staffUl = $('#form-selectOneStaff').find('.selectOneStaff-staff-ul2')
+                staffUl.find('li').remove()
+                for(var i = 0; i < obj.data.length; i++){
+                    var appendStr = '<li data-dismiss="modal" onclick="selectedOneStaff(this)"><img src="imgs/mine.png" height="20px" style="margin-top: -2px"><span ' + 'value="' + obj.data[i].id + '">' + obj.data[i].name + '</span></li>'
+                    staffUl.append(appendStr)
+                }
+            },
+            error:function (error) {
+                console.log(error)
+            }
+        })
+    }
+}
+/*
+选定人员/
  */
 function selectedOneStaff(thisObj) {
-    $('#modal-addProjectReceipt-operator').val( $(thisObj).find("span").text())
-    $('#modal-addProjectReceipt-operator').attr('value', $(thisObj).find("span").attr("value"))
-    $('#modal-updateProjectReceipt-operator').val( $(thisObj).find("span").text())
-    $('#modal-updateProjectReceipt-operator').attr('value', $(thisObj).find("span").attr("value"))
+    if(currentModal == 0){
+        $('#modal-contractResponsibleName').val( $(thisObj).find("span").text())
+        $('#modal-contractResponsibleName').attr('value', $(thisObj).find("span").attr("value"))
+    }else if(currentModal == 1){
+        $('#modal-updateProjectResponsibleName').val( $(thisObj).find("span").text())
+        $('#modal-updateProjectResponsibleName').attr('value', $(thisObj).find("span").attr("value"))
+    }
 }
+/******************************************************************************/
 /*
 上一页/
  */

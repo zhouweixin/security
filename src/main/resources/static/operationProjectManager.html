@@ -592,13 +592,13 @@
                     <div class="form-group">
                         <label for="modal-contractResponsibleName" class="col-xs-3 control-label">项目负责人</label>
                         <div class="col-xs-7">
-                            <input type="text" data-toggle="modal" onclick="getAllStaff(this)"  value="" data-value="contractResponsibleName" data-target="#myModal-selectStaff" class="form-control" id="modal-contractResponsibleName">
+                            <input type="text" data-toggle="modal" onclick="getAllStaff_one(0)"  value="" data-value="contractResponsibleName" data-target="#myModal-selectOneStaff" class="form-control" id="modal-contractResponsibleName">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="modal-contractStaffs" class="col-xs-3 control-label">项目人员</label>
                         <div class="col-xs-7">
-                            <textarea data-toggle="modal" onclick="getAllStaff(this)"  value="" data-value="contractStaffs" data-target="#myModal-selectStaff"class="form-control" id="modal-contractStaffs" style="height: 90px; overflow-y: auto"></textarea>
+                            <textarea data-toggle="modal" onclick="getAllStaff_multi(0)"  value="" data-value="contractStaffs" data-target="#myModal-selectStaff"class="form-control" id="modal-contractStaffs" style="height: 90px; overflow-y: auto"></textarea>
                         </div>
                     </div>
                 </form>
@@ -610,6 +610,8 @@
         </div>
     </div>
 </div>
+<!------------------------------------------------修改项目modal------------------------------------------------->
+<!------------------------------------------------------------------------------------------------->
 <div class="modal fade" id="myModal-updateProjectContract" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-signContract">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -726,13 +728,13 @@
                     <div class="form-group">
                         <label for="modal-updateProjectResponsibleName" class="col-xs-3 control-label">项目负责人</label>
                         <div class="col-xs-7">
-                            <input type="text" data-toggle="modal" onclick="getAllStaff(this)"  value="" data-value="updateProjectResponsibleName" data-target="#myModal-selectStaff" class="form-control" id="modal-updateProjectResponsibleName">
+                            <input type="text" data-toggle="modal" onclick="getAllStaff_one(1)"  value="" data-value="updateProjectResponsibleName" data-target="#myModal-selectOneStaff" class="form-control" id="modal-updateProjectResponsibleName">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="modal-updateProjectStaffs" class="col-xs-3 control-label">项目人员</label>
                         <div class="col-xs-7">
-                            <textarea data-toggle="modal" onclick="getAllStaff(this)"  value="" data-value="updateProjectStaffs" data-target="#myModal-selectStaff"class="form-control" id="modal-updateProjectStaffs" style="height: 90px; overflow-y: auto"></textarea>
+                            <textarea data-toggle="modal" onclick="getAllStaff_multi(1)"  value="" data-value="updateProjectStaffs" data-target="#myModal-selectStaff"class="form-control" id="modal-updateProjectStaffs" style="height: 90px; overflow-y: auto"></textarea>
                         </div>
                     </div>
                 </form>
@@ -745,6 +747,8 @@
     </div>
 </div>
 
+<!------------------------------------------------收款记录modal------------------------------------------------->
+<!------------------------------------------------------------------------------------------------->
 <div class="modal fade" id="myModal-projectReceipt" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-projectReceipt">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -764,7 +768,6 @@
                                     <th>收款时间</th>
                                     <th>描述</th>
                                     <th>经办人姓名</th>
-                                    <th style="width: 50px">修改</th>
                                 </tr>
                                 </thead>
                                 <tbody >
@@ -774,13 +777,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -788,13 +784,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -802,13 +791,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -816,13 +798,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -830,13 +805,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -844,13 +812,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -858,13 +819,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -872,13 +826,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -886,13 +833,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -900,13 +840,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -914,13 +847,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -928,13 +854,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -942,13 +861,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -956,13 +868,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -970,13 +875,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -984,13 +882,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -998,13 +889,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1012,13 +896,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1026,13 +903,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1040,13 +910,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1054,13 +917,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1068,13 +924,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1082,13 +931,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1096,13 +938,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1110,13 +945,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1124,13 +952,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1138,13 +959,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1152,13 +966,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1166,13 +973,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1180,13 +980,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1194,13 +987,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1208,13 +994,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1222,13 +1001,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1236,13 +1008,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1250,13 +1015,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1264,13 +1022,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1278,13 +1029,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1292,13 +1036,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1306,13 +1043,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1320,13 +1050,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1334,13 +1057,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1348,13 +1064,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1362,13 +1071,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1376,13 +1078,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1390,13 +1085,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1404,13 +1092,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1418,13 +1099,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1432,13 +1106,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1446,13 +1113,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr class="table-trr hidden">
                                     <td class="projectReceipt-projectName" value=""></td>
@@ -1460,13 +1120,6 @@
                                     <td class="projectReceipt-time"></td>
                                     <td class="projectReceipt-description"></td>
                                     <td class="projectReceipt-operator"></td>
-                                    <td class="">
-                                        <div>
-                                            <a class="" data-toggle="modal" data-target="#myModal-updateProjectReceipt" onclick="setUpdateProjectReceiptModalInformation(this)">
-                                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -1481,6 +1134,8 @@
         </div>
     </div>
 </div>
+<!------------------------------------------------添加项目收款记录modal------------------------------------------------->
+<!------------------------------------------------------------------------------------------------->
 <div class="modal fade" id="myModal-addProjectReceipt" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -1511,18 +1166,21 @@
                     <div class="form-group">
                         <label for="modal-addProjectReceipt-operator" class="col-xs-3 control-label">经办人姓名</label>
                         <div class="col-xs-7">
-                            <input type="text" data-toggle="modal" onclick="getAllOneStaff()" data-target="#myModal-selectOneStaff" class="form-control" id="modal-addProjectReceipt-operator" >
+                            <input type="text" class="form-control" id="modal-addProjectReceipt-operator" disabled>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" onclick="addProjectReceipt()">确认</button>
+                <button type="button" class="btn btn-primary" onclick="addProjectReceipt()" data-dismiss="modal">确认</button>
             </div>
         </div>
     </div>
 </div>
+
+<!------------------------------------------------修改项目收款记录modal------------------------------------------------->
+<!------------------------------------------------------------------------------------------------->
 <div class="modal fade" id="myModal-updateProjectReceipt" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -1559,7 +1217,7 @@
                     <div class="form-group">
                         <label for="modal-updateProjectReceipt-operator" class="col-xs-3 control-label">经办人姓名</label>
                         <div class="col-xs-7">
-                            <input type="text" data-toggle="modal" onclick="getAllOneStaff()" data-target="#myModal-selectOneStaff" class="form-control" id="modal-updateProjectReceipt-operator" >
+                            <input type="text" class="form-control" id="modal-updateProjectReceipt-operator" disabled>
                         </div>
                     </div>
                 </form>
@@ -1605,77 +1263,127 @@
         </div>
     </div>
 </div>
+
+<!---------------------------------------------------------选择多个人modal--------------------------------------------------------->
+<!------------------------------------------------------------------------------------------------------------------>
 <div class="modal fade" id="myModal-selectStaff" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">选择员工</h4>
+                <h4 class="modal-title col-xs-6" id="myModalLabel">选择多个员工</h4>
+                <div class="col-xs-5 modal-searchInput">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="姓名">
+                        <span class="input-group-addon glyphicon glyphicon-search" onclick="searchByName_modal(this)" aria-hidden="true"></span>
+                    </div>
+                </div>
             </div>
             <div class="modal-body" style="padding: 0px 20px;font-size: 14px">
-                <form class="form-horizontal">
+                <form id="form-selectStaff1" class="form-horizontal">
                     <div class="form-group " style="margin-bottom: 0px;">
                         <ul class="selectStaff-department-ul col-xs-6" style="height: 200px;overflow-y: scroll">
                             <li class="selectStaff-department-li hidden" style="cursor: pointer">
                                 <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
                                 <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
                                 <ul class="selectStaff-staff-ul hidden">
                                 </ul>
                             </li>
                             <li class="selectStaff-department-li hidden" style="cursor: pointer">
                                 <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
                                 <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
                                 <ul class="selectStaff-staff-ul hidden">
                                 </ul>
                             </li>
                             <li class="selectStaff-department-li hidden" style="cursor: pointer">
                                 <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
                                 <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
                                 <ul class="selectStaff-staff-ul hidden">
                                 </ul>
                             </li>
                             <li class="selectStaff-department-li hidden" style="cursor: pointer">
                                 <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
                                 <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
                                 <ul class="selectStaff-staff-ul hidden">
                                 </ul>
                             </li>
                             <li class="selectStaff-department-li hidden" style="cursor: pointer">
                                 <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
                                 <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
                                 <ul class="selectStaff-staff-ul hidden">
                                 </ul>
                             </li>
                             <li class="selectStaff-department-li hidden" style="cursor: pointer">
                                 <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
                                 <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
                                 <ul class="selectStaff-staff-ul hidden">
                                 </ul>
                             </li>
                             <li class="selectStaff-department-li hidden" style="cursor: pointer">
                                 <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
                                 <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
                                 <ul class="selectStaff-staff-ul hidden">
                                 </ul>
                             </li>
                             <li class="selectStaff-department-li hidden" style="cursor: pointer">
                                 <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
                                 <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
                                 <ul class="selectStaff-staff-ul hidden">
                                 </ul>
                             </li>
                             <li class="selectStaff-department-li hidden" style="cursor: pointer">
                                 <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
                                 <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
                                 <ul class="selectStaff-staff-ul hidden">
                                 </ul>
                             </li>
                             <li class="selectStaff-department-li hidden" style="cursor: pointer">
                                 <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
                                 <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
                                 <ul class="selectStaff-staff-ul hidden">
                                 </ul>
                             </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
+                                <div class="selectAllDepartmentStaffs"></div>
+                                <ul class="selectStaff-staff-ul hidden">
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="selectStaff-staff-ul2 col-xs-6 hidden" style="height: 200px;overflow-y: auto;">
+
                         </ul>
                         <div class="col-xs-6" style="border-left: 1px solid #E5E5E5; height: 200px;overflow-y: scroll">
                             <ul class="selectedStaff-staff-ul">
@@ -1691,77 +1399,88 @@
         </div>
     </div>
 </div>
+<!---------------------------------------------------------选择一个人modal--------------------------------------------------------->
+<!------------------------------------------------------------------------------------------------------------------>
 <div class="modal fade" id="myModal-selectOneStaff" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">选择经办人</h4>
+                <h4 class="modal-title col-xs-6" id="myModalLabel-selectOneStaff">选择员工</h4>
+                <div class="col-xs-5 modal-searchInput">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="姓名">
+                        <span class="input-group-addon glyphicon glyphicon-search" onclick="searchOneByName_modal(this)" aria-hidden="true"></span>
+                    </div>
+                </div>
             </div>
             <div class="modal-body" style="padding: 0px 20px;font-size: 14px">
-                <form class="form-horizontal">
+                <form id="form-selectOneStaff" class="form-horizontal">
                     <div class="form-group " style="margin-bottom: 0px;">
                         <ul class="selectOneStaff-department-ul" style="height: 200px;overflow-y: scroll">
                             <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
-                                <img class="departmentName-img_" src="imgs/addition.png" height="20px" style="margin-top: -4px">
-                                <span class="departmentName-span_"></span>
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
                                 <ul class="selectOneStaff-staff-ul hidden">
                                 </ul>
                             </li>
                             <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
-                                <img class="departmentName-img_" src="imgs/addition.png" height="20px" style="margin-top: -4px">
-                                <span class="departmentName-span_"></span>
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
                                 <ul class="selectOneStaff-staff-ul hidden">
                                 </ul>
                             </li>
                             <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
-                                <img class="departmentName-img_" src="imgs/addition.png" height="20px" style="margin-top: -4px">
-                                <span class="departmentName-span_"></span>
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
                                 <ul class="selectOneStaff-staff-ul hidden">
                                 </ul>
                             </li>
                             <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
-                                <img class="departmentName-img_" src="imgs/addition.png" height="20px" style="margin-top: -4px">
-                                <span class="departmentName-span_"></span>
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
                                 <ul class="selectOneStaff-staff-ul hidden">
                                 </ul>
                             </li>
                             <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
-                                <img class="departmentName-img_" src="imgs/addition.png" height="20px" style="margin-top: -4px">
-                                <span class="departmentName-span_"></span>
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
                                 <ul class="selectOneStaff-staff-ul hidden">
                                 </ul>
                             </li>
                             <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
-                                <img class="departmentName-img_" src="imgs/addition.png" height="20px" style="margin-top: -4px">
-                                <span class="departmentName-span_"></span>
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
                                 <ul class="selectOneStaff-staff-ul hidden">
                                 </ul>
                             </li>
                             <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
-                                <img class="departmentName-img_" src="imgs/addition.png" height="20px" style="margin-top: -4px">
-                                <span class="departmentName-span_"></span>
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
                                 <ul class="selectOneStaff-staff-ul hidden">
                                 </ul>
                             </li>
                             <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
-                                <img class="departmentName-img_" src="imgs/addition.png" height="20px" style="margin-top: -4px">
-                                <span class="departmentName-span_"></span>
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
                                 <ul class="selectOneStaff-staff-ul hidden">
                                 </ul>
                             </li>
                             <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
-                                <img class="departmentName-img_" src="imgs/addition.png" height="20px" style="margin-top: -4px">
-                                <span class="departmentName-span_"></span>
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
                                 <ul class="selectOneStaff-staff-ul hidden">
                                 </ul>
                             </li>
                             <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
-                                <img class="departmentName-img_" src="imgs/addition.png" height="20px" style="margin-top: -4px">
-                                <span class="departmentName-span_"></span>
+                                <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
+                                <span class="departmentName-span"></span>
                                 <ul class="selectOneStaff-staff-ul hidden">
                                 </ul>
                             </li>
+                        </ul>
+                        <ul class="selectOneStaff-staff-ul2 col-xs-12 hidden" style="height: 200px;overflow-y: auto;">
+
                         </ul>
                     </div>
                 </form>

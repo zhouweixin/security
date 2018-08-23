@@ -111,3 +111,80 @@ a.page-button{
     background-color: #CECECE;
     border-radius: 5px 5px;
 }
+
+.selectDepartment-ul li{
+    font-size: 16px;
+    margin-left: 22px;
+    margin-top: 2px;
+    color: #4EB1E4;
+    width: 60%;
+}
+.selectDepartment-ul li:hover{
+    cursor: pointer;
+    font-size: 18px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
+}
+.departmentName-span{
+    font-size: 16px;
+}
+.selectOneStaff-staff-ul li{
+    margin-left: 22px;
+    margin-top: 2px;
+    color: #4EB1E4;
+    width: 60%;
+}
+.selectOneStaff-department-li{
+    margin-top: 5px;
+}
+.departmentName-span:hover{
+    color: #7D7D7D;
+}
+
+.selectOneStaff-staff-ul2 li{
+    font-size: 16px;
+    margin-left: 22px;
+    margin-top: 2px;
+    color: #4EB1E4;
+    width: 60%;
+}
+.selectOneStaff-staff-ul2 li:hover{
+    cursor: pointer;
+    font-size: 18px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
+}
+.selectOneStaff-staff-ul li:hover{
+    cursor: pointer;
+    font-size: 18px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
+}
+.selectDepartment-ul li{
+    font-size: 16px;
+    margin-left: 22px;
+    margin-top: 2px;
+    color: #4EB1E4;
+    width: 60%;
+}
+.selectDepartment-ul li:hover{
+    cursor: pointer;
+    font-size: 18px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
+}
+.departmentName-span{
+    font-size: 16px;
+}
+.selectOneStaff-staff-ul li{
+    margin-left: 22px;
+    margin-top: 2px;
+    color: #4EB1E4;
+    width: 60%;
+}
+.selectOneStaff-department-li{
+    margin-top: 5px;
+}
+.departmentName-span:hover{
+    color: #7D7D7D;
+}

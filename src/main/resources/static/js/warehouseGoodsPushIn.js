@@ -40,8 +40,13 @@ $(document).ready(function () {
  */
 function getAllPurchaseApply() {
     currentPage = 0
+    var page = currentPage
+    var size = 10
+    var sortFieldName = 'applyTime'
+    var asc = 0
+    var urlStr = ipPort + '/purchaseHeader/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
     $.ajax({
-        url: ipPort + '/purchaseHeader/getAllByPage',
+        url: urlStr,
         success:function (obj) {
             if(obj.code == 0){
                 setPurchaseApplyTable(obj)
@@ -302,8 +307,8 @@ function previousPage() {
     }
     var page = currentPage
     var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
+    var sortFieldName = 'applyTime'
+    var asc = 0
     var urlStr = ipPort + '/purchaseHeader/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
     $.ajax({
         url:urlStr,
@@ -333,8 +338,8 @@ function nextPage() {
     currentPage++
     var page = currentPage
     var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
+    var sortFieldName = 'applyTime'
+    var asc = 0
     var urlStr = ipPort + '/purchaseHeader/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
     $.ajax({
         url:urlStr,
@@ -368,8 +373,8 @@ function skipPage() {
     currentPage = skipPage_ - 1
     var page = currentPage
     var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
+    var sortFieldName = 'applyTime'
+    var asc = 0
     var urlStr = ipPort + '/purchaseHeader/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
     $.ajax({
         url:urlStr,

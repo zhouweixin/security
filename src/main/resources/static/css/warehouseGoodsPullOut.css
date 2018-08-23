@@ -379,3 +379,9 @@ ul.goOutTable-goodsName-ul li:hover{
     cursor: pointer;
     width: 30px;
 }
+.selectOneStaff-staff-ul li:hover{
+    cursor: pointer;
+    font-size: 18px;
+    background-color: #CECECE;
+    border-radius: 5px 5px;
+}

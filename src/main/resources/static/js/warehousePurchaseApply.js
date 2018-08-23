@@ -3,11 +3,15 @@
  */
 var index = 0
 var currentPage = 0
+/*
+currentModal == 0 申请modal申请人/
+ */
+var currentModal = 0
 $(document).ready(function () {
     index = 0
     /*
-    选择员工/
-     */
+      选择one员工/
+       */
     $('.selectOneStaff-department-li img').on('click', function () {
         if($(this).parent().find('.hidden').length == 0){
             $(this).parent().find('.selectOneStaff-staff-ul').addClass('hidden')
@@ -17,13 +21,22 @@ $(document).ready(function () {
             $(this).parent().find('.departmentName-img').attr('src', 'imgs/offline.png')
         }
     })
-    $('.departmentName-span').on('click', function () {
+    $('.selectOneStaff-department-li .departmentName-span').on('click', function () {
         if($(this).parent().find('.hidden').length == 0){
             $(this).parent().find('.selectOneStaff-staff-ul').addClass('hidden')
             $(this).parent().find('.departmentName-img').attr('src', 'imgs/addition.png')
         }else{
             $(this).parent().find('.selectOneStaff-staff-ul').removeClass('hidden')
             $(this).parent().find('.departmentName-img').attr('src', 'imgs/offline.png')
+        }
+    })
+    /*
+    按姓名搜索modal/
+     */
+    $('#myModal-selectOneStaff .modal-searchInput input').on('input propertychange', function () {
+        if($(this).val() == ''){
+            $('#form-selectOneStaff .selectOneStaff-staff-ul2').addClass('hidden')
+            $('#form-selectOneStaff .selectOneStaff-department-ul').removeClass('hidden')
         }
     })
     /*
@@ -364,10 +377,12 @@ function selectedOneDepartment(thisObj) {
     $('#applyDepartment').val( $(thisObj).find("span").text())
     $('#applyDepartment').attr('value', $(thisObj).find("span").attr("value"))
 }
+/*************************************选取一个员工modal*****************************************/
 /*
 获取所有员工/
  */
-function getAllStaff() {
+function getAllStaff_one(str) {
+    currentModal = str
     var staffInformationDepartmentA = $('.selectOneStaff-department-ul .selectOneStaff-department-li .departmentName-span')
     $.ajax({
         url:ipPort + '/department/getAll',
@@ -407,12 +422,40 @@ function getAllStaff() {
     })
 }
 /*
+通过姓名搜索/
+ */
+function searchOneByName_modal(thisObj) {
+    var name = $(thisObj).parent().find('input').val()
+    if(name != ''){
+        $.ajax({
+            url:ipPort + '/user/getByNameLike?name=' + name,
+            dataType:'json',
+            success:function (obj) {
+                $('#form-selectOneStaff .selectOneStaff-department-ul').addClass('hidden')
+                $('#form-selectOneStaff .selectOneStaff-staff-ul2').removeClass('hidden')
+                var staffUl = $('#form-selectOneStaff').find('.selectOneStaff-staff-ul2')
+                staffUl.find('li').remove()
+                for(var i = 0; i < obj.data.length; i++){
+                    var appendStr = '<li data-dismiss="modal" onclick="selectedOneStaff(this)"><img src="imgs/mine.png" height="20px" style="margin-top: -2px"><span ' + 'value="' + obj.data[i].id + '">' + obj.data[i].name + '</span></li>'
+                    staffUl.append(appendStr)
+                }
+            },
+            error:function (error) {
+                console.log(error)
+            }
+        })
+    }
+}
+/*
 选定人员/
  */
 function selectedOneStaff(thisObj) {
-    $('#applyStaff').val( $(thisObj).find("span").text())
-    $('#applyStaff').attr('value', $(thisObj).find("span").attr("value"))
+    if(currentModal == 0){
+        $('#applyStaff').val( $(thisObj).find("span").text())
+        $('#applyStaff').attr('value', $(thisObj).find("span").attr("value"))
+    }
 }
+/******************************************************************************/
 /*
 获取所有物品名称/
  */

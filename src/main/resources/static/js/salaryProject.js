@@ -1,12 +1,18 @@
 var currentPage = 0
+/*
+currentSearch == -1 全部搜索
+currentSearch == -2 条件搜索/
+ */
+var currentSearch = -1
 $(document).ready(function () {
     getAllProjectWage()
 })
 /*
 获取所有项目工资/
  */
-function getAllProjectWage() {
-    currentPage = 0
+function getAllProjectWage(page_ = 0) {
+    currentSearch = -1
+    currentPage = page_
     var page = currentPage
     var size = 10
     var sortFieldName = 'id'
@@ -31,8 +37,9 @@ function getAllProjectWage() {
 /*
 通过项目名称搜索/
  */
-function getInformationByProjectName() {
-    currentPage = 0
+function getInformationByProjectName(page_ = 0) {
+    currentSearch = -2
+    currentPage = page_
     var projectName = $('#salaryProject-name').val()
     var urlStr = ipPort + '/project/getByNameLikeByPage?name=' + projectName + "&page=" + currentPage
     $.ajax({
@@ -110,6 +117,7 @@ function updateProjectWagePerHour(thisObj) {
     })
 }
 
+
 /*
 上一页/
  */
@@ -123,25 +131,11 @@ function previousPage() {
     if(currentPage < 0){
         currentPage = 0
     }
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/project/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setAllBaseWageATable(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllProjectWage(currentPage)
+    }else  if(currentSearch == -2){
+        getInformationByProjectName(currentPage)
+    }
 }
 /*
 下一页/
@@ -154,25 +148,11 @@ function nextPage() {
         return
     }
     currentPage++
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/project/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setAllBaseWageATable(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllProjectWage(currentPage)
+    }else  if(currentSearch == -2){
+        getInformationByProjectName(currentPage)
+    }
 }
 /*
 跳转页/
@@ -189,23 +169,9 @@ function skipPage() {
         return
     }
     currentPage = skipPage_ - 1
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/project/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setAllBaseWageATable(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllProjectWage(currentPage)
+    }else  if(currentSearch == -2){
+        getInformationByProjectName(currentPage)
+    }
 }

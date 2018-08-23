@@ -1,4 +1,9 @@
 var currentPage = 0
+/*
+currentSearch == -1 全部搜索
+currentSearch == -2 条件搜索/
+ */
+var currentSearch = -1
 $(document).ready(function () {
 
     //设置选择月份为当天日期
@@ -10,8 +15,9 @@ $(document).ready(function () {
 /*
 获取所有固定日期的工资单/
  */
-function getALlWage() {
-    currentPage = 0
+function getALlWage(page_ = 0) {
+    currentSearch = -1
+    currentPage = page_
     var page = currentPage
     var size = 10
     var sortFieldName = 'startTime'
@@ -39,9 +45,10 @@ function getALlWage() {
 /*
 获取所有固定日期的工资单/
  */
-function getWageByParameters() {
+function getWageByParameters(page_ = 0) {
+    currentSearch = -2
     var name = $('#salaryQuery-name').val()
-    currentPage = 0
+    currentPage = page_
     var page = currentPage
     var size = 10
     var sortFieldName = 'startTime'
@@ -402,6 +409,7 @@ function setAllPrintTable(obj) {
 function printSalaryTable() {
     
 }
+
 /*
 上一页/
  */
@@ -415,28 +423,11 @@ function previousPage() {
     if(currentPage < 0){
         currentPage = 0
     }
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'startTime'
-    var asc = 1
-    var month = $('#salaryQuery-month').val()
-    month = month.replace(/\//g, '-')
-    var urlStr = ipPort + '/wageEntry/getByDateAndNameLikeByPage?page='+ page + '&size=' + size + '&sortFieldName='
-        + sortFieldName + '&asc=' + asc + '&date=' + month
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setAllWageTable(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getALlWage(currentPage)
+    }else  if(currentSearch == -2){
+        getWageByParameters(currentPage)
+    }
 }
 /*
 下一页/
@@ -449,28 +440,11 @@ function nextPage() {
         return
     }
     currentPage++
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'startTime'
-    var asc = 1
-    var month = $('#salaryQuery-month').val()
-    month = month.replace(/\//g, '-')
-    var urlStr = ipPort + '/wageEntry/getByDateAndNameLikeByPage?page='+ page + '&size=' + size + '&sortFieldName='
-        + sortFieldName + '&asc=' + asc + '&date=' + month
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setAllWageTable(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getALlWage(currentPage)
+    }else  if(currentSearch == -2){
+        getWageByParameters(currentPage)
+    }
 }
 /*
 跳转页/
@@ -487,26 +461,9 @@ function skipPage() {
         return
     }
     currentPage = skipPage_ - 1
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'startTime'
-    var asc = 1
-    var month = $('#salaryQuery-month').val()
-    month = month.replace(/\//g, '-')
-    var urlStr = ipPort + '/wageEntry/getByDateAndNameLikeByPage?page='+ page + '&size=' + size + '&sortFieldName='
-        + sortFieldName + '&asc=' + asc + '&date=' + month
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setAllWageTable(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getALlWage(currentPage)
+    }else  if(currentSearch == -2){
+        getWageByParameters(currentPage)
+    }
 }

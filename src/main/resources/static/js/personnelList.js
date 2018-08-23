@@ -1,6 +1,12 @@
 var jobNaturesName = []
 var jobNatureID = []
 var currentPage = 0
+/*
+currentSearch == -1 全部搜索
+currentSearch == -2 条件搜索
+currentSearch == else 工作性质搜索/
+ */
+var currentSearch = -1
 $(document).ready(function () {
 
 
@@ -78,6 +84,7 @@ $(document).ready(function () {
 
     // document.getElementById("modal-addStaffJoinDate").valueAsDate = new Date()
     $('#modal-addStaffJoinDate').val(new Date().toLocaleDateString())
+    $('#modal-addStaffBornDate').val(new Date().toLocaleDateString())
 
     $('.addStaffInternshipCycle-menu-ul li a').on('click', function () {
         $('#modal-addStaffInternshipCycle').val($(this).text())
@@ -272,6 +279,15 @@ $(document).ready(function () {
     /*
     选择图片/
      */
+    $('input[class=formalContractFile]').change(function() {
+        $(this).parent().find('.input-append input').val($(this).val())
+    });
+    $('input[class=temporaryContractFile]').change(function() {
+        $(this).parent().find('.input-append input').val($(this).val())
+    });
+    $('input[class=internshipAgreementFile]').change(function() {
+        $(this).parent().find('.input-append input').val($(this).val())
+    });
     $('input[class=bussinessInsuranceFile]').change(function() {
         $(this).parent().find('.input-append input').val($(this).val())
     });
@@ -357,7 +373,8 @@ function addStaff() {
             success:function (obj) {
                 if(obj.code == 0){
                     alert(obj.message)
-                    getAllStaffInformationByPage()
+                    setSummaryNumber()
+                    getAllStaffInformationByPage(currentPage)
                 }else{
                     alert(obj.message)
                 }
@@ -451,9 +468,7 @@ function getDetailsInformation(thisObj) {
         dataType:'json',
         success:function (obj) {
             if(obj.code == 0){
-                if(obj.data.numberOfElements != 0){
-                    setDetailsContractInformationColumn(obj)
-                }
+                setDetailsContractInformationColumn(obj)
             }
             else{
                 console.log(obj)
@@ -467,8 +482,9 @@ function getDetailsInformation(thisObj) {
 /*
 获取全部员工信息/
  */
-function getAllStaffInformationByPage() {
-    currentPage = 0
+function getAllStaffInformationByPage(page_ = 0) {
+    currentSearch = -1
+    currentPage = page_
     var page = currentPage
     var size = 10
     var sortFieldName = 'id'
@@ -478,6 +494,7 @@ function getAllStaffInformationByPage() {
         url:urlStr,
         dataType:'json',
         success:function (obj) {
+            console.log(obj)
             if(obj.code == 0){
                 setStaffTableInformation(obj)
             }else{
@@ -559,7 +576,8 @@ function deleteStaff() {
         success:function (obj) {
             if(obj.code == 0){
                 alert("删除员工信息成功！")
-                getAllStaffInformationByPage()
+                setSummaryNumber()
+                getAllStaffInformationByPage(currentPage)
             }else {
                 console.log(obj)
             }
@@ -593,7 +611,8 @@ function deleteStaffInBatch() {
         success:function (obj) {
             if(obj.code == 0){
                 alert("批量删除员工信息成功！")
-                getAllStaffInformationByPage()
+                setSummaryNumber()
+                getAllStaffInformationByPage(currentPage)
             }else {
                 console.log(obj)
             }
@@ -606,8 +625,9 @@ function deleteStaffInBatch() {
 /*
 通过部门和姓名搜索信息/
  */
-function searchByDepartmentAndStaffName() {
-    currentPage = 0
+function searchByDepartmentAndStaffName(page_ = 0) {
+    currentSearch = -2
+    currentPage = page_
     var departmentId = $('#selectDepartment-dropdownMenu').attr('value')
     var staffName = $('#staffName-searchInput').val()
     var urlStr = ipPort + "/user/getByDepartmentAndNameLikeByPage?id=" + departmentId + "&name=" + staffName + "&page=" + currentPage
@@ -636,7 +656,39 @@ function searchByDepartmentAndStaffName() {
  */
 function searchByJobNature(thisObj) {
     var searchJobNatureID = $(thisObj).attr('value')
+    currentSearch = searchJobNatureID
     currentPage = 0
+    var page = currentPage
+    var size = 10
+    var sortFieldName = 'id'
+    var asc = 1
+    var urlStr = ipPort + '/user/getByJobNatureByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&id=' + searchJobNatureID
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                if(obj.data.numberOfElements == 0){
+                    alert("未搜索到信息")
+                    setStaffTableInformation(obj)
+                    return
+                }
+                setStaffTableInformation(obj)
+            }else {
+                console.log(obj)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
+}
+/*
+通过工作性质查询员工/
+ */
+function searchByJobNature_(search_, page_ = 0) {
+    var searchJobNatureID = search_
+    currentPage = page_
     var page = currentPage
     var size = 10
     var sortFieldName = 'id'
@@ -683,15 +735,18 @@ function leaveJob() {
                             if(obj.code == 0){
                                 var resignDate = new Date(($('#modal-leaveDate').val()))
                                 resignDate = (resignDate.toLocaleDateString()).replace(/\//g, '-')
-                                var resignTypeId = $('#modal-leaveType').attr('value')
+                                var resignTypeId = $('#select-leaveType').attr('value')
+                                console.log(ipPort + '/user/resign?resignDate=' +  resignDate + '&resignTypeId=' + resignTypeId + '&id=' + leaveJobStaffID)
                                 $.ajax({
                                     url:ipPort + '/user/resign?resignDate=' +  resignDate + '&resignTypeId=' + resignTypeId + '&id=' + leaveJobStaffID,
                                     dataType:'json',
                                     success:function (obj) {
                                         if(obj.code == 0){
                                             alert(obj.message)
+                                            setSummaryNumber()
+                                            getAllStaffInformationByPage(currentPage)
                                         }else {
-                                            console.log(obj)
+                                            alert(obj.message)
                                         }
                                     },
                                     error:function (error) {
@@ -911,6 +966,67 @@ function setDetailsArchiveInformationColumn(obj) {
 设置详细页面合同信息栏/
  */
 function setDetailsContractInformationColumn(obj) {
+    //清空合同栏
+    $('#formalContractID').val('')
+    $('#formalContractStartDate').val('')
+    $('#formalContractEndDate').val('')
+    $('#formalContractPeriod').val('')
+    $('#formalContractStatus').attr('value', '')
+    $('#formalContractStatus').html("请选择" + "<span class='caret'></span>")
+    $('#formalContractContent').val('')
+    $('#formalContractScanningCopy').attr('value', '')
+    $('#formalContractScanningCopy').val('')
+    $('#formalContract-panel .scanningCopyImg').remove()
+    $('#formalContract-panel .scanningCopyDiv').remove()
+    
+    $('#temporaryContractID').val('')
+    $('#temporaryContractStartDate').val('')
+    $('#temporaryContractEndDate').val('')
+    $('#temporaryContractPeriod').val('')
+    $('#temporaryContractStatus').attr('value', '')
+    $('#temporaryContractStatus').html("请选择" + "<span class='caret'></span>")
+    $('#temporaryContractContent').val('')
+    $('#temporaryContractScanningCopy').attr('value', '')
+    $('#temporaryContractScanningCopy').val('')
+    $('#temporaryContract-panel .scanningCopyImg').remove()
+    $('#temporaryContract-panel .scanningCopyDiv').remove()
+
+    $('#internshipAgreementID').val('')
+    $('#internshipAgreementStartDate').val('')
+    $('#internshipAgreementEndDate').val('')
+    $('#internshipAgreementPeriod').val('')
+    $('#internshipAgreementStatus').attr('value', '')
+    $('#internshipAgreementStatus').html("请选择" + "<span class='caret'></span>")
+    $('#internshipAgreementContent').val('')
+    $('#internshipAgreementScanningCopy').attr('value', '')
+    $('#internshipAgreementScanningCopy').val('')
+    $('#internshipAgreement-panel .scanningCopyImg').remove()
+    $('#internshipAgreement-panel .scanningCopyDiv').remove()
+
+    $('#businessInsuranceID').val('')
+    $('#businessInsuranceStartDate').val('')
+    $('#businessInsuranceEndDate').val('')
+    $('#businessInsurancePeriod').val('')
+    $('#businessInsuranceStatus').attr('value', '')
+    $('#businessInsuranceStatus').html("请选择" + "<span class='caret'></span>")
+    $('#businessInsuranceContent').val('')
+    $('#businessInsuranceScanningCopy').attr('value', '')
+    $('#businessInsuranceScanningCopy').val('')
+    $('#businessInsurance-panel .scanningCopyImg').remove()
+    $('#businessInsurance-panel .scanningCopyDiv').remove()
+
+    $('#socialSecurityContractID').val('')
+    $('#socialSecurityContractStartDate').val('')
+    $('#socialSecurityContractEndDate').val('')
+    $('#socialSecurityContractPeriod').val('')
+    $('#socialSecurityContractStatus').attr('value', '')
+    $('#socialSecurityContractStatus').html("请选择" + "<span class='caret'></span>")
+    $('#socialSecurityContractContent').val('')
+    $('#socialSecurityContractScanningCopy').attr('value', '')
+    $('#socialSecurityContractScanningCopy').val('')
+    $('#socialSecurityContract-panel .scanningCopyImg').remove()
+    $('#socialSecurityContract-panel .scanningCopyDiv').remove()
+
     for (var i = 0; i < obj.data.numberOfElements; i ++){
         if(obj.data.content[i].contractType.id == 3){
             $('#formalContractID').val(obj.data.content[i].id)
@@ -944,7 +1060,15 @@ function setDetailsContractInformationColumn(obj) {
             }
 
             $('#formalContractContent').val(obj.data.content[i].content)
-            $('#formalContractScanningCopy').val(obj.data.content[i].scanningCopy)
+            //加载扫描件
+            if(obj.data.content[i].scanningCopy){
+                $('#formalContractScanningCopy').attr('value', obj.data.content[i].scanningCopy)
+                var affterStr = "<img class='col-xs-6 col-xs-pull-3 scanningCopyImg' height=300 style='display:none'>"+
+                    "<div class='col-xs-6 col-xs-pull-3 scanningCopyDiv' style='height:300px;color: #006dcc;text-align: center;'>正在加载扫描件...</div>"
+                $('#formalContract-panel iframe').after(affterStr)
+                $('#formalContract-panel img').attr('onload', "this.nextSibling.style.display='none';this.style.display='';")
+                $('#formalContract-panel img').attr('src', ipPort + '/image/' + obj.data.content[i].scanningCopy)
+            }
         }
         else if (obj.data.content[i].contractType.id == 1) {
             $('#temporaryContractID').val(obj.data.content[i].id)
@@ -973,11 +1097,19 @@ function setDetailsContractInformationColumn(obj) {
                 $('#temporaryContractStatus').html(obj.data.content[i].contractStatus.name + "<span class='caret'></span>")
             }else {
                 $('#temporaryContractStatus').attr('value', '')
-                $('#temporaryContractStatus').html("" + "<span class='caret'></span>")
+                $('#temporaryContractStatus').html("请选择" + "<span class='caret'></span>")
             }
 
             $('#temporaryContractContent').val(obj.data.content[i].content)
-            $('#temporaryContractScanningCopy').val(obj.data.content[i].scanningCopy)
+            //加载扫描件
+            if(obj.data.content[i].scanningCopy){
+                $('#temporaryContractScanningCopy').attr('value', obj.data.content[i].scanningCopy)
+                var affterStr = "<img class='col-xs-6 col-xs-pull-3 scanningCopyImg' height=300 style='display:none'>"+
+                    "<div class='col-xs-6 col-xs-pull-3 scanningCopyDiv' style='height:300px;color: #006dcc;text-align: center;'>正在加载扫描件...</div>"
+                $('#temporaryContract-panel iframe').after(affterStr)
+                $('#temporaryContract-panel img').attr('onload', "this.nextSibling.style.display='none';this.style.display='';")
+                $('#temporaryContract-panel img').attr('src', ipPort + '/image/' + obj.data.content[i].scanningCopy)
+            }
         }
         else if (obj.data.content[i].contractType.id == 2) {
             $('#internshipAgreementID').val(obj.data.content[i].id)
@@ -1006,10 +1138,18 @@ function setDetailsContractInformationColumn(obj) {
                 $('#internshipAgreementStatus').html(obj.data.content[i].contractStatus.name + "<span class='caret'></span>")
             }else {
                 $('#internshipAgreementStatus').attr('value', '')
-                $('#internshipAgreementStatus').html("" + "<span class='caret'></span>")
+                $('#internshipAgreementStatus').html("请选择" + "<span class='caret'></span>")
             }
             $('#internshipAgreementContent').val(obj.data.content[i].content)
-            $('#internshipAgreementScanningCopy').val(obj.data.content[i].scanningCopy)
+            //加载扫描件
+            if(obj.data.content[i].scanningCopy){
+                $('#internshipAgreementScanningCopy').attr('value', obj.data.content[i].scanningCopy)
+                var affterStr = "<img class='col-xs-6 col-xs-pull-3 scanningCopyImg' height=300 style='display:none'>"+
+                    "<div class='col-xs-6 col-xs-pull-3 scanningCopyDiv' style='height:300px;color: #006dcc;text-align: center;'>正在加载扫描件...</div>"
+                $('#internshipAgreement-panel iframe').after(affterStr)
+                $('#internshipAgreement-panel img').attr('onload', "this.nextSibling.style.display='none';this.style.display='';")
+                $('#internshipAgreement-panel img').attr('src', ipPort + '/image/' + obj.data.content[i].scanningCopy)
+            }
         }
         else if (obj.data.content[i].contractType.id == 4) {
             $('#businessInsuranceID').val(obj.data.content[i].id)
@@ -1038,13 +1178,11 @@ function setDetailsContractInformationColumn(obj) {
                 $('#businessInsuranceStatus').html(obj.data.content[i].contractStatus.name + "<span class='caret'></span>")
             }else {
                 $('#businessInsuranceStatus').attr('value', '')
-                $('#businessInsuranceStatus').html("" + "<span class='caret'></span>")
+                $('#businessInsuranceStatus').html("请选择" + "<span class='caret'></span>")
             }
             $('#businessInsuranceContent').val(obj.data.content[i].content)
             //加载扫描件
             if(obj.data.content[i].scanningCopy){
-                $('#businessInsurance-panel .scanningCopyImg').remove()
-                $('#businessInsurance-panel .scanningCopyDiv').remove()
                 $('#businessInsuranceScanningCopy').attr('value', obj.data.content[i].scanningCopy)
                 var affterStr = "<img class='col-xs-6 col-xs-pull-3 scanningCopyImg' height=300 style='display:none'>"+
                     "<div class='col-xs-6 col-xs-pull-3 scanningCopyDiv' style='height:300px;color: #006dcc;text-align: center;'>正在加载扫描件...</div>"
@@ -1080,13 +1218,11 @@ function setDetailsContractInformationColumn(obj) {
                 $('#socialSecurityContractStatus').html(obj.data.content[i].contractStatus.name + "<span class='caret'></span>")
             }else {
                 $('#socialSecurityContractStatus').attr('value', '')
-                $('#socialSecurityContractStatus').html("" + "<span class='caret'></span>")
+                $('#socialSecurityContractStatus').html("请选择" + "<span class='caret'></span>")
             }
             $('#socialSecurityContractContent').val(obj.data.content[i].content)
             //加载扫描件
             if(obj.data.content[i].scanningCopy){
-                $('#socialSecurityContract-panel .scanningCopyImg').remove()
-                $('#socialSecurityContract-panel .scanningCopyDiv').remove()
                 $('#socialSecurityContractScanningCopy').attr('value', obj.data.content[i].scanningCopy)
                 var affterStr = "<img class='col-xs-6 col-xs-pull-3 scanningCopyImg' height=300 style='display:none'>"+
                     "<div class='col-xs-6 col-xs-pull-3 scanningCopyDiv' style='height:300px;color: #006dcc;text-align: center;'>正在加载扫描件...</div>"
@@ -1329,7 +1465,17 @@ function setDetailsContractInformationColumnCancelButton(obj) {
         }
 
         $('#formalContractContent').val(obj.data.content)
-        $('#formalContractScanningCopy').val(obj.data.scanningCopy)
+        $('#formalContractScanningCopy').val('')
+        $('#formalContractScanningCopy').attr('value', '')
+        //加载扫描件
+        if(obj.data.scanningCopy){
+            $('#formalContractScanningCopy').attr('value', obj.data.scanningCopy)
+            var affterStr = "<img class='col-xs-6 col-xs-pull-3 scanningCopyImg' height=300 style='display:none'>"+
+                "<div class='col-xs-6 col-xs-pull-3 scanningCopyDiv' style='height:300px;color: #006dcc;text-align: center;'>正在加载扫描件...</div>"
+            $('#formalContract-panel iframe').after(affterStr)
+            $('#formalContract-panel img').attr('onload', "this.nextSibling.style.display='none';this.style.display='';")
+            $('#formalContract-panel img').attr('src', ipPort + '/image/' + obj.data.scanningCopy)
+        }
     }else if (obj.data.contractType.id == 1) {
         $('#temporaryContractID').val(obj.data.id)
 
@@ -1362,7 +1508,17 @@ function setDetailsContractInformationColumnCancelButton(obj) {
         }
 
         $('#temporaryContractContent').val(obj.data.content)
-        $('#temporaryContractScanningCopy').val(obj.data.scanningCopy)
+        $('#temporaryContractScanningCopy').val('')
+        $('#temporaryContractScanningCopy').attr('value', '')
+        //加载扫描件
+        if(obj.data.scanningCopy){
+            $('#temporaryContractScanningCopy').attr('value', obj.data.scanningCopy)
+            var affterStr = "<img class='col-xs-6 col-xs-pull-3 scanningCopyImg' height=300 style='display:none'>"+
+                "<div class='col-xs-6 col-xs-pull-3 scanningCopyDiv' style='height:300px;color: #006dcc;text-align: center;'>正在加载扫描件...</div>"
+            $('#temporaryContract-panel iframe').after(affterStr)
+            $('#temporaryContract-panel img').attr('onload', "this.nextSibling.style.display='none';this.style.display='';")
+            $('#temporaryContract-panel img').attr('src', ipPort + '/image/' + obj.data.scanningCopy)
+        }
     }else if (obj.data.contractType.id == 2) {
         $('#internshipAgreementID').val(obj.data.id)
 
@@ -1395,7 +1551,17 @@ function setDetailsContractInformationColumnCancelButton(obj) {
         }
 
         $('#internshipAgreementContent').val(obj.data.content)
-        $('#internshipAgreementScanningCopy').val(obj.data.scanningCopy)
+        $('#internshipAgreementScanningCopy').val('')
+        $('#internshipAgreementScanningCopy').attr('value', '')
+        //加载扫描件
+        if(obj.data.scanningCopy){
+            $('#internshipAgreementScanningCopy').attr('value', obj.data.scanningCopy)
+            var affterStr = "<img class='col-xs-6 col-xs-pull-3 scanningCopyImg' height=300 style='display:none'>"+
+                "<div class='col-xs-6 col-xs-pull-3 scanningCopyDiv' style='height:300px;color: #006dcc;text-align: center;'>正在加载扫描件...</div>"
+            $('#internshipAgreement-panel iframe').after(affterStr)
+            $('#internshipAgreement-panel img').attr('onload', "this.nextSibling.style.display='none';this.style.display='';")
+            $('#internshipAgreement-panel img').attr('src', ipPort + '/image/' + obj.data.scanningCopy)
+        }
     }else if (obj.data.contractType.id == 4) {
         $('#businessInsuranceID').val(obj.data.id)
 
@@ -1429,7 +1595,7 @@ function setDetailsContractInformationColumnCancelButton(obj) {
 
         $('#businessInsuranceContent').val(obj.data.content)
         $('#businessInsuranceScanningCopy').val('')
-        $('#businessInsuranceScanningCopy').attr(obj.data.scanningCopy)
+        $('#businessInsuranceScanningCopy').attr('value', '')
         //加载扫描件
         if(obj.data.scanningCopy){
             $('#businessInsuranceScanningCopy').attr('value', obj.data.scanningCopy)
@@ -1472,7 +1638,7 @@ function setDetailsContractInformationColumnCancelButton(obj) {
 
         $('#socialSecurityContractContent').val(obj.data.content)
         $('#socialSecurityContractScanningCopy').val('')
-        $('#socialSecurityContractScanningCopy').attr('value', obj.data.scanningCopy)
+        $('#socialSecurityContractScanningCopy').attr('value', '')
         //加载扫描件
         if(obj.data.scanningCopy){
             $('#socialSecurityContractScanningCopy').attr('value', obj.data.scanningCopy)
@@ -1550,54 +1716,7 @@ function updateStaffInformation() {
         })
     }
 }
-/*
-设置批量修改基本工资modal/
- */
-function setUpdateBaseAndSocialSecurityAndFoundationBatchModal() {
-    getAllStaff_multi()
-    $('#updateBaseWageBatch-baseWage').val('')
-    $('#updateBaseWageBatch-foundation').val('')
-    $('#updateBaseWageBatch-socialSecuritySubsidyWage').val('')
-    $('#myModal-updateBaseWageBatch').modal('toggle')
-}
-/*
-批量修改基本工资等/
- */
-function updateBaseAndSocialSecurityAndFoundationBatch() {
-    var baseWage = $('#updateBaseWageBatch-baseWage').val()
-    if(!baseWage){
-        baseWage = 0
-    }
-    var foundation = $('#updateBaseWageBatch-foundation').val()
-    if(!foundation){
-        foundation = 0
-    }
-    var socialSecuritySubsidyWage = $('#updateBaseWageBatch-socialSecuritySubsidyWage').val()
-    if(!socialSecuritySubsidyWage){
-        socialSecuritySubsidyWage = 0
-    }
-    var selectedStaff_span = $('.selectedStaff-span')
-    var strID = []
-    for(var i = 0; i < selectedStaff_span.length; i++){
-        strID.push(selectedStaff_span.eq(i).attr('value'))
-    }
-    var urlStr = ipPort + '/user/updateBaseAndSocialSecurityAndFoundationBatch?userIds=' + strID + '&base=' + baseWage
-        + '&socialSecurity=' + socialSecuritySubsidyWage + '&foundation=' + foundation
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                alert(obj.message)
-            }else{
-                alert(obj.message)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
-}
+
 /*
 详细信息页面保存档案信息/
  */
@@ -1693,44 +1812,137 @@ function saveFormalContract() {
     var contractStatus = $('#formalContractStatus').attr('value')
     var contractContent = $('#formalContractContent').val()
     var contractScanningCopy = $('#formalContractScanningCopy').val()
-
-    if(contractID == ''){
-        var urlStr = ipPort + '/contract/add?user=' + userID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
-            + '&contractStatus=' + parseInt(contractStatus) + '&content=' + contractContent + '&scanningCopy=' + contractScanningCopy
+    if(contractScanningCopy){//有扫描件
+        $("[data-toggle='popover']").popover('show');
+        var formData = new FormData($("#formalContract-uploadImage")[0]);
         $.ajax({
-            url:urlStr,
-            dataType:'json',
-            success:function (obj) {
-                if(obj.code == 0){
-                    alert(obj.message)
-                    setContractID('formalContract')
+            url:ipPort + '/image/upload',
+            type:"post",
+            data:formData,
+            async: true,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success:function(obj_){
+                console.log(obj_)
+                if(obj_.code == 0){
+                    if(contractID == ''){//新增合同
+                        var urlStr = ipPort + '/contract/add?user=' + userID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
+                            + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&scanningCopy=' + obj_.data.code
+                        $.ajax({
+                            url:urlStr,
+                            dataType:'json',
+                            success:function (obj) {
+                                if(obj.code == 0){
+                                    $("[data-toggle='popover']").popover('destroy');
+                                    alert(obj.message)
+                                    setContractID('formalContract')
+                                    //加载扫描件
+                                    if(obj_.data.code){
+                                        $('#formalContract-panel .scanningCopyImg').remove()
+                                        $('#formalContract-panel .scanningCopyDiv').remove()
+                                        $('#formalContractScanningCopy').attr('value', obj_.data.code)
+                                        var affterStr = "<img class='col-xs-6 col-xs-pull-3 scanningCopyImg' height=300 style='display:none'>"+
+                                            "<div class='col-xs-6 col-xs-pull-3 scanningCopyDiv' style='height:300px;color: #006dcc;text-align: center;'>正在加载扫描件...</div>"
+                                        $('#formalContract-panel iframe').after(affterStr)
+                                        $('#formalContract-panel img').attr('onload', "this.nextSibling.style.display='none';this.style.display='';")
+                                        $('#formalContract-panel img').attr('src', ipPort + '/image/' + obj_.data.code)
+                                    }
+                                }else{
+                                    $("[data-toggle='popover']").popover('destroy');
+                                    console.log(obj)
+                                }
+                            },
+                            error:function (error) {
+                                $("[data-toggle='popover']").popover('destroy');
+                                console.log(error)
+                            }
+                        })
+                    }else{//修改合同
+                        var urlStr = ipPort + '/contract/update?id=' + contractID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
+                            + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&scanningCopy=' + obj_.data.code + '&user=' + userID
+                        $.ajax({
+                            url:urlStr,
+                            dataType:'json',
+                            success:function (obj) {
+                                if(obj.code == 0){
+                                    $("[data-toggle='popover']").popover('destroy');
+                                    alert(obj.message)
+                                    setContractID('formalContract')
+                                    //加载扫描件
+                                    if(obj_.data.code){
+                                        $('#formalContract-panel .scanningCopyImg').remove()
+                                        $('#formalContract-panel .scanningCopyDiv').remove()
+                                        $('#formalContractScanningCopy').attr('value', obj_.data.code)
+                                        var affterStr = "<img class='col-xs-6 col-xs-pull-3 scanningCopyImg' height=300 style='display:none'>"+
+                                            "<div class='col-xs-6 col-xs-pull-3 scanningCopyDiv' style='height:300px;color: #006dcc;text-align: center;'>正在加载扫描件...</div>"
+                                        $('#formalContract-panel iframe').after(affterStr)
+                                        $('#formalContract-panel img').attr('onload', "this.nextSibling.style.display='none';this.style.display='';")
+                                        $('#formalContract-panel img').attr('src', ipPort + '/image/' + obj_.data.code)
+                                    }
+                                }else{
+                                    $("[data-toggle='popover']").popover('destroy');
+                                    console.log(obj)
+                                }
+                            },
+                            error:function (error) {
+                                $("[data-toggle='popover']").popover('destroy');
+                                console.log(error)
+                            }
+                        })
+                    }
                 }else{
-                    console.log(obj)
+                    $("[data-toggle='popover']").popover('destroy');
+                    alert(obj_.message)
                 }
             },
-            error:function (error) {
-                console.log(error)
+            error:function(e){
+                $("[data-toggle='popover']").popover('destroy');
+                alert("上传失败！！");
             }
-        })
-    }else{
-        var urlStr = ipPort + '/contract/update?id=' + contractID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
-            + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&scanningCopy=' + contractScanningCopy + '&user=' + userID
-        $.ajax({
-            url:urlStr,
-            dataType:'json',
-            success:function (obj) {
-                if(obj.code == 0){
-                    alert(obj.message)
-                    setContractID('formalContract')
-                }else{
-                    console.log(obj)
-                }
-            },
-            error:function (error) {
-                console.log(error)
-            }
-        })
+        });
     }
+    else{//没有扫描件
+        if(contractID == ''){
+            var urlStr = ipPort + '/contract/add?user=' + userID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
+                + '&contractStatus=' + contractStatus + '&content=' + contractContent
+            $.ajax({
+                url:urlStr,
+                dataType:'json',
+                success:function (obj) {
+                    if(obj.code == 0){
+                        alert(obj.message)
+                        setContractID('formalContract')
+                    }else{
+                        console.log(obj)
+                    }
+                },
+                error:function (error) {
+                    console.log(error)
+                }
+            })
+        }else{
+            var urlStr = ipPort + '/contract/update?id=' + contractID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
+                + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&user=' + userID + '&scanningCopy=' + $('#formalContractScanningCopy').attr('value')
+            $.ajax({
+                url:urlStr,
+                dataType:'json',
+                success:function (obj) {
+                    if(obj.code == 0){
+                        alert(obj.message)
+                        setContractID('formalContract')
+                    }else{
+                        console.log(obj)
+                    }
+                },
+                error:function (error) {
+                    console.log(error)
+                }
+            })
+        }
+    }
+
+
 }
 /*
 详细页面保存临时合同栏信息/
@@ -1754,43 +1966,134 @@ function saveTemporaryContract() {
     var contractStatus = $('#temporaryContractStatus').attr('value')
     var contractContent = $('#temporaryContractContent').val()
     var contractScanningCopy = $('#temporaryContractScanningCopy').val()
-
-    if(contractID == ''){
-        var urlStr = ipPort + '/contract/add?user=' + userID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
-            + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&scanningCopy=' + contractScanningCopy
+    if(contractScanningCopy){//有扫描件
+        $("[data-toggle='popover']").popover('show');
+        var formData = new FormData($("#temporaryContract-uploadImage")[0]);
         $.ajax({
-            url:urlStr,
-            dataType:'json',
-            success:function (obj) {
-                if(obj.code == 0){
-                    alert(obj.message)
-                    setContractID('temporaryContract')
+            url:ipPort + '/image/upload',
+            type:"post",
+            data:formData,
+            async: true,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success:function(obj_){
+                console.log(obj_)
+                if(obj_.code == 0){
+                    if(contractID == ''){//新增合同
+                        var urlStr = ipPort + '/contract/add?user=' + userID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
+                            + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&scanningCopy=' + obj_.data.code
+                        $.ajax({
+                            url:urlStr,
+                            dataType:'json',
+                            success:function (obj) {
+                                if(obj.code == 0){
+                                    $("[data-toggle='popover']").popover('destroy');
+                                    alert(obj.message)
+                                    setContractID('temporaryContract')
+                                    //加载扫描件
+                                    if(obj_.data.code){
+                                        $('#temporaryContract-panel .scanningCopyImg').remove()
+                                        $('#temporaryContract-panel .scanningCopyDiv').remove()
+                                        $('#temporaryContractScanningCopy').attr('value', obj_.data.code)
+                                        var affterStr = "<img class='col-xs-6 col-xs-pull-3 scanningCopyImg' height=300 style='display:none'>"+
+                                            "<div class='col-xs-6 col-xs-pull-3 scanningCopyDiv' style='height:300px;color: #006dcc;text-align: center;'>正在加载扫描件...</div>"
+                                        $('#temporaryContract-panel iframe').after(affterStr)
+                                        $('#temporaryContract-panel img').attr('onload', "this.nextSibling.style.display='none';this.style.display='';")
+                                        $('#temporaryContract-panel img').attr('src', ipPort + '/image/' + obj_.data.code)
+                                    }
+                                }else{
+                                    $("[data-toggle='popover']").popover('destroy');
+                                    console.log(obj)
+                                }
+                            },
+                            error:function (error) {
+                                $("[data-toggle='popover']").popover('destroy');
+                                console.log(error)
+                            }
+                        })
+                    }else{//修改合同
+                        var urlStr = ipPort + '/contract/update?id=' + contractID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
+                            + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&scanningCopy=' + obj_.data.code + '&user=' + userID
+                        $.ajax({
+                            url:urlStr,
+                            dataType:'json',
+                            success:function (obj) {
+                                if(obj.code == 0){
+                                    $("[data-toggle='popover']").popover('destroy');
+                                    alert(obj.message)
+                                    setContractID('temporaryContract')
+                                    //加载扫描件
+                                    if(obj_.data.code){
+                                        $('#temporaryContract-panel .scanningCopyImg').remove()
+                                        $('#temporaryContract-panel .scanningCopyDiv').remove()
+                                        $('#temporaryContractScanningCopy').attr('value', obj_.data.code)
+                                        var affterStr = "<img class='col-xs-6 col-xs-pull-3 scanningCopyImg' height=300 style='display:none'>"+
+                                            "<div class='col-xs-6 col-xs-pull-3 scanningCopyDiv' style='height:300px;color: #006dcc;text-align: center;'>正在加载扫描件...</div>"
+                                        $('#temporaryContract-panel iframe').after(affterStr)
+                                        $('#temporaryContract-panel img').attr('onload', "this.nextSibling.style.display='none';this.style.display='';")
+                                        $('#temporaryContract-panel img').attr('src', ipPort + '/image/' + obj_.data.code)
+                                    }
+                                }else{
+                                    $("[data-toggle='popover']").popover('destroy');
+                                    console.log(obj)
+                                }
+                            },
+                            error:function (error) {
+                                $("[data-toggle='popover']").popover('destroy');
+                                console.log(error)
+                            }
+                        })
+                    }
                 }else{
-                    console.log(obj)
+                    $("[data-toggle='popover']").popover('destroy');
+                    alert(obj_.message)
                 }
             },
-            error:function (error) {
-                console.log(error)
+            error:function(e){
+                $("[data-toggle='popover']").popover('destroy');
+                alert("上传失败！！");
             }
-        })
-    }else{
-        var urlStr = ipPort + '/contract/update?id=' + contractID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
-            + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&scanningCopy=' + contractScanningCopy + '&user=' + userID
-        $.ajax({
-            url:urlStr,
-            dataType:'json',
-            success:function (obj) {
-                if(obj.code == 0){
-                    alert(obj.message)
-                    setContractID('temporaryContract')
-                }else{
-                    console.log(obj)
+        });
+    }
+    else{//没有扫描件
+        if(contractID == ''){
+            var urlStr = ipPort + '/contract/add?user=' + userID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
+                + '&contractStatus=' + contractStatus + '&content=' + contractContent
+            $.ajax({
+                url:urlStr,
+                dataType:'json',
+                success:function (obj) {
+                    if(obj.code == 0){
+                        alert(obj.message)
+                        setContractID('temporaryContract')
+                    }else{
+                        console.log(obj)
+                    }
+                },
+                error:function (error) {
+                    console.log(error)
                 }
-            },
-            error:function (error) {
-                console.log(error)
-            }
-        })
+            })
+        }else{
+            var urlStr = ipPort + '/contract/update?id=' + contractID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
+                + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&user=' + userID + '&scanningCopy=' + $('#temporaryContractScanningCopy').attr('value')
+            $.ajax({
+                url:urlStr,
+                dataType:'json',
+                success:function (obj) {
+                    if(obj.code == 0){
+                        alert(obj.message)
+                        setContractID('temporaryContract')
+                    }else{
+                        console.log(obj)
+                    }
+                },
+                error:function (error) {
+                    console.log(error)
+                }
+            })
+        }
     }
 }
 /*
@@ -1815,42 +2118,134 @@ function saveInternshipAgreement() {
     var contractStatus = $('#internshipAgreementStatus').attr('value')
     var contractContent = $('#internshipAgreementContent').val()
     var contractScanningCopy = $('#internshipAgreementScanningCopy').val()
-    if(contractID == ''){
-        var urlStr = ipPort + '/contract/add?user=' + userID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
-            + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&scanningCopy=' + contractScanningCopy
+    if(contractScanningCopy){//有扫描件
+        $("[data-toggle='popover']").popover('show');
+        var formData = new FormData($("#internshipAgreement-uploadImage")[0]);
         $.ajax({
-            url:urlStr,
-            dataType:'json',
-            success:function (obj) {
-                if(obj.code == 0){
-                    alert(obj.message)
-                    setContractID('internshipAgreement')
+            url:ipPort + '/image/upload',
+            type:"post",
+            data:formData,
+            async: true,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success:function(obj_){
+                console.log(obj_)
+                if(obj_.code == 0){
+                    if(contractID == ''){//新增合同
+                        var urlStr = ipPort + '/contract/add?user=' + userID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
+                            + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&scanningCopy=' + obj_.data.code
+                        $.ajax({
+                            url:urlStr,
+                            dataType:'json',
+                            success:function (obj) {
+                                if(obj.code == 0){
+                                    $("[data-toggle='popover']").popover('destroy');
+                                    alert(obj.message)
+                                    setContractID('internshipAgreement')
+                                    //加载扫描件
+                                    if(obj_.data.code){
+                                        $('#internshipAgreement-panel .scanningCopyImg').remove()
+                                        $('#internshipAgreement-panel .scanningCopyDiv').remove()
+                                        $('#internshipAgreementScanningCopy').attr('value', obj_.data.code)
+                                        var affterStr = "<img class='col-xs-6 col-xs-pull-3 scanningCopyImg' height=300 style='display:none'>"+
+                                            "<div class='col-xs-6 col-xs-pull-3 scanningCopyDiv' style='height:300px;color: #006dcc;text-align: center;'>正在加载扫描件...</div>"
+                                        $('#internshipAgreement-panel iframe').after(affterStr)
+                                        $('#internshipAgreement-panel img').attr('onload', "this.nextSibling.style.display='none';this.style.display='';")
+                                        $('#internshipAgreement-panel img').attr('src', ipPort + '/image/' + obj_.data.code)
+                                    }
+                                }else{
+                                    $("[data-toggle='popover']").popover('destroy');
+                                    console.log(obj)
+                                }
+                            },
+                            error:function (error) {
+                                $("[data-toggle='popover']").popover('destroy');
+                                console.log(error)
+                            }
+                        })
+                    }else{//修改合同
+                        var urlStr = ipPort + '/contract/update?id=' + contractID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
+                            + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&scanningCopy=' + obj_.data.code + '&user=' + userID
+                        $.ajax({
+                            url:urlStr,
+                            dataType:'json',
+                            success:function (obj) {
+                                if(obj.code == 0){
+                                    $("[data-toggle='popover']").popover('destroy');
+                                    alert(obj.message)
+                                    setContractID('internshipAgreement')
+                                    //加载扫描件
+                                    if(obj_.data.code){
+                                        $('#internshipAgreement-panel .scanningCopyImg').remove()
+                                        $('#internshipAgreement-panel .scanningCopyDiv').remove()
+                                        $('#internshipAgreementScanningCopy').attr('value', obj_.data.code)
+                                        var affterStr = "<img class='col-xs-6 col-xs-pull-3 scanningCopyImg' height=300 style='display:none'>"+
+                                            "<div class='col-xs-6 col-xs-pull-3 scanningCopyDiv' style='height:300px;color: #006dcc;text-align: center;'>正在加载扫描件...</div>"
+                                        $('#internshipAgreement-panel iframe').after(affterStr)
+                                        $('#internshipAgreement-panel img').attr('onload', "this.nextSibling.style.display='none';this.style.display='';")
+                                        $('#internshipAgreement-panel img').attr('src', ipPort + '/image/' + obj_.data.code)
+                                    }
+                                }else{
+                                    $("[data-toggle='popover']").popover('destroy');
+                                    console.log(obj)
+                                }
+                            },
+                            error:function (error) {
+                                $("[data-toggle='popover']").popover('destroy');
+                                console.log(error)
+                            }
+                        })
+                    }
                 }else{
-                    console.log(obj)
+                    $("[data-toggle='popover']").popover('destroy');
+                    alert(obj_.message)
                 }
             },
-            error:function (error) {
-                console.log(error)
+            error:function(e){
+                $("[data-toggle='popover']").popover('destroy');
+                alert("上传失败！！");
             }
-        })
-    }else{
-        var urlStr = ipPort + '/contract/update?id=' + contractID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
-            + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&scanningCopy=' + contractScanningCopy + '&user=' + userID
-        $.ajax({
-            url:urlStr,
-            dataType:'json',
-            success:function (obj) {
-                if(obj.code == 0){
-                    alert(obj.message)
-                    setContractID('internshipAgreement')
-                }else{
-                    console.log(obj)
+        });
+    }
+    else{//没有扫描件
+        if(contractID == ''){
+            var urlStr = ipPort + '/contract/add?user=' + userID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
+                + '&contractStatus=' + contractStatus + '&content=' + contractContent
+            $.ajax({
+                url:urlStr,
+                dataType:'json',
+                success:function (obj) {
+                    if(obj.code == 0){
+                        alert(obj.message)
+                        setContractID('internshipAgreement')
+                    }else{
+                        console.log(obj)
+                    }
+                },
+                error:function (error) {
+                    console.log(error)
                 }
-            },
-            error:function (error) {
-                console.log(error)
-            }
-        })
+            })
+        }else{
+            var urlStr = ipPort + '/contract/update?id=' + contractID + '&contractType=' + contractType + '&startDate=' + contractStartDate + '&endDate=' + contractEndDate
+                + '&contractStatus=' + contractStatus + '&content=' + contractContent + '&user=' + userID + '&scanningCopy=' + $('#internshipAgreementScanningCopy').attr('value')
+            $.ajax({
+                url:urlStr,
+                dataType:'json',
+                success:function (obj) {
+                    if(obj.code == 0){
+                        alert(obj.message)
+                        setContractID('internshipAgreement')
+                    }else{
+                        console.log(obj)
+                    }
+                },
+                error:function (error) {
+                    console.log(error)
+                }
+            })
+        }
     }
 }
 /*
@@ -1900,6 +2295,17 @@ function saveBusinessInsurance() {
                                     $("[data-toggle='popover']").popover('destroy');
                                     alert(obj.message)
                                     setContractID('businessInsurance')
+                                    //加载扫描件
+                                    if(obj_.data.code){
+                                        $('#businessInsurance-panel .scanningCopyImg').remove()
+                                        $('#businessInsurance-panel .scanningCopyDiv').remove()
+                                        $('#businessInsuranceScanningCopy').attr('value', obj_.data.code)
+                                        var affterStr = "<img class='col-xs-6 col-xs-pull-3 scanningCopyImg' height=300 style='display:none'>"+
+                                            "<div class='col-xs-6 col-xs-pull-3 scanningCopyDiv' style='height:300px;color: #006dcc;text-align: center;'>正在加载扫描件...</div>"
+                                        $('#businessInsurance-panel iframe').after(affterStr)
+                                        $('#businessInsurance-panel img').attr('onload', "this.nextSibling.style.display='none';this.style.display='';")
+                                        $('#businessInsurance-panel img').attr('src', ipPort + '/image/' + obj_.data.code)
+                                    }
                                 }else{
                                     $("[data-toggle='popover']").popover('destroy');
                                     console.log(obj)
@@ -1921,6 +2327,17 @@ function saveBusinessInsurance() {
                                     $("[data-toggle='popover']").popover('destroy');
                                     alert(obj.message)
                                     setContractID('businessInsurance')
+                                    //加载扫描件
+                                    if(obj_.data.code){
+                                        $('#businessInsurance-panel .scanningCopyImg').remove()
+                                        $('#businessInsurance-panel .scanningCopyDiv').remove()
+                                        $('#businessInsuranceScanningCopy').attr('value', obj_.data.code)
+                                        var affterStr = "<img class='col-xs-6 col-xs-pull-3 scanningCopyImg' height=300 style='display:none'>"+
+                                            "<div class='col-xs-6 col-xs-pull-3 scanningCopyDiv' style='height:300px;color: #006dcc;text-align: center;'>正在加载扫描件...</div>"
+                                        $('#businessInsurance-panel iframe').after(affterStr)
+                                        $('#businessInsurance-panel img').attr('onload', "this.nextSibling.style.display='none';this.style.display='';")
+                                        $('#businessInsurance-panel img').attr('src', ipPort + '/image/' + obj_.data.code)
+                                    }
                                 }else{
                                     $("[data-toggle='popover']").popover('destroy');
                                     console.log(obj)
@@ -2031,6 +2448,17 @@ function saveSocialSecurityContract() {
                                     $("[data-toggle='popover']").popover('destroy');
                                     alert(obj.message)
                                     setContractID('socialSecurityContract')
+                                    //加载扫描件
+                                    if(obj_.data.code){
+                                        $('#socialSecurityContract-panel .scanningCopyImg').remove()
+                                        $('#socialSecurityContract-panel .scanningCopyDiv').remove()
+                                        $('#socialSecurityContractScanningCopy').attr('value', obj_.data.code)
+                                        var affterStr = "<img class='col-xs-6 col-xs-pull-3 scanningCopyImg' height=300 style='display:none'>"+
+                                            "<div class='col-xs-6 col-xs-pull-3 scanningCopyDiv' style='height:300px;color: #006dcc;text-align: center;'>正在加载扫描件...</div>"
+                                        $('#socialSecurityContract-panel iframe').after(affterStr)
+                                        $('#socialSecurityContract-panel img').attr('onload', "this.nextSibling.style.display='none';this.style.display='';")
+                                        $('#socialSecurityContract-panel img').attr('src', ipPort + '/image/' + obj_.data.code)
+                                    }
                                 }else{
                                     $("[data-toggle='popover']").popover('destroy');
                                     console.log(obj)
@@ -2052,6 +2480,17 @@ function saveSocialSecurityContract() {
                                     $("[data-toggle='popover']").popover('destroy');
                                     alert(obj.message)
                                     setContractID('socialSecurityContract')
+                                    //加载扫描件
+                                    if(obj_.data.code){
+                                        $('#socialSecurityContract-panel .scanningCopyImg').remove()
+                                        $('#socialSecurityContract-panel .scanningCopyDiv').remove()
+                                        $('#socialSecurityContractScanningCopy').attr('value', obj_.data.code)
+                                        var affterStr = "<img class='col-xs-6 col-xs-pull-3 scanningCopyImg' height=300 style='display:none'>"+
+                                            "<div class='col-xs-6 col-xs-pull-3 scanningCopyDiv' style='height:300px;color: #006dcc;text-align: center;'>正在加载扫描件...</div>"
+                                        $('#socialSecurityContract-panel iframe').after(affterStr)
+                                        $('#socialSecurityContract-panel img').attr('onload', "this.nextSibling.style.display='none';this.style.display='';")
+                                        $('#socialSecurityContract-panel img').attr('src', ipPort + '/image/' + obj_.data.code)
+                                    }
                                 }else{
                                     $("[data-toggle='popover']").popover('destroy');
                                     console.log(obj)
@@ -2398,25 +2837,34 @@ function previousPage() {
     if(currentPage < 0){
         currentPage = 0
     }
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/user/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setStaffTableInformation(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllStaffInformationByPage(currentPage)
+    }
+    else if(currentSearch == -2){
+        searchByDepartmentAndStaffName(currentPage)
+    }
+    else{
+        searchByJobNature_(currentSearch, currentPage)
+    }
+    // var page = currentPage
+    // var size = 10
+    // var sortFieldName = 'id'
+    // var asc = 1
+    // var urlStr = ipPort + '/user/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
+    // $.ajax({
+    //     url:urlStr,
+    //     dataType:'json',
+    //     success:function (obj) {
+    //         if(obj.code == 0){
+    //             setStaffTableInformation(obj)
+    //         }else{
+    //             console.log(obj)
+    //         }
+    //     },
+    //     error:function (error) {
+    //         console.log(error)
+    //     }
+    // })
 }
 /*
 下一页/
@@ -2429,25 +2877,34 @@ function nextPage() {
         return
     }
     currentPage++
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/user/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setStaffTableInformation(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllStaffInformationByPage(currentPage)
+    }
+    else if(currentSearch == -2){
+        searchByDepartmentAndStaffName(currentPage)
+    }
+    else{
+        searchByJobNature_(currentSearch, currentPage)
+    }
+    // var page = currentPage
+    // var size = 10
+    // var sortFieldName = 'id'
+    // var asc = 1
+    // var urlStr = ipPort + '/user/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
+    // $.ajax({
+    //     url:urlStr,
+    //     dataType:'json',
+    //     success:function (obj) {
+    //         if(obj.code == 0){
+    //             setStaffTableInformation(obj)
+    //         }else{
+    //             console.log(obj)
+    //         }
+    //     },
+    //     error:function (error) {
+    //         console.log(error)
+    //     }
+    // })
 }
 /*
 跳转页/
@@ -2464,23 +2921,32 @@ function skipPage() {
         return
     }
     currentPage = skipPage_ - 1
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/user/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setStaffTableInformation(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllStaffInformationByPage(currentPage)
+    }
+    else if(currentSearch == -2){
+        searchByDepartmentAndStaffName(currentPage)
+    }
+    else{
+        searchByJobNature_(currentSearch, currentPage)
+    }
+    // var page = currentPage
+    // var size = 10
+    // var sortFieldName = 'id'
+    // var asc = 1
+    // var urlStr = ipPort + '/user/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
+    // $.ajax({
+    //     url:urlStr,
+    //     dataType:'json',
+    //     success:function (obj) {
+    //         if(obj.code == 0){
+    //             setStaffTableInformation(obj)
+    //         }else{
+    //             console.log(obj)
+    //         }
+    //     },
+    //     error:function (error) {
+    //         console.log(error)
+    //     }
+    // })
 }

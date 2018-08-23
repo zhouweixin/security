@@ -1,9 +1,16 @@
 var currentPage = 0
+/*
+currentModal == 0 添加审核人1
+currentModal == 1 添加审核人2
+currentModal == 2 修改审核人1
+currentModal == 3 修改审核人2/
+ */
+var currentModal = 0
 $(document).ready(function () {
     getAllProcess()
     /*
-    选择员工/
-     */
+     选择one员工/
+      */
     $('.selectOneStaff-department-li img').on('click', function () {
         if($(this).parent().find('.hidden').length == 0){
             $(this).parent().find('.selectOneStaff-staff-ul').addClass('hidden')
@@ -13,13 +20,22 @@ $(document).ready(function () {
             $(this).parent().find('.departmentName-img').attr('src', 'imgs/offline.png')
         }
     })
-    $('.departmentName-span').on('click', function () {
+    $('.selectOneStaff-department-li .departmentName-span').on('click', function () {
         if($(this).parent().find('.hidden').length == 0){
             $(this).parent().find('.selectOneStaff-staff-ul').addClass('hidden')
             $(this).parent().find('.departmentName-img').attr('src', 'imgs/addition.png')
         }else{
             $(this).parent().find('.selectOneStaff-staff-ul').removeClass('hidden')
             $(this).parent().find('.departmentName-img').attr('src', 'imgs/offline.png')
+        }
+    })
+    /*
+    按姓名搜索modal/
+     */
+    $('#myModal-selectOneStaff .modal-searchInput input').on('input propertychange', function () {
+        if($(this).val() == ''){
+            $('#form-selectOneStaff .selectOneStaff-staff-ul2').addClass('hidden')
+            $('#form-selectOneStaff .selectOneStaff-department-ul').removeClass('hidden')
         }
     })
 })
@@ -271,11 +287,12 @@ function deleteInBatch() {
         }
     })
 }
+/*************************************选取一个员工modal*****************************************/
 /*
 获取所有员工/
  */
-function getAllStaff(str) {
-    $('#myModal-selectOneStaff').attr('value', str)
+function getAllStaff_one(str) {
+    currentModal = str
     var staffInformationDepartmentA = $('.selectOneStaff-department-ul .selectOneStaff-department-li .departmentName-span')
     $.ajax({
         url:ipPort + '/department/getAll',
@@ -315,27 +332,50 @@ function getAllStaff(str) {
     })
 }
 /*
+通过姓名搜索/
+ */
+function searchOneByName_modal(thisObj) {
+    var name = $(thisObj).parent().find('input').val()
+    if(name != ''){
+        $.ajax({
+            url:ipPort + '/user/getByNameLike?name=' + name,
+            dataType:'json',
+            success:function (obj) {
+                $('#form-selectOneStaff .selectOneStaff-department-ul').addClass('hidden')
+                $('#form-selectOneStaff .selectOneStaff-staff-ul2').removeClass('hidden')
+                var staffUl = $('#form-selectOneStaff').find('.selectOneStaff-staff-ul2')
+                staffUl.find('li').remove()
+                for(var i = 0; i < obj.data.length; i++){
+                    var appendStr = '<li data-dismiss="modal" onclick="selectedOneStaff(this)"><img src="imgs/mine.png" height="20px" style="margin-top: -2px"><span ' + 'value="' + obj.data[i].id + '">' + obj.data[i].name + '</span></li>'
+                    staffUl.append(appendStr)
+                }
+            },
+            error:function (error) {
+                console.log(error)
+            }
+        })
+    }
+}
+/*
 选定人员/
  */
 function selectedOneStaff(thisObj) {
-    if($('#myModal-selectOneStaff').attr('value') == 'auditor1'){
+    if(currentModal == 0){
         $('#modal-processAuditor1').val( $(thisObj).find("span").text())
         $('#modal-processAuditor1').attr('value', $(thisObj).find("span").attr("value"))
-    }
-    else if($('#myModal-selectOneStaff').attr('value') == 'auditor2'){
+    }else if(currentModal == 1){
         $('#modal-processAuditor2').val( $(thisObj).find("span").text())
         $('#modal-processAuditor2').attr('value', $(thisObj).find("span").attr("value"))
-    }
-    else if($('#myModal-selectOneStaff').attr('value') == 'modifyAuditor1'){
+    }else if(currentModal == 2){
         $('#modal-modifyProcessAuditor1').val( $(thisObj).find("span").text())
         $('#modal-modifyProcessAuditor1').attr('value', $(thisObj).find("span").attr("value"))
-    }
-    else if($('#myModal-selectOneStaff').attr('value') == 'modifyAuditor2'){
+    }else if(currentModal == 3){
         $('#modal-modifyProcessAuditor2').val( $(thisObj).find("span").text())
         $('#modal-modifyProcessAuditor2').attr('value', $(thisObj).find("span").attr("value"))
     }
 }
-/**********************************************************888/
+/******************************************************************************/
+
  /*
  上一页/
  */

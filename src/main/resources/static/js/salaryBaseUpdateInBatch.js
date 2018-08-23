@@ -1,4 +1,9 @@
 var currentPage = 0
+/*
+currentSearch == -1 全部搜索
+currentSearch == -2 条件搜索/
+ */
+var currentSearch = -1
 $(document).ready(function () {
     getAllBaseWageByPage()
 
@@ -41,8 +46,9 @@ $(document).ready(function () {
 /*
 获取所有基本工资/
  */
-function getAllBaseWageByPage() {
-    currentPage = 0
+function getAllBaseWageByPage(page_ = 0) {
+    currentSearch = -1
+    currentPage = page_
     var page = currentPage
     var size = 10
     var sortFieldName = 'id'
@@ -99,8 +105,9 @@ function setAllBaseWageATable(obj) {
 /*
 通过部门和姓名搜索信息/
  */
-function searchByDepartmentAndStaffName() {
-    currentPage = 0
+function searchByDepartmentAndStaffName(page_ = 0) {
+    currentSearch = -2
+    currentPage = page_
     var departmentId = $('#salaryBaseUpdate-department').attr('value')
     var staffName = $('#salaryBaseUpdate-name').val()
     var urlStr = ipPort + "/user/getByDepartmentAndNameLikeByPage?id=" + departmentId + "&name=" + staffName + "&page=" + currentPage
@@ -282,6 +289,7 @@ function searchByName_modal(thisObj) {
         })
     }
 }
+
 /*
 上一页/
  */
@@ -295,25 +303,11 @@ function previousPage() {
     if(currentPage < 0){
         currentPage = 0
     }
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/user/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setAllBaseWageATable(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllBaseWageByPage(currentPage)
+    }else  if(currentSearch == -2){
+        searchByDepartmentAndStaffName(currentPage)
+    }
 }
 /*
 下一页/
@@ -321,30 +315,16 @@ function previousPage() {
 function nextPage() {
     var currentPage_ = $('.currentPage').text()
     var totalPage_ = $('.totalPage').text()
-    if(currentPage_ == totalPage_){
+    if (currentPage_ == totalPage_) {
         alert("已经是最后一页！")
         return
     }
     currentPage++
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/user/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setAllBaseWageATable(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if (currentSearch == -1) {
+        getAllBaseWageByPage(currentPage)
+    } else if (currentSearch == -2) {
+        searchByDepartmentAndStaffName(currentPage)
+    }
 }
 /*
 跳转页/
@@ -361,23 +341,9 @@ function skipPage() {
         return
     }
     currentPage = skipPage_ - 1
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/user/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setAllBaseWageATable(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllBaseWageByPage(currentPage)
+    }else  if(currentSearch == -2){
+        searchByDepartmentAndStaffName(currentPage)
+    }
 }

@@ -1,12 +1,18 @@
 var currentPage = 0
+/*
+currentSearch == -1 全部搜索
+currentSearch == -2 条件搜索/
+ */
+var currentSearch = -1
 $(document).ready(function () {
     getAllWorkRecords()
 })
 /*
 获取全部记录/
  */
-function getAllWorkRecords() {
-    currentPage = 0
+function getAllWorkRecords(page_ = 0) {
+    currentSearch = -1
+    currentPage = page_
     var page = currentPage
     var size = 10
     var sortFieldName = 'startTime'
@@ -32,7 +38,8 @@ function getAllWorkRecords() {
 通过参数搜索记录/
  */
 
-function getWorkRecordsByParameters() {
+function getWorkRecordsByParameters(page_ = 0) {
+    currentSearch = -2
     var project = $('#dailyStatistics-project').attr('value')
     if(!project){
         project = '-1'
@@ -44,7 +51,7 @@ function getWorkRecordsByParameters() {
         date = date.replace(/\//g, '-')
     }
     var name = $('#dailyStatistics-name').val()
-    currentPage = 0
+    currentPage = page_
     var page = currentPage
     var size = 10
     var sortFieldName = 'startTime'
@@ -168,26 +175,11 @@ function previousPage() {
     if(currentPage < 0){
         currentPage = 0
     }
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'startTime'
-    var asc = 0
-    var urlStr = ipPort + '/workRecord/getByProjectAndDateAndNameLike?page='+ page + '&size=' + size + '&sortFieldName='
-        + sortFieldName + '&asc=' + asc + '&date=2000-01-01'
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setAllWorkRecordsTable(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllWorkRecords(currentPage)
+    }else  if(currentSearch == -2){
+        getWorkRecordsByParameters(currentPage)
+    }
 }
 /*
 下一页/
@@ -200,26 +192,11 @@ function nextPage() {
         return
     }
     currentPage++
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'startTime'
-    var asc = 0
-    var urlStr = ipPort + '/workRecord/getByProjectAndDateAndNameLike?page='+ page + '&size=' + size + '&sortFieldName='
-        + sortFieldName + '&asc=' + asc + '&date=2000-01-01'
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setAllWorkRecordsTable(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllWorkRecords(currentPage)
+    }else  if(currentSearch == -2){
+        getWorkRecordsByParameters(currentPage)
+    }
 }
 /*
 跳转页/
@@ -236,60 +213,9 @@ function skipPage() {
         return
     }
     currentPage = skipPage_ - 1
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'startTime'
-    var asc = 0
-    var urlStr = ipPort + '/workRecord/getByProjectAndDateAndNameLike?page='+ page + '&size=' + size + '&sortFieldName='
-        + sortFieldName + '&asc=' + asc + '&date=2000-01-01'
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setAllWorkRecordsTable(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
-}
-
-/*
-导出/
- */
-function exportOriginalRecordTable(tableID) {
-    if(getExplorer()=='ie')
-    {
-        var curTbl = document.getElementById(tableID);
-        var oXL = new ActiveXObject("Excel.Application");
-        var oWB = oXL.Workbooks.Add();
-        var xlsheet = oWB.Worksheets(1);
-        var sel = document.body.createTextRange();
-        sel.moveToElementText(curTbl);
-        sel.select();
-        sel.execCommand("Copy");
-        xlsheet.Paste();
-        oXL.Visible = true;
-
-        try {
-            var fname = oXL.Application.GetSaveAsFilename("Excel", "Excel Spreadsheets (*.xls), *.xls");
-        } catch (e) {
-            print("Nested catch caught " + e);
-        } finally {
-            oWB.SaveAs(fname);
-            oWB.Close(savechanges = false);
-            oXL.Quit();
-            oXL = null;
-            idTmr = window.setInterval("Cleanup();", 1);
-        }
-
-    }
-    else
-    {
-        tableToExcel(tableID)
+    if(currentSearch == -1){
+        getAllWorkRecords(currentPage)
+    }else  if(currentSearch == -2){
+        getWorkRecordsByParameters(currentPage)
     }
 }

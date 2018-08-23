@@ -8,13 +8,13 @@ $(document).ready(function () {
     /*
     选择多个员工/
     */
-            $('.selectStaff-department-li img').on('click', function () {
-                if($(this).parent().find('.hidden').length == 0){
-                    $(this).parent().find('.selectStaff-staff-ul').addClass('hidden')
-                    $(this).parent().find('.departmentName-img').attr('src', 'imgs/addition.png')
-                    $(this).parent().find('.selectAllDepartmentStaffs').empty()
-                }else{
-                    $(this).parent().find('.selectStaff-staff-ul').removeClass('hidden')
+    $('.selectStaff-department-li img').on('click', function () {
+        if($(this).parent().find('.hidden').length == 0){
+            $(this).parent().find('.selectStaff-staff-ul').addClass('hidden')
+            $(this).parent().find('.departmentName-img').attr('src', 'imgs/addition.png')
+            $(this).parent().find('.selectAllDepartmentStaffs').empty()
+        }else{
+            $(this).parent().find('.selectStaff-staff-ul').removeClass('hidden')
             $(this).parent().find('.departmentName-img').attr('src', 'imgs/offline.png')
             $(this).parent().find('.selectAllDepartmentStaffs').append("全选<input type='checkbox'>")
         }
@@ -77,8 +77,8 @@ $(document).ready(function () {
     /*
     按姓名搜索modal/
      */
-    $('#selectStaff .modal-searchInput input').on('input propertychange', function () {
-        if($(this).val() == ''){
+    $('#myModal-selectStaff .modal-searchInput input').on('input propertychange', function () {
+        if($('#myModal-selectStaff .modal-searchInput input').val() == ''){
             $('#form-selectStaff1 .selectStaff-staff-ul2').addClass('hidden')
             $('#form-selectStaff1 .selectStaff-department-ul').removeClass('hidden')
         }
@@ -86,10 +86,10 @@ $(document).ready(function () {
     /*
     按姓名搜索modal/
      */
-    $('#selectOneStaff .modal-searchInput input').on('input propertychange', function () {
-        if($(this).val() == ''){
-            $('#form-selectOneStaff .selectStaff-staff-ul2').addClass('hidden')
-            $('#form-selectOneStaff .selectStaff-department-ul').removeClass('hidden')
+    $('#myModal-selectOneStaff .modal-searchInput input').on('input propertychange', function () {
+        if(!$('#myModal-selectOneStaff .modal-searchInput input').val()){
+            $('#form-selectOneStaff .selectOneStaff-staff-ul2').addClass('hidden')
+            $('#form-selectOneStaff .selectOneStaff-department-ul').removeClass('hidden')
         }
     })
     /*

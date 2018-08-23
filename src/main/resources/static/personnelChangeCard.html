@@ -204,72 +204,81 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">选择员工</h4>
+                <h4 class="modal-title col-xs-6" id="myModalLabel-selectOneStaff">选择员工</h4>
+                <div class="col-xs-5 modal-searchInput">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="姓名">
+                        <span class="input-group-addon glyphicon glyphicon-search" onclick="searchOneByName_modal(this)" aria-hidden="true"></span>
+                    </div>
+                </div>
             </div>
             <div class="modal-body" style="padding: 0px 20px;font-size: 14px">
-                <form class="form-horizontal">
+                <form id="form-selectOneStaff" class="form-horizontal">
                     <div class="form-group " style="margin-bottom: 0px;">
-                        <ul class="selectStaff-department-ul" style="height: 200px;overflow-y: scroll">
-                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                        <ul class="selectOneStaff-department-ul" style="height: 200px;overflow-y: scroll">
+                            <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
                                 <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
                                 <span class="departmentName-span"></span>
-                                <ul class="selectStaff-staff-ul hidden">
+                                <ul class="selectOneStaff-staff-ul hidden">
                                 </ul>
                             </li>
-                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                            <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
                                 <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
                                 <span class="departmentName-span"></span>
-                                <ul class="selectStaff-staff-ul hidden">
+                                <ul class="selectOneStaff-staff-ul hidden">
                                 </ul>
                             </li>
-                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                            <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
                                 <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
                                 <span class="departmentName-span"></span>
-                                <ul class="selectStaff-staff-ul hidden">
+                                <ul class="selectOneStaff-staff-ul hidden">
                                 </ul>
                             </li>
-                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                            <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
                                 <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
                                 <span class="departmentName-span"></span>
-                                <ul class="selectStaff-staff-ul hidden">
+                                <ul class="selectOneStaff-staff-ul hidden">
                                 </ul>
                             </li>
-                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                            <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
                                 <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
                                 <span class="departmentName-span"></span>
-                                <ul class="selectStaff-staff-ul hidden">
+                                <ul class="selectOneStaff-staff-ul hidden">
                                 </ul>
                             </li>
-                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                            <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
                                 <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
                                 <span class="departmentName-span"></span>
-                                <ul class="selectStaff-staff-ul hidden">
+                                <ul class="selectOneStaff-staff-ul hidden">
                                 </ul>
                             </li>
-                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                            <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
                                 <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
                                 <span class="departmentName-span"></span>
-                                <ul class="selectStaff-staff-ul hidden">
+                                <ul class="selectOneStaff-staff-ul hidden">
                                 </ul>
                             </li>
-                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                            <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
                                 <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
                                 <span class="departmentName-span"></span>
-                                <ul class="selectStaff-staff-ul hidden">
+                                <ul class="selectOneStaff-staff-ul hidden">
                                 </ul>
                             </li>
-                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                            <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
                                 <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
                                 <span class="departmentName-span"></span>
-                                <ul class="selectStaff-staff-ul hidden">
+                                <ul class="selectOneStaff-staff-ul hidden">
                                 </ul>
                             </li>
-                            <li class="selectStaff-department-li hidden" style="cursor: pointer">
+                            <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
                                 <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
                                 <span class="departmentName-span"></span>
-                                <ul class="selectStaff-staff-ul hidden">
+                                <ul class="selectOneStaff-staff-ul hidden">
                                 </ul>
                             </li>
+                        </ul>
+                        <ul class="selectOneStaff-staff-ul2 col-xs-12 hidden" style="height: 200px;overflow-y: auto;">
+
                         </ul>
                     </div>
                 </form>
