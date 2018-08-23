@@ -122,8 +122,8 @@
             <div class="top-body" style="margin-top: 30px">
                 <div class="search-content" style="height: 34px;">
                     <div class="search-left">
-                        <div class="dropdown col-xs-2 select-department" style="padding: 0">
-                            <button class="btn btn-default dropdown-toggle" type="button" value='' id="selectStatus-dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <div class="dropdown  select-department" style="padding: 0;float: left;">
+                            <button style="border-bottom-right-radius: 0px; border-top-right-radius: 0px;" class="btn btn-default dropdown-toggle" type="button" value='' id="selectStatus-dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                 选择状态
                                 <span class="caret"></span>
                             </button>
@@ -135,13 +135,9 @@
                                 <li><a value="3">通过(已入库)</a></li>
                             </ul>
                         </div>
-                        <div class="input-group col-xs-4">
-                            <input id="applyUserId-input" type="text" class="form-control" placeholder="申请人编号">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" onclick="searchByStaffId()">搜索</button>
-                                <button class="btn btn-default" type="button" onclick="getAllPurchaseApply()">搜索全部</button>
-                            </span>
-                        </div>
+
+                        <button style="border-left: none;border-bottom-left-radius: 0px;border-top-left-radius: 0px;" class="btn btn-default" type="button" onclick="searchByStaffId()">搜索</button>
+                        <button class="btn btn-default" type="button" onclick="getAllPurchaseApply()">搜索全部</button>
                     </div>
                     <div class="search-right">
                         <button id="addApplyButton" class="btn btn-default" href="#purchaseApplyPanel">新增申请</button>

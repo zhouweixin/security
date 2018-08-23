@@ -3,6 +3,12 @@
  */
 var index = 0
 var currentPage = 0
+/*
+currentSearch == -1 全部搜索
+currentSearch == -2 条件搜索/
+ */
+var currentSearch = -1
+
 $(document).ready(function () {
     index = 0
     /*
@@ -89,11 +95,15 @@ $(document).ready(function () {
 /*
 初始化/
  */
-function getPurchaseApplyinit() {
-    currentPage = 0
+function getPurchaseApplyinit(page_ = 0) {
+    currentSearch = -1
+    currentPage = page_
+    var sortFieldName = 'applyTime'
+    var asc = 0
     var id = window.localStorage.userID
     $.ajax({
-        url: ipPort + '/purchaseHeader/getByAuditorByPage?id=' + id,
+        url: ipPort + '/purchaseHeader/getByAuditorByPage?id=' + id + '&page=' + currentPage + '&sortFieldName='
+            + sortFieldName + '&asc=' + asc,
         success:function (obj) {
             if(obj.code == 0){
                 setMainTable(obj, id)
@@ -107,15 +117,18 @@ function getPurchaseApplyinit() {
     })
 }
 /*
-通过审核人编码查询/
+通过审核人编码及状态查询/
  */
-function getPurchaseApplyByAuditId() {
-    currentPage = 0
-    var id = $('#auditorId-input').val()
+function getPurchaseApplyByAuditId(page_ = 0) {
+    currentSearch = -2
+    currentPage = page_
+    var sortFieldName = 'applyTime'
+    var asc = 0
+    var id = window.localStorage.userID
     var status = $('#selectStatus-dropdownMenu').attr('value')
-    console.log(ipPort + '/purchaseHeader/getByAuditorByPage?id=' + id + '&status=' + status)
     $.ajax({
-        url: ipPort + '/purchaseHeader/getByAuditorByPage?id=' + id + '&status=' + status,
+        url: ipPort + '/purchaseHeader/getByAuditorByPage?id=' + id + '&status=' + status + '&page=' + currentPage + '&sortFieldName='
+            + sortFieldName + '&asc=' + asc,
         success:function (obj) {
             console.log(obj)
             if(obj.code == 0){
@@ -267,26 +280,11 @@ function previousPage() {
     if(currentPage < 0){
         currentPage = 0
     }
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var id = 'zy00002'
-    var urlStr = ipPort + '/purchaseHeader/getByAuditorByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&id=' + id
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setMainTable(obj, id)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getPurchaseApplyinit(currentPage)
+    }else  if(currentSearch == -2){
+        getPurchaseApplyByAuditId(currentPage)
+    }
 }
 /*
 下一页/
@@ -299,26 +297,11 @@ function nextPage() {
         return
     }
     currentPage++
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var id = 'zy00002'
-    var urlStr = ipPort + '/purchaseHeader/getByAuditorByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&id=' + id
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setMainTable(obj, id)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getPurchaseApplyinit(currentPage)
+    }else  if(currentSearch == -2){
+        getPurchaseApplyByAuditId(currentPage)
+    }
 }
 /*
 跳转页/
@@ -335,24 +318,9 @@ function skipPage() {
         return
     }
     currentPage = skipPage_ - 1
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var id = 'zy00002'
-    var urlStr = ipPort + '/purchaseHeader/getByAuditorByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&id=' + id
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setMainTable(obj, id)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getPurchaseApplyinit(currentPage)
+    }else  if(currentSearch == -2){
+        getPurchaseApplyByAuditId(currentPage)
+    }
 }

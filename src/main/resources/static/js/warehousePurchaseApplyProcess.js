@@ -6,6 +6,12 @@ currentModal == 2 修改审核人1
 currentModal == 3 修改审核人2/
  */
 var currentModal = 0
+/*
+currentSearch == -1 全部搜索
+currentSearch == -2 条件搜索/
+ */
+var currentSearch = -1
+
 $(document).ready(function () {
     getAllProcess()
     /*
@@ -42,10 +48,11 @@ $(document).ready(function () {
 /*
 获取所有流程/
  */
-function getAllProcess() {
-    currentPage = 0
+function getAllProcess(page_ = 0) {
+    currentSearch = -1
+    currentPage = page_
     $.ajax({
-        url: ipPort + '/purchaseAuditProcess/getAllByPage',
+        url: ipPort + '/purchaseAuditProcess/getAllByPage?page=' + currentPage,
         success:function (obj) {
             if(obj.code == 0){
                 setProcessTable(obj)
@@ -197,11 +204,12 @@ function modifyProcess() {
 /*
 通过物品名称搜索/
  */
-function getProcessByName() {
-    currentPage = 0
+function getProcessByName(page_ = 0) {
+    currentSearch = -2
+    currentPage = page_
     var name = $('#processName-input').val()
     $.ajax({
-        url: ipPort + '/purchaseAuditProcess/getByNameLikeByPage?name=' + name,
+        url: ipPort + '/purchaseAuditProcess/getByNameLikeByPage?name=' + name + '&page=' + currentPage,
         success:function (obj) {
             if(obj.code == 0){
                 if(obj.data.numberOfElements == 0){
@@ -389,25 +397,11 @@ function previousPage() {
     if(currentPage < 0){
         currentPage = 0
     }
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/purchaseAuditProcess/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setProcessTable(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllProcess(currentPage)
+    }else  if(currentSearch == -2){
+        getProcessByName(currentPage)
+    }
 }
 /*
 下一页/
@@ -420,25 +414,11 @@ function nextPage() {
         return
     }
     currentPage++
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/purchaseAuditProcess/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setProcessTable(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllProcess(currentPage)
+    }else  if(currentSearch == -2){
+        getProcessByName(currentPage)
+    }
 }
 /*
 跳转页/
@@ -455,23 +435,9 @@ function skipPage() {
         return
     }
     currentPage = skipPage_ - 1
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/purchaseAuditProcess/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setProcessTable(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllProcess(currentPage)
+    }else  if(currentSearch == -2){
+        getProcessByName(currentPage)
+    }
 }

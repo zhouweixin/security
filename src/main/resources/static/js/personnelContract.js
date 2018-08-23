@@ -1,4 +1,12 @@
 var currentPage = 0
+
+/*
+currentSearch == -1 已签订全部搜索
+currentSearch == -2 已签订条件搜索
+currentSearch == -3 即将到期全部搜索/
+ */
+var currentSearch = -1
+
 $(document).ready(function () {
     $('.select-department-ul li a').on('click', function () {
         $('#alreadySigned-dropdownMenu1').val($(this).text())
@@ -75,8 +83,9 @@ $(document).ready(function () {
 /*
 搜索全部合同信息/
  */
-function getAllContractInformation(currentPage_=0) {
-    currentPage = currentPage_
+function getAllContractInformation(page_ = 0  ) {
+    currentSearch = -1
+    currentPage = page_
     var page = currentPage
     var size = 10
     var sortFieldName = 'id'
@@ -147,8 +156,9 @@ function setContractTableInformation(obj) {
 /*
 通过各种参数搜索合同信息/
  */
-function getInformationByParameters() {
-    currentPage = 0
+function getInformationByParameters(page_ = 0) {
+    currentSearch = -2
+    currentPage = page_
     var page = currentPage
     var size = 10
     var sortFieldName = 'id'
@@ -424,8 +434,9 @@ function deleteContractInBatch() {
 /*
 搜索全部即将到期合同信息/
  */
-function getAllDueDateContractInformation() {
-    currentPage = 0
+function getAllDueDateContractInformation(page_ = 0) {
+    currentSearch = -3
+    currentPage = page_
     var page = currentPage
     var size = 10
     var sortFieldName = 'id'
@@ -503,25 +514,13 @@ function previousPage(str) {
     if(currentPage < 0){
         currentPage = 0
     }
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/contract/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setContractTableInformation(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllContractInformation(currentPage)
+    }else  if(currentSearch == -2){
+        getInformationByParameters(currentPage)
+    }else  if(currentSearch == -3){
+        getAllDueDateContractInformation(currentPage)
+    }
 }
 /*
 下一页/
@@ -534,25 +533,13 @@ function nextPage(str) {
         return
     }
     currentPage++
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/contract/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setContractTableInformation(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllContractInformation(currentPage)
+    }else  if(currentSearch == -2){
+        getInformationByParameters(currentPage)
+    }else  if(currentSearch == -3){
+        getAllDueDateContractInformation(currentPage)
+    }
 }
 /*
 跳转页/
@@ -569,23 +556,11 @@ function skipPage(str) {
         return
     }
     currentPage = skipPage_ - 1
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/contract/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setContractTableInformation(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllContractInformation(currentPage)
+    }else  if(currentSearch == -2){
+        getInformationByParameters(currentPage)
+    }else  if(currentSearch == -3){
+        getAllDueDateContractInformation(currentPage)
+    }
 }

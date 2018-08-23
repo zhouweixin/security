@@ -3,6 +3,12 @@
  */
 var index = 0
 var currentPage = 0
+/*
+currentSearch == -1 全部搜索
+currentSearch == -2 条件搜索/
+ */
+var currentSearch = -1
+
 $(document).ready(function () {
     index = 0
     /*
@@ -38,8 +44,9 @@ $(document).ready(function () {
 /*
 获取所有申请/
  */
-function getAllPurchaseApply() {
-    currentPage = 0
+function getAllPurchaseApply(page_ = 0) {
+    currentSearch = -1
+    currentPage = page_
     var page = currentPage
     var size = 10
     var sortFieldName = 'applyTime'
@@ -227,13 +234,17 @@ function pushInGoods() {
 /*
 通过参数搜索/
  */
-function searchByParas() {
-    currentPage = 0
+function searchByParas(page_ = 0) {
+    currentSearch = -2
+    currentPage = page_
+    var sortFieldName = 'applyTime'
+    var asc = 0
     var status = $('#selectStatus-dropdownMenu').attr('value')
     var staffId = $('#applyStaffId-input').val()
     if(status == '' && staffId != ''){
         $.ajax({
-            url: ipPort + '/purchaseHeader/getByApplyUserByPage?id=' + staffId,
+            url: ipPort + '/purchaseHeader/getByApplyUserByPage?id=' + staffId +
+                '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&page=' + currentPage,
             success:function (obj) {
                 if(obj.code == 0){
                     if(obj.data.content.numberOfElements == 0){
@@ -252,7 +263,8 @@ function searchByParas() {
         })
     }else if(status != '' && staffId == ''){
         $.ajax({
-            url: ipPort + '/purchaseHeader/getByStatueByPage?status=' + status,
+            url: ipPort + '/purchaseHeader/getByStatueByPage?status=' + status +
+                '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&page=' + currentPage,
             success:function (obj) {
                 if(obj.code == 0){
                     if(obj.data.content.numberOfElements == 0){
@@ -271,7 +283,8 @@ function searchByParas() {
         })
     }else if(status != '' && staffId != ''){
         $.ajax({
-            url: ipPort + '/purchaseHeader/getByApplyUserAndStatusByPage?id=' + staffId + '&status=' + status,
+            url: ipPort + '/purchaseHeader/getByApplyUserAndStatusByPage?id=' + staffId + '&status=' + status +
+                '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&page=' + currentPage,
             success:function (obj) {
                 if(obj.code == 0){
                     if(obj.data.content.numberOfElements == 0){
@@ -305,25 +318,11 @@ function previousPage() {
     if(currentPage < 0){
         currentPage = 0
     }
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'applyTime'
-    var asc = 0
-    var urlStr = ipPort + '/purchaseHeader/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setPurchaseApplyTable(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllPurchaseApply(currentPage)
+    }else  if(currentSearch == -2){
+        searchByParas(currentPage)
+    }
 }
 /*
 下一页/
@@ -336,25 +335,11 @@ function nextPage() {
         return
     }
     currentPage++
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'applyTime'
-    var asc = 0
-    var urlStr = ipPort + '/purchaseHeader/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setPurchaseApplyTable(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllPurchaseApply(currentPage)
+    }else  if(currentSearch == -2){
+        searchByParas(currentPage)
+    }
 }
 /*
 跳转页/
@@ -371,23 +356,9 @@ function skipPage() {
         return
     }
     currentPage = skipPage_ - 1
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'applyTime'
-    var asc = 0
-    var urlStr = ipPort + '/purchaseHeader/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setPurchaseApplyTable(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllPurchaseApply(currentPage)
+    }else  if(currentSearch == -2){
+        searchByParas(currentPage)
+    }
 }

@@ -1,4 +1,14 @@
 var currentPage = 0
+/*
+currentSearch == -1 已离职全部搜索
+currentSearch == -2 已离职条件搜索
+currentSearch == -3 待离职离职禁用全部搜索
+currentSearch == -4 待离职条件搜索
+currentSearch == -5 离职禁用全部搜索
+currentSearch == -6 离职禁用条件搜索/
+ */
+var currentSearch = -1
+
 $(document).ready(function () {
     $('.select-department-ul li a').on('click', function () {
         $('#all-dropdownMenu1').val($(this).text())
@@ -44,6 +54,7 @@ $(document).ready(function () {
 获取已离职员工信息/
  */
 function getLeftStaffInformationByPage(page_ = 0) {
+    currentSearch = -1
     currentPage = page_
     var page = currentPage
     var size = 10
@@ -69,6 +80,7 @@ function getLeftStaffInformationByPage(page_ = 0) {
 获取待离职员工信息/
  */
 function getLeavingStaffInformationByPage(page_ = 0) {
+    currentSearch = -3
     currentPage = page_
     var page = currentPage
     var size = 10
@@ -94,6 +106,7 @@ function getLeavingStaffInformationByPage(page_ = 0) {
 获取离职禁用员工信息/
  */
 function getLeftAndBanStaffInformationByPage(page_ = 0) {
+    currentSearch = -5
     currentPage = page_
     var page = currentPage
     var size = 10
@@ -118,10 +131,12 @@ function getLeftAndBanStaffInformationByPage(page_ = 0) {
 /*
 已离职panel通过部门和姓名搜索信息/
  */
-function leftTabSearchByDepartmentAndStaffName() {
+function leftTabSearchByDepartmentAndStaffName(page_ = 0) {
+    currentSearch = -2
+    currentPage = page_
     var departmentId = $('#leftTab-selectDepartment').attr('value')
     var staffName = $('#staffName-searchInput-leftTab').val()
-    var urlStr = ipPort + "/user/getByDepartmentAndNameLikeByPage?id=" + departmentId + "&name=" + staffName
+    var urlStr = ipPort + "/user/getByDepartmentAndNameLikeByPage?id=" + departmentId + "&name=" + staffName + '&page=' + currentPage
     $.ajax({
         url:urlStr,
         dataType:'json',
@@ -140,10 +155,12 @@ function leftTabSearchByDepartmentAndStaffName() {
 /*
 待离职panel通过部门和姓名搜索信息/
  */
-function leavingTabSearchByDepartmentAndStaffName() {
+function leavingTabSearchByDepartmentAndStaffName(page_ = 0) {
+    currentSearch = -4
+    currentPage = page_
     var departmentId = $('#leavingTab-selectDepartment').attr('value')
     var staffName = $('#staffName-searchInput-leavingTab').val()
-    var urlStr = ipPort + "/user/getByDepartmentAndNameLikeByPage?id=" + departmentId + "&name=" + staffName
+    var urlStr = ipPort + "/user/getByDepartmentAndNameLikeByPage?id=" + departmentId + "&name=" + staffName + '&page=' + currentPage
     $.ajax({
         url:urlStr,
         dataType:'json',
@@ -162,10 +179,12 @@ function leavingTabSearchByDepartmentAndStaffName() {
 /*
 离职禁用panel通过部门和姓名搜索信息/
  */
-function leftAndBanTabSearchByDepartmentAndStaffName() {
+function leftAndBanTabSearchByDepartmentAndStaffName(page_ = 0) {
+    currentSearch = -6
+    currentPage = page_
     var departmentId = $('#leftAndBanTab-selectDepartment').attr('value')
     var staffName = $('#staffName-searchInput-leftAndBanTab').val()
-    var urlStr = ipPort + "/user/getByDepartmentAndNameLikeByPage?id=" + departmentId + "&name=" + staffName
+    var urlStr = ipPort + "/user/getByDepartmentAndNameLikeByPage?id=" + departmentId + "&name=" + staffName + '&page=' + currentPage
     $.ajax({
         url:urlStr,
         dataType:'json',
@@ -404,42 +423,19 @@ function previousPage(str) {
     if(currentPage < 0){
         currentPage = 0
     }
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ''
-    if(str == '#employeesLeft-panel'){
-        urlStr = ipPort + '/user/getByJobNatureByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&id=' + 8
+    if(currentSearch == -1){
+        getLeftStaffInformationByPage(currentPage)
+    }else  if(currentSearch == -2){
+        leftTabSearchByDepartmentAndStaffName(currentPage)
+    }else  if(currentSearch == -3){
+        getLeavingStaffInformationByPage(currentPage)
+    }else  if(currentSearch == -4){
+        leavingTabSearchByDepartmentAndStaffName(currentPage)
+    }else  if(currentSearch == -5){
+        getLeftAndBanStaffInformationByPage(currentPage)
+    }else  if(currentSearch == -6){
+        leftAndBanTabSearchByDepartmentAndStaffName(currentPage)
     }
-    else if(str == '#employeesLeaving-panel'){
-        urlStr = ipPort + '/user/getByJobNatureByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&id=' + 4
-    }
-    else if(str =='#employeesLeftAndBan-panel'){
-        urlStr = ipPort + '/user/getByJobNatureByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&id=' + 9
-    }
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                if(str == '#employeesLeft-panel'){
-                    setLeftLeaveStaffTableInformation(obj)
-                }
-                else if(str == '#employeesLeaving-panel'){
-                    setLeavingLeaveStaffTableInformation(obj)
-                }
-                else if(str =='#employeesLeftAndBan-panel'){
-                    setLeftAndBanLeaveStaffTableInformation(obj)
-                }
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
 }
 /*
 下一页/
@@ -452,40 +448,19 @@ function nextPage(str) {
         return
     }
     currentPage++
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    if(str == '#employeesLeft-panel'){
-        urlStr = ipPort + '/user/getByJobNatureByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&id=' + 8
+    if(currentSearch == -1){
+        getLeftStaffInformationByPage(currentPage)
+    }else  if(currentSearch == -2){
+        leftTabSearchByDepartmentAndStaffName(currentPage)
+    }else  if(currentSearch == -3){
+        getLeavingStaffInformationByPage(currentPage)
+    }else  if(currentSearch == -4){
+        leavingTabSearchByDepartmentAndStaffName(currentPage)
+    }else  if(currentSearch == -5){
+        getLeftAndBanStaffInformationByPage(currentPage)
+    }else  if(currentSearch == -6){
+        leftAndBanTabSearchByDepartmentAndStaffName(currentPage)
     }
-    else if(str == '#employeesLeaving-panel'){
-        urlStr = ipPort + '/user/getByJobNatureByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&id=' + 4
-    }
-    else if(str =='#employeesLeftAndBan-panel'){
-        urlStr = ipPort + '/user/getByJobNatureByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&id=' + 9
-    }    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                if(str == '#employeesLeft-panel'){
-                    setLeftLeaveStaffTableInformation(obj)
-                }
-                else if(str == '#employeesLeaving-panel'){
-                    setLeavingLeaveStaffTableInformation(obj)
-                }
-                else if(str =='#employeesLeftAndBan-panel'){
-                    setLeftAndBanLeaveStaffTableInformation(obj)
-                }
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
 }
 /*
 跳转页/
@@ -502,38 +477,17 @@ function skipPage(str) {
         return
     }
     currentPage = skipPage_ - 1
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    if(str == '#employeesLeft-panel'){
-        urlStr = ipPort + '/user/getByJobNatureByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&id=' + 8
+    if(currentSearch == -1){
+        getLeftStaffInformationByPage(currentPage)
+    }else  if(currentSearch == -2){
+        leftTabSearchByDepartmentAndStaffName(currentPage)
+    }else  if(currentSearch == -3){
+        getLeavingStaffInformationByPage(currentPage)
+    }else  if(currentSearch == -4){
+        leavingTabSearchByDepartmentAndStaffName(currentPage)
+    }else  if(currentSearch == -5){
+        getLeftAndBanStaffInformationByPage(currentPage)
+    }else  if(currentSearch == -6){
+        leftAndBanTabSearchByDepartmentAndStaffName(currentPage)
     }
-    else if(str == '#employeesLeaving-panel'){
-        urlStr = ipPort + '/user/getByJobNatureByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&id=' + 4
-    }
-    else if(str =='#employeesLeftAndBan-panel'){
-        urlStr = ipPort + '/user/getByJobNatureByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc + '&id=' + 9
-    }    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                if(str == '#employeesLeft-panel'){
-                    setLeftLeaveStaffTableInformation(obj)
-                }
-                else if(str == '#employeesLeaving-panel'){
-                    setLeavingLeaveStaffTableInformation(obj)
-                }
-                else if(str =='#employeesLeftAndBan-panel'){
-                    setLeftAndBanLeaveStaffTableInformation(obj)
-                }
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
 }

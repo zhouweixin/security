@@ -3,6 +3,12 @@
  */
 var index = 0
 var currentPage = 0
+/*
+currentSearch == -1 全部搜索
+currentSearch == -2 条件搜索/
+ */
+var currentSearch = -1
+
 var materialUserIds_global = []
 var userIds_global = []
 $(document).ready(function () {
@@ -34,8 +40,9 @@ $(document).ready(function () {
 /*
 获取所有物品用户关系/
  */
-function getAllMaterialUserBypage() {
-    currentPage = 0
+function getAllMaterialUserBypage(page_ = 0) {
+    currentSearch = -1
+    currentPage = page_
     var page = currentPage
     var size = 10
     var sortFieldName = 'id'
@@ -60,10 +67,11 @@ function getAllMaterialUserBypage() {
 /*
 通过参数获取物品用户关系/
  */
-function searchByParas() {
+function searchByParas(page_ = 0) {
+    currentSearch = -2
     var name = $('#giveBack-name').val()
     var status = $('#giveBack-status').attr('value')
-    currentPage = 0
+    currentPage = page_
     var page = currentPage
     var size = 10
     var sortFieldName = 'id'
@@ -231,107 +239,6 @@ function giveBackMaterialInBatch() {
     })
 }
 /*
-增加申请表内容/
- */
-function addApplyContent() {
-    index++
-    var tbody = $('.table-selfDefine tbody')
-    var appendStr = "<tr class='table-tr'><td>" + index + "</td><td><input></td><td><input></td>" +
-        "<td style='border-right: none'><a onclick='cleanRowApplyContent(this)'><img src='imgs/minus-r.png'></a></td></tr>"
-    tbody.append(appendStr)
-}
-/*
-清除申请表内容一行/
- */
-function cleanRowApplyContent(thisObj) {
-    $(thisObj).parent().parent().remove()
-    index--
-    var tr = $('.table-selfDefine').find('.table-tr')
-    for(var i = 1; i <= tr.length; i++){
-        tr.eq(i-1).find('td').eq(0).text(i)
-    }
-}
-/*
-获取所有部门/
- */
-function getAllDepartment() {
-    $('.selectDepartment-ul li').remove()
-    $.ajax({
-        url: ipPort + '/department/getAll',
-        success:function (obj) {
-            if(obj.code == 0){
-                for(var j = 0; j < obj.data.length; j++){
-                    var ul = $('.selectDepartment-ul')
-                    var appendStr = '<li data-dismiss="modal" onclick="selectedOneDepartment(this)"><img src="imgs/tips_department_up.png" height="20px" style="margin-top: -2px;margin-right: 5px"><span ' + 'value="' + obj.data[j].id + '">' + obj.data[j].name + '</span></li>'
-                    ul.append(appendStr)
-                }
-            }else{
-                alert(obj.message)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
-}
-/*
-选定部门/
- */
-function selectedOneDepartment(thisObj) {
-    $('#applyDepartment').val( $(thisObj).find("span").text())
-    $('#applyDepartment').attr('value', $(thisObj).find("span").attr("value"))
-}
-/*
-获取所有员工/
- */
-function getAllStaff() {
-    var staffInformationDepartmentA = $('.selectOneStaff-department-ul .selectOneStaff-department-li .departmentName-span')
-    $.ajax({
-        url:ipPort + '/department/getAll',
-        dataType:'json',
-        success:function (obj) {
-            for(var i = 0; i < obj.data.length; i++){
-                staffInformationDepartmentA.eq(i).parent().removeClass('hidden')
-                staffInformationDepartmentA.eq(i).text(obj.data[i].name)
-                staffInformationDepartmentA.eq(i).attr('value', obj.data[i].id)
-                staffInformationDepartmentA.eq(i).parent().find('li').remove()
-            }
-            $.ajax({
-                url:ipPort + '/user/getAll',
-                dataType:'json',
-                success:function (obj_) {
-                    if(obj_.data.length != 0){
-                        for(var j = 0; j < obj_.data.length; j++){
-                            for(var m = 0; m < obj.data.length; m++){
-                                if(obj_.data[j].department.id == obj.data[m].id){
-                                    var staffUl = staffInformationDepartmentA.eq(m).parent().find('.selectOneStaff-staff-ul')
-                                    var appendStr = '<li data-dismiss="modal" onclick="selectedOneStaff(this)"><img src="imgs/mine.png" height="20px" style="margin-top: -2px"><span ' + 'value="' + obj_.data[j].id + '">' + obj_.data[j].name + '</span></li>'
-                                    staffUl.append(appendStr)
-                                    break
-                                }
-                            }
-                        }
-                    }
-                },
-                error:function (error) {
-                    console.log(error)
-                }
-            })
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
-}
-/*
-选定人员/
- */
-function selectedOneStaff(thisObj) {
-    $('#applyStaff').val( $(thisObj).find("span").text())
-    $('#applyStaff').attr('value', $(thisObj).find("span").attr("value"))
-}
-
-/*
 上一页/
  */
 function previousPage() {
@@ -344,26 +251,11 @@ function previousPage() {
     if(currentPage < 0){
         currentPage = 0
     }
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/gooutMaterialUser/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName='
-        + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setAllMaterialUserTable(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllMaterialUserBypage(currentPage)
+    }else  if(currentSearch == -2){
+        searchByParas(currentPage)
+    }
 }
 /*
 下一页/
@@ -376,26 +268,11 @@ function nextPage() {
         return
     }
     currentPage++
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/gooutMaterialUser/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName='
-        + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setAllMaterialUserTable(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllMaterialUserBypage(currentPage)
+    }else  if(currentSearch == -2){
+        searchByParas(currentPage)
+    }
 }
 /*
 跳转页/
@@ -412,24 +289,9 @@ function skipPage() {
         return
     }
     currentPage = skipPage_ - 1
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/gooutMaterialUser/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName='
-        + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setAllMaterialUserTable(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllMaterialUserBypage(currentPage)
+    }else  if(currentSearch == -2){
+        searchByParas(currentPage)
+    }
 }

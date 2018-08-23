@@ -1,5 +1,10 @@
 var currentPage = 0
 /*
+currentSearch == -1 全部搜索
+currentSearch == -2 条件搜索/
+ */
+var currentSearch = -1
+/*
 currentModal == 0 添加
 currentModal == 1 修改/
  */
@@ -126,8 +131,9 @@ function addProjectContract() {
 /*
 搜索所有项目合同/
  */
-function getAllProjectContractInformation() {
-    currentPage = 0
+function getAllProjectContractInformation(page_ = 0) {
+    currentSearch = -1
+    currentPage = page_
     var page = currentPage
     var size = 10
     var sortFieldName = 'id'
@@ -386,8 +392,9 @@ function deleteContractInBatch() {
 /*
 通过项目名称搜索/
  */
-function getInformationByProjectName() {
-    currentPage = 0
+function getInformationByProjectName(page_ = 0) {
+    currentSearch = -2
+    currentPage = page_
     var projectName = $('#projectName-input').val()
     var urlStr = ipPort + '/project/getByNameLikeByPage?name=' + projectName + "&page=" + currentPage
     $.ajax({
@@ -781,6 +788,8 @@ function selectedOneStaff(thisObj) {
     }
 }
 /******************************************************************************/
+
+
 /*
 上一页/
  */
@@ -794,25 +803,11 @@ function previousPage() {
     if(currentPage < 0){
         currentPage = 0
     }
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/project/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setStaffTableInformation(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllProjectContractInformation(currentPage)
+    }else  if(currentSearch == -2){
+        getInformationByProjectName(currentPage)
+    }
 }
 /*
 下一页/
@@ -825,25 +820,11 @@ function nextPage() {
         return
     }
     currentPage++
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/project/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setStaffTableInformation(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllProjectContractInformation(currentPage)
+    }else  if(currentSearch == -2){
+        getInformationByProjectName(currentPage)
+    }
 }
 /*
 跳转页/
@@ -851,32 +832,19 @@ function nextPage() {
 function skipPage() {
     var skipPage_ = parseInt($('.skipPage').val())
     var totalPage_ = parseInt($('.totalPage').text())
-    if(skipPage_ - totalPage_ > 0){
+    if (skipPage_ - totalPage_ > 0) {
         alert("没有此页！")
         return
     }
-    if(skipPage_ < 1){
+    if (skipPage_ < 1) {
         alert("没有此页！")
         return
     }
     currentPage = skipPage_ - 1
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/project/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setStaffTableInformation(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if (currentSearch == -1) {
+        getAllProjectContractInformation(currentPage)
+    } else if (currentSearch == -2) {
+        getInformationByProjectName(currentPage)
+    }
 }
+

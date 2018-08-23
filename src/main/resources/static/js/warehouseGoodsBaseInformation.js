@@ -1,13 +1,21 @@
 var currentPage = 0
+/*
+currentSearch == -1 全部搜索
+currentSearch == -2 条件搜索/
+ */
+var currentSearch = -1
+
 $(document).ready(function () {
     getAllGoodsBaseInformation()
 })
 /*
 获取所有物品基本信息/
  */
-function getAllGoodsBaseInformation() {
+function getAllGoodsBaseInformation(page_ = 0) {
+    currentSearch = -1
+    currentPage = page_
     $.ajax({
-        url: ipPort + '/material/getAllByPage',
+        url: ipPort + '/material/getAllByPage?page=' + currentPage,
         success:function (obj) {
             if(obj.code == 0){
                 setGoodsBaseInformationTable(obj)
@@ -126,8 +134,9 @@ function modifyGoodsBaseInformation() {
 /*
 通过物品名称搜索/
  */
-function getGoodsBaseInformationByName() {
-    currentPage = 0
+function getGoodsBaseInformationByName(page_ = 0) {
+    currentSearch = -2
+    currentPage = page_
     var page = currentPage
     var name = $('#goodsName-input').val()
     $.ajax({
@@ -231,25 +240,11 @@ function previousPage() {
     if(currentPage < 0){
         currentPage = 0
     }
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/material/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setStaffTableInformation(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllGoodsBaseInformation(currentPage)
+    }else  if(currentSearch == -2){
+        getGoodsBaseInformationByName(currentPage)
+    }
 }
 /*
 下一页/
@@ -262,25 +257,11 @@ function nextPage() {
         return
     }
     currentPage++
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/material/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setStaffTableInformation(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllGoodsBaseInformation(currentPage)
+    }else  if(currentSearch == -2){
+        getGoodsBaseInformationByName(currentPage)
+    }
 }
 /*
 跳转页/
@@ -297,23 +278,9 @@ function skipPage() {
         return
     }
     currentPage = skipPage_ - 1
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/material/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setStaffTableInformation(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllGoodsBaseInformation(currentPage)
+    }else  if(currentSearch == -2){
+        getGoodsBaseInformationByName(currentPage)
+    }
 }

@@ -1,5 +1,13 @@
 var currentPage = 0
 var deleteID = ''
+/*
+currentSearch == -1 库存全部搜索
+currentSearch == -2 库存条件搜索
+currentSearch == -3 报损表全部搜索
+currentSearch == -4 报损表条件搜索/
+ */
+var currentSearch = -1
+
 $(document).ready(function () {
     /*
     申请报损按钮/
@@ -29,8 +37,9 @@ $(document).ready(function () {
 /*
 获取所有库存/
  */
-function getAllStock() {
-    currentPage = 0
+function getAllStock(page_ = 0) {
+    currentSearch = -1
+    currentPage = page_
     var page = currentPage
     $.ajax({
         url: ipPort + '/stock/getAllByPage?page=' + page,
@@ -77,8 +86,9 @@ function setAllStockTable(obj) {
 /*
 通过物品名称搜索/
  */
-function searchByName() {
-    currentPage = 0
+function searchByName(page_ = 0) {
+    currentSearch = -2
+    currentPage = page_
     var page = currentPage
     var name = $('#allWarehouseGoodsInformation-goodsName-input').val()
     $.ajax({
@@ -147,8 +157,9 @@ function submitReportSpoiled() {
 /*
 获取所有报损表/
  */
-function getAllLossEntry() {
-    currentPage = 0
+function getAllLossEntry(page_ = 0) {
+    currentSearch = -3
+    currentPage = page_
     var page = currentPage
     var size = 10
     var sortFieldName = 'id'
@@ -174,8 +185,9 @@ function getAllLossEntry() {
 /*
 通过参数搜索报损表/
  */
-function searchLossEntryByParas() {
-    currentPage = 0
+function searchLossEntryByParas(page_ = 0) {
+    currentSearch = -4
+    currentPage = page_
     var page = currentPage
     var status = $('#selectStatus-dropdownMenu').attr('value')
     var name = $('#reportSpoiledTablePanel-goodsName').val()
@@ -364,25 +376,15 @@ function previousPage(str) {
     if(currentPage < 0){
         currentPage = 0
     }
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/contract/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setContractTableInformation(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllStock(currentPage)
+    }else  if(currentSearch == -2){
+        searchByName(currentPage)
+    }else  if(currentSearch == -3){
+        getAllLossEntry(currentPage)
+    }else  if(currentSearch == -4){
+        searchLossEntryByParas(currentPage)
+    }
 }
 /*
 下一页/
@@ -395,25 +397,15 @@ function nextPage(str) {
         return
     }
     currentPage++
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/contract/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setContractTableInformation(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllStock(currentPage)
+    }else  if(currentSearch == -2){
+        searchByName(currentPage)
+    }else  if(currentSearch == -3){
+        getAllLossEntry(currentPage)
+    }else  if(currentSearch == -4){
+        searchLossEntryByParas(currentPage)
+    }
 }
 /*
 跳转页/
@@ -430,23 +422,13 @@ function skipPage(str) {
         return
     }
     currentPage = skipPage_ - 1
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/contract/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setContractTableInformation(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllStock(currentPage)
+    }else  if(currentSearch == -2){
+        searchByName(currentPage)
+    }else  if(currentSearch == -3){
+        getAllLossEntry(currentPage)
+    }else  if(currentSearch == -4){
+        searchLossEntryByParas(currentPage)
+    }
 }

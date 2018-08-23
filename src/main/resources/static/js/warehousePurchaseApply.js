@@ -7,6 +7,12 @@ var currentPage = 0
 currentModal == 0 申请modal申请人/
  */
 var currentModal = 0
+/*
+currentSearch == -1 全部搜索
+currentSearch == -2 条件搜索/
+ */
+var currentSearch = -1
+
 $(document).ready(function () {
     index = 0
     /*
@@ -104,10 +110,14 @@ $(document).ready(function () {
 /*
 获取所有申请/
  */
-function getAllPurchaseApply() {
-    currentPage = 0
+function getAllPurchaseApply(page_ = 0) {
+    currentSearch = -1
+    currentPage = page_
+    var sortFieldName = 'applyTime'
+    var asc = 0
     $.ajax({
-        url: ipPort + '/purchaseHeader/getAllByPage',
+        url: ipPort + '/purchaseHeader/getAllByPage?page=' + currentPage + '&sortFieldName='
+            + sortFieldName + '&asc=' + asc,
         success:function (obj) {
             if(obj.code == 0){
                 setPurchaseApplyTable(obj)
@@ -514,11 +524,16 @@ function setApplyTableProcessNameUl(obj) {
 /*
 通过申请人编号搜索/
  */
-function searchByStaffId() {
-    currentPage = 0
-    var id = $('#applyUserId-input').val()
+function searchByStaffId(page_ =0) {
+    currentSearch = -2
+    currentPage = page_
+    var sortFieldName = 'applyTime'
+    var asc = 0
+    var id = window.localStorage.userID
+    var status = $('#selectStatus-dropdownMenu').attr('value')
     $.ajax({
-        url:ipPort + '/purchaseHeader/getByApplyUserByPage?id=' + id,
+        url:ipPort + '/purchaseHeader/getByStatueByPage?status=' + status + '&page=' + currentPage + '&sortFieldName='
+            + sortFieldName + '&asc=' + asc,
         success:function (obj) {
             if(obj.code == 0){
                 if(obj.data.numberOfElements == 0){
@@ -550,25 +565,11 @@ function previousPage() {
     if(currentPage < 0){
         currentPage = 0
     }
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/purchaseHeader/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setPurchaseApplyTable(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllPurchaseApply(currentPage)
+    }else  if(currentSearch == -2){
+        searchByStaffId(currentPage)
+    }
 }
 /*
 下一页/
@@ -581,25 +582,11 @@ function nextPage() {
         return
     }
     currentPage++
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/purchaseHeader/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setPurchaseApplyTable(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllPurchaseApply(currentPage)
+    }else  if(currentSearch == -2){
+        searchByStaffId(currentPage)
+    }
 }
 /*
 跳转页/
@@ -616,23 +603,9 @@ function skipPage() {
         return
     }
     currentPage = skipPage_ - 1
-    var page = currentPage
-    var size = 10
-    var sortFieldName = 'id'
-    var asc = 1
-    var urlStr = ipPort + '/purchaseHeader/getAllByPage?page='+ page + '&size=' + size + '&sortFieldName=' + sortFieldName + '&asc=' + asc
-    $.ajax({
-        url:urlStr,
-        dataType:'json',
-        success:function (obj) {
-            if(obj.code == 0){
-                setPurchaseApplyTable(obj)
-            }else{
-                console.log(obj)
-            }
-        },
-        error:function (error) {
-            console.log(error)
-        }
-    })
+    if(currentSearch == -1){
+        getAllPurchaseApply(currentPage)
+    }else  if(currentSearch == -2){
+        searchByStaffId(currentPage)
+    }
 }
