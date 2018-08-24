@@ -375,6 +375,7 @@ function addStaff() {
                     alert(obj.message)
                     setSummaryNumber()
                     getAllStaffInformationByPage(currentPage)
+                    $('#myModal-addStaff').modal('toggle')
                 }else{
                     alert(obj.message)
                 }

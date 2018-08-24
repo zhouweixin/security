@@ -131,6 +131,7 @@ function getAllGoOutRecords() {
 设置出库记录表/
  */
 function setGoOutRecordsTable(obj) {
+    console.log(obj)
     $('.currentPage').text(currentPage + 1)
     $('.totalPage').text(obj.data.totalPages)
     var id = $('.goOutRecords-id')
@@ -206,7 +207,7 @@ function setGoOutRecordsModal(thisObj) {
 提交出库内容/
  */
 function submitGoOutTable() {
-    var operatorName = $('#goOutPanel-operatorName').val()
+    var operatorName = $('#goOutPanel-operatorName').attr('value')
     if(!operatorName){
         alert('经办人不能为空！')
         return
