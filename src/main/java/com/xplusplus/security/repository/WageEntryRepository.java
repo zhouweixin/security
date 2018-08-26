@@ -43,4 +43,19 @@ public interface WageEntryRepository extends JpaRepository<WageEntry, Long> {
      * @return
      */
     public List<WageEntry> findByDate(Date date);
+
+    /**
+     * 通过日期查询
+     *
+     * @param date
+     * @return
+     */
+    public WageEntry findFirstByDate(Date date);
+
+    /**
+     * 通过日期删除
+     *
+     * @param date
+     */
+    public void deleteByDate(Date date);
 }

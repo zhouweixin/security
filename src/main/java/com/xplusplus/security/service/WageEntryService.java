@@ -1,5 +1,8 @@
 package com.xplusplus.security.service;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
+import cn.afterturn.easypoi.excel.entity.enmus.ExcelType;
 import com.xplusplus.security.domain.*;
 import com.xplusplus.security.exception.EnumExceptions;
 import com.xplusplus.security.exception.SecurityExceptions;
@@ -8,6 +11,8 @@ import com.xplusplus.security.repository.UserRepository;
 import com.xplusplus.security.repository.WageEntryRepository;
 import com.xplusplus.security.repository.WorkRecordRepository;
 import com.xplusplus.security.vo.WorkRecordMonthVO;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.hibernate.jdbc.WorkExecutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,12 +46,38 @@ public class WageEntryService {
     private ArchiveRepository archiveRepository;
 
     /**
+     * 重新生成工资单
+     *
+     * @param date
+     */
+    @Transactional
+    public void reGenerateWageEntry(Date date){
+        wageEntryRepository.deleteByDate(date);
+
+        generateWageEntryProcess(date);
+    }
+
+    /**
      * 生成工资单
      *
      * @param date
      */
     @Transactional
     public void generateWageEntry(Date date) {
+        if(wageEntryRepository.findFirstByDate(date) != null){
+            throw new SecurityExceptions(EnumExceptions.WAGE_GENERATED);
+        }
+
+        generateWageEntryProcess(date);
+    }
+
+    /**
+     * 生成工资单过程
+     *
+     * @param date
+     */
+    @Transactional
+    public void generateWageEntryProcess(Date date) {
         // 0.创建工资单
         Map<String, WageEntry> wageEntryMap = new HashMap<>();
 
@@ -131,6 +162,17 @@ public class WageEntryService {
         wageEntryRepository.save(wageEntryMap.values());
     }
 
+    /**
+     * 通过日期和名称模糊查询-分页
+     *
+     * @param date
+     * @param name
+     * @param page
+     * @param size
+     * @param sortFieldName
+     * @param asc
+     * @return
+     */
     public Page<WageEntry> getByDateAndNameLikeByPage(Date date, String name, Integer page, Integer size, String sortFieldName, Integer asc) {
         if(date.toString().equals("2000-01")){
             throw new SecurityExceptions(EnumExceptions.WAGE_GENERATE_FAILED_DATE_NULL);
@@ -198,5 +240,21 @@ public class WageEntryService {
      */
     public List<WageEntry> getAllByMonth(Date date) {
         return wageEntryRepository.findByDate(date);
+    }
+
+    /**
+     * 导出工资单
+     *
+     * @param date
+     * @return
+     */
+    public Workbook exportByDate(Date date) {
+        List<WageEntry> wageEntries = wageEntryRepository.findByDate(date);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        String fileName = String.format("%d年%d月工资单.xlsx", calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1);
+        return ExcelExportUtil.exportExcel(new ExportParams(fileName, fileName, ExcelType.XSSF), WageEntry.class, wageEntries);
     }
 }

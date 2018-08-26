@@ -90,6 +90,7 @@ public enum EnumExceptions {
     WAGE_GENERATE_FAILED_DATE_NULL(79, "工资单生成失败, 日期不可为空"),
     LOGIN_FAILED_USER_NOT_EXISTS(80, "登录失败, 用户不存在"),
     LOGIN_FAILED_USER_PASSWORD_NOT_MATCHER(81, "登录失败, 用户名或密码错误"),
+    WAGE_GENERATED(82, "本月工资单已生成, 请勿重复生成"),
 
 	;
 

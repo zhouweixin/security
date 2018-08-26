@@ -1,15 +1,13 @@
 package com.xplusplus.security.domain;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @Author: zhouweixin
@@ -29,12 +27,15 @@ public class WageEntry {
     private Long id;
 
     @ApiModelProperty(value = "工号")
+    @Excel(name = "工号", orderNum = "1")
     private String userId = "";
 
     @ApiModelProperty(value = "姓名")
+    @Excel(name = "姓名", orderNum = "0")
     private String userName = "";
 
-    @ApiModelProperty(value = "原岗点")
+    @ApiModelProperty(value = "原岗点部门")
+    @Excel(name = "部门", orderNum = "2")
     private String originalSpot = "";
 
     @ApiModelProperty(value = "日期， 格式：yyyy-MM")
@@ -44,20 +45,25 @@ public class WageEntry {
     private Date date;
 
     @ApiModelProperty(value = "证件号码")
+    @Excel(name = "证件号码", width = 20, orderNum = "3")
     private String idNumber;
 
     @ApiModelProperty(value = "卡号")
+    @Excel(name = "卡号", width = 20, orderNum = "4")
     private String cardNumber = "";
 
     @ApiModelProperty(value = "基本工资")
+    @Excel(name = "基本工资", orderNum = "5")
     @Column(precision = 2)
     private double baseWage = 0.00;
 
     @ApiModelProperty(value = "项目工资")
+    @Excel(name = "项目工资", orderNum = "6")
     @Column(precision = 2)
     private double projectWage = 0.00;
 
     @ApiModelProperty(value = "全勤奖")
+    @Excel(name = "全勤奖", orderNum = "7")
     @Column(precision = 2)
     private double fullAttenBonus = 0.00;
 
@@ -65,6 +71,7 @@ public class WageEntry {
     private int overtimeDays = 0;
 
     @ApiModelProperty(value = "加班费")
+    @Excel(name = "加班费", orderNum = "9")
     @Column(precision = 2)
     private double overtimeWage = 0.00;
 
@@ -77,6 +84,7 @@ public class WageEntry {
     private double delayWage = 0.00;
 
     @ApiModelProperty(value = "伙食费")
+    @Excel(name = "伙食费", orderNum = "10")
     @Column(precision = 2)
     private double boardWage = 0.00;
 
@@ -85,18 +93,22 @@ public class WageEntry {
     private double fixedOvertimeWage = 0.00;
 
     @ApiModelProperty(value = "社保补助")
+    @Excel(name = "社保补助", orderNum = "11")
     @Column(precision = 2)
     private double socialSecuritySubsidyWage = 0.00;
 
     @ApiModelProperty(value = "奖金")
+    @Excel(name = "奖金", orderNum = "8")
     @Column(precision = 2)
     private double bonus = 0.00;
 
     @ApiModelProperty(value = "基金")
+    @Excel(name = "基金", orderNum = "12")
     @Column(precision = 2)
     private double foundation = 0.00;
 
     @ApiModelProperty(value = "应扣款项")
+    @Excel(name = "应扣款项", orderNum = "13")
     @Column(precision = 2)
     private double deductionWage = 0.00;
 
@@ -108,23 +120,29 @@ public class WageEntry {
     private int workHours = 0;
 
     @ApiModelProperty(value = "工作天数")
+    @Excel(name = "工作天数", orderNum = "14")
     private int workDays = 0;
 
     @ApiModelProperty(value = "月总天数")
+    @Excel(name = "有总天数", orderNum = "15")
     private int sumDays = 31;
 
     @ApiModelProperty(value = "应发工资")
     @Column(precision = 2)
+    @Excel(name = "应发工资", orderNum = "16")
     private double grossPay = 0.00;
 
     @ApiModelProperty(value = "实发工资")
     @Column(precision = 2)
+    @Excel(name = "实发工资", orderNum = "17")
     private double realPay = 0.00;
 
     @ApiModelProperty(value = "签名")
+    @Excel(name = "签名", orderNum = "18")
     private String underWrite = "";
 
     @ApiModelProperty(value = "备注")
+    @Excel(name = "备注", orderNum = "17")
     private String note = "";
 
     @ApiModelProperty(value = "状态：0未发；1已发")

@@ -13,9 +13,9 @@ spring:
 
 server:
   context-path: /security
-  ssl:
-    key-store: classpath:keystore.p12
-    key-store-type: PKCS12
-    key-alias: tomcat
-    key-store-password: 123456
-  port: 8443
+#  ssl:
+#    key-store: classpath:keystore.p12
+#    key-store-type: PKCS12
+#    key-alias: tomcat
+#    key-store-password: 123456
+  port: 9000

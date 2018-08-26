@@ -7,11 +7,16 @@ import com.xplusplus.security.utils.ResultUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -33,6 +38,13 @@ public class WageEntryController {
     @GetMapping(value = "/generateWageEntry")
     public Result<Object> generateWageEntry(@ApiParam(value = "日期, 格式为yyyy-MM") @RequestParam @DateTimeFormat(pattern = "yyyy-MM") Date date){
         wageEntryService.generateWageEntry(date);
+        return ResultUtil.success();
+    }
+
+    @ApiOperation(value = "重新生成工资单")
+    @GetMapping(value = "/reGenerateWageEntry")
+    public Result<Object> reGenerateWageEntry(@ApiParam(value = "日期, 格式为yyyy-MM") @RequestParam @DateTimeFormat(pattern = "yyyy-MM") Date date){
+        wageEntryService.reGenerateWageEntry(date);
         return ResultUtil.success();
     }
 
@@ -59,5 +71,24 @@ public class WageEntryController {
     @PostMapping(value = "/getAllByMonth")
     public Result<List<WageEntry>> getAllByMonth(@ApiParam(value = "时间, 格式为yyyy-MM") @RequestParam @DateTimeFormat(pattern = "yyyy-MM") Date date){
         return ResultUtil.success(wageEntryService.getAllByMonth(date));
+    }
+
+    @ApiOperation(value = "通过日期导出工资单")
+    @GetMapping(value = "/exportByDate")
+    public Result<Object> exportByDate(
+            @ApiParam(value = "日期, 格式为yyyy-MM") @RequestParam @DateTimeFormat(pattern = "yyyy-MM") Date date,
+            HttpServletResponse response) throws IOException {
+
+        Workbook workbook = wageEntryService.exportByDate(date);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+
+        String fileName = String.format("%d年%d月工资单.xlsx", calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1);
+        response.addHeader("Content-Disposition", "attachment;fileName=" + new String(fileName.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
+
+        response.flushBuffer();
+        workbook.write(response.getOutputStream());
+        return ResultUtil.success();
     }
 }
