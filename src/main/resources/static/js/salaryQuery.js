@@ -10,6 +10,12 @@ $(document).ready(function () {
     var today_date = new Date().toLocaleDateString()
     $('#salaryQuery-month').val(today_date.split('/')[0] + '/' + today_date.split('/')[1])
 
+    //设置导出按钮
+    var month = $('#salaryQuery-month').val()
+    month = month.replace(/\//g, '-')
+    var urlStr = ipPort + '/wageEntry/exportByDate?date=' + month
+    $('#export-a').attr('href',urlStr)
+
     getALlWage()
 })
 /*
@@ -404,10 +410,13 @@ function setAllPrintTable(obj) {
     $('.print-body2').removeClass('hidden')
 }
 /*
-打印/
+导出工资单/
  */
-function printSalaryTable() {
-    
+function exportSalary() {
+    var month = $('#salaryQuery-month').val()
+    month = month.replace(/\//g, '-')
+    var urlStr = ipPort + '/wageEntry/exportByDate?date=' + month
+    $('#export-a').attr('href',urlStr)
 }
 
 /*

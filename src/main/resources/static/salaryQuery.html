@@ -189,8 +189,8 @@
                         </div>
                     </div>
                     <div class="search-right">
-                        <input class="printAll-box" type="checkbox">导出全部
-                        <button class="btn btn-info" onclick="setPrintSalaryTable()">导出</button>
+                        <!--<input class="printAll-box" type="checkbox">导出全部-->
+                        <a id="export-a" class="btn btn-info" onclick="exportSalary()">导出</a>
                     </div>
                 </div>
             </div>
@@ -414,6 +414,31 @@
                     <li class="page-ul-li" style="margin-top: 8px"><span class="currentPage"></span>/<span class="totalPage"></span></li>
                     <li class="page-ul-li"><a class="btn btn-default page-button" onclick="previousPage()"><span class="caret caret-right"></span></a></li>
                 </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!---------------------------------------------------导出工资单modal----------------------------------------------------------->
+<!-------------------------------------------------------------------------------------------------------------->
+<div class="modal fade" id="myModal-exportSalary" style="width: 40%;margin-left: 30%;padding: 0 0;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel-addStaff">
+    <div class="modal-dialog" role="document" style="margin: 20px 0;width: 100%;">
+        <div class="modal-content">
+            <div class="modal-header" style="text-align: center;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel-addStaff">导出工资单</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="col-xs-3 control-label" style="height: 34px;margin: 0 0;line-height: 34px;">选择导出月份：</label>
+                    <div class="input-group date bottom-month col-xs-7" style="padding: 0 15px">
+                        <input id="exportSalary-month" size="16" class="form-control"  value="年/月" type="text" >
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <a  type="button" class="btn btn-primary" href="">导出资单</a>
             </div>
         </div>
     </div>
