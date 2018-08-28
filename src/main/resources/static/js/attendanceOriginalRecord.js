@@ -116,13 +116,10 @@ function setAllWorkRecordsTableCallBack(i, obj) {
         staff_department.eq(i).text(obj.data.content[i].user.department.name)
     }
     if(obj.data.content[i].startTime){
-        staff_attendanceDate.eq(i).text(obj.data.content[i].realStartTime.substring(0, 10))
-    }
-    if(obj.data.content[i].startTime){
-        staff_startPunchTime.eq(i).text(obj.data.content[i].realStartTime.substring(12, 17))
+        staff_startPunchTime.eq(i).text(obj.data.content[i].realStartTime)
     }
     if(obj.data.content[i].endTime){
-        staff_endPunchTime.eq(i).text(obj.data.content[i].realEndTime.substring(12, 17))
+        staff_endPunchTime.eq(i).text(obj.data.content[i].realEndTime)
     }
     if(obj.data.content[i].project){
         staff_project.eq(i).text(obj.data.content[i].project.name)

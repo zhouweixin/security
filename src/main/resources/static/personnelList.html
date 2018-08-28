@@ -238,7 +238,7 @@
                   </div>
                   <div class="search-content">
                       <div class="search-left">
-                          <div class="dropdown col-xs-3 select-department" >
+                          <div class="dropdown col-xs-2 select-department" >
                               <button class="btn btn-default dropdown-toggle" type="button" value='' id="selectDepartment-dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                  选择部门
                                   <span class="caret"></span>
@@ -266,8 +266,19 @@
                                   <li class="hidden"><a></a></li>
                               </ul>
                           </div>
-                          <div class="input-group col-xs-7">
-                              <input type="text" class="form-control" id="staffName-searchInput" placeholder="按姓名搜索">
+                          <div class="input-group col-xs-6">
+                              <div class="input-group-btn"">
+                                  <button class="btn btn-default dropdown-toggle" type="button" value="0" id="selectSearchWay-dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                      姓名
+                                      <span class="caret" style="margin-left: 5px;"></span>
+                                  </button>
+                                  <ul class="dropdown-menu" aria-labelledby="selectSearchWay-dropdownMenu">
+                                      <li><a value="0">姓名</a></li>
+                                      <li><a value="1">工号</a></li>
+                                      <li><a value="2">IC卡号</a></li>
+                                  </ul>
+                              </div>
+                              <input type="text" class="form-control" id="staffName-searchInput" placeholder="">
                               <span class="input-group-btn">
                                   <button class="btn btn-default" type="button" onclick="searchByDepartmentAndStaffName()">搜索</button>
                                </span>
@@ -804,6 +815,12 @@
                                   <input id="staffInformation-socialSecuritySubsidyWage" type="text" class="form-control"  disabled="disabled">
                               </div>
                           </div>
+                          <div class="form-group col-xs-6">
+                              <label class="col-xs-3 control-label">岗位津贴：</label>
+                              <div class="col-xs-7">
+                                  <input id="staffInformation-socialSecuritySubsidyWage" type="text" class="form-control"  disabled="disabled">
+                              </div>
+                          </div>
                       </form>
                       <div class="button-body col-xs-12">
                           <a class="btn btn-default" onclick="editButtonOnClick('staff')">编辑</a>
@@ -1147,11 +1164,11 @@
                   </div>
                   <div class="panel-body">
                       <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 20px">
-                          <li role="presentation" class="active"><a href="#formalContract-panel" aria-controls="formalContract-panel" role="tab" data-toggle="tab">正式合同</a></li>
+                          <li role="presentation" class="active"><a href="#formalContract-panel" aria-controls="formalContract-panel" role="tab" data-toggle="tab">全日制合同</a></li>
                           <li role="presentation"><a href="#temporaryContract-panel" aria-controls="temporaryContract-panel" role="tab" data-toggle="tab">临时合同</a></li>
                           <li role="presentation"><a href="#internshipAgreement-panel" aria-controls="internshipAgreement-panel" role="tab" data-toggle="tab">实习合同</a></li>
                           <li role="presentation"><a href="#businessInsurance-panel" aria-controls="businessInsurance-panel" role="tab" data-toggle="tab">商业保险合同</a></li>
-                          <li role="presentation"><a href="#socialSecurityContract-panel" aria-controls="socialSecurityContract-panel" role="tab" data-toggle="tab">社保合同</a></li>
+                          <li role="presentation"><a href="#socialSecurityContract-panel" aria-controls="socialSecurityContract-panel" role="tab" data-toggle="tab">聘用合同</a></li>
                       </ul>
                       <div class="tab-content">
                           <div role="tabpanel" class="tab-pane active" id="formalContract-panel">
@@ -1840,6 +1857,12 @@
                       </div>
                       <div class="form-group">
                           <label class="col-xs-3 control-label">社保：</label>
+                          <div class="col-xs-7">
+                              <input id="modal-addStaffSocialSecuritySubsidyWage" type="text" class="form-control" placeholder="">
+                          </div>
+                      </div>
+                      <div class="form-group">
+                          <label class="col-xs-3 control-label">岗位津贴：</label>
                           <div class="col-xs-7">
                               <input id="modal-addStaffSocialSecuritySubsidyWage" type="text" class="form-control" placeholder="">
                           </div>

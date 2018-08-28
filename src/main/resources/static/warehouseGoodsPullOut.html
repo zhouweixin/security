@@ -411,10 +411,21 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title col-xs-6" id="myModalLabel">选择多个员工</h4>
-                <div class="col-xs-5 modal-searchInput">
+                <h4 class="modal-title col-xs-5" id="myModalLabel">选择多个员工</h4>
+                <div class="col-xs-6 modal-searchInput">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="姓名">
+                        <div class="input-group-btn">
+                            <button style="height: 28px;padding: 2px 2px;" class="btn btn-default dropdown-toggle" type="button" value="0" id="selectSearchWay-dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                姓名
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="selectSearchWay-dropdownMenu">
+                                <li><a value="0">姓名</a></li>
+                                <li><a value="1">工号</a></li>
+                                <li><a value="2">IC卡号</a></li>
+                            </ul>
+                        </div>
+                        <input type="text" class="form-control" placeholder="">
                         <span class="input-group-addon glyphicon glyphicon-search" onclick="searchByName_modal(this)" aria-hidden="true"></span>
                     </div>
                 </div>
@@ -422,7 +433,7 @@
             <div class="modal-body" style="padding: 0px 20px;font-size: 14px">
                 <form id="form-selectStaff1" class="form-horizontal">
                     <div class="form-group " style="margin-bottom: 0px;">
-                        <ul class="selectStaff-department-ul col-xs-6" style="height: 200px;overflow-y: scroll">
+                        <ul class="selectStaff-department-ul col-xs-6" style="height: 200px;overflow-y: auto;">
                             <li class="selectStaff-department-li hidden" style="cursor: pointer">
                                 <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
                                 <span class="departmentName-span"></span>
@@ -525,7 +536,7 @@
                         <ul class="selectStaff-staff-ul2 col-xs-6 hidden" style="height: 200px;overflow-y: auto;">
 
                         </ul>
-                        <div class="col-xs-6" style="border-left: 1px solid #E5E5E5; height: 200px;overflow-y: scroll">
+                        <div class="col-xs-6" style="border-left: 1px solid #E5E5E5; height: 200px;overflow-y: auto;">
                             <ul class="selectedStaff-staff-ul">
                             </ul>
                         </div>
@@ -546,10 +557,21 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title col-xs-6" id="myModalLabel-selectOneStaff">选择员工</h4>
-                <div class="col-xs-5 modal-searchInput">
+                <h4 class="modal-title col-xs-5" id="myModalLabel-selectOneStaff">选择员工</h4>
+                <div class="col-xs-6 modal-searchInput">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="姓名">
+                        <div class="input-group-btn">
+                            <button style="height: 28px;padding: 2px 2px;" class="btn btn-default dropdown-toggle" type="button" value="0" id="selectSearchWay-dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                姓名
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="selectSearchWay-dropdownMenu">
+                                <li><a value="0">姓名</a></li>
+                                <li><a value="1">工号</a></li>
+                                <li><a value="2">IC卡号</a></li>
+                            </ul>
+                        </div>
+                        <input type="text" class="form-control" placeholder="">
                         <span class="input-group-addon glyphicon glyphicon-search" onclick="searchOneByName_modal(this)" aria-hidden="true"></span>
                     </div>
                 </div>
@@ -557,7 +579,7 @@
             <div class="modal-body" style="padding: 0px 20px;font-size: 14px">
                 <form id="form-selectOneStaff" class="form-horizontal">
                     <div class="form-group " style="margin-bottom: 0px;">
-                        <ul class="selectOneStaff-department-ul" style="height: 200px;overflow-y: scroll">
+                        <ul class="selectOneStaff-department-ul" style="height: 200px;overflow-y: auto;">
                             <li class="selectOneStaff-department-li hidden" style="cursor: pointer">
                                 <img class="departmentName-img" src="imgs/addition.png" height="20px" style="margin-top: -4px">
                                 <span class="departmentName-span"></span>

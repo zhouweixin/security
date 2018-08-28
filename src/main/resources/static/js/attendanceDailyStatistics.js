@@ -79,6 +79,7 @@ function getWorkRecordsByParameters(page_ = 0) {
 设置记录table/
  */
 function setAllWorkRecordsTable(obj) {
+    console.log(obj)
     $('.currentPage').text(currentPage + 1)
     $('.totalPage').text(obj.data.totalPages)
     if(obj.data.numberOfElements != 0){
@@ -104,6 +105,8 @@ function setAllWorkRecordsTableCallBack(i, obj) {
     var staff_attendanceDate = $('.dailyStatistics-attendanceDate')
     var staff_startPunchTime = $('.dailyStatistics-startPunchTime')
     var staff_endPunchTime = $('.dailyStatistics-endPunchTime')
+    var staff_realStartTime = $('.dailyStatistics-realStartTime')
+    var staff_realEndTime = $('.dailyStatistics-realEndTime')
     var staff_validWorkTime = $('.dailyStatistics-validWorkTime')
     var staff_department = $('.dailyStatistics-staffDepartment')
     var staff_project = $('.dailyStatistics-project')
@@ -116,13 +119,16 @@ function setAllWorkRecordsTableCallBack(i, obj) {
         staff_department.eq(i).text(obj.data.content[i].user.department.name)
     }
     if(obj.data.content[i].startTime){
-        staff_attendanceDate.eq(i).text(obj.data.content[i].startTime.substring(0, 10))
-    }
-    if(obj.data.content[i].startTime){
-        staff_startPunchTime.eq(i).text(obj.data.content[i].startTime.substring(12, 17))
+        staff_startPunchTime.eq(i).text(obj.data.content[i].startTime)
     }
     if(obj.data.content[i].endTime){
-        staff_endPunchTime.eq(i).text(obj.data.content[i].endTime.substring(12, 17))
+        staff_endPunchTime.eq(i).text(obj.data.content[i].endTime)
+    }
+    if(obj.data.content[i].realStartTime){
+        staff_realStartTime.eq(i).text(obj.data.content[i].realStartTime)
+    }
+    if(obj.data.content[i].realEndTime){
+        staff_realEndTime.eq(i).text(obj.data.content[i].realEndTime)
     }
     staff_validWorkTime.eq(i).text(obj.data.content[i].hours)
     if(obj.data.content[i].project){
