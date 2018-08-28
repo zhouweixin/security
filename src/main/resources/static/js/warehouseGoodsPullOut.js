@@ -65,6 +65,24 @@ $(document).ready(function () {
         $('#goOutPanel .table-selfDefine tbody').find('tr').remove()
         $('#goOutPanel-operatorName').attr('value', window.localStorage.userID)
         $('#goOutPanel-operatorName').val(window.localStorage.userName)
+
+        /*
+    出库单5行初始化/
+     */
+        index = 0
+        for(var i = 0; i < 5; i++){
+            index++
+            var tbody = $('.table-selfDefine tbody')
+            var appendStr = "<tr class='table-tr'><td>" + index + "</td><td><div class='dropdown' style='width: 100%; height: 100%'>" +
+                "<div class='goOutTable-goodsName dropdown-toggle' style='width: 100%; height: 26px' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true'>" +
+                "</div><ul class='dropdown-menu goOutTable-goodsName-ul' style='width: 100%' aria-labelledby='alreadySigned'></ul></div></td>" +
+                "<td></td><td><input class='numberPerStaff'></td><td>" + "<p style='margin: 0'><input class='bootstrapSwitch' type='checkbox' checked data-size='mini'></p></td>" +
+                '<td style="border-right: none"> <a onclick="cleanRowPullOutContent(this)"><img style="width: 25px" src="imgs/minus-r.png"></a></td>'
+            tbody.append(appendStr)
+            $('.bootstrapSwitch').bootstrapSwitch('onText','是').bootstrapSwitch('offText','否').bootstrapSwitch("onColor",'info').bootstrapSwitch("offColor",'warning').bootstrapSwitch('state',true);
+            getAllGoodsName()
+        }
+
     })
     /*
    左箭头/
@@ -100,6 +118,8 @@ $(document).ready(function () {
         $(this).parent().parent().find('div').text($(this).text())
         $(this).parent().parent().parent().parent().find('td').eq(2).text($(this).attr('unitValue'))
     })
+
+
     getAllGoOutRecords()
 })
 
@@ -235,25 +255,30 @@ function submitGoOutTable() {
     var jsonArr = []
     for(var i = 0; i < tr.length; i++){
         var id = tr.eq(i).find('td').eq(1).find('.goOutTable-goodsName').attr('value')
-        if(!id){
-            alert('物品名称不能为空！')
-            return
+        if(i == 0){
+            if(!id){
+                alert('第一行物品名称不能为空！')
+                return
+            }
         }
         var json_ = {}
-        json_['material'] = {
-            "id": id
+        if(id){
+            json_['material'] = {
+                "id": id
+            }
+            var numPerStaff = tr.eq(i).find('td').eq(3).find('input').val()
+            json_['numPerPeople'] = numPerStaff
+            var sum = staffNumbers * numPerStaff
+            json_['sum'] = sum
+            var needReturn = tr.eq(i).find('td').eq(4).find('.bootstrap-switch-on')
+            if(needReturn.length == 1){
+                json_['needReturn'] = 1
+            }else {
+                json_['needReturn'] = 0
+            }
+            jsonArr.push(json_)
         }
-        var numPerStaff = tr.eq(i).find('td').eq(3).find('input').val()
-        json_['numPerPeople'] = numPerStaff
-        var sum = staffNumbers * numPerStaff
-        json_['sum'] = sum
-        var needReturn = tr.eq(i).find('td').eq(4).find('.bootstrap-switch-on')
-        if(needReturn.length == 1){
-            json_['needReturn'] = 1
-        }else {
-            json_['needReturn'] = 0
-        }
-        jsonArr.push(json_)
+
     }
     var userId_jsonArr = []
     var userId = staffNames.split('_')

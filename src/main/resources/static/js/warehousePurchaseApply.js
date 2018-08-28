@@ -51,6 +51,27 @@ $(document).ready(function () {
     $('#addApplyButton').on('click', function () {
         $('#applyRecordsPanel').addClass('hidden')
         $('#purchaseApplyPanel').removeClass('hidden')
+
+        $('#applyDepartment').attr('value', '')
+        $('#applyDepartment').val('')
+        $('#applyStaff').attr('value', '')
+        $('#applyStaff').val('')
+        $('#applyReason').val('')
+        $('#applyProcess').text('')
+        $('#allGoodsPrice').text('')
+        $('#purchaseApplyPanel .table-selfDefine tbody').find('tr').remove()
+        index = 0
+        for(var i = 0; i < 5; i++){
+            index++
+            var tbody = $('.table-selfDefine tbody')
+            var appendStr = "<tr class='table-tr'><td>" + index + "</td><td><div class='dropdown' style='width: 100%; height: 100%'>" +
+                "<div class='applyTable-goodsName dropdown-toggle' style='width: 100%; height: 26px' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true'>" +
+                "</div><ul class='dropdown-menu applyTable-goodsName-ul' style='width: 100%' aria-labelledby='alreadySigned'></ul></div></td>" +
+                "<td></td><td><input class='unitPriceOfGoods'></td><td><input class='numberOfGoods'></td><td class='priceOfGoods'></td>" +
+                "<td style='border-right: none'><a onclick='cleanRowApplyContent(this)'><img src='imgs/minus-r.png'></a></td></tr>"
+            tbody.append(appendStr)
+            getAllGoodsName()
+        }
     })
     /*
     左箭头/
@@ -91,7 +112,9 @@ $(document).ready(function () {
         var tr = $('.table-selfDefine .table-tr')
         var sumPrice = 0
         for(var i = 0; i < tr.length; i++){
-            sumPrice = parseFloat(sumPrice) + parseFloat(tr.eq(i).find('.priceOfGoods').text())
+            if(tr.eq(i).find('.priceOfGoods').text()){
+                sumPrice = parseFloat(sumPrice) + parseFloat(tr.eq(i).find('.priceOfGoods').text())
+            }
         }
         sumPrice = sumPrice.toFixed(2)
         $('#allGoodsPrice').text(sumPrice)
@@ -307,21 +330,27 @@ function submitPurchaseApplyTable() {
     var jsonArr = []
     for(var i = 0; i < tr.length; i++){
         var id = tr.eq(i).find('td').eq(1).find('.applyTable-goodsName').attr('value')
-        if(!id){
-            alert('物品名称不能为空！')
-            return
+        if(i == 0){
+            if(!id){
+                alert('第一行物品名称不能为空！')
+                return
+            }
         }
+
         var json_ = {}
-        json_['material'] = {
-            "id": id
+        if(id){
+            json_['material'] = {
+                "id": id
+            }
+            var unitPrice = tr.eq(i).find('td').eq(3).find('input').val()
+            json_['unitPrice'] = parseFloat(unitPrice).toFixed(2)
+            var number = tr.eq(i).find('td').eq(4).find('input').val()
+            json_['number'] = parseInt(number)
+            var price_ = tr.eq(i).find('td').eq(5).text()
+            json_['price'] = parseFloat(price_).toFixed(2)
+            jsonArr.push(json_)
         }
-        var unitPrice = tr.eq(i).find('td').eq(3).find('input').val()
-        json_['unitPrice'] = parseFloat(unitPrice).toFixed(2)
-        var number = tr.eq(i).find('td').eq(4).find('input').val()
-        json_['number'] = parseInt(number)
-        var price_ = tr.eq(i).find('td').eq(5).text()
-        json_['price'] = parseFloat(price_).toFixed(2)
-        jsonArr.push(json_)
+
     }
     var json = {
         "applyUser":{
