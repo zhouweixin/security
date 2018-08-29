@@ -1,4 +1,4 @@
-
+//var ipPort = "http://47.97.124.111:8080/security"
 var ipPort = "http://39.108.89.212:8080/security"
 //var ipPort = "http://127.0.0.1:9000/security"
 var departmentsName = []

@@ -359,32 +359,48 @@ function addStaff() {
     var baseWage = $('#modal-addStaffBaseWage').val()
     var foundation = $('#modal-addStaffFoundation').val()
     var socialSecuritySubsidyWage = $('#modal-addStaffSocialSecuritySubsidyWage').val()
+    var postAllowance = $('#modal-addStaffPostAllowance').val()
     if(!staffName || !phoneNumber){
         alert('姓名或者联系方式不能为空！')
         return
-    }else {
-        var urlStr = ipPort + '/user/add?name=' + staffName + '&sex=' + staffSex + '&ic=' + IcID + '&wechat=' + weChat + '&contact=' + phoneNumber
-            + '&department=' + department + '&role=' + position + '&jobNature=' + jobNature + '&employDate=' + joinDate + '&practiceEndDate=' + period
-        + '&bornDate=' + bornDate + '&bankCardNum=' + bankCardNum + '&baseWage=' + baseWage + '&foundation=' + foundation
-            + '&socialSecuritySubsidyWage=' + socialSecuritySubsidyWage
-        $.ajax({
-            url:urlStr,
-            dataType:'json',
-            success:function (obj) {
-                if(obj.code == 0){
-                    alert(obj.message)
-                    setSummaryNumber()
-                    getAllStaffInformationByPage(currentPage)
-                    $('#myModal-addStaff').modal('toggle')
-                }else{
-                    alert(obj.message)
-                }
-            },
-            error:function (error) {
-                console.log(error)
-            }
-        })
     }
+    if(!staffSex){
+        alert('请选择性别！')
+        return
+    }
+    if(!department){
+        alert('请选择部门！')
+        return
+    }
+    if(!position){
+        alert('请选择职位！')
+        return
+    }
+    if(!jobNature){
+        alert('请选择工作性质！')
+        return
+    }
+    var urlStr = ipPort + '/user/add?name=' + staffName + '&sex=' + staffSex + '&ic=' + IcID + '&wechat=' + weChat + '&contact=' + phoneNumber
+        + '&department=' + department + '&role=' + position + '&jobNature=' + jobNature + '&employDate=' + joinDate + '&practiceEndDate=' + period
+        + '&bornDate=' + bornDate + '&bankCardNum=' + bankCardNum + '&baseWage=' + baseWage + '&foundation=' + foundation
+        + '&socialSecuritySubsidyWage=' + socialSecuritySubsidyWage + '&postAllowance=' + postAllowance
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                alert(obj.message)
+                setSummaryNumber()
+                getAllStaffInformationByPage(currentPage)
+                $('#myModal-addStaff').modal('toggle')
+            }else{
+                alert(obj.message)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
 }
 /*
 获取员工的详细信息/
@@ -630,8 +646,9 @@ function searchByDepartmentAndStaffName(page_ = 0) {
     currentSearch = -2
     currentPage = page_
     var departmentId = $('#selectDepartment-dropdownMenu').attr('value')
-    var staffName = $('#staffName-searchInput').val()
-    var urlStr = ipPort + "/user/getByDepartmentAndNameLikeByPage?id=" + departmentId + "&name=" + staffName + "&page=" + currentPage
+    var keyword = $('#staffName-searchInput').val()
+    var type = $('#selectSearchWay-dropdownMenu').attr('value')
+    var urlStr = ipPort + "/user/searchByPage?departmentId=" + departmentId + "&type=" + type + "&keyword=" + keyword + "&page=" + currentPage
     $.ajax({
         url:urlStr,
         dataType:'json',
@@ -866,6 +883,7 @@ function setDetailsStaffInformationColumn(obj) {
         $('#staffInformation-baseWage').val(obj.data.baseWage)
         $('#staffInformation-foundation').val(obj.data.foundation)
         $('#staffInformation-socialSecuritySubsidyWage').val(obj.data.socialSecuritySubsidyWage)
+        $('#staffInformation-postAllowance').val(obj.data.postAllowance)
     }
 }
 /*
@@ -1693,29 +1711,45 @@ function updateStaffInformation() {
     var baseWage = $('#staffInformation-baseWage').val()
     var foundation = $('#staffInformation-foundation').val()
     var socialSecuritySubsidyWage = $('#staffInformation-socialSecuritySubsidyWage').val()
+    var postAllowance = $('#staffInformation-postAllowance').val()
     if(!staffName || !phoneNumber){
         alert('姓名或者联系方式不能为空！')
         return
-    }else {
-        var urlStr = ipPort + '/user/update?name=' + staffName + '&id=' + staffID + '&sex=' + staffSex + '&ic=' + IcID + '&wechat=' + weChat + '&contact=' + phoneNumber
-            + '&department=' + department + '&role=' + position + '&jobNature=' + jobNature + '&employDate=' + joinDate + '&practiceEndDate=' + period + '&resignDate= ' + resignDate + '&resignType=' + resignType
-            + '&bornDate=' + bornDate + '&bankCardNum=' + bankCardNum + '&baseWage=' + baseWage + '&foundation=' + foundation
-            + '&socialSecuritySubsidyWage=' + socialSecuritySubsidyWage
-        $.ajax({
-            url:urlStr,
-            dataType:'json',
-            success:function (obj) {
-                if(obj.code == 0){
-                    alert(obj.message)
-                }else{
-                    console.log(obj)
-                }
-            },
-            error:function (error) {
-                console.log(error)
-            }
-        })
     }
+    if(!staffSex){
+        alert('请选择性别！')
+        return
+    }
+    if(!department){
+        alert('请选择部门！')
+        return
+    }
+    if(!position){
+        alert('请选择职位！')
+        return
+    }
+    if(!jobNature){
+        alert('请选择工作性质！')
+        return
+    }
+    var urlStr = ipPort + '/user/update?name=' + staffName + '&id=' + staffID + '&sex=' + staffSex + '&ic=' + IcID + '&wechat=' + weChat + '&contact=' + phoneNumber
+        + '&department=' + department + '&role=' + position + '&jobNature=' + jobNature + '&employDate=' + joinDate + '&practiceEndDate=' + period + '&resignDate= ' + resignDate + '&resignType=' + resignType
+        + '&bornDate=' + bornDate + '&bankCardNum=' + bankCardNum + '&baseWage=' + baseWage + '&foundation=' + foundation
+        + '&socialSecuritySubsidyWage=' + socialSecuritySubsidyWage + '&postAllowance=' + postAllowance
+    $.ajax({
+        url:urlStr,
+        dataType:'json',
+        success:function (obj) {
+            if(obj.code == 0){
+                alert(obj.message)
+            }else{
+                alert(obj.message)
+            }
+        },
+        error:function (error) {
+            console.log(error)
+        }
+    })
 }
 
 /*

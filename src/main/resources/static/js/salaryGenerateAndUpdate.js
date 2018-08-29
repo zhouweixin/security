@@ -308,7 +308,6 @@ function updateWageInBatch() {
             jsonArr.push(json_)
         }
     }
-    console.log(jsonArr)
     let myjson = JSON.stringify(jsonArr)
     $.ajax({
         url: ipPort + '/wageEntry/update',

@@ -84,6 +84,7 @@ function setAllBaseWageATable(obj) {
         var baseWage = $('.salaryBaseUpdate-baseWage').find('input')
         var socialSecuritySubsidyWage = $('.salaryBaseUpdate-socialSecuritySubsidyWage').find('input')
         var foundation = $('.salaryBaseUpdate-foundation').find('input')
+        var postAllowance = $('.salaryBaseUpdate-postAllowance').find('input')
         for(var i = 0; i < obj.data.numberOfElements; i++){
             table_tr.eq(i).removeClass('hidden')
             name.eq(i).text(obj.data.content[i].name)
@@ -94,6 +95,7 @@ function setAllBaseWageATable(obj) {
             baseWage.eq(i).val(obj.data.content[i].baseWage)
             socialSecuritySubsidyWage.eq(i).val(obj.data.content[i].socialSecuritySubsidyWage)
             foundation.eq(i).val(obj.data.content[i].foundation)
+            postAllowance.eq(i).val(obj.data.content[i].postAllowance)
         }
     }else{
         alert('没有相关信息！')
@@ -137,11 +139,24 @@ function searchByDepartmentAndStaffName(page_ = 0) {
 function updateBaseWage(thisObj) {
     var parent = $(thisObj).parent().parent()
     var baseWage = parent.find('.salaryBaseUpdate-baseWage input').val()
+    if(!baseWage){
+        baseWage = -1
+    }
     var foundation = parent.find('.salaryBaseUpdate-foundation input').val()
+    if(!foundation){
+        foundation = -1
+    }
     var socialSecuritySubsidyWage = parent.find('.salaryBaseUpdate-socialSecuritySubsidyWage input').val()
+    if(!socialSecuritySubsidyWage){
+        socialSecuritySubsidyWage = -1
+    }
+    var postAllowance = parent.find('.salaryBaseUpdate-postAllowance input').val()
+    if(!postAllowance){
+        postAllowance = -1
+    }
     var strID = parent.find('.salaryBaseUpdate-staffID').text()
-    var urlStr = ipPort + '/user/updateBaseAndSocialSecurityAndFoundationBatch?userIds=' + strID + '&base=' + baseWage
-        + '&socialSecurity=' + socialSecuritySubsidyWage + '&foundation=' + foundation
+    var urlStr = ipPort + '/user/updateWagesByIds?userIds=' + strID + '&base=' + baseWage
+        + '&socialSecurity=' + socialSecuritySubsidyWage + '&foundation=' + foundation + '&postAllowance=' + postAllowance
     $.ajax({
         url:urlStr,
         dataType:'json',
@@ -183,13 +198,17 @@ function updateBaseAndSocialSecurityAndFoundationBatch() {
     if(!socialSecuritySubsidyWage){
         socialSecuritySubsidyWage = -1
     }
+    var postAllowance = $('#updateBaseWageBatch-postAllowance').val()
+    if(!postAllowance){
+        postAllowance = -1
+    }
     var selectedStaff_span = $('.selectedStaff-span')
     var strID = []
     for(var i = 0; i < selectedStaff_span.length; i++){
         strID.push(selectedStaff_span.eq(i).attr('value'))
     }
-    var urlStr = ipPort + '/user/updateBaseAndSocialSecurityAndFoundationBatch?userIds=' + strID + '&base=' + baseWage
-        + '&socialSecurity=' + socialSecuritySubsidyWage + '&foundation=' + foundation
+    var urlStr = ipPort + '/user/updateWagesByIds?userIds=' + strID + '&base=' + baseWage
+        + '&socialSecurity=' + socialSecuritySubsidyWage + '&foundation=' + foundation + '&postAllowance=' + postAllowance
     $.ajax({
         url:urlStr,
         dataType:'json',
@@ -268,10 +287,11 @@ function cancelSelectStaff(thisObj) {
 通过姓名搜索/
  */
 function searchByName_modal(thisObj) {
-    var name = $(thisObj).parent().find('input').val()
-    if(name != ''){
+    var keyword = $(thisObj).parent().find('input').val()
+    var type = $('#selectSearchWay-dropdownMenu').attr('value')
+    if(keyword != ''){
         $.ajax({
-            url:ipPort + '/user/getByNameLike?name=' + name,
+            url:ipPort + '/user/search?type=' + type + '&keyword=' + keyword,
             dataType:'json',
             success:function (obj) {
                 $('#form-selectStaff1 .selectStaff-department-ul').addClass('hidden')

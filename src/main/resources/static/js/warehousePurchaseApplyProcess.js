@@ -343,10 +343,11 @@ function getAllStaff_one(str) {
 通过姓名搜索/
  */
 function searchOneByName_modal(thisObj) {
-    var name = $(thisObj).parent().find('input').val()
-    if(name != ''){
+    var keyword = $(thisObj).parent().find('input').val()
+    var type = $('#selectSearchWay-dropdownMenu').attr('value')
+    if(keyword != ''){
         $.ajax({
-            url:ipPort + '/user/getByNameLike?name=' + name,
+            url:ipPort + '/user/search?type=' + type + '&keyword=' + keyword,
             dataType:'json',
             success:function (obj) {
                 $('#form-selectOneStaff .selectOneStaff-department-ul').addClass('hidden')
