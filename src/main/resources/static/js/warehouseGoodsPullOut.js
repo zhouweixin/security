@@ -76,7 +76,8 @@ $(document).ready(function () {
             var appendStr = "<tr class='table-tr'><td>" + index + "</td><td><div class='dropdown' style='width: 100%; height: 100%'>" +
                 "<div class='goOutTable-goodsName dropdown-toggle' style='width: 100%; height: 26px' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true'>" +
                 "</div><ul class='dropdown-menu goOutTable-goodsName-ul' style='width: 100%' aria-labelledby='alreadySigned'></ul></div></td>" +
-                "<td></td><td><input class='numberPerStaff'></td><td>" + "<p style='margin: 0'><input class='bootstrapSwitch' type='checkbox' checked data-size='mini'></p></td>" +
+                "<td></td><td><input class='numberPerStaff'></td><td>" + "<input class='outNumber' disabled></td><td>"
+                + "<input class='stockNumber' disabled></td><td>" + "<p style='margin: 0'><input class='bootstrapSwitch' type='checkbox' checked data-size='mini'></p></td>" +
                 '<td style="border-right: none"> <a onclick="cleanRowPullOutContent(this)"><img style="width: 25px" src="imgs/minus-r.png"></a></td>'
             tbody.append(appendStr)
             $('.bootstrapSwitch').bootstrapSwitch('onText','是').bootstrapSwitch('offText','否').bootstrapSwitch("onColor",'info').bootstrapSwitch("offColor",'warning').bootstrapSwitch('state',true);
@@ -117,8 +118,49 @@ $(document).ready(function () {
         $(this).parent().parent().find('div').attr('value', $(this).attr('value'))
         $(this).parent().parent().find('div').text($(this).text())
         $(this).parent().parent().parent().parent().find('td').eq(2).text($(this).attr('unitValue'))
-    })
+        $(this).parent().parent().parent().parent().find('td').eq(5).find('input').val($(this).attr('numberValue'))
+        var outNumber = $(this).parent().parent().parent().parent().find('td').eq(4).find('input').val()
+        var stockNumber = $(this).parent().parent().parent().parent().find('td').eq(5).find('input').val()
+        if(parseInt(outNumber) > parseInt(stockNumber)){
+            $(this).parent().parent().parent().parent().find('td').eq(4).find('input').css('color', 'red')
+        }else{
+            $(this).parent().parent().parent().parent().find('td').eq(4).find('input').css('color', '#333')
+        }
 
+    })
+    /*
+    数量/人变化/
+     */
+    $('#goOutPanel').on('input propertychange', '.numberPerStaff', function () {
+        var staffNumber = $('#goOutPanel-staffNumbers').val()
+        var perNumber = $(this).val()
+        var outNumber = staffNumber * perNumber
+        var stockNumber = $(this).parent().parent().find('td').eq(5).find('input').val()
+        $(this).parent().parent().find('td').eq(4).find('input').val(outNumber)
+        if(parseInt(outNumber) > parseInt(stockNumber)){
+            $(this).parent().parent().find('td').eq(4).find('input').css('color', 'red')
+        }else{
+            $(this).parent().parent().find('td').eq(4).find('input').css('color', '#333')
+        }
+    })
+    /*
+    人数变化/
+     */
+    $('#goOutPanel-staffNumbers').on('input propertychange', function () {
+        var staffNumber = $('#goOutPanel-staffNumbers').val()
+        var tr = $('.table-selfDefine .table-tr')
+        for(var i = 0; i < tr.length; i ++){
+            var perNumber = tr.eq(i).find('td').eq(3).find('input').val()
+            var outNumber = staffNumber * perNumber
+            var stockNumber = tr.eq(i).find('td').eq(5).find('input').val()
+            tr.eq(i).find('td').eq(4).find('input').val(outNumber)
+            if(parseInt(outNumber) > parseInt(stockNumber)){
+                tr.eq(i).find('td').eq(4).find('input').css('color', 'red')
+            }else{
+                tr.eq(i).find('td').eq(4).find('input').css('color', '#333')
+            }
+        }
+    })
 
     getAllGoOutRecords()
 })
@@ -263,6 +305,13 @@ function submitGoOutTable() {
         }
         var json_ = {}
         if(id){
+            //判断出库是否大于库存
+            var outNumber = tr.eq(i).find('td').eq(4).find('input').val()
+            var stockNumber = tr.eq(i).find('td').eq(5).find('input').val()
+            if(parseInt(outNumber) > parseInt(stockNumber)){
+                alert("第" + (i+1) + "行出库数量大于库存，请重新选择出库数量！")
+                return
+            }
             json_['material'] = {
                 "id": id
             }
@@ -324,7 +373,8 @@ function addPullOutContent() {
     var appendStr = "<tr class='table-tr'><td>" + index + "</td><td><div class='dropdown' style='width: 100%; height: 100%'>" +
         "<div class='goOutTable-goodsName dropdown-toggle' style='width: 100%; height: 26px' data-toggle='dropdown' aria-haspopup='true' aria-expanded='true'>" +
         "</div><ul class='dropdown-menu goOutTable-goodsName-ul' style='width: 100%' aria-labelledby='alreadySigned'></ul></div></td>" +
-        "<td></td><td><input class='numberPerStaff'></td><td>" + "<p style='margin: 0'><input class='bootstrapSwitch' type='checkbox' checked data-size='mini'></p></td>" +
+        "<td></td><td><input class='numberPerStaff'></td><td>" + "<input class='outNumber' disabled></td><td>"
+        + "<input class='stockNumber' disabled></td><td>" + "<p style='margin: 0'><input class='bootstrapSwitch' type='checkbox' checked data-size='mini'></p></td>" +
         '<td style="border-right: none"> <a onclick="cleanRowPullOutContent(this)"><img style="width: 25px" src="imgs/minus-r.png"></a></td>'
     tbody.append(appendStr)
     $('.bootstrapSwitch').bootstrapSwitch('onText','是').bootstrapSwitch('offText','否').bootstrapSwitch("onColor",'info').bootstrapSwitch("offColor",'warning').bootstrapSwitch('state',true);
@@ -347,7 +397,7 @@ function cleanRowPullOutContent(thisObj) {
  */
 function getAllGoodsName() {
     $.ajax({
-        url: ipPort + '/material/getAll',
+        url: ipPort + '/stock/getAll',
         success: function (obj) {
             if(obj.code == 0){
                 setGoOutTableGoodsNameUl(obj)
@@ -366,7 +416,7 @@ function setGoOutTableGoodsNameUl(obj) {
     ul.find('li').remove()
     var appendStr = ''
     for(var i = 0; i < obj.data.length; i++){
-        appendStr = "<li class='col-xs-6' value='" + obj.data[i].id + "'" + "unitValue='" + obj.data[i].unit + "'" + ">" + obj.data[i].name + "</li>"
+        appendStr = "<li class='col-xs-6' value='" + obj.data[i].material.id + "'" + "numberValue='" + obj.data[i].number + "'" + "unitValue='" + obj.data[i].material.unit + "'" + ">" + obj.data[i].material.name + "</li>"
         ul.append(appendStr)
     }
 }
@@ -445,6 +495,7 @@ function selectedPeople() {
     }
     $('#goOutPanel-staffNames').attr('value', strID)
     $('#goOutPanel-staffNames').val(strName)
+   // $('#goOutPanel-staffNumbers').val(selectedStaff_span.length)
 }
 /*
 通过姓名搜索/
