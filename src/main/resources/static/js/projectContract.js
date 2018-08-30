@@ -101,8 +101,16 @@ function addProjectContract() {
     var contractCustomerName = $('#modal-contractCustomerName').val()
     var contractStartDate = new Date(($('#modal-contractStartDate').val()))
     contractStartDate = (contractStartDate.toLocaleDateString()).replace(/\//g, '-')
+    contractStartDate = contractStartDate.split(' ')[0]
+    contractStartDate = contractStartDate.replace(/年/g, '-')
+    contractStartDate = contractStartDate.replace(/月/g, '-')
+    contractStartDate = contractStartDate.replace(/日/g, '')
     var contractEndDate = new Date(($('#modal-contractEndDate').val()))
     contractEndDate = (contractEndDate.toLocaleDateString()).replace(/\//g, '-')
+    contractEndDate = contractEndDate.split(' ')[0]
+    contractEndDate = contractEndDate.replace(/年/g, '-')
+    contractEndDate = contractEndDate.replace(/月/g, '-')
+    contractEndDate = contractEndDate.replace(/日/g, '')
     var contractAmount = $('#modal-contractAmount').val()
     var contractCustomerOfficePhone = $('#modal-contractCustomerOfficePhone').val()
     var contractCustomerFinancePhone = $('#modal-contractCustomerFinancePhone').val()
@@ -287,12 +295,20 @@ function updateProjectContract() {
     var contractStartDate = new Date(($('#modal-updateProjectStartDate').val()))
     if(contractStartDate != 'Invalid Date'){
         contractStartDate = (contractStartDate.toLocaleDateString()).replace(/\//g, '-')
+        contractStartDate = contractStartDate.split(' ')[0]
+        contractStartDate = contractStartDate.replace(/年/g, '-')
+        contractStartDate = contractStartDate.replace(/月/g, '-')
+        contractStartDate = contractStartDate.replace(/日/g, '')
     }else{
         contractStartDate = ''
     }
     var contractEndDate = new Date(($('#modal-updateProjectEndDate').val()))
     if(contractEndDate != 'Invalid Date'){
         contractEndDate = (contractEndDate.toLocaleDateString()).replace(/\//g, '-')
+        contractEndDate = contractEndDate.split(' ')[0]
+        contractEndDate = contractEndDate.replace(/年/g, '-')
+        contractEndDate = contractEndDate.replace(/月/g, '-')
+        contractEndDate = contractEndDate.replace(/日/g, '')
     }else{
         contractEndDate = ''
     }

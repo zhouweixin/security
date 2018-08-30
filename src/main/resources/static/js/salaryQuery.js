@@ -8,7 +8,11 @@ $(document).ready(function () {
 
     //设置选择月份为当天日期
     var today_date = new Date().toLocaleDateString()
-    $('#salaryQuery-month').val(today_date.split('/')[0] + '/' + today_date.split('/')[1])
+    if(today_date.indexOf("年") != -1){
+        $('#salaryQuery-month').val(today_date.split('年')[0] + '/' + today_date.split('年')[1].split('月')[0])
+    }else {
+        $('#salaryQuery-month').val(today_date.split('/')[0] + '/' + today_date.split('/')[1])
+    }
 
     //设置导出按钮
     var month = $('#salaryQuery-month').val()

@@ -8,7 +8,11 @@ $(document).ready(function () {
 
     //设置选择月份为当天日期
     var today_date = new Date().toLocaleDateString()
-    $('#salaryQuery-month').val(today_date.split('/')[0] + '/' + today_date.split('/')[1])
+    if(today_date.indexOf("年") != -1){
+        $('#salaryQuery-month').val(today_date.split('年')[0] + '/' + today_date.split('年')[1].split('月')[0])
+    }else {
+        $('#salaryQuery-month').val(today_date.split('/')[0] + '/' + today_date.split('/')[1])
+    }
 
     /*
     工资单修改事件/
@@ -144,7 +148,12 @@ function setGenerateSalaryModal() {
     $('#myModal-generateSalary').modal('toggle')
     //设置选择月份为当天日期
     var today_date = new Date().toLocaleDateString()
-    $('#generateSalary-month').val(today_date.split('/')[0] + '/' + today_date.split('/')[1])
+
+    if(today_date.indexOf("年") != -1){
+        $('#generateSalary-month').val(today_date.split('年')[0] + '/' + today_date.split('年')[1].split('月')[0])
+    }else {
+        $('#generateSalary-month').val(today_date.split('/')[0] + '/' + today_date.split('/')[1])
+    }
 }
 /*
 设置是否确认生成工资单modal/

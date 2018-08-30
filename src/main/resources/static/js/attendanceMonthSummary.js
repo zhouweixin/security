@@ -8,8 +8,13 @@ $(document).ready(function () {
 
     //设置选择月份为当天日期
     var today_date = new Date().toLocaleDateString()
-    $('#staffMonthSummary-date').val(today_date.split('/')[0] + '/' + today_date.split('/')[1])
-    $('#projectMonthSummary-date').val(today_date.split('/')[0] + '/' + today_date.split('/')[1])
+    if(today_date.indexOf("年") != -1){
+        $('#staffMonthSummary-date').val(today_date.split('年')[0] + '/' + today_date.split('年')[1].split('月')[0])
+        $('#projectMonthSummary-date').val(today_date.split('年')[0] + '/' + today_date.split('年')[1].split('月')[0])
+    }else {
+        $('#staffMonthSummary-date').val(today_date.split('/')[0] + '/' + today_date.split('/')[1])
+        $('#projectMonthSummary-date').val(today_date.split('/')[0] + '/' + today_date.split('/')[1])
+    }
 })
 
 /*
@@ -75,7 +80,6 @@ function getMonthSummaryByParameters() {
 设置月统计table/
  */
 function setMonthSummaryTable(obj) {
-    console.log(obj)
     var parent = $('#staffMonthSummaryTable tbody')
     parent.find('.table-tr').remove()
     if(obj.data.length != 0){

@@ -206,9 +206,17 @@ function updateContractInformation() {
 
     var contractStartDate = new Date(($('#modal-contractStartDate').val()))
     contractStartDate = (contractStartDate.toLocaleDateString()).replace(/\//g, '-')
+    contractStartDate = contractStartDate.split(' ')[0]
+    contractStartDate = contractStartDate.replace(/年/g, '-')
+    contractStartDate = contractStartDate.replace(/月/g, '-')
+    contractStartDate = contractStartDate.replace(/日/g, '')
 
     var contractEndDate = new Date(($('#modal-contractEndDate').val()))
     contractEndDate = (contractEndDate.toLocaleDateString()).replace(/\//g, '-')
+    contractEndDate = contractEndDate.split(' ')[0]
+    contractEndDate = contractEndDate.replace(/年/g, '-')
+    contractEndDate = contractEndDate.replace(/月/g, '-')
+    contractEndDate = contractEndDate.replace(/日/g, '')
 
     var contractStatus = $('#modal-contractStatus').attr('value')
     var contractContent = $('#modal-contractContent').val()
