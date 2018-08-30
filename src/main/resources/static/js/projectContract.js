@@ -13,20 +13,6 @@ $(document).ready(function () {
     $('#modal-contractStartDate').val( new Date().toLocaleDateString())
     $('#modal-contractEndDate').val( new Date().toLocaleDateString())
 
-    var projectStatusA = $('.projectStatus-menu-ul li a')
-    getAllProjectStatusName(projectStatusA)
-    $('.projectStatus-menu-ul li a').on('click', function () {
-        $('#modal-projectStatus').val($(this).text())
-        $('#modal-projectStatus').attr('value', $(this).attr('value'))
-    })
-
-    var updateProjectStatusA = $('.updateProjectStatus-menu-ul li a')
-    getAllProjectStatusName(updateProjectStatusA)
-    $('.updateProjectStatus-menu-ul li a').on('click', function () {
-        $('#modal-updateProjectStatus').val($(this).text())
-        $('#modal-updateProjectStatus').attr('value', $(this).attr('value'))
-    })
-
     getAllProjectContractInformation()
     /*
       选择多个员工/
@@ -92,6 +78,24 @@ $(document).ready(function () {
             $('#form-selectOneStaff .selectOneStaff-department-ul').removeClass('hidden')
         }
     })
+    /*
+    搜索添加回车绑定事件/
+     */
+    $('#projectName-input').on('keypress', function (event) {
+        if(event.keyCode == '13'){
+            getInformationByProjectName()
+        }
+    })
+    $('#myModal-selectStaff .modal-searchInput input').on('keypress', function (event) {
+        if(event.keyCode == '13'){
+            searchByName_modal(this)
+        }
+    })
+    $('#myModal-selectOneStaff .modal-searchInput input').on('keypress', function (event) {
+        if(event.keyCode == '13'){
+            searchOneByName_modal(this)
+        }
+    })
 })
 /*
 添加项目合同/
@@ -99,18 +103,18 @@ $(document).ready(function () {
 function addProjectContract() {
     var projectName = $('#modal-contractName').val()
     var contractCustomerName = $('#modal-contractCustomerName').val()
-    var contractStartDate = new Date(($('#modal-contractStartDate').val()))
-    contractStartDate = (contractStartDate.toLocaleDateString()).replace(/\//g, '-')
+    var contractStartDate = $('#modal-contractStartDate').val()
     contractStartDate = contractStartDate.split(' ')[0]
-    contractStartDate = contractStartDate.replace(/年/g, '-')
-    contractStartDate = contractStartDate.replace(/月/g, '-')
+    contractStartDate = contractStartDate.replace(/年/g, '/')
+    contractStartDate = contractStartDate.replace(/月/g, '/')
     contractStartDate = contractStartDate.replace(/日/g, '')
-    var contractEndDate = new Date(($('#modal-contractEndDate').val()))
-    contractEndDate = (contractEndDate.toLocaleDateString()).replace(/\//g, '-')
+    contractStartDate = contractStartDate.replace(/\//g, '-')
+    var contractEndDate = $('#modal-contractEndDate').val()
     contractEndDate = contractEndDate.split(' ')[0]
-    contractEndDate = contractEndDate.replace(/年/g, '-')
-    contractEndDate = contractEndDate.replace(/月/g, '-')
+    contractEndDate = contractEndDate.replace(/年/g, '/')
+    contractEndDate = contractEndDate.replace(/月/g, '/')
     contractEndDate = contractEndDate.replace(/日/g, '')
+    contractEndDate = contractEndDate.replace(/\//g, '-')
     var contractAmount = $('#modal-contractAmount').val()
     var contractCustomerOfficePhone = $('#modal-contractCustomerOfficePhone').val()
     var contractCustomerFinancePhone = $('#modal-contractCustomerFinancePhone').val()
@@ -130,6 +134,9 @@ function addProjectContract() {
         success:function (obj) {
             alert(obj.message)
             getAllProjectContractInformation()
+            if(obj.code == 0){
+                $('#myModal-signContract').modal('toggle')
+            }
         },
         error:function (error) {
             console.log(error)
@@ -230,7 +237,7 @@ function setUpdateModalInformation(thisObj) {
     var td = $(thisObj).parent().parent().parent().find('td')
     $('#modal-updateProjectID').val(td.eq(1).text())
     $('#modal-updateProjectName').val(td.eq(2).text())
-    $('#modal-updateProjectStatus').val(td.eq(3).text())
+    $('#modal-updateProjectStatus').html(td.eq(3).text() + "<span class='caret'></span>")
     $('#modal-updateProjectStatus').attr('value', td.eq(3).attr('value'))
     $('#modal-updateProjectCustomerName').val(td.eq(5).text())
     $('#modal-updateProjectCustomerOfficePhone').val(td.eq(6).text())
@@ -252,7 +259,7 @@ function setUpdateModalInformation(thisObj) {
     if(updateProjectEndDateSplit){
         var updateProjectEndDate = new Date()
         updateProjectEndDate.setFullYear(updateProjectEndDateSplit.split('-')[0], updateProjectEndDateSplit.split('-')[1] - 1, updateProjectEndDateSplit.split('-')[2])
-        $('#modal-updateProjectEndDate').val(updateProjectStartDate.toLocaleDateString())
+        $('#modal-updateProjectEndDate').val(updateProjectEndDate.toLocaleDateString())
     }else {
         $('#modal-updateProjectEndDate').val('')
     }
@@ -292,23 +299,23 @@ function updateProjectContract() {
     var projectName = $('#modal-updateProjectName').val()
     var contractCustomerName = $('#modal-updateProjectCustomerName').val()
 
-    var contractStartDate = new Date(($('#modal-updateProjectStartDate').val()))
+    var contractStartDate = $('#modal-updateProjectStartDate').val()
     if(contractStartDate != 'Invalid Date'){
-        contractStartDate = (contractStartDate.toLocaleDateString()).replace(/\//g, '-')
         contractStartDate = contractStartDate.split(' ')[0]
-        contractStartDate = contractStartDate.replace(/年/g, '-')
-        contractStartDate = contractStartDate.replace(/月/g, '-')
+        contractStartDate = contractStartDate.replace(/年/g, '/')
+        contractStartDate = contractStartDate.replace(/月/g, '/')
         contractStartDate = contractStartDate.replace(/日/g, '')
+        contractStartDate = contractStartDate.replace(/\//g, '-')
     }else{
         contractStartDate = ''
     }
-    var contractEndDate = new Date(($('#modal-updateProjectEndDate').val()))
+    var contractEndDate = $('#modal-updateProjectEndDate').val()
     if(contractEndDate != 'Invalid Date'){
-        contractEndDate = (contractEndDate.toLocaleDateString()).replace(/\//g, '-')
         contractEndDate = contractEndDate.split(' ')[0]
-        contractEndDate = contractEndDate.replace(/年/g, '-')
-        contractEndDate = contractEndDate.replace(/月/g, '-')
+        contractEndDate = contractEndDate.replace(/年/g, '/')
+        contractEndDate = contractEndDate.replace(/月/g, '/')
         contractEndDate = contractEndDate.replace(/日/g, '')
+        contractEndDate = contractEndDate.replace(/\//g, '-')
     }else{
         contractEndDate = ''
     }
@@ -334,6 +341,9 @@ function updateProjectContract() {
         success:function (obj) {
             alert(obj.message)
             getAllProjectContractInformation()
+            if(obj.code == 0){
+                $('#myModal-updateProjectContract').modal('toggle')
+            }
         },
         error:function (error) {
             console.log(error)

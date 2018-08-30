@@ -6,6 +6,14 @@ currentSearch == -2 条件搜索/
 var currentSearch = -1
 $(document).ready(function () {
     getAllProjectWage()
+    /*
+    搜索添加回车绑定事件/
+     */
+    $('#salaryProject-name').on('keypress', function (event) {
+        if(event.keyCode == '13'){
+            getInformationByProjectName()
+        }
+    })
 })
 /*
 获取所有项目工资/

@@ -6,6 +6,14 @@ currentSearch == -2 条件搜索/
 var currentSearch = -1
 $(document).ready(function () {
     getAllWorkRecords()
+    /*
+   搜索添加回车绑定事件/
+    */
+    $('#originalRecord-name').on('keypress', function (event) {
+        if(event.keyCode == '13'){
+            getWorkRecordsByParameters()
+        }
+    })
 })
 /*
 获取全部记录/

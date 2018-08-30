@@ -24,6 +24,14 @@ $(document).ready(function () {
     })
 
     getALlWage()
+    /*
+    搜索添加回车绑定事件/
+     */
+    $('#salaryQuery-name').on('keypress', function (event) {
+        if(event.keyCode == '13'){
+            getWageByParameters()
+        }
+    })
 })
 /*
 获取所有固定日期的工资单/

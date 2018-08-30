@@ -44,6 +44,24 @@ $(document).ready(function () {
             $('#form-selectOneStaff .selectOneStaff-department-ul').removeClass('hidden')
         }
     })
+    /*
+    搜索添加回车绑定事件/
+     */
+    $('#processName-input').on('keypress', function (event) {
+        if(event.keyCode == '13'){
+            getProcessByName()
+        }
+    })
+    $('#myModal-selectOneStaff .modal-searchInput input').on('keypress', function (event) {
+        if(event.keyCode == '13'){
+            searchOneByName_modal(this)
+        }
+    })
+    $('#myModal-selectOneStaff .modal-searchInput input').on('keypress', function (event) {
+        if(event.keyCode == '13'){
+            getInformationByParameters()
+        }
+    })
 })
 /*
 获取所有流程/

@@ -7,6 +7,14 @@ var currentSearch = -1
 
 $(document).ready(function () {
     getAllGoodsBaseInformation()
+    /*
+    搜索添加回车绑定事件/
+     */
+    $('#goodsName-input').on('keypress', function (event) {
+        if(event.keyCode == '13'){
+            getGoodsBaseInformationByName()
+        }
+    })
 })
 /*
 获取所有物品基本信息/

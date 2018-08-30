@@ -33,6 +33,19 @@ $(document).ready(function () {
         $('#reportSpoiledTablePanel').removeClass('hidden')
     })
     getAllStock()
+    /*
+    搜索添加回车绑定事件/
+     */
+    $('#allWarehouseGoodsInformation-goodsName-input').on('keypress', function (event) {
+        if(event.keyCode == '13'){
+            searchByName()
+        }
+    })
+    $('#reportSpoiledTablePanel-goodsName').on('keypress', function (event) {
+        if(event.keyCode == '13'){
+            searchLossEntryByParas()
+        }
+    })
 })
 /*
 获取所有库存/

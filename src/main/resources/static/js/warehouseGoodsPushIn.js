@@ -40,6 +40,14 @@ $(document).ready(function () {
         $('#selectStatus-dropdownMenu').html($(this).text() + '<span style="margin-left:4px" class="caret"></span>')
     })
     getAllPurchaseApply()
+    /*
+    搜索添加回车绑定事件/
+     */
+    $('#applyStaffId-input').on('keypress', function (event) {
+        if(event.keyCode == '13'){
+            searchByParas()
+        }
+    })
 })
 /*
 获取所有申请/

@@ -129,6 +129,14 @@ $(document).ready(function () {
     })
 
     getAllPurchaseApply()
+    /*
+    搜索添加回车绑定事件/
+     */
+    $('#myModal-selectOneStaff .modal-searchInput input').on('keypress', function (event) {
+        if(event.keyCode == '13'){
+            searchOneByName_modal(this)
+        }
+    })
 })
 /*
 获取所有申请/

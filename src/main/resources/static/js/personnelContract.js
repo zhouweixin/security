@@ -79,6 +79,20 @@ $(document).ready(function () {
     $('input[class=scanningCopy]').change(function() {
         $(this).parent().find('.input-append input').val($(this).val())
     });
+
+    /*
+    搜索添加回车绑定事件/
+     */
+    $('#alreadySigned-name').on('keypress', function (event) {
+        if(event.keyCode == '13'){
+            getInformationByParameters()
+        }
+    })
+    $('#alreadySigned-name').on('keypress', function (event) {
+        if(event.keyCode == '13'){
+            getInformationByParameters()
+        }
+    })
 })
 /*
 搜索全部合同信息/
@@ -204,19 +218,19 @@ function updateContractInformation() {
     var contractID = $('#modal-contractID').val()
     var contractType = $('#modal-contractType').attr('value')
 
-    var contractStartDate = new Date(($('#modal-contractStartDate').val()))
-    contractStartDate = (contractStartDate.toLocaleDateString()).replace(/\//g, '-')
+    var contractStartDate = $('#modal-contractStartDate').val()
     contractStartDate = contractStartDate.split(' ')[0]
-    contractStartDate = contractStartDate.replace(/年/g, '-')
-    contractStartDate = contractStartDate.replace(/月/g, '-')
+    contractStartDate = contractStartDate.replace(/年/g, '/')
+    contractStartDate = contractStartDate.replace(/月/g, '/')
     contractStartDate = contractStartDate.replace(/日/g, '')
+    contractStartDate = contractStartDate.replace(/\//g, '-')
 
-    var contractEndDate = new Date(($('#modal-contractEndDate').val()))
-    contractEndDate = (contractEndDate.toLocaleDateString()).replace(/\//g, '-')
+    var contractEndDate = $('#modal-contractEndDate').val()
     contractEndDate = contractEndDate.split(' ')[0]
-    contractEndDate = contractEndDate.replace(/年/g, '-')
-    contractEndDate = contractEndDate.replace(/月/g, '-')
+    contractEndDate = contractEndDate.replace(/年/g, '/')
+    contractEndDate = contractEndDate.replace(/月/g, '/')
     contractEndDate = contractEndDate.replace(/日/g, '')
+    contractEndDate = contractEndDate.replace(/\//g, '-')
 
     var contractStatus = $('#modal-contractStatus').attr('value')
     var contractContent = $('#modal-contractContent').val()

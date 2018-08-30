@@ -348,33 +348,33 @@ $(document).ready(function () {
 function addStaff() {
     var staffName = $('#modal-addStaffName').val()
     var staffSex = $('#modal-addStaffSex').attr('value')
-    var bornDate = new Date(($('#modal-addStaffBornDate').val()))
-    bornDate = (bornDate.toLocaleDateString()).replace(/\//g, '-')
+    var bornDate = $('#modal-addStaffBornDate').val()
     bornDate = bornDate.split(' ')[0]
-    bornDate = bornDate.replace(/年/g, '-')
-    bornDate = bornDate.replace(/月/g, '-')
+    bornDate = bornDate.replace(/年/g, '/')
+    bornDate = bornDate.replace(/月/g, '/')
     bornDate = bornDate.replace(/日/g, '')
+    bornDate = bornDate.replace(/\//g, '-')
     var IcID = $('#modal-addStaffICNumber').val()
     var department = $('#modal-addStaffDepartment').attr('value')
     var weChat = $('#modal-addStaffWeChat').val()
     var phoneNumber = $('#modal-addStaffPhoneNumber').val()
     var position = $('#modal-addStaffPosition').attr('value')
     var jobNature = $('#modal-addStaffJobNature').attr('value')
-    var joinDate = new Date(($('#modal-addStaffJoinDate').val()))
+    var joinDate = $('#modal-addStaffJoinDate').val()
     var period = joinDate
-    joinDate = (joinDate.toLocaleDateString()).replace(/\//g, '-')
     joinDate = joinDate.split(' ')[0]
-    joinDate = joinDate.replace(/年/g, '-')
-    joinDate = joinDate.replace(/月/g, '-')
+    joinDate = joinDate.replace(/年/g, '/')
+    joinDate = joinDate.replace(/月/g, '/')
     joinDate = joinDate.replace(/日/g, '')
+    joinDate = joinDate.replace(/\//g, '-')
     var internshipCycle = $('#modal-addStaffInternshipCycle').attr('value')
     if(parseInt(internshipCycle) != 0){
         period = changeMonth(period, internshipCycle)
-        period = (period.toLocaleDateString()).replace(/\//g, '-')
         period = period.split(' ')[0]
-        period = period.replace(/年/g, '-')
-        period = period.replace(/月/g, '-')
+        period = period.replace(/年/g, '/')
+        period = period.replace(/月/g, '/')
         period = period.replace(/日/g, '')
+        period = period.replace(/\//g, '-')
     }else {
         period = ""
     }
@@ -774,12 +774,12 @@ function leaveJob() {
                         dataType:'json',
                         success:function (obj) {
                             if(obj.code == 0){
-                                var resignDate = new Date(($('#modal-leaveDate').val()))
-                                resignDate = (resignDate.toLocaleDateString()).replace(/\//g, '-')
+                                var resignDate = $('#modal-leaveDate').val()
                                 resignDate = resignDate.split(' ')[0]
-                                resignDate = resignDate.replace(/年/g, '-')
-                                resignDate = resignDate.replace(/月/g, '-')
+                                resignDate = resignDate.replace(/年/g, '/')
+                                resignDate = resignDate.replace(/月/g, '/')
                                 resignDate = resignDate.replace(/日/g, '')
+                                resignDate = resignDate.replace(/\//g, '-')
                                 var resignTypeId = $('#select-leaveType').attr('value')
                                 $.ajax({
                                     url:ipPort + '/user/resign?resignDate=' +  resignDate + '&resignTypeId=' + resignTypeId + '&id=' + leaveJobStaffID,
@@ -1704,12 +1704,11 @@ function updateStaffInformation() {
     var staffSex = $('#staffInformation-sex').attr('value')
     var bornDate = $('#staffInformation-bornDate').val()
     if(bornDate){
-        bornDate = new Date(bornDate)
-        bornDate = (bornDate.toLocaleDateString()).replace(/\//g, '-')
         bornDate = bornDate.split(' ')[0]
-        bornDate = bornDate.replace(/年/g, '-')
-        bornDate = bornDate.replace(/月/g, '-')
+        bornDate = bornDate.replace(/年/g, '/')
+        bornDate = bornDate.replace(/月/g, '/')
         bornDate = bornDate.replace(/日/g, '')
+        bornDate = bornDate.replace(/\//g, '-')
     }else{
         bornDate = ''
     }
@@ -1719,33 +1718,33 @@ function updateStaffInformation() {
     var phoneNumber = $('#staffInformation-phone').val()
     var position = $('#staffInformation-role').attr('value')
     var jobNature = $('#staffInformation-jobNature').attr('value')
-    var joinDate = new Date(($('#staffInformation-joinDate').val()))
+    var joinDate = $('#staffInformation-joinDate').val()
     var period = joinDate
-    joinDate = (joinDate.toLocaleDateString()).replace(/\//g, '-')
     joinDate = joinDate.split(' ')[0]
-    joinDate = joinDate.replace(/年/g, '-')
-    joinDate = joinDate.replace(/月/g, '-')
+    joinDate = joinDate.replace(/年/g, '/')
+    joinDate = joinDate.replace(/月/g, '/')
     joinDate = joinDate.replace(/日/g, '')
+    joinDate = joinDate.replace(/\//g, '-')
     var internshipCycle = $('#staffInformation-cycle').attr('value')
     if(parseInt(internshipCycle) != 0){
         period = changeMonth(period, internshipCycle)
-        period = (period.toLocaleDateString()).replace(/\//g, '-')
         period = period.split(' ')[0]
-        period = period.replace(/年/g, '-')
-        period = period.replace(/月/g, '-')
+        period = period.replace(/年/g, '/')
+        period = period.replace(/月/g, '/')
         period = period.replace(/日/g, '')
+        period = period.replace(/\//g, '-')
     }else {
         period = ""
     }
     var archive = $('#staffInformation-archive').val()
     var resignType = $('#staffInformation-resignType').attr('value')
-    var resignDate = new Date(($('#staffInformation-resignDate').val()))
+    var resignDate = $('#staffInformation-resignDate').val()
     if(resignDate != 'Invalid Date'){
-        resignDate = (resignDate.toLocaleDateString()).replace(/\//g, '-')
         resignDate = resignDate.split(' ')[0]
-        resignDate = resignDate.replace(/年/g, '-')
-        resignDate = resignDate.replace(/月/g, '-')
+        resignDate = resignDate.replace(/年/g, '/')
+        resignDate = resignDate.replace(/月/g, '/')
         resignDate = resignDate.replace(/日/g, '')
+        resignDate = resignDate.replace(/\//g, '-')
     }else{
         resignDate = ''
     }
@@ -1807,13 +1806,13 @@ function saveArchiveInformation() {
     var politicalStatus = $('#archiveInformation-politicalStatus').attr('value')
     var education = $('#archiveInformation-education').attr('value')
     var major = $('#archiveInformation-major').val()
-    var firstWorkDate = new Date(($('#archiveInformation-firstWorkDate').val()))
+    var firstWorkDate = $('#archiveInformation-firstWorkDate').val()
     if(firstWorkDate != 'Invalid Date'){
-        firstWorkDate = (firstWorkDate.toLocaleDateString()).replace(/\//g, '-')
         firstWorkDate = firstWorkDate.split(' ')[0]
-        firstWorkDate = firstWorkDate.replace(/年/g, '-')
-        firstWorkDate = firstWorkDate.replace(/月/g, '-')
+        firstWorkDate = firstWorkDate.replace(/年/g, '/')
+        firstWorkDate = firstWorkDate.replace(/月/g, '/')
         firstWorkDate = firstWorkDate.replace(/日/g, '')
+        firstWorkDate = firstWorkDate.replace(/\//g, '-')
     }else{
         firstWorkDate = ''
     }
@@ -1878,23 +1877,23 @@ function saveFormalContract() {
     var contractID = $('#formalContractID').val()
     var userID = $('#staffInformation-id').val()
     var contractType = $('#formalContractType').attr('value')
-    var contractStartDate = new Date(($('#formalContractStartDate').val()))
+    var contractStartDate = $('#formalContractStartDate').val()
     if(contractStartDate != 'Invalid Date'){
-        contractStartDate = (contractStartDate.toLocaleDateString()).replace(/\//g, '-')
         contractStartDate = contractStartDate.split(' ')[0]
-        contractStartDate = contractStartDate.replace(/年/g, '-')
-        contractStartDate = contractStartDate.replace(/月/g, '-')
+        contractStartDate = contractStartDate.replace(/年/g, '/')
+        contractStartDate = contractStartDate.replace(/月/g, '/')
         contractStartDate = contractStartDate.replace(/日/g, '')
+        contractStartDate = contractStartDate.replace(/\//g, '-')
     }else{
         contractStartDate = ''
     }
-    var contractEndDate = new Date(($('#formalContractEndDate').val()))
+    var contractEndDate = $('#formalContractEndDate').val()
     if(contractEndDate != 'Invalid Date'){
-        contractEndDate = (contractEndDate.toLocaleDateString()).replace(/\//g, '-')
         contractEndDate = contractEndDate.split(' ')[0]
-        contractEndDate = contractEndDate.replace(/年/g, '-')
-        contractEndDate = contractEndDate.replace(/月/g, '-')
+        contractEndDate = contractEndDate.replace(/年/g, '/')
+        contractEndDate = contractEndDate.replace(/月/g, '/')
         contractEndDate = contractEndDate.replace(/日/g, '')
+        contractEndDate = contractEndDate.replace(/\//g, '-')
     }else{
         contractEndDate = ''
     }
@@ -2040,23 +2039,23 @@ function saveTemporaryContract() {
     var contractID = $('#temporaryContractID').val()
     var userID = $('#staffInformation-id').val()
     var contractType = $('#temporaryContractType').attr('value')
-    var contractStartDate = new Date(($('#temporaryContractStartDate').val()))
+    var contractStartDate = $('#temporaryContractStartDate').val()
     if(contractStartDate != 'Invalid Date'){
-        contractStartDate = (contractStartDate.toLocaleDateString()).replace(/\//g, '-')
         contractStartDate = contractStartDate.split(' ')[0]
-        contractStartDate = contractStartDate.replace(/年/g, '-')
-        contractStartDate = contractStartDate.replace(/月/g, '-')
+        contractStartDate = contractStartDate.replace(/年/g, '/')
+        contractStartDate = contractStartDate.replace(/月/g, '/')
         contractStartDate = contractStartDate.replace(/日/g, '')
+        contractStartDate = contractStartDate.replace(/\//g, '-')
     }else{
         contractStartDate = ''
     }
-    var contractEndDate = new Date(($('#temporaryContractEndDate').val()))
+    var contractEndDate = $('#temporaryContractEndDate').val()
     if(contractEndDate != 'Invalid Date'){
-        contractEndDate = (contractEndDate.toLocaleDateString()).replace(/\//g, '-')
         contractEndDate = contractEndDate.split(' ')[0]
-        contractEndDate = contractEndDate.replace(/年/g, '-')
-        contractEndDate = contractEndDate.replace(/月/g, '-')
+        contractEndDate = contractEndDate.replace(/年/g, '/')
+        contractEndDate = contractEndDate.replace(/月/g, '/')
         contractEndDate = contractEndDate.replace(/日/g, '')
+        contractEndDate = contractEndDate.replace(/\//g, '-')
     }else{
         contractEndDate = ''
     }
@@ -2200,23 +2199,23 @@ function saveInternshipAgreement() {
     var contractID = $('#internshipAgreementID').val()
     var userID = $('#staffInformation-id').val()
     var contractType = $('#internshipAgreementType').attr('value')
-    var contractStartDate = new Date(($('#internshipAgreementStartDate').val()))
+    var contractStartDate = $('#internshipAgreementStartDate').val()
     if(contractStartDate != 'Invalid Date'){
-        contractStartDate = (contractStartDate.toLocaleDateString()).replace(/\//g, '-')
         contractStartDate = contractStartDate.split(' ')[0]
-        contractStartDate = contractStartDate.replace(/年/g, '-')
-        contractStartDate = contractStartDate.replace(/月/g, '-')
+        contractStartDate = contractStartDate.replace(/年/g, '/')
+        contractStartDate = contractStartDate.replace(/月/g, '/')
         contractStartDate = contractStartDate.replace(/日/g, '')
+        contractStartDate = contractStartDate.replace(/\//g, '-')
     }else{
         contractStartDate = ''
     }
-    var contractEndDate = new Date(($('#internshipAgreementEndDate').val()))
+    var contractEndDate = $('#internshipAgreementEndDate').val()
     if(contractEndDate != 'Invalid Date'){
-        contractEndDate = (contractEndDate.toLocaleDateString()).replace(/\//g, '-')
         contractEndDate = contractEndDate.split(' ')[0]
-        contractEndDate = contractEndDate.replace(/年/g, '-')
-        contractEndDate = contractEndDate.replace(/月/g, '-')
+        contractEndDate = contractEndDate.replace(/年/g, '/')
+        contractEndDate = contractEndDate.replace(/月/g, '/')
         contractEndDate = contractEndDate.replace(/日/g, '')
+        contractEndDate = contractEndDate.replace(/\//g, '-')
     }else{
         contractEndDate = ''
     }
@@ -2360,23 +2359,23 @@ function saveBusinessInsurance() {
     var contractID = $('#businessInsuranceID').val()
     var userID = $('#staffInformation-id').val()
     var contractType = $('#businessInsuranceType').attr('value')
-    var contractStartDate = new Date(($('#businessInsuranceStartDate').val()))
+    var contractStartDate = $('#businessInsuranceStartDate').val()
     if(contractStartDate != 'Invalid Date'){
-        contractStartDate = (contractStartDate.toLocaleDateString()).replace(/\//g, '-')
         contractStartDate = contractStartDate.split(' ')[0]
-        contractStartDate = contractStartDate.replace(/年/g, '-')
-        contractStartDate = contractStartDate.replace(/月/g, '-')
+        contractStartDate = contractStartDate.replace(/年/g, '/')
+        contractStartDate = contractStartDate.replace(/月/g, '/')
         contractStartDate = contractStartDate.replace(/日/g, '')
+        contractStartDate = contractStartDate.replace(/\//g, '-')
     }else{
         contractStartDate = ''
     }
-    var contractEndDate = new Date(($('#businessInsuranceEndDate').val()))
+    var contractEndDate = $('#businessInsuranceEndDate').val()
     if(contractEndDate != 'Invalid Date'){
-        contractEndDate = (contractEndDate.toLocaleDateString()).replace(/\//g, '-')
         contractEndDate = contractEndDate.split(' ')[0]
-        contractEndDate = contractEndDate.replace(/年/g, '-')
-        contractEndDate = contractEndDate.replace(/月/g, '-')
+        contractEndDate = contractEndDate.replace(/年/g, '/')
+        contractEndDate = contractEndDate.replace(/月/g, '/')
         contractEndDate = contractEndDate.replace(/日/g, '')
+        contractEndDate = contractEndDate.replace(/\//g, '-')
     }else{
         contractEndDate = ''
     }
@@ -2520,23 +2519,23 @@ function saveSocialSecurityContract() {
     var contractID = $('#socialSecurityContractID').val()
     var userID = $('#staffInformation-id').val()
     var contractType = $('#socialSecurityContractType').attr('value')
-    var contractStartDate = new Date(($('#socialSecurityContractStartDate').val()))
+    var contractStartDate = $('#socialSecurityContractStartDate').val()
     if(contractStartDate != 'Invalid Date'){
-        contractStartDate = (contractStartDate.toLocaleDateString()).replace(/\//g, '-')
         contractStartDate = contractStartDate.split(' ')[0]
-        contractStartDate = contractStartDate.replace(/年/g, '-')
-        contractStartDate = contractStartDate.replace(/月/g, '-')
+        contractStartDate = contractStartDate.replace(/年/g, '/')
+        contractStartDate = contractStartDate.replace(/月/g, '/')
         contractStartDate = contractStartDate.replace(/日/g, '')
+        contractStartDate = contractStartDate.replace(/\//g, '-')
     }else{
         contractStartDate = ''
     }
-    var contractEndDate = new Date(($('#socialSecurityContractEndDate').val()))
+    var contractEndDate = $('#socialSecurityContractEndDate').val()
     if(contractEndDate != 'Invalid Date'){
-        contractEndDate = (contractEndDate.toLocaleDateString()).replace(/\//g, '-')
         contractEndDate = contractEndDate.split(' ')[0]
-        contractEndDate = contractEndDate.replace(/年/g, '-')
-        contractEndDate = contractEndDate.replace(/月/g, '-')
+        contractEndDate = contractEndDate.replace(/年/g, '/')
+        contractEndDate = contractEndDate.replace(/月/g, '/')
         contractEndDate = contractEndDate.replace(/日/g, '')
+        contractEndDate = contractEndDate.replace(/\//g, '-')
     }else{
         contractEndDate = ''
     }

@@ -36,6 +36,14 @@ $(document).ready(function () {
     })
 
     getAllMaterialUserBypage()
+    /*
+    搜索添加回车绑定事件/
+     */
+    $('#giveBack-name').on('keypress', function (event) {
+        if(event.keyCode == '13'){
+            searchByParas()
+        }
+    })
 })
 /*
 获取所有物品用户关系/

@@ -15,6 +15,14 @@ $(document).ready(function () {
         $('#staffMonthSummary-date').val(today_date.split('/')[0] + '/' + today_date.split('/')[1])
         $('#projectMonthSummary-date').val(today_date.split('/')[0] + '/' + today_date.split('/')[1])
     }
+    /*
+    搜索添加回车绑定事件/
+     */
+    $('#staffMonthSummary-name').on('keypress', function (event) {
+        if(event.keyCode == '13'){
+            getMonthSummaryByParameters()
+        }
+    })
 })
 
 /*
@@ -59,7 +67,6 @@ function getMonthSummaryByParameters() {
     var name = $('#staffMonthSummary-name').val()
 
     var urlStr = ipPort  + '/workRecord/getByMonth?date=' + date + '&name=' + name + '&projectId=' + project
-    console.log(urlStr)
     $.ajax({
         url:urlStr,
         dataType:'json',

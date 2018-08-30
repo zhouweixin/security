@@ -163,6 +163,19 @@ $(document).ready(function () {
     })
 
     getAllGoOutRecords()
+    /*
+    搜索添加回车绑定事件/
+     */
+    $('#myModal-selectStaff .modal-searchInput input').on('keypress', function (event) {
+        if(event.keyCode == '13'){
+            searchByName_modal(this)
+        }
+    })
+    $('#myModal-selectOneStaff .modal-searchInput input').on('keypress', function (event) {
+        if(event.keyCode == '13'){
+            searchOneByName_modal(this)
+        }
+    })
 })
 
 //*************************************************************出库记录****************************************************************

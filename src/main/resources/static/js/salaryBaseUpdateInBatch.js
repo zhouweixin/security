@@ -42,6 +42,19 @@ $(document).ready(function () {
         }
     })
 
+    /*
+    搜索添加回车绑定事件/
+     */
+    $('#salaryBaseUpdate-name').on('keypress', function (event) {
+        if(event.keyCode == '13'){
+            searchByDepartmentAndStaffName()
+        }
+    })
+    $('#myModal-updateBaseWageBatch .modal-searchInput input').on('keypress', function (event) {
+        if(event.keyCode == '13'){
+            searchByName_modal(this)
+        }
+    })
 })
 /*
 获取所有基本工资/
