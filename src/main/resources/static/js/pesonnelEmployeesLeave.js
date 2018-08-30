@@ -49,6 +49,25 @@ $(document).ready(function () {
         $('#leftAndBanTab-selectDepartment').attr('value', $(this).attr('value'))
     })
     getLeftStaffInformationByPage()
+
+    /*
+    搜索添加回车绑定事件/
+     */
+    $('#staffName-searchInput-leftTab').on('keypress', function (event) {
+        if(event.keyCode == '13'){
+            leftTabSearchByDepartmentAndStaffName()
+        }
+    })
+    $('#staffName-searchInput-leavingTab').on('keypress', function (event) {
+        if(event.keyCode == '13'){
+            leavingTabSearchByDepartmentAndStaffName()
+        }
+    })
+    $('#staffName-searchInput-leftAndBanTab').on('keypress', function (event) {
+        if(event.keyCode == '13'){
+            leftAndBanTabSearchByDepartmentAndStaffName()
+        }
+    })
 })
 /*
 获取已离职员工信息/

@@ -329,6 +329,15 @@ $(document).ready(function () {
         }
     })
 
+    /*
+    搜索添加回车绑定事件/
+     */
+    $('#staffName-searchInput').on('keypress', function (event) {
+        if(event.keyCode == '13'){
+            searchByDepartmentAndStaffName()
+        }
+    })
+
 })
 
 /*

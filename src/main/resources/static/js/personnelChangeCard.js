@@ -29,6 +29,16 @@ $(document).ready(function () {
             $('#form-selectOneStaff .selectOneStaff-department-ul').removeClass('hidden')
         }
     })
+
+    /*
+   搜索添加回车绑定事件/
+    */
+    $('#myModal-selectStaff .modal-searchInput input').on('keypress', function (event) {
+        if(event.keyCode == '13'){
+            searchOneByName_modal(this)
+        }
+    })
+
 })
 function changeICNumber() {
     var staffID = $('#modal-staffNumber').val()
